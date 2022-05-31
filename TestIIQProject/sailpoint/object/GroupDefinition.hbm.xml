@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" [
+  <!ENTITY SailPointObject SYSTEM "classpath://sailpoint/object/SailPointObject.hbm.xml">
+]>
+
+<!-- (c) Copyright 2008 SailPoint Technologies, Inc., All Rights Reserved. -->
+
+<hibernate-mapping>
+  <class name="sailpoint.object.GroupDefinition">
+
+    &SailPointObject;
+
+    <property name="name"/>
+    <property name="description" type="string" length="1024"/>
+    <property name="filter" type="sailpoint.persistence.XmlType" length="100000000"/>
+    <property name="lastRefresh" type="sailpoint.persistence.DateType"/>
+    <property name="nullGroup" type="boolean"/>
+    <property name="indexed" type="boolean"/>
+    <property name="private" type="boolean"/>
+
+    <many-to-one embed-xml="false" name="factory" class="sailpoint.object.GroupFactory"/>
+    <many-to-one embed-xml="false" name="index" column="groupIndex" class="sailpoint.object.GroupIndex"/>
+
+  </class>
+</hibernate-mapping>

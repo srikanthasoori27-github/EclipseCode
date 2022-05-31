@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" [
+  <!ENTITY SailPointObject SYSTEM "classpath://sailpoint/object/SailPointObject.hbm.xml">
+]>
+
+<!-- (c) Copyright 2008 SailPoint Technologies, Inc., All Rights Reserved. -->
+
+<hibernate-mapping>
+  <class name="sailpoint.object.ProcessLog">
+
+    &SailPointObject;
+
+    <property name="processName" type="string" length="128" index="spt_process_log_process_name"/>
+    <property name="caseId" type="string" length="128" index="spt_process_log_case_id"/>
+    <property name="workflowCaseName" type="string" length="450" index="spt_process_log_wf_case_name"/>
+    <property name="launcher" type="string" length="128"/>
+    <property name="caseStatus" type="string" length="128" index="spt_process_log_case_status"/>
+    <property name="stepName" type="string" length="128" index="spt_process_log_step_name"/>
+    <property name="approvalName" type="string" length="128" index="spt_process_log_approval_name"/>
+    <property name="ownerName" type="string" length="128" index="spt_process_log_owner_name"/>
+    <property name="startTime" type="sailpoint.persistence.DateType"/>
+    <property name="endTime" type="sailpoint.persistence.DateType"/>
+    <property name="stepDuration" type="int"/>
+    <property name="escalations" type="int"/>
+  </class>
+</hibernate-mapping>

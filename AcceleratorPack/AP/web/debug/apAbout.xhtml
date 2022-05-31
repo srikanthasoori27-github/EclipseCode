@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC
+  "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<!-- (c) Copyright 2008 SailPoint Technologies, Inc., All Rights Reserved. -->
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html">
+<body>
+
+<ui:composition template="/appPage.xhtml">
+
+  <ui:define name="title">#{msgs.debug_about_acceleratorpack_title}</ui:define>
+  <ui:define name="headerItems">
+    <script type="text/javascript" defer="defer">
+      <!--//--><![CDATA[//><!--
+        helpKey = 'DEBUG_ABOUT';
+      //--><!]]>
+    </script>
+  </ui:define>
+
+  <ui:define name="body">
+    <h2>Server Date</h2>
+    <h:outputText value="#{apDebug.currentDate}"/>
+
+    <h2>Accelerator Pack Information</h2>
+
+    <h:panelGrid styleClass="horizPaddedTbl" columnClasses="top" columns="2">
+      <h:outputText value="Version"/>
+      <h:outputText value="#{apDebug.fullVersion}"/>
+
+      <h:outputText value="E-Fixes"/>
+      <h:outputText value="#{apDebug.eFixes}" escape="false"/>
+
+      <h:outputText value="Schema Version"/>
+      <h:outputText value="#{apDebug.schemaVersion}"/>
+
+      <h:outputText value="Source Repository Location"/>
+      <h:outputText value="#{apDebug.repoLocation}"/>
+
+      <h:outputText value="Builder"/>
+      <h:outputText value="#{apDebug.builder}"/>
+
+      <h:outputText value="Build Date"/>
+      <h:outputText value="#{apDebug.buildDate}"/>
+
+      <h:outputText value="Application Home"/>
+      <h:outputText value="#{apDebug.applicationHome}"/>
+
+    </h:panelGrid>
+
+  </ui:define>
+</ui:composition>
+
+</body>
+</html>

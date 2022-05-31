@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE ImportAction PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<ImportAction name="connectorRegistryUpdateAction">
+  <Application connector="sailpoint.connector.SharePointServerConnector" featuresString="PROVISIONING, SYNC_PROVISIONING" icon="enterpriseIcon" name="Microsoft SharePoint Server" type="Microsoft SharePoint Server">
+    <Attributes>
+      <Map>
+        <entry key="skipDomainGroups" value="true"/>
+        <entry key="formPath" value="MicrosoftSharePointServer.xhtml"/>
+      </Map>
+    </Attributes>
+    <Schemas>
+      <Schema displayAttribute="DisplayName" identityAttribute="AccountName" nativeObjectType="User" objectType="account">
+        <AttributeDefinition name="AccountName" type="string">
+        <Description>Login name of the user.</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="DisplayName" type="string">
+        <Description>Display name of the user.</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="UserName" type="string">
+        <Description>sAMAccountName of the user.</Description>
+        </AttributeDefinition>        
+        <AttributeDefinition name="Email" type="string">
+        <Description>E-mail address of the user.</Description>
+        </AttributeDefinition>        
+        <AttributeDefinition multi="true" name="OwnedGroups" type="string">
+        <Description>Groups that the user owns.</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="IsDomainGroup" type="boolean">
+        <Description>Specifies whether the user is part of Domain Group.</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="SID" type="string">
+        <Description>Unique security ID for the network account of the user.</Description>
+        </AttributeDefinition>
+        <AttributeDefinition multi="true" name="SiteCollections" type="string">
+        <Description>Site Collections associated with Account</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="Notes" type="string">
+        <Description>Notes</Description>
+        </AttributeDefinition>
+        <AttributeDefinition entitlement="true" managed="true" multi="true" name="Groups" schemaObjectType="group" type="string">
+        <Description>Collection of groups of which the user is a member.</Description>
+        </AttributeDefinition>
+      </Schema>
+      <Schema displayAttribute="GroupName" featuresString="PROVISIONING" identityAttribute="GroupUrl" nativeObjectType="Group"
+              objectType="group" descriptionAttribute="Description">
+        <AttributeDefinition name="GroupUrl" remediationModificationType="None" type="string">
+        <Description>Identity attribute of group in format "ParentWeb.Url\GroupName".</Description> 
+        </AttributeDefinition>
+        <AttributeDefinition name="GroupName" remediationModificationType="None" type="string">
+        <Description>Name of the group.</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="LoginName" remediationModificationType="None" type="string">
+        <Description>Login Name of the group.</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="Description" remediationModificationType="None" type="string">
+        <Description>Description for the group.</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="Owner" remediationModificationType="None" type="string">
+        <Description>Name of the group owner.</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="ID" remediationModificationType="None" type="string">
+        <Description>Identifier (ID) for the group.</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="ParentWeb" remediationModificationType="None" type="string">
+        <Description>Parent Web of the group.</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="AllowMembersEditMembership" remediationModificationType="None" type="string">
+        <Description>Who can edit the membership.</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="AllowRequestToJoinLeave" remediationModificationType="None" type="string">
+        <Description>Whether to allow users to request for membership of the group.</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="OnlyAllowMembersViewMembership" remediationModificationType="None" type="string">
+        <Description>Who can view the membership of the group.</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="AutoAcceptRequestToJoinLeave" remediationModificationType="None" type="string">
+        <Description>Whether membership requests are automatically accepted.</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="RequestToJoinLeaveEmailSetting" remediationModificationType="None" type="string">
+        <Description>Membership requests to this e-mail address.</Description>
+        </AttributeDefinition>
+        <AttributeDefinition multi="true" name="ADGroups" type="string">
+        <Description>Collection of AD groups which are member of this SharePoint Group.</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="SiteAdmin" type="string">
+        <Description>Site Collection Administrator</Description>
+        </AttributeDefinition>
+      </Schema>
+    </Schemas>
+    <Templates>
+      <Template name="Account" schemaObjectType="account" usage="Create">
+        <Field displayName="con_prov_policy_sp_AccountName" helpKey="help_con_prov_policy_sp_AcountName" name="AccountName" required="true" section="" type="string"/>
+      </Template>
+      <Template name="Update Group" schemaObjectType="group" usage="Update">
+        <Field displayName="con_prov_policy_sp_ADGroups" multi="true" name="ADGroups" reviewRequired="true" type="string"/>
+      </Template>
+    </Templates>
+  </Application>
+</ImportAction>

@@ -1,0 +1,11 @@
+-- You can define here all the statements that should be excluded by the schema checker,
+-- these statements are not going to be included in the upgrade file.
+
+create user if not exists 'identityiq'@'%' identified with mysql_native_password by 'identityiq';
+grant all privileges on identityiq.* to 'identityiq'@'%';
+create user if not exists 'identityiq'@'localhost' identified with mysql_native_password by 'identityiq';
+grant all privileges on identityiq.* to 'identityiq'@'localhost';
+create user if not exists 'identityiqplugin'@'%' identified with mysql_native_password by 'identityiqplugin';
+grant all privileges on identityiqplugin.* to 'identityiqplugin'@'%';
+create user if not exists 'identityiqplugin'@'localhost' identified with mysql_native_password by 'identityiqplugin';
+grant all privileges on identityiqplugin.* to 'identityiqplugin'@'localhost'; 

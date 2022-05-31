@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE CertificationDefinition PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<CertificationDefinition name="DriverCare MS SQL Database Application Certification Template">
+    <Attributes>
+        <Map>
+            <entry key="activePeriodDurationAmount" value="15"/>
+            <entry key="activePeriodDurationScale" value="Day"/>
+            <entry key="allowCertificationEntityBulkAccountRevocation" value="true"/>
+            <entry key="allowCertificationEntityBulkApprove" value="true"/>
+            <entry key="allowCertificationEntityBulkClearDecisions" value="true"/>
+            <entry key="allowCertificationEntityBulkRevocation" value="true"/>
+            <entry key="allowListViewBulkApprove" value="true"/>
+            <entry key="allowListViewBulkClearDecisions" value="true"/>
+            <entry key="allowListViewBulkMitigate" value="false"/>
+            <entry key="allowListViewBulkReassign" value="true"/>
+            <entry key="allowListViewBulkRevoke" value="true"/>
+            <entry key="allowProvisioningMissingRequirements" value="false"/>
+            <entry key="allowSelfCertification" value="CertificationAdministrator"/>
+            <entry key="automateSignOffOnReassignment" value="false"/>
+            <entry key="automateSignoffPopup" value="true"/>
+            <entry key="automaticClosingEnabled" value="false"/>
+            <entry key="automaticClosingSigner" value="spadmin"/>
+            <entry key="backupCertifier" value="DriverCare MS SQL Database Application Owner"/>
+            <entry key="bulkReassignmentEmailTemplate" value="Bulk Reassignment"/>
+            <entry key="certOwner" value="Certification Administrator"/>
+            <entry key="certification.remindersAndEscalations">
+                <value>
+                    <NotificationConfig enabled="true" escalationEnabled="true" reminderFrequency="172800000" remindersEnabled="true">
+                        <Configs>
+                            <ReminderConfig emailTemplateName="Work Item Reminder" enabled="true" frequency="172800000" millis="259200000"/>
+                            <EscalationConfig emailTemplateName="Work Item Escalation" enabled="true" escalationRuleName="ELE Work Item Escalate to Manager Rule" millis="691200000"/>
+                            <EscalationConfig emailTemplateName="Work Item Escalation" enabled="true" escalationRuleName="ELE Work Item Escalate to Manager Rule" millis="864000000"/>
+                            <EscalationConfig emailTemplateName="Work Item Escalation" enabled="true" escalationRuleName="ELE Work Item Escalate to Governance Team Rule" millis="1036800000"/>
+                        </Configs>
+                    </NotificationConfig>
+                </value>
+            </entry>
+            <entry key="certificationAutoApprove" value="false"/>
+            <entry key="certificationDecisionChallengedEmailTemplate" value="Certification Decision Challenged Notification"/>
+            <entry key="certificationDelegationReview" value="false"/>
+            <entry key="certificationDisableDelegationForwarding" value="false"/>
+            <entry key="certificationEmailTemplate" value="Element-Initial-Email-InitialCertifierNotification"/>
+            <entry key="certificationEntityDelegationEnabled" value="true"/>
+            <entry key="certificationItemDelegationEnabled" value="true"/>
+            <entry key="certificationLimitReassignments" value="false"/>
+            <entry key="certificationMitigationDeprovisionEnabled" value="false"/>
+            <entry key="certificationMitigationEnabled" value="false"/>
+            <entry key="certificationMitigationPopupEnabled" value="false"/>
+            <entry key="certificationNameTemplate" value="DriverCare MS SQL Database Certification [${fullDate}]"/>
+            <entry key="certificationShowRecommendations" value="false"/>
+            <entry key="certificationSignOffApprovalEmailTemplate" value="Certification Sign Off Approval"/>
+            <entry key="certificationType" value="Focused"/>
+            <entry key="certifierOwnerAccount" value="ApplicationOwner"/>
+            <entry key="certifierOwnerEntitlement" value="ApplicationOwner"/>
+            <entry key="certifierOwnerRole" value="RoleOwner"/>
+            <entry key="certifierType" value="Manager"/>
+            <entry key="certifyAccounts" value="false"/>
+            <entry key="certifyEmptyAccounts" value="false"/>
+            <entry key="challengeAcceptedEmailTemplate" value="Challenge Accepted"/>
+            <entry key="challengeGenerationEmailTemplate" value="Challenge Creation Notification"/>
+            <entry key="challengePeriodDurationAmount" value="1"/>
+            <entry key="challengePeriodDurationScale" value="Week"/>
+            <entry key="challengePeriodEnabled" value="true"/>
+            <entry key="challengePeriodEndEmailTemplate" value="Challenge Period End"/>
+            <entry key="challengePeriodStartEmailTemplate" value="Challenge Period Start"/>
+            <entry key="challengeRejectedEmailTemplate" value="Challenge Rejected"/>
+            <entry key="completeCertificationHierarchyEnabled" value="false"/>
+            <entry key="electronicSignatureRequired" value="false"/>
+            <entry key="enableAccountRevokeAction" value="false"/>
+            <entry key="enableApproveAccountAction" value="false"/>
+            <entry key="enablePartitioning" value="true"/>
+            <entry key="entitlementFilter">
+                <value>
+                    <Filter operation="EQ" property="application.name" value="DriverCare MS SQL Database"/>
+                </value>
+            </entry>
+            <entry key="entitlementFilterValues">
+                <value>
+                    <List>
+                        <Map>
+                            <entry key="operation" value="Equals"/>
+                            <entry key="property" value="application"/>
+                            <entry key="value" value="DriverCare MS SQL Database"/>
+                        </Map>
+                    </List>
+                </value>
+            </entry>
+            <entry key="entitlementGranularity" value="Value"/>
+            <entry key="entityPopulation" value="Active Employee with Manager"/>
+            <entry key="entitySelectionType" value="Population"/>
+            <entry key="excludeBaseAppAccounts" value="false"/>
+            <entry key="excludeInactive" value="false"/>
+            <entry key="filterLogicalEntitlements" value="false"/>
+            <entry key="flattenManagerCertificationHierarchy" value="false"/>
+            <entry key="includeAdditionalEntitlements" value="true"/>
+            <entry key="includeCapabilities" value="false"/>
+            <entry key="includePolicyViolations" value="false"/>
+            <entry key="includeRoleHierarchy" value="false"/>
+            <entry key="includeRoles" value="true"/>
+            <entry key="includeScopes" value="false"/>
+            <entry key="includeTargetPermissions" value="false"/>
+            <entry key="mitigationDurationAmount" value="1"/>
+            <entry key="mitigationDurationScale" value="Month"/>
+            <entry key="mitigationExpirationEmailTemplate" value="Mitigation Expiration"/>
+            <entry key="nameTemplate" value="DriverCare MS SQL Database Certification ${certifierFullname}  -- ${fullDate}"/>
+            <entry key="notifyRemediation" value="false"/>
+            <entry key="processRevokesImmediately" value="false"/>
+            <entry key="recommendationsGenerated" value="false"/>
+            <entry key="remediationPeriodDurationAmount" value="1"/>
+            <entry key="remediationPeriodDurationScale" value="Month"/>
+            <entry key="remediationPeriodEnabled" value="true"/>
+            <entry key="requireApprovalComments" value="false"/>
+            <entry key="requireBulkCertifyConfirmation" value="false"/>
+            <entry key="requireMitigationComments" value="false"/>
+            <entry key="requireReassignmentCompletion" value="true"/>
+            <entry key="requireRemediationComments" value="false"/>
+            <entry key="saveExclusions" value="false"/>
+            <entry key="sendPreDelegationCompleteEmails" value="false"/>
+            <entry key="shortNameTemplate" value="DriverCare MS SQL Database Certification${certifierFullname}"/>
+            <entry key="signOffApproverRuleName" value="ELE_Global_SignOff_Rule"/>
+            <entry key="stagingEnabled" value="true"/>
+            <entry key="subordinateCertificationEnabled" value="true"/>
+            <entry key="useApprovalRule">
+                <value>
+                    <Boolean>true</Boolean>
+                </value>
+            </entry>
+        </Map>
+    </Attributes>
+    <Description>Targeted Certification</Description>
+    <Owner>
+        <Reference class="sailpoint.object.Identity" name="spadmin"/>
+    </Owner>
+</CertificationDefinition>

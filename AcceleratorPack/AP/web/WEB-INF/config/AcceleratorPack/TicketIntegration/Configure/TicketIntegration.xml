@@ -1,0 +1,126 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE sailpoint PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<!-- Copyright © 2018 SailPoint Technologies, Inc. All Rights Reserved.
+All logos, text, content, and works of authorship, including but not limited to underlying code, programming or scripting language, designs, and/or graphics,
+that are used and/or depicted herein are protected under United States and international copyright and trademark laws and treaties,
+and may not be used or reproduced without the prior express written permission of SailPoint Technologies, Inc. -->
+<sailpoint>
+<IntegrationConfig name='SmartServicesTicketIntegration'
+  executor='sailpoint.rapidapponboarding.testing.ROADTicketIntegrationExecutor'
+  execStyle='synchronous'
+  roleSyncStyle='detectable'>
+  	  <PlanInitializer>
+			<Reference class="sailpoint.object.Rule" name="Rule-Framework-Plan-Initializer" />
+	  </PlanInitializer>
+  <!-- ServiceNow executor="sailpoint.integration.servicenow.ServiceNowIntegrationExecutor" -->
+  <!-- HP executor="sailpoint.integration.hpservicemanager.HPServiceManagerIntegrationExecutor" -->
+  <!-- Remedy executor="sailpoint.integration.remedy.RemedyIntegrationExecutor" -->
+  <Attributes>
+    <Map>
+     <!-- Common -->
+        <entry key='defaultRequestedBy' value='spadmin'/>
+        <entry key='defaultAssignmentGroupName' value='Trace Assignment Group'/>
+        <entry key='universalManager' value=''/>
+        <entry key='multipleTicket' value='true' />
+		<entry key='groupTicketBy' value='Application' />
+		<entry key="retryableErrors">
+	        <value>
+	          <List>
+		          <String>Failed to connect to server</String>
+		          <String>Connect failed</String>
+		          <String>Connection refused: connect</String>
+	              <String>Connection timed out</String>
+		          <String>Connection reset</String>          
+	          </List>
+	        </value>
+		</entry>
+		<!-- New One -->
+		<entry key='noProvisioningRequests' value='false' />
+    	 <!-- If this is zero, the expiration days are taken from the system configuration entry "provisioningRequestExpirationDays"-->
+          <entry key='provisioningRequestExpiration' value='10' />
+		<entry key='operations' value='Create,Modify,Delete,Disable,Enable,Unlock,Lock' />
+			<entry key='statusMap'>
+            <value>
+              <Map>
+                <entry key='-5' value='inProcess'/>
+                <entry key='1' value='inProcess'/>
+                <entry key='2' value='inProcess'/>
+                <entry key='4' value='failure'/>
+                <entry key='7' value='failure'/>
+                <entry key='3' value='committed'/>
+              </Map>
+            </value>
+          </entry>
+           <entry key='provision'>
+            <value>
+              <Map>
+				<entry key='endpoint' value='http://localhost:8080/SoaPservice' />
+				<entry key='prefix' value='x' />
+				<entry key='SOAPAction' />
+				<entry key='responseElement' value='scResult' />
+                <entry key='soapMessage'>
+                  <value>
+                    <String><![CDATA[<?xml version="1.0" encoding="UTF-8"?><soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:x="http://www.dummy/dummy"><soapenv:Header></soapenv:Header><soapenv:Body><ticketContent>
+	                    $!{provisioningPlan.getArguments().get('requestername')}
+						$!{provisioningPlan.getArguments().get('requesterfirstname')}
+						$!{provisioningPlan.getArguments().get('requesterlastname')}
+						$!{provisioningPlan.getArguments().get('requestorname')}
+						$!{provisioningPlan.getArguments().get('requestorfirstname')}
+						$!{provisioningPlan.getArguments().get('requestorlastname')}
+						$!{provisioningPlan.getArguments().get('managername')}
+						$!{provisioningPlan.getArguments().get('managerfirstname')}
+						$!{provisioningPlan.getArguments().get('managerlastname')}
+						$!{provisioningPlan.getArguments().get('assignmentGroupName')}
+						$!{provisioningPlan.getArguments().get('source')}
+						$!{provisioningPlan.getArguments().get('flow')}
+						$!{provisioningPlan.getArguments().get('requestType')}
+						$!{provisioningPlan.getArguments().get('identityRequestId')}
+						#foreach ($request in $provisioningPlan.accountRequests)
+                        #if ($request.attributeRequests)
+                        #foreach ($att in $request.attributeRequests)
+                         <item>
+                             <trackingId>$att.trackingId</trackingId>
+                             <app>$request.application</app>
+                             <nativeID>$!request.nativeIdentity</nativeID>
+                             <operation>$att.operation</operation>
+                             <entitlements>$att.value</entitlements>
+                         </item>
+					     #end
+						#else
+                         <item>
+                           <trackingId>$request.trackingId</trackingId>
+                            <app>$request.application</app>
+                           <nativeID>$!request.nativeIdentity</nativeID>
+                         </item>
+                          #end
+                         #end
+                        </ticketContent></soapenv:Body></soapenv:Envelope>]]>
+                    </String>
+                  </value>
+                </entry>
+              </Map>
+            </value>
+          </entry>
+          <entry key='getRequestStatus'>
+            <value>
+              <Map>
+				<entry key='endpoint' value='http://localhost:8080/SoaPservic' />
+				<entry key='prefix' value='sc' />
+				<entry key="SOAPAction" value='' />
+				<entry key='responseElement' value='state' />
+                <entry key='soapMessage'>
+                  <value>
+                    <String><![CDATA[
+                    ]]>
+                    </String>
+                  </value>
+                </entry>
+              </Map>
+            </value>
+          </entry>
+    </Map>
+  </Attributes>
+<ManagedResources>
+</ManagedResources>
+	</IntegrationConfig>
+</sailpoint>

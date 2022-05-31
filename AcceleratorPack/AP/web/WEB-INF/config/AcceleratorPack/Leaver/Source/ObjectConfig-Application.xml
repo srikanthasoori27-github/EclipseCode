@@ -1,0 +1,129 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE sailpoint PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<!-- Copyright © 2018 SailPoint Technologies, Inc. All Rights Reserved.
+All logos, text, content, and works of authorship, including but not limited to underlying code, programming or scripting language, designs, and/or graphics,
+that are used and/or depicted herein are protected under United States and international copyright and trademark laws and treaties,
+and may not be used or reproduced without the prior express written permission of SailPoint Technologies, Inc. -->
+<sailpoint>
+<ImportAction name='merge'>
+<ObjectConfig name="Application">
+	<!-- LEAVER -->
+	<ObjectAttribute categoryName="Leaver"
+		defaultValue="" displayName="Termination Options"
+		editMode="Permanent" namedColumn="true" name="terminationProcess" required="true">
+		<AllowedValues>
+			<String>Do Nothing</String>
+			<String>Disable Only</String>
+			<String>Disable Only and Scramble Password and Add Comments</String>
+			<String>Disable Only After X Days</String>
+			<String>Disable Only and Scramble Password and Add Comments After X Days</String>
+			<String>Disable Immediately and Scramble Password and Add Comments After X Days</String>
+			<String>Disable Only and Move Account</String>
+			<String>Disable Only and Scramble Password and Add Comments and Move Account</String>
+			<String>Disable Only and Move Account After X Days </String>
+			<String>Disable Immediately and Move Account After X Days </String>
+			<String>Disable Only and Scramble Password and Add Comments and Move Account After X Days</String>
+			<String>Disable Immediately and Scramble Password and Add Comments and Move Account After X Days</String>
+			<String>Disable and Remove Entitlements</String>
+			<String>Disable and Remove Entitlements and Scramble Password and Add Comments</String>
+			<String>Disable and Remove Entitlements After X Days</String>
+			<String>Disable Immediately and Remove Entitlements After X Days</String>
+			<String>Disable Immediately and Remove Entitlements and Move Account After X Days</String>
+			<String>Disable Immediately and Remove Entitlements and Move Account and Scramble Password and Add Comments After X Days</String>
+			<String>Disable and Remove Entitlements and Scramble Password and Add Comments After X Days</String>
+			<String>Disable and Remove Entitlements Immediately and Scramble Password and Add Comments After X Days</String>
+			<String>Disable and Remove Entitlements and Move Account</String>
+			<String>Disable and Remove Entitlements and Scramble Password and Add Comments and Move Account</String>
+			<String>Disable and Remove Entitlements and Move Account After X Days</String>
+			<String>Disable and Remove Entitlements Immediately and Move Account After X Days</String>
+			<String>Disable and Remove Entitlements and Scramble Password and Add Comments and Move Account After X Days</String>
+			<String>Disable and Remove Entitlements Immediately and Scramble Password and Add Comments and Move Account After X Days</String>
+			<String>Disable and Move Account Immediately and Remove Entitlements After X Days</String>
+			<String>Disable and Move Account and Scramble Password and Add Comments Immediately and Remove Entitlements After X Days</String>
+			<String>Remove Entitlements</String>
+			<String>Remove Entitlements and Scramble Password and Add Comments</String>
+			<String>Remove Entitlements After X Days</String>
+			<String>Remove Entitlements and Scramble Password and Add Comments After X Days</String>
+			<String>Remove Entitlements Immediately and Scramble Password and Add Comments After X Days</String>
+			<String>Remove Entitlements and Move Account</String>
+			<String>Remove Entitlements and Scramble Password and Add Comments and Move Account</String>
+			<String>Remove Entitlements and Move Account After X Days</String>
+			<String>Remove Entitlements Immediately and Move Account After X Days</String>
+			<String>Remove Entitlements and Scramble Password and Add Comments and Move Account After X Days</String>
+			<String>Remove Entitlements Immediately and Scramble Password and Add Comments and Move Account After X Days</String>
+			<String>Delete Only</String>
+			<String>Delete Only After X Days</String>
+			<String>Lock Only</String>
+			<String>Lock Only and Scramble Password and Add Comments</String>
+			<String>Lock Only After X Days</String>
+			<String>Lock Only and Scramble Password and Add Comments After X Days</String>
+			<String>Lock Immediately and Scramble Password and Add Comments After X Days</String>
+			<String>Lock Only and Move Account</String>
+			<String>Lock Only and Scramble Password and Add Comments and Move Account</String>
+			<String>Lock Only and Move Account After X Days</String>
+			<String>Lock Immediately and Move Account After X Days</String>
+			<String>Lock Only and Scramble Password and Add Comments and Move Account After X Days</String>
+			<String>Lock Immediately and Scramble Password and Add Comments and Move Account After X Days</String>
+			<String>Lock and Remove Entitlements</String>
+			<String>Lock and Remove Entitlements and Scramble Password and Add Comments</String>
+			<String>Lock and Remove Entitlements After X Days</String>
+			<String>Lock Immediately and Remove Entitlements After X Days</String>
+			<String>Lock Immediately and Remove Entitlements and Move Account After X Days</String>
+			<String>Lock Immediately and Remove Entitlements and Move Account and Scramble Password and Add Comments After X Days</String>
+			<String>Lock and Remove Entitlements and Scramble Password and Add Comments After X Days</String>
+			<String>Lock and Remove Entitlements Immediately and Scramble Password and Add Comments After X Days</String>
+			<String>Lock and Remove Entitlements and Move Account</String>
+			<String>Lock and Remove Entitlements and Scramble Password and Add Comments and Move Account</String>
+			<String>Lock and Remove Entitlements and Move Account After X Days</String>
+			<String>Lock and Remove Entitlements Immediately and Move Account After X Days</String>
+			<String>Lock and Remove Entitlements and Scramble Password and Add Comments and Move Account After X Days</String>
+			<String>Lock and Remove Entitlements Immediately and Scramble Password and Add Comments and Move Account After X Days</String>
+			<String>Lock and Move Account Immediately and Remove Entitlements After X Days</String>
+			<String>Lock and Move Account and Scramble Password and Add Comments Immediately and Remove Entitlements After X Days</String>
+			<String>Extended Rule</String>
+		</AllowedValues>
+	 <Description>Termination Options. Please note, remove entitlements option will remove roles per application too. Within a role business application termination option wins</Description>
+	</ObjectAttribute>
+	<ObjectAttribute categoryName="Leaver"
+		defaultValue="" displayName="Termination Extended Rule" editMode="Permanent"
+		name="terminationExtendedRule">
+		<Description>This rule will be executed in case selected Termination Options is Extended Rule</Description>
+	</ObjectAttribute>
+	<ObjectAttribute defaultValue="" categoryName="Leaver"
+		displayName="After X Days"  editMode="Permanent"
+		name="xDays" >
+		<Description>This is required, in case selected Termination Options is one of X Days </Description>
+	</ObjectAttribute>
+	<ObjectAttribute defaultValue="" categoryName="Leaver"
+		displayName="Delete Account After X Days"  editMode="Permanent"
+		name="xDeleteDays" >
+		<Description>Defer Account Deletion After X Days</Description>
+	</ObjectAttribute>
+	<ObjectAttribute defaultValue="" categoryName="Leaver"
+		displayName="Scramble Password Attribute Name" editMode="Permanent"
+		name="scramblePasswordAttr" >
+		<Description>This is required Only if connector doesn't know the name of password attribute, if scramble password and add comments is selected</Description>
+	</ObjectAttribute>
+	<ObjectAttribute defaultValue="" categoryName="Leaver"
+		displayName="Comments Attribute Name" editMode="Permanent"
+		name="commentsAttr" >
+		<Description>This is required, if scramble password and add comments is selected</Description>
+	</ObjectAttribute>
+	<ObjectAttribute defaultValue="" categoryName="Leaver"
+		displayName="Comments Value" editMode="Permanent"
+		name="commentsValue" >
+		<Description>This is required, if scramble password and add comments is selected</Description>
+	</ObjectAttribute>
+	<ObjectAttribute defaultValue="" categoryName="Leaver"
+		displayName="Move Account Container" editMode="Permanent" name="moveAccountContainer">
+		<Description>OU=Services</Description>
+	</ObjectAttribute>
+	<ObjectAttribute defaultValue="" categoryName="Leaver"
+		displayName="Remove Entitlement Exceptions Identification" editMode="Permanent"
+		name="removeEntitlementLeaverExceptionExpression">
+		<Description>SUPPORTED FORMATS: [Schema Attribute Name]#IIQEntitlementLeaverException#[Schema Attribute Value]#IIQEntitlementLeaverException#[Operation] OR [Schema Attribute Name]#IIQEntitlementLeaverException#[Java Regular Expression]</Description>
+	</ObjectAttribute>
+	<!-- IIQSR-236 Removed apPopulationLeaverOptions extended attribute as the UI doesn't support it-->
+	</ObjectConfig>
+	</ImportAction>
+</sailpoint>

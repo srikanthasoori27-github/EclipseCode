@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE Plugin PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<Plugin certificationLevel="None" displayName="Training Plugin" minSystemVersion="7.3" name="TrainingPlugin" version="1.0">
+  <Attributes>
+    <Map>
+      <entry key="minUpgradableVersion" value="1.0" />
+      <entry key="fullPage">
+         <value>
+            <FullPage title="Training Full Page"/>
+         </value>
+      </entry>
+      <entry key="restResources">
+        <value>
+          <List>
+            <String>com.acme.training.rest.SearchResource</String>
+          </List>
+        </value>
+      </entry>
+      <entry key="settings">
+       <value>
+         <List>
+           <Setting dataType="int" helpText="The maximum number of objects to search. If there are 1000s or more objects of the type to search, the server could get overloaded" label="Max Objects to Search" name="maxSearchObjectCount" defaultValue="200"/>
+         </List>
+       </value>
+    </entry>
+      <entry key="snippets">
+        <value>
+          <List>
+            <Snippet regexPattern=".*" >
+              <Scripts>
+                <String>ui/js/snippets/snippet-insert.js</String>
+              </Scripts>
+            </Snippet>
+          </List>
+        </value>
+      </entry>
+    </Map>
+  </Attributes>
+</Plugin>

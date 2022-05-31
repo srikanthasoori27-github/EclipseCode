@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE TaskDefinition PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<TaskDefinition formPath="/monitor/tasks/sequentialTask.xhtml" name="Element Group Aggregation Task" resultAction="Rename" subType="task_item_type_generic" type="Generic">
+          
+    
+    <Attributes>
+                    
+        
+        <Map>
+                              
+            
+            <entry key="TaskSchedule.host"/>
+                              
+            
+            <entry key="exitOnError" value="false"/>
+                              
+            
+            <entry key="taskCompletionEmailNotify" value="Disabled"/>
+                              
+            
+            <entry key="taskCompletionEmailRecipients"/>
+                              
+            
+            <entry key="taskCompletionEmailTemplate"/>
+                              
+            
+            <entry key="taskList" value="Element AD Group Aggregation Task, CEI AD Group Aggregation Task,Element Collateral Group Aggregation Task,Element Contpaq Bancos Group Aggregation Task,Element Contpaq Commercial Group Aggregation Task,Element eInvoicing Group Aggregation Task,Element FDC Billing Group Aggregation Task,Element Great Plains Group Aggregation Task,Element Intelliclaim Group Aggregation Task,Element MS Dynamics Group Aggregation Task,Element NVP Group Aggregation Task,Element Oasis Group Aggregation Task,Element OnBase Group Aggregation Task"/>
+                              
+            
+            <entry key="trace" value="false"/>
+                            
+        
+        </Map>
+                  
+    
+    </Attributes>
+          
+    
+    <Description>Template for creating a task that runs multiple other tasks.</Description>
+          
+    
+    <Owner>
+                    
+        
+        <Reference class="sailpoint.object.Identity" name="spadmin"/>
+                  
+    
+    </Owner>
+          
+    
+    <Parent>
+                    
+        
+        <Reference class="sailpoint.object.TaskDefinition" name="Sequential Task Launcher"/>
+                  
+    
+    </Parent>
+        
+
+</TaskDefinition>

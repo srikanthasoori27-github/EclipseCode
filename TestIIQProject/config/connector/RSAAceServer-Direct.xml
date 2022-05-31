@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE ImportAction PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<ImportAction name="connectorRegistryUpdateAction">
+  <Application connector="sailpoint.connector.OpenConnectorAdapter" featuresString="PROVISIONING, AUTHENTICATE, SEARCH, UNLOCK, ENABLE, PASSWORD, CURRENT_PASSWORD, SYNC_PROVISIONING" icon="enterpriseIcon" name="RSA Template" type="RSA Authentication Manager - Direct">
+    <Attributes>
+      <Map>
+        <entry key="connectorClass" value="openconnector.connector.RSAConnector"/>
+        <entry key="formPath" value="RSAAttributesForm.xhtml"/>
+        <entry key="encrypted" value="cmdClientPassword"/>
+      </Map>
+    </Attributes>
+    <Schemas>
+      <Schema displayAttribute="userID" identityAttribute="guid" nativeObjectType="account" objectType="account">
+        <AttributeDefinition name="userID" type="string">
+          <Description>name by which the entity is known by</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="firstName" type="string">
+          <Description>first name of the entity</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="middleName" type="string">
+          <Description>middle name of the entity</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="lastName" type="string">
+          <Description>last name for which the entity is known by</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="notes" type="string">
+          <Description>notes or description for the entity</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="email" type="string">
+          <Description>Email of the entity</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="guid" type="string">
+          <Description>Guid of the entity</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="certificateDN" type="string">
+          <Description>certificate DN of the entity</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="securityDomain" type="string">
+          <Description>Security Domain Name to which entity belongs</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="identitySource" type="string">
+          <Description>Identity Source Name to which entity belongs</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="lastModifiedBy" type="string">
+          <Description>Admin or user which modified the entity last time</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="lastModifiedOn" type="string">
+          <Description>Last time when the entity was modified</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="accountStartDate" type="string">
+          <Description>Time when the entity was created</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="accountExpireDate" type="string">
+          <Description>Time when the entity will get expired</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="lastLogin" type="string">
+          <Description>Last time when the entity was logged in</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="forceChangePassword" type="boolean">
+          <Description>Whether or not user need to change the password during next logon</Description>
+        </AttributeDefinition>
+        <AttributeDefinition entitlement="true" managed="true" multi="true" name="roles" type="string">
+          <Description>roles</Description>
+        </AttributeDefinition>
+        <AttributeDefinition entitlement="true" managed="true" multi="true" name="groups" schemaObjectType="group" type="string">
+          <Description>Group Membership</Description>
+        </AttributeDefinition>
+        <AttributeDefinition entitlement="true" managed="true" multi="true" name="tokens" schemaObjectType="token" type="string">
+          <Description>Tokens assigned</Description>
+        </AttributeDefinition>
+        <AttributeDefinition entitlement="true" managed="true" name="profile" schemaObjectType="profile" type="string">
+          <Description>Assigned RADIUS Profile</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="Mobile Number" type="string">
+          <Description>Mobile Number of the entity</Description>
+        </AttributeDefinition>
+      </Schema>
+      <Schema displayAttribute="groupName" featuresString="PROVISIONING" identityAttribute="guid" nativeObjectType="group"
+              objectType="group" descriptionAttribute="notes">
+        <AttributeDefinition name="groupName" type="string">
+          <Description>name by which the entity is known by</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="notes" type="string">
+          <Description>notes or description for the entity</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="guid" type="string">
+          <Description>Guid of the entity</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="identitySource" type="string">
+          <Description>Identity Source to which entity belongs</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="securityDomain" type="string">
+          <Description>Security Domain to which entity belongs</Description>
+        </AttributeDefinition>
+      </Schema>
+      <Schema aggregationType="group" displayAttribute="serialNumber" identityAttribute="serialNumber" nativeObjectType="token" objectType="token">
+        <AttributeDefinition name="enable" type="boolean">
+          <Description>Token's enabled status</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="expirationDate" type="string">
+          <Description>Expiration Date of the token</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="guid" type="string">
+          <Description>Guid of the token</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="lastLoginDate" type="string">
+          <Description>Last time when user logged in using the assigned token</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="newPinMode" type="boolean">
+          <Description>Status indicating whether or not the token is in new PIN mode</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="nextTokenMode" type="boolean">
+          <Description>Status indicating whether or not the token is in next token mode</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="replacementMode" type="string">
+          <Description>Token's replacement mode</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="serialNumber" type="string">
+          <Description>Serial number of token</Description>
+        </AttributeDefinition>
+      </Schema>
+      <Schema aggregationType="group" displayAttribute="name" identityAttribute="guid" nativeObjectType="profile" objectType="profile">
+        <AttributeDefinition name="checkLists" multi="true" type="string">
+          <Description>List of attributes to be received to validate the access</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="description" type="string">
+          <Description>Description for the RADIUS profile</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="guid" type="string">
+          <Description>Guid of the RADIUS profile</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="isDangling" type="string">
+          <Description>Dangling status of RADIUS profile</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="lastUpdatedBy" type="string">
+          <Description>User ID of the user who updated the RADIUS profile recently</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="lastUpdatedOn" type="string">
+          <Description>Time when the RADIUS profile was last updated on</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="name" type="string">
+          <Description>Name by which the RADIUS profile is known</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="returnLists" multi="true" type="string">
+          <Description>List of attributes to be returned in case of successful validation</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="securityDomain" type="string">
+          <Description>Security Domain to which RADIUS profile belongs</Description>
+        </AttributeDefinition>
+      </Schema>
+    </Schemas>
+    <Templates>
+      <Template name="account" schemaObjectType="account" usage="Create">
+        <Field displayName="con_prov_policy_UserID" helpKey="help_con_prov_policy_UserID" name="userID" required="true" type="string"/>
+        <Field displayName="con_prov_policy_Password" helpKey="help_con_prov_policy_RsaPassword" name="password" required="true" type="secret"/>
+        <Field displayName="con_prov_policy_LastName" helpKey="help_con_prov_policy_LastName" name="lastName" required="true" type="string"/>
+        <Field displayName="con_prov_policy_FirstName" helpKey="help_con_prov_policy_FirstName" name="firstName" reviewRequired="true" type="string"/>
+        <Field displayName="con_prov_policy_Email" helpKey="help_con_prov_policy_RsaEmail" name="email" reviewRequired="true" type="string"/>
+        <Field displayName="con_prov_policy_ChangePassAtNextLogon" helpKey="help_con_prov_policy_forceChangePassword" name="forceChangePassword" reviewRequired="true" type="boolean" value="false"/>
+        <Field displayName="con_prov_policy_AssignNextToken" helpKey="help_con_prov_policy_AssignNextToken" name="nextAvailableToken" reviewRequired="true" type="boolean" value="false"/>
+      </Template>
+      <Template name="update group" schemaObjectType="group" usage="Update">
+        <Field displayName="con_prov_policy_GroupName" helpKey="help_con_prov_policy_GroupName" name="groupName" required="true" type="string"/>
+        <Field displayName="con_prov_policy_Notes" helpKey="help_con_prov_policy_Description" name="notes" type="string"/>
+        <Field displayName="con_prov_policy_SecurityDomain" helpKey="help_con_prov_policy_SecurityDomain" name="securityDomain" readOnly="true" type="string"/>
+        <Field displayName="con_prov_policy_IdentitySource" helpKey="help_con_prov_policy_IdentitySource" name="identitySource" readOnly="true" type="string"/>
+      </Template>
+    </Templates>
+  </Application>
+</ImportAction>

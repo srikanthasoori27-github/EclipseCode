@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Workflow PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<Workflow explicitTransitions="true" libraries="Identity" name="Govtech Lifecycle Event - DeferredLeaver" type="IdentityLifecycle">
+          
+    
+    <Variable input="true" name="trigger">
+                    
+        
+        <Description>The IdentityTrigger</Description>
+                  
+    
+    </Variable>
+          
+    
+    <Variable input="true" name="event" transient="true">
+                    
+        
+        <Description>
+      The IdentityChangeEvent.  It can be used to build
+      the provisioning plan, but does not need to be
+      persisted with the case, so marked as transient.
+    </Description>
+                  
+    
+    </Variable>
+          
+    
+    <Variable input="true" name="identityName">
+                    
+        
+        <Description>The name of the identity.</Description>
+                  
+    
+    </Variable>
+          
+    
+    <Variable name="plan"/>
+          
+    
+    <Variable name="argList"/>
+          
+    
+    <Variable initializer="LCM" input="true" name="source">
+                    
+        
+        <Description>
+            String version of sailpoint.object.Source to indicate
+            where the request originated.
+        </Description>
+                  
+    
+    </Variable>
+          
+    
+    <Variable initializer="none" input="true" name="notificationScheme">
+                    
+        
+        <Description>
+            A string that specifies who should be notified via the LCM workflows when the request has been completed.
+            The value can be null or a csv of one or more of the following options.
+
+            none or null
+            disable notifications
+
+            user
+            Identity that is being update will be notified.
+
+            manager
+            The manager of the Identity that is being updated will be notified.
+
+            requester
+            The person that has requested the update will be notified.
+        </Description>
+                  
+    
+    </Variable>
+          
+    
+    <Variable initializer="none" input="true" name="policyScheme">
+                    
+        
+        <Description>
+            A String that specifies how policy checks effect the overall
+            process.
+
+            none - disabled policy checking
+
+            interactive -  allow requester to remove request items which are causing violations
+
+            continue -  continue if policy violations are found
+
+            fail -  fail and exit the workflow if any policy violations are found
+        </Description>
+                  
+    
+    </Variable>
+          
+    
+    <Variable name="project"/>
+          
+    
+    <Description>Process a terminated employee.</Description>
+          
+    
+    <RuleLibraries>
+                    
+        
+        <Reference class="sailpoint.object.Rule" name="LCM Workflow Library"/>
+                    
+        
+        <Reference class="sailpoint.object.Rule" name="Govtech-Workflow-Leaver RuleLibrary"/>
+                  
+    
+    </RuleLibraries>
+          
+    
+    <Step icon="Start" name="Start" posX="28" posY="10">
+                    
+        
+        <Transition to="Build Provisioning Plan"/>
+                  
+    
+    </Step>
+          
+    
+    <Step action="call:buildEventPlan" icon="Start" name="Build Provisioning Plan" posX="50" posY="10" resultVariable="plan">
+                    
+        
+        <Arg name="identityName" value="ref:identityName"/>
+                    
+        
+        <Arg name="op" value="Disable"/>
+                    
+        
+        <Arg name="event" value="ref:event"/>
+                    
+        
+        <Arg name="trigger" value="ref:trigger"/>
+                    
+        
+        <Description>Go through all of the user's links and build a plan.</Description>
+                    
+        
+        <Transition to="Filter Authoritative Application"/>
+                  
+    
+    </Step>
+          
+    
+    <Step name="Filter Authoritative Application" posX="148" posY="10" resultVariable="plan">
+                    
+        
+        <Description>Filters the authoritative apps from the Termination Plan.</Description>
+                    
+        
+        <Script>
+                              
+            
+            <Source><![CDATA[
+        filterAuthoritativeAppAccounts(plan);
+      ]]></Source>
+                            
+        
+        </Script>
+                    
+        
+        <Transition to="Build Deffered Plan"/>
+                  
+    
+    </Step>
+          
+    
+    <Step name="Build Deffered Plan" posX="148" posY="10">
+                    
+        
+        <Arg name="identityName" value="ref:identityName"/>
+                    
+        
+        <Arg name="noTriggers" value="true"/>
+                    
+        
+        <Arg name="flow" value="ref:flow"/>
+                    
+        
+        <Arg name="approvalScheme" value="none"/>
+                    
+        
+        <Arg name="policyScheme" value="ref:policyScheme"/>
+                    
+        
+        <Arg name="notificationScheme" value="ref:notificationScheme"/>
+                    
+        
+        <Arg name="source" value="ref:source"/>
+                    
+        
+        <Description>Generate the request object</Description>
+                    
+        
+        <Script>
+                              
+            
+            <Source><![CDATA[
+   executeDeferredPlan(workflow,plan);
+      ]]></Source>
+                            
+        
+        </Script>
+                    
+        
+        <Transition to="Stop"/>
+                  
+    
+    </Step>
+          
+    
+    <Step icon="Stop" name="Stop" posX="268" posY="10"/>
+        
+
+</Workflow>

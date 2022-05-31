@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Application PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<Application connector="sailpoint.connector.JDBCConnector" featuresString="DISCOVER_SCHEMA, PROVISIONING, SYNC_PROVISIONING, DIRECT_PERMISSIONS, SEARCH, ENABLE, UNLOCK" icon="databaseIcon" name="MS Dynamics" profileClass="" type="JDBC">
+    <Attributes>
+        <Map>
+            <entry key="SQL" value="Select Distinct RTRIM(U.UserID) as UserID,  SUBSTRING(username, 1, CHARINDEX(' ', username) - 1) AS FirstName,  &#13;&#10;            SUBSTRING(username, CHARINDEX(' ', username) + 1, len(username)) AS LastName ,RTRIM(ug.GroupID) as GroupID, RTRIM(emailaddress) as emailaddress&#13;&#10;from Userrec U&#13;&#10;left outer join UserGrp ug on ug.UserId = U.UserId&#13;&#10;Left outer Join AccessDetRights a on a.UserId = U.UserId&#13;&#10;Left outer join Screen S on s.Number = a.ScreenNumber&#13;&#10;Join (Select    &#13;&#10;             ug.GroupID,  &#13;&#10;            a.CompanyID, Max(DeleteRights) as Del, Max(InitRights) as Init, Max(InsertRights) as Ins, Max(UpdateRights) as Upd  &#13;&#10;    from Userrec U&#13;&#10;     join UserGrp ug on ug.UserId = U.UserId&#13;&#10;     Left outer Join AccessDetRights a on a.UserId = U.UserId&#13;&#10;     Left outer join Screen S on s.Number = a.ScreenNumber&#13;&#10;    where U.RecType = 'U'  &#13;&#10;     Group by  ug.GroupId, a.CompanyID  ) aa on aa.GroupId = ug.GroupID&#13;&#10;where U.RecType = 'U'  &#13;&#10;order by UserID;"/>
+            <entry key="acctAggregationEnd">
+                <value>
+                    <Date>1615990931693</Date>
+                </value>
+            </entry>
+            <entry key="acctAggregationStart">
+                <value>
+                    <Date>1615990930092</Date>
+                </value>
+            </entry>
+            <entry key="afterProvisioningRule"/>
+            <entry key="aggregationMode">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="beforeProvisioningRule"/>
+            <entry key="compositeDefinition"/>
+            <entry key="deltaTable"/>
+            <entry key="disableOrderingCheck" value="true"/>
+            <entry key="driverClass" value="%%ELE_MS_DYNAMICS_DB_DRIVER%%"/>
+            <entry key="getDeltaSQL"/>
+            <entry key="group.SQL" value="Select  RTRIM(ug.UserID) as UserID , aa.Screennumber + ' ' +  Substring(sc.name, 1,35)&#13;&#10;           + ' Delete=' + Convert(varchar(1),Del )   +  &#13;&#10;            ' Init=' + Convert(varchar(1),Init)   +  &#13;&#10;            ' Ins=' + Convert(varchar(1),Ins)   +  &#13;&#10;            ' Upd=' + Convert(varchar(1),Upd ) as ScreenRole&#13;&#10;from  UserRec ug&#13;&#10;Cross Apply&#13;&#10; (Select   distinct top 5 ScreenNumber, GroupID from  Usergrp ug1&#13;&#10;    join  accessdetrights S1 on S1.UserId = ug1.GroupId&#13;&#10;    join UserRec ur on ur.UserId = S1.userid&#13;&#10;    where ug.UserID = ug1.GroupID&#13;&#10;    Order by GroupID&#13;&#10;  ) aa&#13;&#10;join Screen sc on sc.Number =  aa.ScreenNumber&#13;&#10; --order by ug.UserID&#13;&#10;Cross Apply&#13;&#10;(Select    &#13;&#10;             ug.GroupID,  &#13;&#10;            a.ScreenNumber, Max(DeleteRights) as Del, Max(InitRights) as Init, Max(InsertRights) as Ins, Max(UpdateRights) as Upd  &#13;&#10;    from Userrec U&#13;&#10;     join UserGrp ug on ug.UserId = U.UserId&#13;&#10;     Left outer Join AccessDetRights a on a.UserId = ug.GroupId    &#13;&#10;     Left outer join Screen S on s.Number = a.ScreenNumber&#13;&#10;   where  U.RecType = 'U'   and  &#13;&#10;    aa.ScreenNumber = a.Screennumber&#13;&#10;   and aa.GroupId = ug.GroupId&#13;&#10;     Group by  ug.GroupId, a.ScreenNumber) bb  &#13;&#10;    order by ug.userid ;"/>
+            <entry key="group.aggregationMode">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="group.deltaTable"/>
+            <entry key="group.driverClass" value="%%ELE_MS_DYNAMICS_DB_DRIVER%%"/>
+            <entry key="group.getDeltaSQL"/>
+            <entry key="group.indexColumns">
+                <value>
+                    <List>
+                        <String>UserID</String>
+                    </List>
+                </value>
+            </entry>
+            <entry key="group.isPermissionEnabled">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="group.mergeColumns">
+                <value>
+                    <List>
+                        <String>ScreenRole</String>
+                    </List>
+                </value>
+            </entry>
+            <entry key="group.mergeRows">
+                <value>
+                    <Boolean>true</Boolean>
+                </value>
+            </entry>
+            <entry key="group.password" value="%%ELE_MS_SQL_SVC_ACCOUNT_PWD%%"/>
+            <entry key="group.url" value="%%ELE_MS_DYNAMICS_DB_URL%%"/>
+            <entry key="group.useExecuteQuery">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="group.useStoredProcedureDelta">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="group.useStoredProcedureDirectPermission">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="group.useStoredProcedureGetObject">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="group.useStoredProcedureSqlStmt">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="group.user" value="%%ELE_MS_SQL_SVC_ACCOUNT%%"/>
+            <entry key="indexColumns">
+                <value>
+                    <List>
+                        <String>UserID</String>
+                    </List>
+                </value>
+            </entry>
+            <entry key="isPermissionEnabled">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="jdbcExceptionBucketing">
+                <value>
+                    <Boolean>true</Boolean>
+                </value>
+            </entry>
+            <entry key="mergeColumns">
+                <value>
+                    <List>
+                        <String>GroupID</String>
+                    </List>
+                </value>
+            </entry>
+            <entry key="mergeRows">
+                <value>
+                    <Boolean>true</Boolean>
+                </value>
+            </entry>
+            <entry key="nativeChangeDetectionAttributeScope" value="entitlements"/>
+            <entry key="nativeChangeDetectionAttributes"/>
+            <entry key="nativeChangeDetectionEnabled">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="nativeChangeDetectionOperations"/>
+            <entry key="partitionMode">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="partitionStatements"/>
+            <entry key="password" value="%%ELE_MS_SQL_SVC_ACCOUNT_PWD%%"/>
+            <entry key="provisionRule" value="globalRule"/>
+            <entry key="sysDescriptions">
+                <value>
+                    <Map>
+                        <entry key="en_US"/>
+                    </Map>
+                </value>
+            </entry>
+            <entry key="templateApplication" value="JDBC Template"/>
+            <entry key="testConnSQL" value="select * from Userrec U;"/>
+            <entry key="url" value="%%ELE_MS_DYNAMICS_DB_URL%%"/>
+            <entry key="useExecuteQuery">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="useStoredProcedureDelta">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="useStoredProcedureDirectPermission">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="useStoredProcedureGetObject">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="useStoredProcedurePartition">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="useStoredProcedureSqlStmt">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="useStoredProcedureTestConn">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="user" value="%%ELE_MS_SQL_SVC_ACCOUNT%%"/>
+        </Map>
+    </Attributes>
+    <CorrelationRule>
+        <Reference class="sailpoint.object.Rule" name="ELE_Global_Correlation_Rule"/>
+    </CorrelationRule>
+    <CreationRule>
+        <Reference class="sailpoint.object.Rule" name="ELE_Global_IdentityCreation_Rule"/>
+    </CreationRule>
+    <Owner>
+        <Reference class="sailpoint.object.Identity" name="spadmin"/>
+    </Owner>
+    <Schemas>
+        <Schema displayAttribute="FirstName" identityAttribute="UserID" instanceAttribute="" nativeObjectType="account" objectType="account" permissionsRemediationModificationType="None">
+            <AttributeDefinition name="UserID" type="string">
+                <Description/>
+            </AttributeDefinition>
+            <AttributeDefinition name="FirstName" type="string">
+                <Description/>
+            </AttributeDefinition>
+            <AttributeDefinition name="LastName" type="string">
+                <Description/>
+            </AttributeDefinition>
+            <AttributeDefinition entitlement="true" managed="true" multi="true" name="GroupID" schemaObjectType="group" type="string">
+                <Description/>
+            </AttributeDefinition>
+            <AttributeDefinition name="emailaddress" type="string">
+                <Description/>
+            </AttributeDefinition>
+        </Schema>
+        <Schema descriptionAttribute="" displayAttribute="UserID" identityAttribute="UserID" instanceAttribute="" nativeObjectType="group" objectType="group" permissionsRemediationModificationType="None">
+            <AttributeDefinition name="UserID" type="string">
+                <Description/>
+            </AttributeDefinition>
+            <AttributeDefinition multi="true" name="ScreenRole" type="string">
+                <Description/>
+            </AttributeDefinition>
+        </Schema>
+    </Schemas>
+    <ApplicationScorecard/>
+</Application>

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" [
+        <!ENTITY SailPointObjectSimple SYSTEM "classpath://sailpoint/object/SailPointObjectSimple.hbm.xml">
+        ]>
+
+<!-- (c) Copyright 2020 SailPoint Technologies, Inc., All Rights Reserved. -->
+
+<hibernate-mapping>
+  <class name="sailpoint.object.BulkIdJoin">
+    &SailPointObjectSimple;
+
+    <property name="joinId" type="string" length="128" index="spt_bulkidjoin_id_ci"/>
+    <property name="joinProperty" type="string" length="128" index="spt_bulkidjoin_prop_ci"/>
+    <property name="userId" type="string" length="128" index="spt_bulkidjoin_user_ci"/>
+  </class>
+</hibernate-mapping>

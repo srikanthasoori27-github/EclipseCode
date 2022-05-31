@@ -1,0 +1,39 @@
+  
+  <!DOCTYPE html PUBLIC
+  "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+  <body>
+    <ui:composition>
+      <H3>Training Plugin Full Page</H3>
+      <div class="container" ng-app="TrainingPlugin" ng-controller="trainingPluginFullPageCtrl as ctrl">
+	    <div class="panel-body"> 
+           	   <!-- Data entry form with button -->
+        <form  class="form-inline"> 
+           <select ng-model="object" style="width: 180px;" ng-options="x for x in objects"     
+                   class="form-control input-sm" ></select>
+           <input  placeholder="Enter Search Term" style="width: 180px;" 
+                   class="form-control input-sm" ng-keypress="searchEnter($event)" 
+                   ng-model="search"></input> 
+           <button type="button" role="button" class="btn btn-white btn-sm" 
+                   ng-click="getSearch(object,search)">Search</button>
+        </form> 
+        <!-- End Data entry form -->
+    
+        <!-- Results display section -->
+        <div class="panel-body"> 
+           <div  style="strong" id="directions">{{directions}}</div>
+           <div style="strong" ng-repeat="result in results"> 
+              {{result}} 
+           </div>
+        </div>
+        <!-- End Results display section -->    
+        </div> 
+      </div>
+      <script src="#{plugins.requestContextPath}/plugin/TrainingPlugin/ui/js/SailPointBundleLibrary.js"></script>
+      <script src="#{plugins.requestContextPath}/plugin/TrainingPlugin/ui/js/trainingPluginFullPageModule.js"></script>
+    </ui:composition>
+  </body>
+</html>

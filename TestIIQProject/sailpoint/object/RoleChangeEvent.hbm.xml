@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<!-- (c) Copyright 2014 SailPoint Technologies, Inc., All Rights Reserved. -->
+
+<hibernate-mapping>
+  <class name="sailpoint.object.RoleChangeEvent">
+    <id name="id" length="32">
+        <generator class="sailpoint.persistence.IdGenerator">
+          <param name="uuid_gen_strategy_class">org.hibernate.id.uuid.CustomVersionOneStrategy</param>
+        </generator>
+    </id>
+    <property name="created" type="sailpoint.persistence.DateType"/>
+    <property name="bundleId" type="string" length="128"/>
+    <property name="bundleName" type="string" length="128"/>
+    <property name="provisioningPlan" type="sailpoint.persistence.XmlType" length="100000000"/>
+    <property name="bundleDeleted" type="boolean"/>
+
+    <property name="status" index="spt_rce_status">
+      <type name="sailpoint.persistence.EnumType">
+        <param name="enumClassName">sailpoint.object.RoleChangeEvent$Status</param>
+      </type>
+    </property>
+    <property name="skippedIdentityIds" type="sailpoint.persistence.XmlType" length="100000000"/>
+    <property name="failedIdentityIds" type="sailpoint.persistence.XmlType" length="100000000"/>
+    <property name="affectedIdentityCount" type="int"/>
+    <property name="runCount" type="int" />
+    <property name="failedAttempts" type="int" />
+    
+  </class>
+</hibernate-mapping>

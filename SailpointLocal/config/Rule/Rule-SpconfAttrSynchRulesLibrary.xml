@@ -1,0 +1,607 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Rule PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<Rule language="beanshell" name="SPCONF Attr Synch Rules Library">
+          
+    
+    <ReferencedRules>
+                    
+        
+        <Reference class="sailpoint.object.Rule" name="SP Provisioning Rules Library"/>
+                    
+        
+        <Reference class="sailpoint.object.Rule" name="SP Role Assigment Rule Library"/>
+                  
+    
+    </ReferencedRules>
+          
+    
+    <Source><![CDATA[
+
+  import sailpoint.api.SailPointFactory;
+  import sailpoint.api.SailPointContext;
+  import sailpoint.api.Provisioner;
+  import sailpoint.object.ProvisioningPlan.AttributeRequest;
+  import sailpoint.object.ProvisioningPlan.AccountRequest;
+  import sailpoint.object.ProvisioningPlan.Operation; 
+  import sailpoint.tools.Util;
+  import sailpoint.tools.Message;
+  import sailpoint.tools.GeneralException;
+  import java.sql.Connection;
+  import java.sql.PreparedStatement;
+  import java.sql.ResultSet;
+  import java.sql.SQLException;
+  import java.sql.DriverManager;
+  import java.sql.Timestamp;
+  import java.util.*;
+  import java.text.*;
+  import javax.naming.Context;
+  import javax.naming.InitialContext;
+  import javax.sql.DataSource;
+  import sailpoint.api.PasswordGenerator;
+  import sailpoint.api.Provisioner;
+  import sailpoint.object.*;
+  import java.util.Map.Entry;
+  import sailpoint.api.IncrementalObjectIterator;
+  
+  import sailpoint.api.Aggregator;
+  import sailpoint.connector.Connector;
+
+  import org.apache.commons.logging.Log;
+  import org.apache.commons.logging.LogFactory;
+
+
+  private static Log aslogger = LogFactory.getLog("rule.SP.AttrSynch.RulesLibrary");
+
+  /******************************************************************************
+		TODO:  FILL IN FOLLOWING AttrSynch METHODS
+	******************************************************************************/
+  /*
+		In all rules that receive the workflow param, any workflow variable is accessible by doing workflow.get, such as:
+
+			String identityName = workflow.get("identityName");
+	*/
+
+  public static boolean isAttrSynchCustomTriggerRule(SailPointContext context, Identity previousIdentity, Identity newIdentity){
+    aslogger.trace("Enter isAttrSynchCustomTriggerRule");
+    boolean flag = false;
+
+    aslogger.trace("Exit isAttrSynchCustomTriggerRule: " + flag);
+    return true;
+    //return flag;
+  }
+
+  public static ProvisioningPlan buildCustomAttrSynchPlan(SailPointContext context, Workflow workflow){
+    aslogger.trace("Enter buildCustomAttrSynchPlan");
+
+    ProvisioningPlan plan = workflow.get("plan");
+    if (plan == null){
+      plan = new ProvisioningPlan();
+    }
+
+    aslogger.trace("Exit buildCustomAttrSynchPlan: " + plan.toXml());
+    return plan;
+  }
+
+  /* Return the request Type */
+  public static String getAttrSynchRequestTypeRule(SailPointContext context, Workflow workflow){
+    aslogger.trace("Enter getAttrSynchRequestTypeRule");
+    String requestType = "AttrSynch";
+
+    aslogger.trace("Exit getAttrSynchRequestTypeRule: " + requestType);
+    return requestType;
+  }
+
+  /* Return prov success email */
+  public static String getAttrSynchProvSuccessEmailTemplateRule(SailPointContext context, Workflow workflow){
+    String val = "AttrSynch Success Email Template";
+
+    return val;
+  }
+
+  /* Return prov failure email */
+  public static String getAttrSynchProvFailureEmailTemplateRule(SailPointContext context, Workflow workflow){
+    String val = "AttrSynch Failure Email Template";
+
+    return val;
+  }
+
+  /* Return approved email */
+  public static String getAttrSynchApprovedEmailTemplateRule(SailPointContext context, Workflow workflow){
+    String val = "AttrSynch Approved Email Template";
+
+    return val;
+  }
+
+  /* Return rejected email */
+  public static String getAttrSynchRejectedEmailTemplateRule(SailPointContext context, Workflow workflow){
+    String val = "AttrSynch Rejected Email Template";
+
+    return val;
+  }
+
+  /* Return prov success email to */
+  public static String getAttrSynchProvSuccessEmailToRule(SailPointContext context, Workflow workflow){
+    Identity identity = context.getObjectByName(Identity.class, workflow.get("identityName"));
+    String val = identity.getEmail();
+
+    context.decache(identity);
+    identity = null;
+
+    return val;
+  }
+
+  /* Return prov failure email to */
+  public static String getAttrSynchProvFailureEmailToRule(SailPointContext context, Workflow workflow){
+    Identity identity = context.getObjectByName(Identity.class, workflow.get("identityName"));
+    String val = identity.getEmail();
+
+    context.decache(identity);
+    identity = null;
+
+    return val;
+  }
+
+  /* Return approved email to */
+  public static String getAttrSynchApprovedEmailToRule(SailPointContext context, Workflow workflow){
+    Identity identity = context.getObjectByName(Identity.class, workflow.get("identityName"));
+    String val = identity.getEmail();
+
+    context.decache(identity);
+    identity = null;
+
+    return val;
+  }
+
+  /* Return rejected email to */
+  public static String getAttrSynchRejectedEmailToRule(SailPointContext context, Workflow workflow){
+    String val = "somedefaultaddress@sailpoint.com";
+
+    return val;
+  }
+
+  /* Do any updates to workflow variables before ProvisioningPlan is compiled */
+  public static void attrSynchBeforePlanRule(SailPointContext context, Workflow workflow){
+    aslogger.trace("Enter attrSynchBeforePlanRule");
+    aslogger.trace("Getting extension attributes that can be used for customizations");
+    Attributes identityModel = initWorkflowAttributesVar(workflow, "identityModel");
+    Attributes spExtAttrs = initWorkflowAttributesVar(workflow, "spExtAttrs");
+
+
+
+    workflow.put("identityModel", identityModel);
+    workflow.put("spExtAttrs", spExtAttrs);
+    aslogger.trace("Exit attrSynchBeforePlanRule");
+  }
+
+  /* Do any updates to workflow variables before ProvisioningProject is provisioned */
+ public static void attrSynchBeforeProvisionRule(SailPointContext context, Workflow workflow) throws GeneralException{
+		
+		     
+		aslogger.trace("Enter attrsynchBeforeProvisionRule");
+			//aslogger.debug("XML Workflow:" + workflow.toXml());
+			plan = (ProvisioningPlan)workflow.get("plan");
+			aslogger.debug("original Plan:" + plan.toXml());
+			if (plan.getIdentity() == null)
+			{
+			aslogger.trace("Provisioning plan has no Identity");
+			}
+			
+			aslogger.debug("Before Identity");
+			
+			Identity identity = plan.getIdentity()!=null?plan.getIdentity():context.getObjectByName(Identity.class, (String)workflow.get("identityName"));
+			
+			
+			if (identity!=null && plan.getAccountRequests()!=null)
+			{
+				//lists to store the delete account requests and create account request during the Recreate operation.
+				//do not modify the iterator directly .. may cause concurrent Modification error 
+				//Also set them and pass them to workflow and do the processing there. 
+				//nativeIdentityMap is used to store newNativeIdentity and old native identity and is used to compare when deleting the existing account
+				// this map will be passed into workflow as a variable. 
+				// example nativeIdentityMap.put("applicationName-oldNativeIdentity", newNativeIdentity")
+				// Existing account will be deleted only if the new account is created
+				
+			List<AccountRequest> deleteExistingAccountsRequestList= new ArrayList();
+			List<AccountRequest> recreateAccountRequestsList = new ArrayList();
+			Map nativeIdentityMap= new HashMap();
+			aslogger.debug("Plan has Account Requests");
+			Iterator accountRequestit = plan.getAccountRequests().iterator();
+					while (accountRequestit != null && accountRequestit.hasNext())
+					{
+						aslogger.debug("Iteration on Account Requests");
+						AccountRequest accountRequest = (AccountRequest) accountRequestit.next();
+						
+							Link link = identity.getLink(accountRequest);
+				
+							aslogger.debug("the link value is "+link);
+							aslogger.debug(link.toXml());
+							aslogger.debug("Account Request application name: " + accountRequest.getApplicationName());
+							aslogger.debug("Link application name: " + link.getApplicationName());
+							if (accountRequest.getApplicationName().equalsIgnoreCase(link.getApplicationName()))
+							{
+							aslogger.debug("Account Request native Identity: " + accountRequest.getNativeIdentity());
+							aslogger.debug("Link native Identity: " + link.getNativeIdentity());
+							String appIdatt = link.getApplication().getAccountSchema().getIdentityAttribute();
+							aslogger.debug("Application name: " + link.getApplicationName() + " ID attribute: "+ appIdatt);
+							List<AttributeRequest> attrRequests = accountRequest.getAttributeRequests();
+							
+							boolean isNativeIdModified=false;
+							String newNativeIdvalue = "";
+							//using this variable to avoid looping again if needs to remove from plan.
+							AttributeRequest removedAttrRequest=null;
+							for(AttributeRequest attrRequest : attrRequests)
+							{
+								aslogger.debug("attrRequest name : "+attrRequest.getName() +" attrRequest Value :"+attrRequest.getValue());
+								
+								if(attrRequest.getName().equals(appIdatt))
+								{
+									aslogger.debug("Native identity value change in plan");
+									isNativeIdModified=true;
+									newNativeIdvalue=attrRequest.getValue().toString();
+									removedAttrRequest=attrRequest;
+									
+								}
+							}
+							
+							//if the native Identity is modified 
+							
+							if(isNativeIdModified)
+							{
+								
+								String changeType=(String) link.getApplication().getExtendedAttribute("iamAccountChangeID");
+								aslogger.debug("changeType in the appication : "+changeType);
+								
+								
+								if(Util.isNotNullOrEmpty(changeType))
+								{
+									//If changeType is NoAction 
+									
+									if("NoAction".equalsIgnoreCase(changeType))
+									{
+										aslogger.debug("Native identity Removing from Attribute list "+accountRequest.toXml());
+										accountRequest.remove(removedAttrRequest);
+										aslogger.debug("Modified Account Request  is "+accountRequest.toXml());
+										aslogger.debug("Modified ProvisioningPlan is "+accountRequest.toXml());
+										
+										
+									}
+									else if("Rename".equalsIgnoreCase(changeType))
+									{
+										aslogger.debug("Inside the Rename Action");
+									}
+									else if("Recreate".equalsIgnoreCase(changeType)) 
+									{
+										AccountRequest originalAccountRequest = accountRequest;
+										String oldNativeIdentity = originalAccountRequest.getNativeIdentity();
+										AccountRequest newAccountRequest = new AccountRequest();
+										String applicationName = originalAccountRequest.getApplicationName();
+										newAccountRequest.setApplication(applicationName);
+										newAccountRequest.setNativeIdentity(newNativeIdvalue);
+										
+										List<Form> provisioningForms = link.getApplication().getProvisioningForms();
+										  
+										List fieldNames= new ArrayList();
+										//How do you determine the Operation ? for now everything is Set as it is new Account
+										for(Form form : provisioningForms)	
+										{
+											
+											for(Field field: form.getEntireFields())
+											{
+											fieldNames.add(field.getName());
+											}
+										}
+									
+										for (Map.Entry att : link.getAttributes().entrySet())
+										{
+										aslogger.debug("Key: "+ att.getKey() + " &amp; Value: " + att.getValue());
+										aslogger.debug("fieldNames.contains(att.getKey()) "+ fieldNames.contains(att.getKey()));
+										if(fieldNames.contains(att.getKey()))
+										{
+										newAccountRequest.add(new AttributeRequest((String)att.getKey(), ProvisioningPlan.Operation.Set, att.getValue()));
+										}
+										}
+										
+										
+										//if original Account request has some attribute requests add them in new plan and remove the ones set from old link
+										
+										if(!Util.isEmpty(originalAccountRequest.getAttributeRequests()) && originalAccountRequest.getAttributeRequests()!=null)
+										{
+										for(AttributeRequest originalAttrRequest :originalAccountRequest.getAttributeRequests())
+										{
+											
+											AttributeRequest attrRequestToRemove= newAccountRequest.getAttributeRequest(originalAttrRequest.getName());
+											newAccountRequest.add(originalAttrRequest);
+											newAccountRequest.remove(attrRequestToRemove);
+										}
+										}
+										aslogger.debug("New Account Request is "+newAccountRequest.toXml());
+										recreateAccountRequestsList.add(newAccountRequest);
+										deleteExistingAccountsRequestList.add(originalAccountRequest);
+											
+										// In case multiple account requests for the same application, use list to add the old and new native identity values
+											if(nativeIdentityMap.get(applicationName)==null)
+											{
+												List temp = new ArrayList();
+												temp.add(oldNativeIdentity+"$$$"+newNativeIdvalue);
+												nativeIdentityMap.put(applicationName,temp);
+											}
+											else
+											{
+												nativeIdentityMap.get(applicationName).add(oldNativeIdentity+"$$$"+newNativeIdvalue);
+											}
+										
+										aslogger.debug("Exit reCreate loop ");
+										// Insert audit here
+										} // end of Recreate 
+										
+										
+									}
+									
+								}
+								
+							}
+							
+	
+						}
+					
+					workflow.put("recreateAccountRequestsList", recreateAccountRequestsList);
+					workflow.put("deleteExistingAccountsRequestList", deleteExistingAccountsRequestList);
+					workflow.put("nativeIdentityMap",nativeIdentityMap);
+					
+					//Remove the deleteAccount Request from the original plan as they will be processed in the deleteExistingAccounts step. 
+					if(!Util.isEmpty(deleteExistingAccountsRequestList)&& deleteExistingAccountsRequestList!=null && deleteExistingAccountsRequestList.size()>0)
+					{
+						for(AccountRequest oldAccReq : deleteExistingAccountsRequestList)
+						{
+							plan.remove(oldAccReq);
+						}
+					}
+					
+					}	
+					
+				aslogger.trace("Exit attrSynchBeforeProvisionRule");
+		}
+		/*
+		 *  This Rule will take the accountRequest Object and create a delete ProvisioningPlan for that Object.
+		 *  Then provisioner will execute the account deletion 
+		 */
+		public static void deleteExistingAccounts(SailPointContext context, Workflow workflow,String identityName,List<AccountRequest> deleteExistingAccountsRequestList) {
+			aslogger.trace("Enter deleteExistingAccounts");
+			Identity identity;
+			try {
+				identity = context.getObjectByName(Identity.class, identityName);
+				Map nativeIdentityMap = (Map)workflow.get("nativeIdentityMap");
+				aslogger.debug("navtiveIdentity Map "+nativeIdentityMap);
+				for (AccountRequest originalAccountRequest : deleteExistingAccountsRequestList) {
+					
+					aslogger.trace("The accountRequest in deleteExistingAcounts is "+originalAccountRequest.toXml());
+					String appName=originalAccountRequest.getApplicationName();
+					List<String> oldAndNewNativeIds = (List) nativeIdentityMap.get(appName);
+					aslogger.trace("oldAndNewNativeIds  is "+oldAndNewNativeIds);
+					String modifiedNativeIdentity=null;
+					for(String temp : oldAndNewNativeIds)
+					{
+						if(temp.contains(originalAccountRequest.getNativeIdentity())) {
+							modifiedNativeIdentity =temp.substring(temp.indexOf("$$$")+3, temp.length());
+						}
+					}
+					aslogger.trace("ModifiedNativeIdentity is "+modifiedNativeIdentity);
+					
+					if(Util.isNotNullOrEmpty(modifiedNativeIdentity))
+					{
+					// Only delete the previous link - if the account creation with new link is successful
+					List<Link> links = identity.getLinks(originalAccountRequest.getApplication(context));
+					boolean isaccountAlreadyRecreated= false;
+					if(links!=null && links.size()>0)
+					{
+						for(Link link : links)
+							if(link.getNativeIdentity().equalsIgnoreCase(modifiedNativeIdentity))
+							{
+								isaccountAlreadyRecreated=true;
+								break;
+							}
+					}
+					aslogger.debug("the account already recreated ? : "+isaccountAlreadyRecreated);
+					if(Util.isNotNullOrEmpty(modifiedNativeIdentity)&&isaccountAlreadyRecreated)
+					{
+					ProvisioningPlan deleteProvisioningPlan = new ProvisioningPlan();
+					deleteProvisioningPlan.setIdentity(identity);
+					originalAccountRequest.setOperation(AccountRequest.Operation.Delete);
+					//do i need to remove attribute requests ?
+					originalAccountRequest.setAttributeRequests(null);
+					deleteProvisioningPlan.add(originalAccountRequest);
+					aslogger.debug(deleteProvisioningPlan.toXml());
+					Provisioner p = new Provisioner(context);
+					p.setNoLocking(true);
+					p.setOptimisticProvisioning(true);
+					p.execute(deleteProvisioningPlan);
+					audit_event("WBC-AccountIDChange","Account ID and Name Change","Attribute Sync",identity.getDisplayName(),originalAccountRequest.getApplicationName(),originalAccountRequest.getNativeIdentity(),"displayName",originalAccountRequest.getNativeIdentity(),"Native Identity Deleted","","","");
+					}
+					}
+
+				}
+			} catch (GeneralException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+				aslogger.error("Error in deleteExistingAccounts method");
+			}
+			aslogger.trace("Exit deleteExistingAccounts");
+		}
+	
+	/*
+	 *  This Rule will take the accountRequest Object and create a Create Account ProvisioningPlan.
+	 *  Then provisioner will execute the plan and create new account 
+	 */
+	
+	public static void recreateNewAccounts(SailPointContext context, Workflow workflow,String identityName,List<AccountRequest> recreateAccountRequestsList) {
+		aslogger.trace("Enter recreateNewAccounts");
+		Identity identity;
+		try {
+			identity = context.getObjectByName(Identity.class, identityName);
+			for (AccountRequest createAccountRequest : recreateAccountRequestsList) {
+				ProvisioningPlan createProvisioningPlan = new ProvisioningPlan();
+				createProvisioningPlan.setIdentity(identity);
+				createAccountRequest.setOperation(AccountRequest.Operation.Create);
+				createProvisioningPlan.add(createAccountRequest);
+				aslogger.debug(createProvisioningPlan.toXml());
+				Provisioner p = new Provisioner(context);
+				p.setNoLocking(true);
+				p.setOptimisticProvisioning(true);
+				p.execute(createProvisioningPlan);
+				audit_event("WBC-AccountIDChange","Account ID and Name Change","Attribute Sync",identity.getDisplayName(),createAccountRequest.getApplicationName(),createAccountRequest.getNativeIdentity(),"displayName",createAccountRequest.getNativeIdentity(),"New Native Identity Recreated","","","");
+			}
+		} catch (GeneralException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+			aslogger.error("Error in recreateNewAccounts method");
+		}
+		aslogger.trace("Exit recreateNewAccounts");
+	}
+	
+	/*
+	 * Rule to run the target account aggregation after the create and delete account requests.  
+	 * This is required to execute only if the native identity is modified and existing account is deleted and new account with new native identity has to created. 
+	 */
+	
+	public static void doTargetedAggregation(SailPointContext context, String nativeId, String appName){
+		aslogger.trace("Enter doTargetedAggregation: " + nativeId);
+		
+		try {
+			
+			Application app = context.getObjectByName(Application.class, appName);
+			Connector connector = sailpoint.connector.ConnectorFactory.getConnector(app, null);  
+			ResourceObject rObj = connector.getObject("account", nativeId, null);
+			Attributes argMap = new Attributes();
+			argMap.put("checkDeleted", true);
+			Aggregator agg = new Aggregator(context, argMap);
+			aslogger.trace("Calling aggregate() method... ");
+			TaskResult taskResult = agg.aggregate(app, rObj);
+			aslogger.trace("aggregation complete. ");
+
+
+		} catch (Exception e){
+			aslogger.error("Exception during targeted aggregation: " + e.toString());
+		}
+		
+		
+		aslogger.trace("Exit doTargetedAggregation: " + nativeId);
+	}
+	
+	public static void doTargetedAggregationForRecreatedAccounts(SailPointContext context, Workflow workflow)
+	{
+		aslogger.trace("Enter doTargetedAggregationForRecreatedAccounts: ");
+		Map nativeIdentityMap = (Map)workflow.get("nativeIdentityMap");
+		aslogger.trace("nativeIdentityMap is "+nativeIdentityMap);
+		if(!Util.isEmpty(nativeIdentityMap))
+		{
+			Set<Entry> entryset = nativeIdentityMap.entrySet();
+			for(Entry entry :entryset)
+			{
+				String appName = entry.getKey().toString();
+				List<String> oldAndNewNativeIds = (List) entry.getValue();
+				aslogger.trace("entry key and value are  is "+appName +" : "+oldAndNewNativeIds);
+				for(String nativeIds : oldAndNewNativeIds)
+				{
+					String newNativeId = nativeIds.substring(nativeIds.indexOf("$$$")+3, nativeIds.length());
+					aslogger.trace("newNativeId  is "+newNativeId);
+					if(Util.isNotNullOrEmpty(newNativeId))
+					{
+						doTargetedAggregation(context,newNativeId,appName);
+					}
+				}
+			
+				
+			
+			}
+			
+		}
+		aslogger.trace("Exit doTargetedAggregationForRecreatedAccounts: ");
+	}
+	
+	public static void doTargetedAggregationForDeletedAccounts(SailPointContext context, Workflow workflow)
+	{
+		aslogger.trace("Enter doTargetedAggregationForDeletedAccounts: ");
+		Map nativeIdentityMap = (Map)workflow.get("nativeIdentityMap");
+		aslogger.trace("nativeIdentityMap is "+nativeIdentityMap);
+		if(!Util.isEmpty(nativeIdentityMap))
+		{
+			Set<Entry> entryset = nativeIdentityMap.entrySet();
+			for(Entry entry :entryset)
+			{
+				String appName = entry.getKey().toString();
+				List<String> oldAndNewNativeIds = (List) entry.getValue();
+				aslogger.trace("entry key and value are  is "+appName +" : "+oldAndNewNativeIds);
+				for(String nativeIds : oldAndNewNativeIds)
+				{
+					String newNativeId = nativeIds.substring(0,nativeIds.indexOf("$$$"));
+					aslogger.trace("newNativeId  is "+newNativeId);
+					if(Util.isNotNullOrEmpty(newNativeId))
+					{
+						doTargetedAggregation(context,newNativeId,appName);
+					}
+				}
+			
+				
+			
+			}
+			
+		}
+		aslogger.trace("Exit doTargetedAggregationForDeletedAccounts: ");
+	}
+	
+	public static void auditAttributeSync(SailPointContext context, ProvisioningPlan plan,String identityName)
+	{
+		 
+		    try {
+					Identity identity = plan.getIdentity()!=null?plan.getIdentity():context.getObjectByName(Identity.class,identityName);
+					if(plan!=null && plan.getAccountRequests()!=null && plan.getAccountRequests().size()>0)
+					{
+						
+						for(AccountRequest accRequest:plan.getAccountRequests() )
+						 {
+							String str1 ="Modified Attributes List : ";
+							String str2 ="";
+							if(accRequest.getAttributeRequests()!=null && accRequest.getAttributeRequests().size()>0)
+							{
+								for(AttributeRequest attrRequest:accRequest.getAttributeRequests())
+								{
+									str1=str1.concat(attrRequest.getName()+" : "+attrRequest.getValue());
+								}
+							}
+							
+					        audit_event("WBC-AccountIDChange","Account ID and Name Change","Attribute Sync",identity.getDisplayName(),accRequest.getApplicationName(),accRequest.getNativeIdentity(),"","",str1,"","","");
+					      } 
+						}
+				}
+		    catch (GeneralException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	}
+	public static void attrSynchAfterProvisionRule(SailPointContext context, Workflow workflow){
+	    aslogger.trace("Enter attrSynchAfterProvisionRule");
+	    
+	    auditAttributeSync(context,(ProvisioningPlan)workflow.get("plan"),(String)workflow.get("identityName"));
+	    aslogger.trace("Exit attrSynchAfterProvisionRule");
+	  }
+
+
+	private static void audit_event(String string, String string2, String string3, String displayName, String string4,
+			String string5, String string6, String string7, String string8, String string9, String string10,
+			String string11) {
+		
+aslogger.debug(string+" "+string2+" "+string3+" "+displayName+" "+string4+" "+string5+" "+string6+" "+string7+" "+string8+" "+string9+" "+string10+" "+string11);
+		
+	}
+  /* Do any updates to workflow variables if there was no request to process */
+  public static void attrSynchNoRequestRule(SailPointContext context, Workflow workflow){
+    aslogger.trace("Enter  attrSynchNoRequestRule");
+
+    aslogger.trace("Exit  attrSynchNoRequestRule");
+  }
+
+
+  ]]></Source>
+        
+
+</Rule>

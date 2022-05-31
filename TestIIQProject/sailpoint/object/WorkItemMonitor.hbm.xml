@@ -1,0 +1,20 @@
+<!-- (c) Copyright 2008 SailPoint Technologies, Inc., All Rights Reserved. -->
+
+    <property name="ownerName" column="ownerName"/>
+    <property name="emailTemplate"/>
+    <property name="comments" type="materialized_clob" length="8192"/>
+    <property name="expiration"/>
+    <property name="workItem"/>
+
+    <property name="completionState">
+      <type name="sailpoint.persistence.EnumType">
+        <param name="enumClassName">sailpoint.object.WorkItem$State</param>
+      </type>
+    </property>
+    <property name="completionComments" type="materialized_clob" length="8192"/>
+    <property name="completionUser" type="string" length="128" />
+
+    <property name="actorName" type="string" length="128" />
+    <property name="actorDisplayName" type="string" length="128" />
+    <property name="actingWorkItem" />
+    

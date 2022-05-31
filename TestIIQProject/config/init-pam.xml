@@ -1,0 +1,165 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE sailpoint PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+
+<!-- (c) Copyright 2017 SailPoint Technologies, Inc., All Rights Reserved. -->
+
+<!--
+  Initialization file for new SailPoint PAM functionality.
+-->
+<sailpoint>
+
+    <ImportAction name="merge">
+        <Configuration name="SystemConfiguration">
+            <Attributes>
+                <Map>
+                    <!-- Indicates that PAM is enabled for this install of IIQ -->
+                    <entry key='pamEnabled' value='true'/>
+
+                    <!-- Indicates that provisioning is enabled in the PAM UI -->
+                    <entry key='pamProvisioningEnabled' value='true'/>
+
+                    <!-- True if privileged data is allowed to be added to or removed from PAM containers-->
+                    <entry key="pamModifyPrivilegedDataEnabled" value="true"/>
+
+                    <!-- True if container owner is allowed to edit their PAM containers -->
+                    <entry key="pamOwnerCanEditContainer" value="true" />
+
+                    <!-- True if create PAM container is allowed -->
+                    <entry key="pamCreateContainerEnabled" value="true"/>
+
+                    <!-- max number of selectable identities allowed in PAM UI -->
+                    <entry key="pamMaxSelectableIdentities" value="100" />
+
+                    <!-- The workflow used to porvision identities on PAM systems -->
+                    <entry key="pamWorkflowIdentityProvisioning" value="PAM Identity Provisioning"/>
+
+                    <entry key='accessRequestTypes'>
+                        <value><List>
+                            <String>PAM</String>
+                        </List></value>
+                    </entry>
+                </Map>
+            </Attributes>
+        </Configuration>
+    </ImportAction>
+
+    <ImportAction name="merge">
+        <UIConfig name='UIConfig'>
+            <Attributes>
+                <Map>
+                    <entry key="pamUiContainerList">
+                        <value>
+                            <List>
+                                <ColumnConfig headerKey="ui_pam_application_name" property="applicationName" dataIndex="applicationName" hideable="true" />
+                                <ColumnConfig property="id" dataIndex="id" fieldOnly="true" />
+                                <ColumnConfig headerKey="label_name" property="name" sortable="true" hideable="true" hidden="true"/>
+                                <ColumnConfig headerKey="ui_pam_containers_identities_total" dataIndex="identityTotalCount" hideable="true"/>
+                                <ColumnConfig headerKey="ui_pam_containers_privileged_items" dataIndex="privilegedItemCount" hideable="true"/>
+                                <ColumnConfig headerKey="ui_pam_containers_groups" dataIndex="groupCount" hideable="true"/>
+                                <ColumnConfig headerKey="ui_pam_containers_owner" property="owner.displayName" dataIndex="owner.displayName" hideable="true"/>
+                            </List>
+                        </value>
+                    </entry>
+                    <entry key="pamUiContainerIdentityList">
+                        <value>
+                            <List>
+                                <ColumnConfig property="id" dataIndex="id" fieldOnly="true" />
+                                <ColumnConfig dataIndex="direct" fieldOnly="true" />
+                                <ColumnConfig headerKey="ui_pam_container_identity_list_display_name" property="displayName" sortable="true" hideable="false"/>
+                                <ColumnConfig headerKey="ui_pam_container_identity_list_name" property="name" sortable="true" hideable="true" hidden="true"/>
+                                <ColumnConfig headerKey="ui_pam_container_identity_list_status" property="inactive" sortable="true" hideable="true" renderer="pamIdentityStatus"/>
+                                <ColumnConfig headerKey="ui_pam_container_identity_list_manager" property="manager.displayName" dataIndex="manager" sortable="true" hideable="true"/>
+                                <ColumnConfig headerKey="ui_pam_container_identity_list_details" dataIndex="actions" renderer="spPamIdentityActions" sortable="false" hideable="false" fixed="Right"/>
+                            </List>
+                        </value>
+                    </entry>
+                    <entry key="pamUiContainerGroupList">
+                        <value>
+                            <List>
+                                <ColumnConfig property="id" dataIndex="id" fieldOnly="true" />
+                                <ColumnConfig headerKey="ui_pam_container_group_list_display_name" property="displayName" sortable="true" hideable="false"/>
+                                <ColumnConfig headerKey="ui_pam_container_group_list_description" dataIndex="description" property="attributes" sortable="false" hideable="true" />
+                                <ColumnConfig headerKey="ui_pam_container_group_list_details" dataIndex="actions" renderer="spPamGroupActions" sortable="false" hideable="false" fixed="Right"/>
+                            </List>
+                        </value>
+                    </entry>
+                    <entry key="pamUiContainerGroupIdentityList">
+                        <value>
+                            <List>
+                                <ColumnConfig property="id" dataIndex="id" fieldOnly="true" />
+                                <ColumnConfig headerKey="ui_pam_container_group_identity_list_display_name" property="displayName" sortable="true" hideable="false"/>
+                                <ColumnConfig headerKey="ui_pam_container_group_identity_list_name" property="name" sortable="true" hideable="true" hidden="true"/>
+                                <ColumnConfig headerKey="ui_pam_container_group_identity_list_status" property="inactive" sortable="true" hideable="true" renderer="pamIdentityStatus"/>
+                                <ColumnConfig headerKey="ui_pam_container_group_identity_list_manager" property="manager.displayName" sortable="true" hideable="true"/>
+                            </List>
+                        </value>
+                    </entry>
+                    <entry key="pamUiContainerGroupPermissionContainerOnlyList">
+                        <value>
+                            <List>
+                                <ColumnConfig headerKey="ui_pam_container_group_permission_list_rights" property="rights" sortable="true" hideable="false"/>
+                            </List>
+                        </value>
+                    </entry>
+                    <entry key="pamUiContainerIdentityDeprovisioningResultGroupList">
+                        <value>
+                            <List>
+                                <ColumnConfig headerKey="ui_pam_container_identity_list_display_name" property="identityDisplayName" sortable="true" hideable="false"/>
+                                <ColumnConfig headerKey="ui_pam_container_groups" property="groups" sortable="false" hideable="false" renderer="pamLabelListFilter"/>
+                            </List>
+                        </value>
+                    </entry>
+                    <entry key="pamUiContainerGroupPermissionAllList">
+                        <value>
+                            <List>
+                                <ColumnConfig headerKey="ui_pam_container_group_permission_list_rights" property="rights" sortable="true" hideable="false"/>
+                                <ColumnConfig headerKey="ui_pam_container_group_permission_list_containers" property="targets" sortable="false" hideable="false" renderer="pamLabelListFilter"/>
+                            </List>
+                        </value>
+                    </entry>
+                    <entry key="pamUiContainerIdentityPermissionList">
+                        <value>
+                            <List>
+                                <ColumnConfig headerKey="ui_pam_container_identity_permission_list_name" property="rights" sortable="true" hideable="false"/>
+                                <ColumnConfig headerKey="ui_pam_container_identity_permission_list_granted" property="grantingAccounts" sortable="false" hideable="false" renderer="pamIdentityPermissionAccounts"/>
+                            </List>
+                        </value>
+                    </entry>
+                    <entry key="pamUiContainerPrivilegedItemList">
+                        <value>
+                            <List>
+                                <ColumnConfig headerKey="ui_pam_container_privileged_item_list_name" property="name" sortable="true" hideable="false"/>
+                                <ColumnConfig headerKey="ui_pam_container_privileged_item_list_type" property="type" sortable="true" hideable="false"/>
+                                <ColumnConfig headerKey="ui_pam_container_privileged_item_list_actions" dataIndex="actions" renderer="spPamPrivilegedItemActions" sortable="false" hideable="false" fixed="Right"/>
+                            </List>
+                        </value>
+                    </entry>
+                </Map>
+            </Attributes>
+        </UIConfig>
+    </ImportAction>
+
+    <QuickLink category="Access" action="pamContainers" messageKey="ui_pam_container_list" name="View PAM Container List"  ordering="99">
+        <QuickLinkOptions allowSelf="true">
+            <DynamicScopeRef>
+                <Reference class="sailpoint.object.DynamicScope" name="PAMAdministrator"/>
+            </DynamicScopeRef>
+        </QuickLinkOptions>
+    </QuickLink>
+
+    <ImportAction name="merge">
+      <AuditConfig name="AuditConfig">
+        <AuditActions>
+          <AuditAction name="ApprovePamRequest" displayName="audit_action_ApprovePamRequest" enabled="true" />
+          <AuditAction name="RejectPamRequest" displayName="audit_action_RejectPamRequest" enabled="true" />
+        </AuditActions>
+      </AuditConfig>
+    </ImportAction>
+
+    <ImportAction name="include" value="WEB-INF/config/pam/pamworkflows.xml" />
+    <ImportAction name="include" value="WEB-INF/config/pam/pamemailtemplates.xml" />
+    <ImportAction name="include" value="WEB-INF/config/pam/pamrules.xml" />
+    <ImportAction name="include" value="WEB-INF/config/pam/pamconnectorregistry.xml" />
+    <ImportAction name="include" value="WEB-INF/config/pam/authorization-pam.xml" />
+
+</sailpoint>

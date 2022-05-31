@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE sailpoint PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<!-- Copyright © 2018 SailPoint Technologies, Inc. All Rights Reserved.
+All logos, text, content, and works of authorship, including but not limited to underlying code, programming or scripting language, designs, and/or graphics,
+that are used and/or depicted herein are protected under United States and international copyright and trademark laws and treaties,
+and may not be used or reproduced without the prior express written permission of SailPoint Technologies, Inc. -->
+<sailpoint>
+<ImportAction name='merge'>
+<ObjectConfig name="Application">
+<!-- JOINER REVERSE LTD -->
+<ObjectAttribute categoryName="Joiner" defaultValue="" displayName="Return To Work From Long Term Disability Options"
+	editMode="Permanent" namedColumn="true" name="rtwltdProcess" required="true">
+	<AllowedValues>
+		<String>Do Nothing</String>
+			<String>Enable Immediately</String>
+			<String>Unlock Only</String>
+			<String>Extended Rule</String>
+	</AllowedValues>
+ <Description>This is a reverse of LTD, Pending X Days Requests will be removed</Description>
+</ObjectAttribute>
+<ObjectAttribute categoryName="Joiner"  defaultValue=""
+	displayName="Return To Work From Long Term Disability Extended Rule" editMode="Permanent" name="rtwLTDxtendedRule">
+	<Description>This rule will be executed in case selected Return To Work from Long Term Disability Options is Extended Rule</Description>
+</ObjectAttribute>
+</ObjectConfig>
+</ImportAction>
+</sailpoint>

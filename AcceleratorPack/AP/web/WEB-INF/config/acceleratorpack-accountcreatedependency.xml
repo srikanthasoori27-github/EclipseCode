@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE sailpoint PUBLIC 'sailpoint.dtd' 'sailpoint.dtd'>
+<!-- Copyright © 2018 SailPoint Technologies, Inc. All Rights Reserved.
+All logos, text, content, and works of authorship, including but not limited to underlying code, programming or scripting language, designs, and/or graphics,
+that are used and/or depicted herein are protected under United States and international copyright and trademark laws and treaties,
+and may not be used or reproduced without the prior express written permission of SailPoint Technologies, Inc. -->
+<sailpoint>
+  <ImportAction name='include' value='AcceleratorPack/AccountCreationDependency/Source/ObjectConfig-Application.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/AccountCreationDependency/Source/Rule-AccountCreation-Dependency-Framework.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/AccountCreationDependency/Source/Rule-AccountCreationDependency-RuleLibrary.xml'/>
+</sailpoint>

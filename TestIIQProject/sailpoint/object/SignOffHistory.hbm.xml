@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" [
+  <!ENTITY SailPointObject SYSTEM "classpath://sailpoint/object/SailPointObject.hbm.xml">
+]>
+
+<!-- (c) Copyright 2008 SailPoint Technologies, Inc., All Rights Reserved. -->
+
+<hibernate-mapping>
+  <class name="sailpoint.object.SignOffHistory">
+
+    &SailPointObject;
+
+    <property name="date" column="sign_date" type="sailpoint.persistence.DateType"/>
+    <property name="signerId" type="string" length="128" index="sign_off_history_signer_id"/>
+    <property name="signerName" type="string" length="128"/>
+    <property name="signerDisplayName" type="string" length="128"/>
+    <property name="application" type="string" length="128"/>
+    <property name="account" type="string" length="322"/>
+    <property name="text" type="materialized_clob" length="100000000"/>
+    <property name="electronicSign" type="boolean" index="spt_sign_off_history_esig"/>
+
+  </class>
+</hibernate-mapping>

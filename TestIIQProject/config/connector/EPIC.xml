@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE ImportAction PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<ImportAction name="connectorRegistryUpdateAction">
+  <Application connector="sailpoint.connector.OpenConnectorAdapter" featuresString="PROVISIONING, PASSWORD, ENABLE, SEARCH, UNLOCK" icon="internetIcon" name="EPIC" type="EPIC">
+    <Attributes>
+      <Map>
+        <entry key="CAConnector" value="true"/>
+        <entry key="connectorClass" value="openconnector.connector.EPICConnector"/>
+        <entry key="formPath" value="EPICAttributesForm.xhtml"/>
+        <entry key="encrypted" value="authUserPassword,coreWSSecurityPassword,commonWSSecurityPassword,auditUserPassword,clientId"/>
+        <entry key="CoreStubUrl" value="/httplistener.ashx" />
+        <entry key="EpicSOAP1.1EndPointsMap">
+          <value>
+            <Map>
+              <entry key="CommonUser2011" value="wcf/Epic.Common.GeneratedServices/User.svc/basic" />
+              <entry key="PersonnelManagement2012" value="wcf/Epic.Security.GeneratedServices/PersonnelManagement.svc/basic" />
+              <entry key="PersonnelManagement2014" value="wcf/Epic.Security.GeneratedServices/PersonnelManagement.svc/basic_2014" />
+              <entry key="PersonnelManagement2015" value="wcf/Epic.Security.GeneratedServices/PersonnelManagement.svc/basic_2015" />
+              <entry key="PersonnelManagement2016" value="wcf/Epic.Security.GeneratedServices/PersonnelManagement.svc/basic_2016" />
+              <entry key="PersonnelManagement2017" value="wcf/Epic.Security.GeneratedServices/PersonnelManagement.svc/basic_2017" />
+            </Map>
+          </value>
+       </entry>
+       <entry key="EpicSOAP1.2EndPointsMap">
+         <value>
+           <Map>
+            <entry key="CommonUser2011" value="wcf/Epic.Common.GeneratedServices/User.svc" />
+            <entry key="PersonnelManagement2012" value="wcf/Epic.Security.GeneratedServices/PersonnelManagement.svc/" />
+            <entry key="PersonnelManagement2014" value="wcf/Epic.Security.GeneratedServices/PersonnelManagement.svc/2014" />
+            <entry key="PersonnelManagement2015" value="wcf/Epic.Security.GeneratedServices/PersonnelManagement.svc/2015" />
+            <entry key="PersonnelManagement2016" value="wcf/Epic.Security.GeneratedServices/PersonnelManagement.svc/2016" />
+            <entry key="PersonnelManagement2017" value="wcf/Epic.Security.GeneratedServices/PersonnelManagement.svc/2017" />
+            </Map>
+          </value>
+        </entry>
+      </Map>
+    </Attributes>
+    <Schemas>
+      <Schema displayAttribute="Name" identityAttribute="UserID" nativeObjectType="account" objectType="account">
+      <AttributeDefinition name="Name" remediationModificationType="None" type="string">
+        <Description>Full Name of the user</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="UserID" remediationModificationType="None" type="string">
+        <Description>User Id of the user</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="SystemLoginID" remediationModificationType="None" type="string">
+        <Description>Login Id of the user</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="UserAlias" remediationModificationType="None" type="string">
+        <Description>User Alias</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="StartDate" remediationModificationType="None" type="string">
+        <Description>Start date of the user account</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="IsPasswordChangeRequired" remediationModificationType="None" type="boolean">
+        <Description>Password Change Required Flag</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="EndDate" remediationModificationType="None" type="string">
+        <Description>End date of the user account</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="IsActive" remediationModificationType="None" type="boolean">
+        <Description>Indicates whether this User is allowed to log into Epic</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="IsBlocked" remediationModificationType="None" type="boolean">
+        <Description>Indicates whether this User is blocked from logging into Epic</Description>
+      </AttributeDefinition>
+       <AttributeDefinition name="BlockReason" remediationModificationType="None" type="string">
+        <Description>The reason why the User account is blocked</Description>
+      </AttributeDefinition>
+       <AttributeDefinition name="BlockComment" remediationModificationType="None" type="string">
+        <Description>A freetext comment about why the User is blocked</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="DefaultLoginDepartmentID" remediationModificationType="None" type="string">
+        <Description>Name of default login department</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="AuthenticationConfigurationID" remediationModificationType="None" type="string">
+        <Description>Authentication Configuration </Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="LinkedProviderID" remediationModificationType="None" type="string">
+        <Description>Linked Provider Id of the user</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="DefaultLinkedTemplateID" remediationModificationType="None" type="string">
+        <Description>The default linkable template for this user</Description>
+      </AttributeDefinition>     
+      <AttributeDefinition entitlement="true" managed="true" multi="true" name="LinkedTemplateID" schemaObjectType="group" type="string">
+        <Description>Linked template Id of the user</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="LinkedTemplateConfig" remediationModificationType="None" type="string" multi="true">
+          <Description>List of LinkedTemplateConfig objects pointing to the template setup for the user</Description>
+      </AttributeDefinition>
+      <AttributeDefinition entitlement="true" managed="true" multi="true" name="LinkedSubtemplateIDs" schemaObjectType="linkedSubTemplate" type="string">
+        <Description>List of Linked Subtemplate Ids</Description>
+      </AttributeDefinition> 
+      <AttributeDefinition entitlement="true" managed="true" multi="true" name="InBasketClassifications" schemaObjectType="InBasketClassification" type="string">
+        <Description>List of InBasketClassification Id's</Description>
+      </AttributeDefinition>
+      <AttributeDefinition multi="true" name="UserRoles" type="string">
+        <Description>User Roles</Description>
+      </AttributeDefinition>
+      <AttributeDefinition multi="true" name="ExternalIdentifiers" type="string">
+        <Description>External identifiers are specifically used to allow a lightweight way to manage user identity in multiple systems</Description>
+      </AttributeDefinition>
+      <AttributeDefinition multi="true" name="CustomUserDictionaries" type="string">
+        <Description>Custom dictionaries allow users to maintain their own spellcheck corrections</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="Notes" remediationModificationType="None" type="string">
+        <Description>Freetext notes about this User</Description>
+      </AttributeDefinition>
+       <AttributeDefinition name="ContactDate" remediationModificationType="None" type="string">
+        <Description>The date the User was created. Defaults to the current date if not provided</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="ContactComment" remediationModificationType="None" type="string">
+        <Description>A comment associated with the most recent revision of the User's record</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="UserDictionaryPath" remediationModificationType="None" type="string">
+        <Description>The file path at which custom user dictionary files can be found</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="LDAPOverrideID" remediationModificationType="None" type="string">
+        <Description>A string that can be provided to identify the User to the LDAP server in place of the SystemLogin</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="ReportGrouper1" remediationModificationType="None" type="string">
+        <Description>Report groupers are used to segregate users for highly specific reporting and statistics needs</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="ReportGrouper2" remediationModificationType="None" type="string">
+        <Description>Report groupers are used to segregate users for highly specific reporting and statistics needs</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="ReportGrouper3" remediationModificationType="None" type="string">
+        <Description>Report groupers are used to segregate users for highly specific reporting and statistics needs</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="UserPhotoPath" remediationModificationType="None" type="string">
+        <Description>A URL or file path to a picture of this user</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="Sex" remediationModificationType="None" type="string">
+        <Description>The User's legal sex, typically. Valid values include the Male, Female, Unknown</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="ProviderAtLoginOption" remediationModificationType="None" type="String">
+        <Description>How shall the User be prompted to choose an associated provider upon login</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="ForceContactCreation" remediationModificationType="None" type="boolean">
+        <Description>If true, the provided values will be filed to a new "contact" for the User, meaning that previous values will be retained</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="EmployeeDemographics" remediationModificationType="None" type="string" multi="true">
+        <Description>This parameter is used to provide certain specific information about the user</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="CategoryReportGrouper1" remediationModificationType="None" type="string" multi="true">
+        <Description>Report groupers are used to segregate users for highly specific reporting and statistics needs</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="CategoryReportGrouper2" remediationModificationType="None" type="string" multi="true">
+        <Description>Report groupers are used to segregate users for highly specific reporting and statistics needs</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="CategoryReportGrouper3" remediationModificationType="None" type="string" multi="true">
+        <Description>Report groupers are used to segregate users for highly specific reporting and statistics needs</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="CategoryReportGrouper4" remediationModificationType="None" type="string" multi="true">
+        <Description>Report groupers are used to segregate users for highly specific reporting and statistics needs</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="CategoryReportGrouper5" remediationModificationType="None" type="string" multi="true">
+        <Description>Report groupers are used to segregate users for highly specific reporting and statistics needs</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="CategoryReportGrouper6" remediationModificationType="None" type="string" multi="true">
+        <Description>Report groupers are used to segregate users for highly specific reporting and statistics needs</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="UserComplexName_AcademicTitle" remediationModificationType="None" type="string">
+        <Description>Academic title of the user. e.g. Phd, MD, Dr, DDS, DD etc.</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="UserComplexName_FatherName" remediationModificationType="None" type="string">
+        <Description>The user's father's name, typically used for constructing Arabic names</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="UserComplexName_FirstName" remediationModificationType="None" type="string">
+        <Description>The first or given name of the User</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="UserComplexName_GivenNameInitials" remediationModificationType="None" type="string">
+        <Description>Initials for the first name</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="UserComplexName_GrandfatherName" remediationModificationType="None" type="string">
+        <Description>The user's grandfather's name, typically used for constructing Arabic names</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="UserComplexName_LastName" remediationModificationType="None" type="string">
+        <Description>The user's last or family name</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="UserComplexName_LastNamePrefix" remediationModificationType="None" type="string">
+        <Description>The user's last name prefix</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="UserComplexName_PrimaryTitle" remediationModificationType="None" type="string">
+        <Description>Primary title of the user. e.g Mr., Miss, Dr., Ms. etc.</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="UserComplexName_SpouseLastName" remediationModificationType="None" type="string">
+        <Description>The last, or family name of the user's spouse</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="UserComplexName_SpouseLastNameFirst" remediationModificationType="None" type="boolean">
+        <Description>"Yes" or "No." If "Yes", the spouse's last name will appear first in the hyphenated last name</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="UserComplexName_SpousePrefix" remediationModificationType="None" type="string">
+        <Description>The user's spouse prefix</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="UserComplexName_Suffix" remediationModificationType="None" type="string">
+        <Description>Suffix of user e.g. Sr., Jr., I, II, III</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="CommunityUser_WebExternalIdentifier" remediationModificationType="None" type="string">
+        <Description>The external system Login ID</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="CommunityUser_ReceiveExternalEmail" remediationModificationType="None" type="boolean">
+        <Description>This controls whether users receive notification emails from EpicCare link</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="CommunityUser_ReceiveGroupNotifications" remediationModificationType="None" type="boolean">
+        <Description>This controls whether users receive group notification emails from EpicCare link</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="CommunityUser_Deactivated" remediationModificationType="None" type="boolean">
+        <Description>Signifies a user should no longer have access to the application</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="CommunityUser_SiteManagerContexts" remediationModificationType="None" type="string" multi="true">
+        <Description>This links users to EpicCare Link user context groups for the purposes of site management</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="CommunityUser_UserContexts" remediationModificationType="None" type="string" multi="true">
+        <Description>This links users to EpicCare Link user context groups</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="UserGroups" remediationModificationType="None" type="string" multi="true">
+        <Description>The current list of User Groups for the selected user</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="BIDefaultUser" remediationModificationType="None" type="string">
+        <Description>The BI default user name for the Hyperspace user, which is used by Hyperspace to connect to BI applications</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="EmailAddress" remediationModificationType="None" type="string">
+        <Description>Email address of the user</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="PhoneNumber" remediationModificationType="None" type="string">
+        <Description>Phone number of the user</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="FaxNumber" remediationModificationType="None" type="string">
+        <Description>Fax number of the user</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="UpdateLinkedProviderRecord" remediationModificationType="None" type="boolean">
+        <Description>Update linked provider record flag</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="Address_City" remediationModificationType="None" type="string">
+        <Description>City of the user</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="Address_Country" remediationModificationType="None" type="string">
+        <Description>Country of the user</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="Address_County" remediationModificationType="None" type="string">
+        <Description>County of the user</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="Address_District" remediationModificationType="None" type="string">
+        <Description>District of the user</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="Address_HouseNumber" remediationModificationType="None" type="string">
+        <Description>House number of the user</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="Address_Lines" remediationModificationType="None" type="string" multi="true">
+        <Description>Lines of the user</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="Address_State" remediationModificationType="None" type="string">
+        <Description>State of the user</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="Address_ZipCode" remediationModificationType="None" type="string">
+        <Description>Zip code of the user</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="PreferredLoginDepartments" remediationModificationType="None" type="string" multi="true">
+        <Description>The departments on the user's preferred list</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="LoginDepartmentFilterList" entitlement="true" managed="true" remediationModificationType="None" type="Department" multi="true">
+        <Description>The list of departments to use when limiting access for the user</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="LoginDepartmentFilterSetting" remediationModificationType="None" type="string">
+        <Description>Whether the Department Filter List is Inclusive or Exclusive</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="ReportAuthorizedServiceAreas" remediationModificationType="None" type="string" multi="true">
+        <Description>A list of service areas for which the user has access</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="ReportAuthorizedLocations" remediationModificationType="None" type="string" multi="true">
+        <Description>A list of locations for which the user has access</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="ReportAuthorizedDepartments" remediationModificationType="None" type="string" multi="true">
+        <Description>A list of Departments for which the user has access</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="ReportAuthorizedDepartmentGroups" remediationModificationType="None" type="string" multi="true">
+        <Description>A list of department groups for which the user has access</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="ReportAuthorizedUsers" remediationModificationType="None" type="string" multi="true">
+        <Description>A list of users for which the user has access</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="ReportAuthorizedProviders" remediationModificationType="None" type="string" multi="true">
+        <Description>A list of providers for which the user has access</Description>
+      </AttributeDefinition>
+    </Schema>
+   <Schema displayAttribute="LinkedTemplateName" identityAttribute="LinkedTemplateID" nativeObjectType="group" objectType="group">
+      <AttributeDefinition name="LinkedTemplateID" remediationModificationType="None" type="string">
+        <Description>ID of the Linked template</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="LinkedTemplateName" remediationModificationType="None" type="string">
+        <Description>Name of the Linked template</Description>
+      </AttributeDefinition>
+    </Schema>    
+    <Schema displayAttribute="LinkedSubTemplateName" identityAttribute="LinkedSubtemplateIDs" nativeObjectType="linkedSubTemplate" objectType="linkedSubTemplate" aggregationType="group">
+      <AttributeDefinition name="LinkedSubtemplateIDs" remediationModificationType="None" type="string">
+        <Description>ID of the Linked Sub template</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="LinkedSubTemplateName" remediationModificationType="None" type="string">
+        <Description>Name of the Linked Sub template</Description>
+      </AttributeDefinition>
+    </Schema> 
+    <Schema displayAttribute="Title" identityAttribute="Number" nativeObjectType="InBasketClassification" objectType="InBasketClassification" aggregationType="group">
+      <AttributeDefinition name="Number" remediationModificationType="None" type="string">
+        <Description>Number of the InBasket Classification</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="Title" remediationModificationType="None" type="string">
+        <Description>Title of the InBasket Classification</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="Abbreviation" remediationModificationType="None" type="string">
+        <Description>Abbreviation of the InBasket Classification</Description>
+      </AttributeDefinition>
+    </Schema>
+    <Schema displayAttribute="Name" identityAttribute="ExternalID" nativeObjectType="Department" objectType="Department" aggregationType="group">
+      <AttributeDefinition name="ExternalID" remediationModificationType="None" type="string">
+        <Description>The external ID of department</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="Name" remediationModificationType="None" type="string">
+        <Description>Name of the department</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="Location" remediationModificationType="None" type="string">
+        <Description>Location of the department</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="Service Area" remediationModificationType="None" type="string">
+        <Description>Service Area of the department</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="Center" remediationModificationType="None" type="string">
+        <Description>Center of the department</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="Specialty" remediationModificationType="None" type="string">
+        <Description>Specialty of the department</Description>
+      </AttributeDefinition>
+    </Schema>
+    </Schemas>
+    <Templates>
+    <Template name="account" schemaObjectType="account" usage="Create">
+       <Field displayName="con_prov_policy_Name" helpKey="help_con_prov_policy_Name" name="Name" required="true" reviewRequired="true" type="string">
+        <Script>
+          <Source>
+                            return identity.getName();
+                          </Source>
+        </Script>
+      </Field>
+      <Field displayName="con_prov_policy_Password" helpKey="help_con_prov_policy_Password" name="password" reviewRequired="true" type="secret"/>
+      <Field displayName="con_prov_policy_DefaultloginDept" helpKey="help_con_prov_policy_DefaultLoginDept" name="DefaultLoginDepartmentID" reviewRequired="true" type="string"/>
+      <Field displayName="con_epic_prov_policy_DefaultLinkedTemplateID" helpKey="help_epic_con_prov_policy_DefaultLinkedTemplateID" name="DefaultLinkedTemplateID" reviewRequired="true" type="string"/>
+      <Field displayName="con_epic_prov_policy_UserID" helpKey="help_con_prov_policy_UserID" name="UserInternalID" reviewRequired="true" type="string"/>
+      <Field displayName="con_prov_policy_StartDate" helpKey="help_con_prov_policy_StartDate" name="StartDate" reviewRequired="true" type="date"/>
+      <Field displayName="con_prov_policy_EndDate" helpKey="help_con_prov_policy_EndDate" name="EndDate" reviewRequired="true" type="date"/>
+      <Field displayName="con_prov_policy_SystemLoginID" helpKey="help_con_prov_policy_SystemLoginID" name="SystemLoginID" required="true" reviewRequired="true" type="string">
+        <Script>
+           <Source>return identity.getName();</Source>
+        </Script>
+      </Field>
+        <Field displayName="con_epic_prov_policy_Notes" helpKey="help_epic_prov_policy_Notes" name="Notes" reviewRequired="true" type="string"/>
+        <Field displayName="con_epic_prov_policy_ContactComment" helpKey="help_epic_prov_policy_ContactComment" name="ContactComment" reviewRequired="true" value="Epic account created by SailPoint Identity Management." type="string"/>
+        <Field displayName="con_epic_prov_policy_LDAPOverrideID" helpKey="help_epic_prov_policy_LDAPOverrideID" name="LDAPOverrideID" reviewRequired="true" type="string"/>
+        <Field displayName="con_epic_prov_policy_UserDictionaryPath" helpKey="help_epic_prov_policy_UserDictionaryPath" name="UserDictionaryPath" reviewRequired="true" type="string"/>
+        <Field displayName="con_epic_prov_policy_AuthenticationConfigurationID" helpKey="help_epic_prov_policy_AuthenticationConfigurationID" name="AuthenticationConfigurationID" reviewRequired="true" type="string"/>
+        <Field displayName="con_epic_prov_policy_CustomUserDictionary_index_0" helpKey="help_epic_prov_policy_CustomUserDictionary_index" name="CustomUserDictionary_index_0" reviewRequired="true" type="string"/>
+        <Field displayName="con_epic_prov_policy_CustomUserDictionary_value_0" helpKey="help_epic_prov_policy_CustomUserDictionary_value" name="CustomUserDictionary_value_0" reviewRequired="true" type="string"/>
+        <Field displayName="con_epic_prov_policy_CustomUserDictionary_index_1" helpKey="help_epic_prov_policy_CustomUserDictionary_index" name="CustomUserDictionary_index_1" reviewRequired="true" type="string"/>
+        <Field displayName="con_epic_prov_policy_CustomUserDictionary_value_1" helpKey="help_epic_prov_policy_CustomUserDictionary_value" name="CustomUserDictionary_value_1" reviewRequired="true" type="string"/>
+        <Field displayName="con_epic_prov_policy_ExternalIdentifier_id_0" helpKey="help_epic_prov_policy_ExternalIdentifier_id" name="ExternalIdentifier_id_0" reviewRequired="true" type="string"/>
+        <Field displayName="con_epic_prov_policy_ExternalIdentifier_type_0" helpKey="help_epic_prov_policy_ExternalIdentifier_type" name="ExternalIdentifier_type_0" reviewRequired="true" type="string"/>
+        <Field displayName="con_epic_prov_policy_ExternalIdentifier_password_0" helpKey="help_epic_prov_policy_ExternalIdentifier_password" name="ExternalIdentifier_password_0" reviewRequired="true" type="secret"/>
+        <Field displayName="con_epic_prov_policy_ExternalIdentifier_isActive_0" helpKey="help_epic_prov_policy_ExternalIdentifier_isActive" name="ExternalIdentifier_isActive_0" reviewRequired="true" type="boolean"/>
+        <Field displayName="con_epic_prov_policy_ExternalIdentifier_id_1" helpKey="help_epic_prov_policy_ExternalIdentifier_id" name="ExternalIdentifier_id_1" reviewRequired="true" type="string"/>
+        <Field displayName="con_epic_prov_policy_ExternalIdentifier_type_1" helpKey="help_epic_prov_policy_ExternalIdentifier_type" name="ExternalIdentifier_type_1" reviewRequired="true" type="string"/>
+        <Field displayName="con_epic_prov_policy_ExternalIdentifier_password_1" helpKey="help_epic_prov_policy_ExternalIdentifier_password" name="ExternalIdentifier_password_1" reviewRequired="true" type="secret"/>
+        <Field displayName="con_epic_prov_policy_ExternalIdentifier_isActive_1" helpKey="help_epic_prov_policy_ExternalIdentifier_isActive" name="ExternalIdentifier_isActive_1" reviewRequired="true" type="boolean"/>
+        <Field displayName="con_epic_prov_policy_EmployeeDemographics_Index_0" helpKey="help_epic_prov_policy_EmployeeDemographics_Index" name="EmployeeDemographics_Index_0" reviewRequired="true" type="String"/>
+        <Field displayName="con_epic_prov_policy_EmployeeDemographics_EmployeeDemographic1_0" helpKey="help_epic_prov_policy_EmployeeDemographics_EmployeeDemographic1" name="EmployeeDemographics_EmployeeDemographic1_0" reviewRequired="true" type="String"/>
+        <Field displayName="con_epic_prov_policy_EmployeeDemographics_EmployeeDemographic2_0" helpKey="help_epic_prov_policy_EmployeeDemographics_EmployeeDemographic2" name="EmployeeDemographics_EmployeeDemographic2_0" reviewRequired="true" type="String"/>
+        <Field displayName="con_epic_prov_policy_EmployeeDemographics_EmployeeDemographic3_0" helpKey="help_epic_prov_policy_EmployeeDemographics_EmployeeDemographic3" name="EmployeeDemographics_EmployeeDemographic3_0" reviewRequired="true" type="String"/>
+        <Field displayName="con_epic_prov_policy_EmployeeDemographics_Index_1" helpKey="help_epic_prov_policy_EmployeeDemographics_Index" name="EmployeeDemographics_Index_1" reviewRequired="true" type="String"/>
+        <Field displayName="con_epic_prov_policy_EmployeeDemographics_EmployeeDemographic1_1" helpKey="help_epic_prov_policy_EmployeeDemographics_EmployeeDemographic1" name="EmployeeDemographics_EmployeeDemographic1_1" reviewRequired="true" type="String"/>
+        <Field displayName="con_epic_prov_policy_EmployeeDemographics_EmployeeDemographic2_1" helpKey="help_epic_prov_policy_EmployeeDemographics_EmployeeDemographic2" name="EmployeeDemographics_EmployeeDemographic2_1" reviewRequired="true" type="String"/>
+        <Field displayName="con_epic_prov_policy_EmployeeDemographics_EmployeeDemographic3_1" helpKey="help_epic_prov_policy_EmployeeDemographics_EmployeeDemographic3" name="EmployeeDemographics_EmployeeDemographic3_1" reviewRequired="true" type="String"/>
+        
+   </Template>
+   </Templates>
+  </Application>
+</ImportAction>

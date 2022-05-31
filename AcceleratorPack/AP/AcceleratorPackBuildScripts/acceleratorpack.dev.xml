@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright © 2018 SailPoint Technologies, Inc. All Rights Reserved.
+All logos, text, content, and works of authorship, including but not limited to underlying code, programming or scripting language, designs, and/or graphics,
+that are used and/or depicted herein are protected under United States and international copyright and trademark laws and treaties,
+and may not be used or reproduced without the prior express written permission of SailPoint Technologies, Inc. -->
+<project name="accelerator.pack.dev">
+    <!--
+    **********************************************************
+    Targets to make your dev life easier
+    **********************************************************
+     -->
+    <condition property="is-windows">
+		<os family="windows" />
+	</condition>
+	<condition property='is-linux'>
+		<os family='unix' name='Linux' />
+	</condition>
+    <macrodef name="iiq.sql">
+        <attribute name="sql.file"/>
+        <sequential>
+            <!--<echo>Executing @{sql.file}</echo>-->
+            <sql
+                    driver="${db.driver}"
+                    url="${db.url}"
+                    userid="${db.userid}"
+                    password="${db.password}"
+                    src="@{sql.file}"
+                    print="yes"
+                    keepformat="true"
+                    escapeprocessing="false"
+                    expandproperties="false"
+                    >
+                <classpath>
+                    <pathelement path="${classpath}"/>
+                    <fileset dir="${build.iiqBinaryExtract}/WEB-INF/lib">
+                        <include name="**/*.jar"/>
+                    </fileset>
+                </classpath>
+            </sql>
+            <!-- Other interesting sql params
+                 showwarnings="true"
+                  autocommit="true"
+            -->
+        </sequential>
+    </macrodef>
+    <macrodef name="iiq.sql.upgrade">
+        <attribute name="sql.file"/>
+        <sequential>
+            <!--<echo>Executing @{sql.file}</echo>-->
+            <sql
+                    driver="${db.driver}"
+                    url="${db.url}"
+                    userid="${db.userid}"
+                    password="${db.password}"
+                    src="@{sql.file}"
+                    print="yes"
+                    keepformat="true"
+                    escapeprocessing="false"
+                    expandproperties="false"
+                    onerror="continue"
+                    autocommit="true"
+                    >
+                <classpath>
+                    <pathelement path="${classpath}"/>
+                    <fileset dir="${build.iiqBinaryExtract}/WEB-INF/lib">
+                        <include name="**/*.jar"/>
+                    </fileset>
+                </classpath>
+            </sql>
+            <!-- Other interesting sql params
+                 showwarnings="true"
+                  autocommit="true"
+            -->
+        </sequential>
+    </macrodef>
+    <macrodef name="iiq.start.stop">
+        <attribute name="action"/>
+        <sequential>
+            <if>
+                <equals arg1="@{action}" arg2="stop"/>
+                <then>
+                    <if>
+                        <isset property="is-windows"/>
+                        <then>
+                            <echo>Shutting down app server..</echo>
+                            <exec executable="cmd.exe">
+                                <env key="CATALINA_HOME" path="${tomcat.home}"/>
+                                <arg value="/c"/>
+                                <arg value="${application.server.stop}"/>
+                            </exec>
+                        </then>
+                        <else>
+                            <exec executable="${application.server.stop}">
+                                <!--<arg value="/c"/>-->
+                            </exec>
+                        </else>
+                    </if>
+                </then>
+                <else>
+                    <if>
+                        <isset property="is-windows"/>
+                        <then>
+                            <echo>Starting app server..</echo>
+                            <exec executable="cmd.exe">
+                                <env key="CATALINA_HOME" path="${tomcat.home}"/>
+                                <!-- trys to start the app server in debug mode -->
+                                <!--<env key="JAVA_OPTS" value="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005"/>-->
+                                <arg value="/c"/>
+                                <arg value="${application.server.start}"/>
+                                <!--<arg value="run"/>-->
+                            </exec>
+                            <waitfor>
+                                <and>
+                                    <socket server="${application.server.host}" port="${application.server.port}"/>
+                                    <http url="http://${application.server.host}:${application.server.port}/${iiq.path}"/>
+                                </and>
+                            </waitfor>
+                        </then>
+                        <else>
+                            <exec executable="${application.server.start}">
+                                <!--<arg value="/c"/>-->
+                            </exec>
+                        </else>
+                    </if>
+                </else>
+            </if>
+        </sequential>
+    </macrodef>
+    <target name="up" depends="init-properties">
+        <iiq.start.stop action="start"/>
+    </target>
+    <target name="down" depends="init-properties">
+        <iiq.start.stop action="stop"/>
+    </target>
+	 <target name="-connectIIQConsole" depends="init-properties">
+	         <if>
+	                    <isset property="is-windows"/>
+	                    <then>
+	                        <echo>Connecting  IIQ Console to check DB connection and also create spt_db_version 'main' entry so that patch upgrade scripts can upgrade</echo>
+	                        <exec executable="cmd.exe">
+	                            <arg value="/c"/>
+	                            <arg value="${build.iiqBinaryExtract}/WEB-INF/bin/iiq"/>
+	                             <arg value="console"/>
+	                        </exec>
+	                    </then>
+	                    <else>
+	                        <exec executable="${build.iiqBinaryExtract}/WEB-INF/bin/iiq">
+	                        <arg value="console"/>
+	                            <!--<arg value="/c"/>-->
+	                        </exec>
+	                    </else>
+	                </if>
+	    </target>
+	    <target name="-hibernatChanges" depends="init-properties">
+	         <if>
+	                    <isset property="is-windows"/>
+	                    <then>
+	                        <echo>Running IIQ Schema</echo>
+	                        <exec executable="cmd.exe">
+	                            <arg value="/c"/>
+	                            <arg value="${build.iiqBinaryExtract}/WEB-INF/bin/iiq"/>
+	                             <arg value="schema"/>
+	                        </exec>
+	                    </then>
+	                    <else>
+	                        <exec executable="${build.iiqBinaryExtract}/WEB-INF/bin/iiq">
+	                        <arg value="schema"/>
+	                            <!--<arg value="/c"/>-->
+	                        </exec>
+	                    </else>
+	                </if>
+	    </target>
+	<target name="buildPermissions">
+		<chmod file="${build.iiqBinaryExtract}/WEB-INF/bin/iiq" perm="700"/>
+	</target>
+    <!-- propose we refactor to split this giant up -->
+    <target name="setupSS" depends="-clean,-acceleratorPackwar,init-properties,buildPermissions,-hibernatChanges" description="Builds WAR, Creates AcceleratorPack Database (Applies Hibernate Changes) and Applies Patch Changes To DB. Imports init, int-lcm, init-acceleratorpack, init-pam. Restarts Tomcat Server">
+    	 <copy overwrite="true" file="${build.iiqBinaryExtract}/WEB-INF/database/create_identityiq_tables.${db.type}"
+    	              tofile="${build.iiqBinaryExtract}/WEB-INF/database/create_identityiq_tables-${IIQVersion}.${db.type}"/>
+    	<copy overwrite="true" file="${build.iiqBinaryExtract}/WEB-INF/database/create_identityiq_tables-${IIQVersion}.${db.type}"
+              tofile="${build.iiqBinaryExtract}/WEB-INF/database/create_identityiq_tables-${IIQVersion}.${db.type}.tokenReplaced"/>
+        <!-- start mysql section -->
+        <if>
+            <and>
+                <isset property="db.type"/>
+                <equals arg1="${db.type}" arg2="mysql"/>
+            </and>
+            <then>
+                <!-- # First swap out the passwords:-->
+                <replace 
+                    file="${build.iiqBinaryExtract}/WEB-INF/database/create_identityiq_tables-${IIQVersion}.${db.type}.tokenReplaced"
+                    token="BY 'identityiqPlugin'"
+                    value="BY '${db.userPasswordPlugin}'"
+                />
+                <replace 
+                    file="${build.iiqBinaryExtract}/WEB-INF/database/create_identityiq_tables-${IIQVersion}.${db.type}.tokenReplaced"
+                    token="BY 'identityiq'"
+                    value="BY '${db.userPassword}'"
+                />
+                <!-- # Next swap out the USE statement: -->
+            	  <replace 
+                    file="${build.iiqBinaryExtract}/WEB-INF/database/create_identityiq_tables-${IIQVersion}.${db.type}.tokenReplaced"
+                    token="USE identityiqPlugin;"
+                    value="USE ${db.namePlugin};"
+                />
+                <replace 
+                    file="${build.iiqBinaryExtract}/WEB-INF/database/create_identityiq_tables-${IIQVersion}.${db.type}.tokenReplaced"
+                    token="USE identityiq;"
+                    value="USE ${db.name};"
+                />
+                <!-- # Next swap database create statement: -->  
+                <replace file="${build.iiqBinaryExtract}/WEB-INF/database/create_identityiq_tables-${IIQVersion}.${db.type}.tokenReplaced"
+                               token="EXISTS identityiqPlugin"
+                               value="EXISTS ${db.namePlugin}"
+                           />
+                <replace file="${build.iiqBinaryExtract}/WEB-INF/database/create_identityiq_tables-${IIQVersion}.${db.type}.tokenReplaced"
+                    token="EXISTS identityiq"
+                    value="EXISTS ${db.name}"
+                />
+            	<!-- # Next swap out the permissions statements -->
+            	   <replace file="${build.iiqBinaryExtract}/WEB-INF/database/create_identityiq_tables-${IIQVersion}.${db.type}.tokenReplaced" token="TO 'identityiqPlugin'" value="TO '${db.userNamePlugin}'" />
+                <replace file="${build.iiqBinaryExtract}/WEB-INF/database/create_identityiq_tables-${IIQVersion}.${db.type}.tokenReplaced" token="TO 'identityiq'" value="TO '${db.userName}'"/>
+            	<!-- # Next swap utf8  with latin1: -->  
+         	 <replace file="${build.iiqBinaryExtract}/WEB-INF/database/create_identityiq_tables-${IIQVersion}.${db.type}.tokenReplaced"
+            	                    token="utf8;"
+            	                    value="latin1;"
+            	                />
+            <!-- added with 7.3 testing to remove the warnings/nowarnings statements as they were causing us trouble. -->
+			<replace 
+                file="${build.iiqBinaryExtract}/WEB-INF/database/create_identityiq_tables-${IIQVersion}.${db.type}.tokenReplaced"
+                token="nowarning;"
+                value="-- nowarning ;"
+            />
+			<replace 
+                file="${build.iiqBinaryExtract}/WEB-INF/database/create_identityiq_tables-${IIQVersion}.${db.type}.tokenReplaced"
+                token="warnings;"
+                value="-- warnings ;"
+            />
+            </then>
+        </if>
+        <!-- Replacing ootb behavior to remove chance of multiple incorrect substitution. These will only swap out the table and index prefixes -->
+    	 <replace file="${build.iiqBinaryExtract}/WEB-INF/database/create_identityiq_tables-${IIQVersion}.${db.type}.tokenReplaced" casesensitive="false"
+    	                 token=" identityiqPlugin." value=" ${db.namePlugin}."/>
+        <replace file="${build.iiqBinaryExtract}/WEB-INF/database/create_identityiq_tables-${IIQVersion}.${db.type}.tokenReplaced" casesensitive="false"
+                 token=" identityiq." value=" ${db.name}."/>
+    	<!--Create DB With Hibernate Changes-->
+        <iiq.sql sql.file="${build.iiqBinaryExtract}/WEB-INF/database/create_identityiq_tables-${IIQVersion}.${db.type}.tokenReplaced"/>
+    	<!--Import All Inits-->
+        <antcall target="import-all"/>
+        <if>
+            <and>
+                <isset property="IIQPatchLevel"/>
+                <length string="${IIQPatchLevel}" when="greater" length="1"/>
+            </and>
+            <then>
+                <!--Connect IIQ Console-->
+            	<antcall target="-connectIIQConsole"/>
+                <copy overwrite="true" file="${build.iiqBinaryExtract}/WEB-INF/database/upgrade_identityiq_tables-${IIQVersion}${IIQPatchLevel}.${db.type}"
+                      tofile="${build.iiqBinaryExtract}/WEB-INF/database/upgrade_identityiq_tables-${IIQVersion}${IIQPatchLevel}.${db.type}.tokenReplaced"/>
+                <replace file="${build.iiqBinaryExtract}/WEB-INF/database/upgrade_identityiq_tables-${IIQVersion}${IIQPatchLevel}.${db.type}.tokenReplaced" casesensitive="false"
+                         token="identityiq" value="${db.name}"/>
+                <!-- fix trailing white space which causes syntax errors -->
+                <replaceregexp
+                        file="${build.iiqBinaryExtract}/WEB-INF/database/upgrade_identityiq_tables-${IIQVersion}${IIQPatchLevel}.${db.type}.tokenReplaced"
+                        match="\s*$"
+                        replace=""
+                        byline="true"
+                        />
+                <iiq.sql.upgrade
+                        sql.file="${build.iiqBinaryExtract}/WEB-INF/database/upgrade_identityiq_tables-${IIQVersion}${IIQPatchLevel}.${db.type}.tokenReplaced"/>
+                <antcall target="runUpgrade"/>
+            </then>
+        </if>
+	  	<!--Distribute new Files -->
+    	  <antcall target="dist"/>
+    	  <antcall target="cycle"/>
+    </target>
+    <!-- Propose we refactor this to split the DB types. Not enough overlap to make this giant piece worth it -->
+    <target name="dropSS"  depends="init-properties" description="Drops the AcceleratorPack/Plugin Database and their Users">
+        <if>
+            <equals arg1="${override.safety.prompts}" arg2="false"/>
+            <then>
+                <input
+                        message="Are you sure you want to drop your db and all of your data? continue (y/n)?"
+                        validargs="y,n"
+                        addproperty="do.delete"
+                        />
+                <condition property="do.abort">
+                    <equals arg1="n" arg2="${do.delete}"/>
+                </condition>
+                <fail if="do.abort">Build aborted by user.</fail>
+            </then>
+        </if>
+        <copy overwrite="true" file="${build.iiqBinaryExtract}/WEB-INF/database/drop_identityiq_tables-${IIQVersion}.${db.type}"
+              tofile="${build.iiqBinaryExtract}/WEB-INF/database/drop_identityiq_tables-${IIQVersion}.${db.type}.tokenReplaced"/>
+                <!-- Each DB has different syntax for removing the user and db-->
+                <!-- mysql section -->
+                <if>                    
+                    <and>
+                        <isset property="db.type"/>
+                        <equals arg1="${db.type}" arg2="mysql"/>
+                    </and>
+                    <then>
+                        <replace 
+                            file="${build.iiqBinaryExtract}/WEB-INF/database/drop_identityiq_tables-${IIQVersion}.${db.type}.tokenReplaced"
+                            token="USE identityiq"
+                            value="USE ${db.name}"
+                        /> 
+                        <replace 
+                            file="${build.iiqBinaryExtract}/WEB-INF/database/drop_identityiq_tables-${IIQVersion}.${db.type}.tokenReplaced"
+                            token="user='identityiq'"
+                            value="user='${db.userName}'"
+                        /> 
+                        <replace 
+                            file="${build.iiqBinaryExtract}/WEB-INF/database/drop_identityiq_tables-${IIQVersion}.${db.type}.tokenReplaced"
+                            token="EXISTS identityiq;"
+                            value="EXISTS ${db.name};"
+                        />  
+                    	<replace
+                        file="${build.iiqBinaryExtract}/WEB-INF/database/drop_identityiq_tables-${IIQVersion}.${db.type}.tokenReplaced"
+                        token="EXISTS identityiqPlugin;"
+                        value="EXISTS  ${db.namePlugin};"
+                   		 />
+                        <replace
+                        file="${build.iiqBinaryExtract}/WEB-INF/database/drop_identityiq_tables-${IIQVersion}.${db.type}.tokenReplaced"
+                        token="user='identityiqPlugin';"
+                        value="user='${db.userNamePlugin}';"
+                        />
+                    </then>                                        
+                </if>
+                <!-- end mysql section -->
+                <!-- fix to properly substitute in the right schema name in the drop script -->
+                <replace file="${build.iiqBinaryExtract}/WEB-INF/database/drop_identityiq_tables-${IIQVersion}.${db.type}.tokenReplaced" casesensitive="false"
+                         token="identityiq." value="${db.name}."/>
+                <iiq.sql sql.file="${build.iiqBinaryExtract}/WEB-INF/database/drop_identityiq_tables-${IIQVersion}.${db.type}.tokenReplaced"/>
+    </target>
+    <target name="deployImport" depends="-clean,-acceleratorpack,dist,import-acceleratorpack,import-acceleratorpack-BETA,import-acceleratorpack-epic-BETA,import-acceleratorpack-persona-BETA,cycle" description="Deploy to IIQHome. Apply Java Changes and Import (init-acceleratorpack.xml). Restart Server">
+    </target>
+    <target name="deploy" depends="-acceleratorpack,dist,cycle" description="Deploy to IIQHome. Apply Java Changes and Restart Server">
+    </target>
+    <target name="import" depends="-clean,-acceleratorpack,dist,import-acceleratorpack,import-acceleratorpack-BETA,import-acceleratorpack-epic-BETA,import-acceleratorpack-persona-BETA" description="Deploy to IIQHome and Import (init-acceleratorpack.xml)">
+    </target>
+    <target name="cycle" depends="init-properties" description="Restart Tomcat Server">
+        <!-- stop the server -->
+        <if>
+            <http url="http://${application.server.host}:${application.server.port}/${iiq.path}"/>
+            <then>
+                <iiq.start.stop action="stop"/>
+                <waitfor>
+                    <not>
+                        <socket server="${application.server.host}" port="${application.server.port}"/>
+                    </not>
+                </waitfor>
+                <iiq.start.stop action="start"/>
+            </then>
+            <else>
+                <iiq.start.stop action="start"/>
+            </else>
+        </if>
+    </target>
+</project>

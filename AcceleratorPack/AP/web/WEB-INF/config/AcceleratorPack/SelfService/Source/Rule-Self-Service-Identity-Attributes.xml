@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Rule PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<!-- Copyright © 2018 SailPoint Technologies, Inc. All Rights Reserved.
+All logos, text, content, and works of authorship, including but not limited to underlying code, programming or scripting language, designs, and/or graphics,
+that are used and/or depicted herein are protected under United States and international copyright and trademark laws and treaties,
+and may not be used or reproduced without the prior express written permission of SailPoint Technologies, Inc. -->
+<Rule language="beanshell" name="Rule-Self-Service-Identity-Attributes">
+<ReferencedRules>
+	   <Reference class="sailpoint.object.Rule" name="Rule-Self-Service-RuleLibrary"/>
+  </ReferencedRules>
+  <Source>
+  <![CDATA[
+	return getIdentityAttributeNameList();	
+   ]]>
+	</Source>
+</Rule>

@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE ImportAction PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<ImportAction name="connectorRegistryUpdateAction">
+  <Application connector="sailpoint.connector.LDAPConnector" featuresString="CURRENT_PASSWORD, PROVISIONING, SYNC_PROVISIONING, ENABLE, PASSWORD, MANAGER_LOOKUP, SEARCH" icon="directory2Icon" name="RACFLDAP Template" type="RACF LDAP">
+    <Attributes>
+      <Map>
+        <entry key="formPath" value="ldapAttributesForm.xhtml"/>
+        <entry key="dropDefaultGroupConnection">
+          <value>
+            <Boolean>true</Boolean>
+          </value>
+        </entry>
+        <entry key="groupEntitlementAttr" value="racfConnectGroupName"/>
+        <entry key="iterateModeOverride" value="DEFAULT"/>
+        <entry key="provisionPropertiesToAllConnections">
+          <value>
+            <Boolean>true</Boolean>
+          </value>
+        </entry>
+        <entry key="restoreAction" value="ADD"/>
+        <entry key="restoreAttr" value="racfAttributes"/>
+        <entry key="restoreVal" value="RESUME"/>
+        <entry key="revokeAttr" value="racfAttributes"/>
+        <entry key="revokeVal" value="REVOKE"/>
+        <entry key="revokedVal" value="REVOKED"/>
+        <entry key="setGroupAsConnectionOwner">
+          <value>
+            <Boolean>true</Boolean>
+          </value>
+        </entry>
+      </Map>
+    </Attributes>
+    <Schemas>
+      <Schema displayAttribute="racfid" identityAttribute="dn" nativeObjectType="racfUser" objectType="account">
+        <AttributeDefinition name="dn" type="string">
+          <Description>Distinguished name of RACF User</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="racfid" type="string">
+          <Description>RACF User Id</Description>
+        </AttributeDefinition>
+        <AttributeDefinition multi="true" name="objectClass" type="string">
+          <Description>RACF User Object Classes</Description>
+        </AttributeDefinition>
+        <AttributeDefinition multi="true" name="racfAttributes" type="string">
+          <Description>RACF Attributes Pertaining To This User</Description>
+        </AttributeDefinition>
+        <AttributeDefinition multi="true" name="racfClassName" type="string">
+          <Description>Classes in which user is allowed to define profiles</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="racfDefaultGroup" type="string">
+          <Description>RACF Default Group of User</Description>
+        </AttributeDefinition>
+        <AttributeDefinition entitlement="true" managed="true" multi="true" name="racfConnectGroupName" schemaObjectType="group" type="string">
+          <Description>List of groups a RACF User is a member</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="racfLastAccess" type="string">
+          <Description>RACF Last Access Date</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="racfProgrammerName" type="string">
+          <Description>User name associated with the RACF user ID</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="racfPasswordChangeDate" type="string">
+          <Description>Last date user changed his password</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="racfPasswordInterval" type="string">
+          <Description>Number of days during which a user's password and password phrase (if set) remain valid</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="racfHavePasswordEnvelope" type="string">
+          <Description>RACF User Has Password Envelope</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="racfPassPhraseChangeDate" type="string">
+          <Description>Last date user changed his passphrase</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="racfHavePassPhraseEnvelope" type="string">
+          <Description>RACF User Has Password Envelope</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="racfResumeDate" type="string">
+          <Description>Starting date when user will be allowed to access the system again</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="racfRevokeDate" type="string">
+          <Description>Starting date when user will be disallowed to access the system</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="racfSecurityLabel" type="string">
+          <Description>Default security label</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="racfSecurityLevel" type="string">
+          <Description>Security level of user</Description>
+        </AttributeDefinition>
+        <AttributeDefinition multi="true" name="racfSecurityCategoryList" type="string">
+          <Description>User access to resources is additionally protected by the security categories</Description>
+        </AttributeDefinition>
+        <AttributeDefinition multi="true" name="racfLogonDays" type="string">
+          <Description>Days of the week when the user is allowed to access the system from a terminal</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="racfLogonTime" type="string">
+          <Description>Hours in the day when the user is allowed to access the system from a terminal</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="racfAuthorizationDate" type="string">
+          <Description>Date when user was defined to RACF</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="racfInstallationData" type="string">
+          <Description>RACF Installation Data</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="racfDatasetModel" type="string">
+          <Description>Discrete data set profile name that is used as a model when new data set profiles are created that have userid as the high-level qualifier</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="racfOwner" type="string">
+          <Description>Owner User or owner group</Description>
+        </AttributeDefinition>
+        <AttributeDefinition multi="true" name="racfOperatorClass" type="string">
+          <Description>classes assigned to this operator to which BMS (basic mapping support) messages are to be routed - CICS segment</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="racfOperatorIdentification" type="string">
+          <Description>Operator ID for use by BMS - CICS segment</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="racfOperatorPriority" type="string">
+          <Description>Priority of the operator - CICS segment</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="racfTerminalTimeout" type="string">
+          <Description>Time, in hours and minutes, that the operator is allowed to be idle before being signed off. - CICS segment</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="racfOperatorReSignon" type="string">
+          <Description>FORCE means that the user is signed off by CICS when an XRF takeover occurs - CICS segment</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="SAFAccountNumber" type="string">
+          <Description>Default TSO account number when logging on - TSO segment</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="SAFDefaultCommand" type="string">
+          <Description>Command run during TSO logon - TSO segment</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="SAFDestination" type="string">
+          <Description>Default destination to which the system routes dynamically-allocated SYSOUT data sets - TSO segment</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="SAFHoldClass" type="string">
+          <Description>Default hold class - TSO segment</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="SAFJobClass" type="string">
+          <Description>Default job class - TSO segment</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="SAFMessageClass" type="string">
+          <Description>Default message class - TSO segment</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="SAFTsoSecurityLabel" type="string">
+          <Description>Security label entered or used during TSO LOGON - TSO segment</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="SAFDefaultSysoutClass" type="string">
+          <Description>Default SYSOUT class - TSO segment</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="SAFDefaultUnit" type="string">
+          <Description>Default name of a device or group of devices that a procedure uses for allocations - TSO segment</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="SAFDefaultLoginProc" type="string">
+          <Description>Default logon procedure name when logging on through TSO logon panel - TSO segment</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="SAFLogonSize" type="string">
+          <Description>Default or requested region size during TSO logon - TSO segment</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="SAFMaximumRegionSize" type="string">
+          <Description>Maximum region size the user can request at logon - TSO segment</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="SAFUserdata" type="string">
+          <Description>Optional installation data defined for the user - TSO segment</Description>
+        </AttributeDefinition>
+      </Schema>
+      <Schema displayAttribute="racfid" identityAttribute="dn" nativeObjectType="racfGroup" objectType="group">
+        <AttributeDefinition name="dn" type="string">
+          <Description>Distinguished Name of RACF Group</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="racfid" type="string">
+          <Description>RACF Group Id</Description>
+        </AttributeDefinition>
+        <AttributeDefinition multi="true" name="objectClass" type="string">
+          <Description>RACF Group Object Classes</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="racfAuthorizationDate" type="string">
+          <Description>RACF Authorization Date</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="racfInstallationData" type="string">
+          <Description>RACF Installation Data</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="racfOwner" type="string">
+          <Description>Owner of RACF Group</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="racfGroupNoTermUAC" type="string">
+          <Description>Specifies whether the users present in group are having universal access authority (UACC) to the Terminal </Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="racfSuperiorGroup" type="string">
+          <Description>RACF Superior Group</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="racfSubGroupName" type="string">
+          <Description>RACF Sub Group Names</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="racfGroupUniversal" type="string">
+          <Description>RACF Universal Group</Description>
+        </AttributeDefinition>
+        <AttributeDefinition multi="true" name="racfGroupUserids" type="string">
+          <Description>RACF Group Members</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="racfDatasetModel" type="string">
+          <Description>RACF Data Set Model</Description>
+        </AttributeDefinition>
+      </Schema>
+    </Schemas>
+    <Templates>
+      <Template name="account" schemaObjectType="account" usage="Create">
+        <Field displayName="con_prov_policy_ldap_user_DN" helpKey="help_con_prov_policy_racf_ldap_user_DN" name="dn" required="true" section="" type="string"/>
+        <Field displayName="con_prov_policy_ldap_password" helpKey="help_con_prov_policy_ldap_password" name="password" required="true" section="" type="secret"/>
+        <Field displayName="con_prov_policy_racf_ldap_default_group" helpKey="help_con_prov_policy_racf_ldap_default_group" name="racfDefaultGroup" reviewRequired="true" section="" type="string"/>
+        <Field displayName="con_prov_policy_racf_ldap_owner" helpKey="help_con_prov_policy_racf_ldap_owner" name="racfOwner" reviewRequired="true" section="" type="string"/>
+        <Field displayName="con_prov_policy_racf_ldap_connection_revokedate" helpKey="help_con_prov_policy_racf_ldap_connection_revokedate" name="connection_racfConnectRevokeDate" reviewRequired="true" section="" type="string"/>
+      </Template>
+      <Template name="edit account" schemaObjectType="account" usage="Update">
+        <Field displayName="con_prov_policy_racf_ldap_connection_revokedate" helpKey="help_con_prov_policy_racf_ldap_connection_revokedate" name="connection_racfConnectRevokeDate" reviewRequired="true" section="" type="string"/>
+      </Template>
+    </Templates>
+  </Application>
+</ImportAction>

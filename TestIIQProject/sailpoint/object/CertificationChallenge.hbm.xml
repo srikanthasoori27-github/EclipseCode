@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" [
+  <!ENTITY SailPointObject SYSTEM "classpath://sailpoint/object/SailPointObject.hbm.xml">
+  <!ENTITY WorkItemMonitor SYSTEM "classpath://sailpoint/object/WorkItemMonitor.hbm.xml">
+]>
+
+<!-- (c) Copyright 2008 SailPoint Technologies, Inc., All Rights Reserved. -->
+
+<hibernate-mapping>
+  <class name="sailpoint.object.CertificationChallenge">
+
+    &SailPointObject;
+    &WorkItemMonitor;
+
+    <property name="description" type="string" length="1024"/>
+    <property name="challenged" type="boolean" />
+
+    <property name="decision">
+      <type name="sailpoint.persistence.EnumType">
+        <param name="enumClassName">sailpoint.object.CertificationChallenge$Decision</param>
+      </type>
+    </property>
+
+    <!-- length necessary for DB2 -->
+    <property name="decisionComments" type="materialized_clob" length="8192"/>
+    <property name="deciderName" type="string" />
+
+    <property name="challengeDecisionExpired" type="boolean" />
+
+  </class>
+</hibernate-mapping>
+

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Rule PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<!-- Copyright © 2018 SailPoint Technologies, Inc. All Rights Reserved.
+All logos, text, content, and works of authorship, including but not limited to underlying code, programming or scripting language, designs, and/or graphics,
+that are used and/or depicted herein are protected under United States and international copyright and trademark laws and treaties,
+and may not be used or reproduced without the prior express written permission of SailPoint Technologies, Inc. -->
+<Rule language="beanshell" name="Rule-Operations-EmergencyAction">
+  <Description>Operations - Emergency Action</Description>
+  <Source><![CDATA[
+         import org.apache.commons.logging.Log;
+		 import org.apache.commons.logging.LogFactory;
+		 import sailpoint.rapidapponboarding.logger.LogEnablement;
+		 import sailpoint.rapidonboarding.callables.SuspensionRestoreRMThreadPoolProcessor;
+		 import sailpoint.tools.Util;
+		 Log susLogger = LogFactory.getLog("rapidapponboarding.rules");
+		 String appNames=config.get("APPLICATIONAMES");
+		 String undo=config.get("UNDO");
+		 List appNamesList=new ArrayList();
+		 LogEnablement.isLogDebugEnabled(susLogger,"APPLICATIONAMES..."+appNames);
+		 if(appNames!=null)
+		 {
+			 if( appNames.contains("]"))
+			 {
+				 appNames=appNames.replaceAll("\\]","");
+			 }
+			 if( appNames.contains("["))
+			 {
+				 appNames=appNames.replaceAll("\\[","");
+			 }
+			 LogEnablement.isLogDebugEnabled(susLogger,"APPLICATIONAMES REPLACE..."+appNames);
+			 appNamesList=Util.csvToList(appNames);
+			 LogEnablement.isLogDebugEnabled(susLogger,"APPLICATIONAMES LIST..."+appNamesList);
+		 }
+		 boolean allApps=false;
+		 if(config.get("ALLAPS")!=null && config.get("ALLAPS").equalsIgnoreCase("TRUE"))
+		 {
+		 	allApps=true;
+		 }
+		 else if(config.get("ALLAPS")!=null)
+		 {
+			 allApps=false;
+		 }
+		 boolean switchUITask=false;
+		 if(config.get("SWITCH")!=null && config.get("SWITCH").equalsIgnoreCase("TRUE"))
+		 {
+		 	switchUITask=true;
+		 }
+		 else if(config.get("SWITCH")!=null)
+		 {
+		 	switchUITask=false;
+		 }
+		 String postPoneDate=null;
+		 if(config.get("POSTPONE")!=null)
+		 {
+		 	postPoneDate=config.get("POSTPONE");
+		 }
+		 boolean terminateTasks=false;
+		 if(config.get("TERMINATETASKS")!=null && config.get("TERMINATETASKS").equalsIgnoreCase("TRUE"))
+		 {
+		 	terminateTasks=true;
+		 }
+		 else if(config.get("SWITCH")!=null)
+		 {
+		 	terminateTasks=false;
+		 }
+		String populationName=config.get("GROUPDEFINITION");
+		String includePopulationName=config.get("INCLUDEGROUPDEFINITION");
+		String launchOption=config.get("LAUNCHOPTIONS");
+		String suspensionRestoreThreads=config.get("SUSPENSIONRESTORETHREADS");
+		String suspensionRestoreWait=config.get("SUSPENSIONRESTOREWAIT");
+		SuspensionRestoreRMThreadPoolProcessor suspensionRestoreRMThreadPoolProcessor = new SuspensionRestoreRMThreadPoolProcessor(context,appNamesList,populationName,
+		launchOption,undo,allApps,switchUITask,postPoneDate,terminateTasks,includePopulationName,suspensionRestoreThreads,suspensionRestoreWait);
+		suspensionRestoreRMThreadPoolProcessor.startProcessing();
+  ]]></Source>
+</Rule>

@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" [
+  <!ENTITY SailPointObject SYSTEM "classpath://sailpoint/object/SailPointObject.hbm.xml">
+]>
+
+<!-- (c) Copyright 2008 SailPoint Technologies, Inc., All Rights Reserved. -->
+
+<hibernate-mapping>
+  <class name="sailpoint.object.WorkItemConfig">
+
+    &SailPointObject;
+
+    <property name="name" type="string" length="128"/>
+    <property name="descriptionTemplate" type="string" length="1024"/>
+    <property name="disabled" type="boolean"/>
+    <property name="noWorkItem" type="boolean"/>
+
+    <many-to-one embed-xml="false" name="parent" class="sailpoint.object.WorkItemConfig"/>
+
+    <list name="owners" table="WorkItemOwners" cascade="persist,merge,save-update">
+      <key column="config"/>
+      <list-index column="idx"/>
+      <many-to-many class="sailpoint.object.Identity"/>
+    </list>
+
+    <many-to-one embed-xml="false" name="ownerRule" class="sailpoint.object.Rule"/>
+    
+    <property name="hoursTillEscalation"/>
+    <property name="hoursBetweenReminders"/>
+    <property name="maxReminders"/>
+
+    <many-to-one embed-xml="false" name="notificationEmail" class="sailpoint.object.EmailTemplate"/>
+    <many-to-one embed-xml="false" name="reminderEmail" class="sailpoint.object.EmailTemplate"/>
+    <many-to-one embed-xml="false" name="escalationEmail" class="sailpoint.object.EmailTemplate"/>
+    <many-to-one embed-xml="false" name="escalationRule" class="sailpoint.object.Rule"/>
+
+  </class>
+</hibernate-mapping>

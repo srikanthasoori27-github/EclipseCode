@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" [
+  <!ENTITY SailPointObject SYSTEM "classpath://sailpoint/object/SailPointObject.hbm.xml">
+  <!ENTITY BaseConstraint SYSTEM "classpath://sailpoint/object/BaseConstraint.hbm.xml">
+]>
+
+<!-- (c) Copyright 2008 SailPoint Technologies, Inc., All Rights Reserved. -->
+
+<hibernate-mapping>
+  <class name="sailpoint.object.SODConstraint">
+
+    &SailPointObject;
+    &BaseConstraint;
+
+    <property name="arguments" type="sailpoint.persistence.XmlType" length="100000000"/>
+
+    <list name="leftBundles" table="SODConstraintLeft" 
+      cascade="persist,merge,save-update">
+      <key column="sodconstraint"/>
+      <list-index column="idx"/>
+      <many-to-many column="businessrole" class="sailpoint.object.Bundle"/>
+    </list>
+
+    <list name="rightBundles" table="SODConstraintRight"
+      cascade="persist,merge,save-update">
+      <key column="sodconstraint"/>
+      <list-index column="idx"/>
+      <many-to-many column="businessrole" class="sailpoint.object.Bundle"/>
+    </list>
+
+  </class>
+</hibernate-mapping>

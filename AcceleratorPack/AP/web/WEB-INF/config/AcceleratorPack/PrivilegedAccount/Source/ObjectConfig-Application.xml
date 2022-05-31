@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE sailpoint PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<!-- Copyright © 2018 SailPoint Technologies, Inc. All Rights Reserved.
+All logos, text, content, and works of authorship, including but not limited to underlying code, programming or scripting language, designs, and/or graphics,
+that are used and/or depicted herein are protected under United States and international copyright and trademark laws and treaties,
+and may not be used or reproduced without the prior express written permission of SailPoint Technologies, Inc. -->
+<sailpoint>
+<ImportAction name='merge'>
+<ObjectConfig name="Application">
+	<!-- USED BY AGGREGATION, PRIVILEGED ACCOUNT-->
+	<ObjectAttribute defaultValue="" categoryName="Aggregate"
+		displayName="Privileged Entitlement Identification" editMode="Permanent"
+		name="privilegedEntAttrExpression">
+		<Description>SUPPORTED FORMATS: [Object Type(Optional).Schema Attribute Name]#IIQEntitlementPrivileged#[Schema Attribute Value]#IIQEntitlementPrivileged#[Operation] OR [Schema Attribute Name]#IIQEntitlementPrivileged#[Java Regular Expression]</Description>
+	</ObjectAttribute>
+	<!-- USED BY AGGREGATION, PRIVILEGED ACCOUNT-->
+		<ObjectAttribute defaultValue="" categoryName="Aggregate"
+		displayName="Privileged Account Identification" editMode="Permanent"
+		name="privilegedAccountAttrExpression">
+		<Description>SUPPORTED FORMATS: [Schema Attribute Name]#IIQPrivileged#[Schema Attribute Value]#IIQPrivileged#[Operation] OR [Schema Attribute Name]#IIQPrivileged#[Java Regular Expression]</Description>
+	</ObjectAttribute>
+	<!-- USED BY MOVER, PRIVILEGED ACCOUNT-->
+		<ObjectAttribute categoryName="Mover"
+		defaultValue="" displayName="Before Mover Only Primary Account" editMode="Permanent" name="beforemoverPrimaryaccount" type="boolean">
+		<Description>Before Mover Only Primary Account</Description>
+	</ObjectAttribute>
+	<!-- USED BY ATTRIBUTE SYNCHRONIZATION, PRIVILEGED ACCOUNT-->
+		<ObjectAttribute categoryName="Attribute Synchronization"
+		defaultValue="" displayName="Only Primary Account Attribute Synchronization" editMode="Permanent" name="primarySyncaccounts" type="boolean">
+		<Description>Attribute Synchronization for Accounts</Description>
+	</ObjectAttribute>
+	<!-- USED BY PASSWORD SYNCHRONIZATION, PRIVILEGED ACCOUNT-->
+	<ObjectAttribute categoryName="Password Synchronization"
+		defaultValue="" displayName="Detect Change Password on Primary Account" editMode="Permanent" name="primarypasswordSyncaccounts" type="boolean">
+		<Description>Password Synchronization for Accounts</Description>
+	</ObjectAttribute>
+	<!-- USED BY JOINER, PRIVILEGED ACCOUNT-->
+	<ObjectAttribute categoryName="Joiner"
+		defaultValue="" displayName="On Rehire Restore Only Primary Account" editMode="Permanent" name="rehirePrimaryaccount" type="boolean">
+		<Description>Move Only Primary Account</Description>
+	</ObjectAttribute>
+	</ObjectConfig>
+	</ImportAction>
+</sailpoint>

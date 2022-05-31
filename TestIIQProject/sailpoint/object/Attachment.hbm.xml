@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" [
+    <!ENTITY SailPointObject SYSTEM "classpath://sailpoint/object/SailPointObject.hbm.xml">
+    ]>
+
+<!-- (c) Copyright 2018 SailPoint Technologies, Inc., All Rights Reserved. -->
+
+<hibernate-mapping>
+  <class name="sailpoint.object.Attachment">
+
+    &SailPointObject;
+
+    <property name="name" type="string" length="256"/>
+    <property name="description" type="string" length="256"/>
+    <!--DB2 requires a specified length so the length was set to the max blob size in DB2. The other DBs work without the length defined-->
+    <property name="content" type="materialized_blob" length="2147483647"/>
+  </class>
+
+
+</hibernate-mapping>

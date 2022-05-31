@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Custom PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<!-- Copyright © 2018 SailPoint Technologies, Inc. All Rights Reserved.
+All logos, text, content, and works of authorship, including but not limited to underlying code, programming or scripting language, designs, and/or graphics,
+that are used and/or depicted herein are protected under United States and international copyright and trademark laws and treaties,
+and may not be used or reproduced without the prior express written permission of SailPoint Technologies, Inc. -->
+<Custom name="Custom-Framework-Common-Settings">
+  <Attributes>
+    <Map>
+      <entry key="SMARTSERVICES GLOBAL SETTINGS">
+        <value>
+          <Map>
+          	 <!-- Worklfow Settings Start -->
+         	 <entry key="globalWait">
+             <value>
+             <Integer>60</Integer>
+             </value>
+             </entry>
+             <entry key="existingAccessRequest"/>
+             <entry key="existingAccountRequest"/>
+             <entry key="existingBatchAccessRequest"/>
+             <entry key="existingBatchAccountRequest"/>
+            <!-- Worklfow Settings End -->
+            <entry key="additionalPasswordEmail" value="TRUE"/>
+            <entry key="authSourceAppName" value=""/>
+              <!-- The interval in minutes to wait to retry the request -->
+             <entry key="provisioningRetryThreshold">
+             <value>
+             <Integer>720</Integer>
+             </value>
+             </entry> 
+             <!-- The maximum number of retries that will be attempted before failure 
+       		of the provisioning -->
+              <entry key="provisioningMaxRetries">
+             <value>
+             <Integer>3</Integer>
+             </value>
+             </entry> 
+            <!-- Approvals  Start-->
+             <entry key="apEnableAutoApprovalsAccessAccountRequest" value="FALSE"/>
+            <!-- Approvals  End-->
+            <!-- Operations  Start-->
+            <entry key="errorNotificationWorkGroup" value="Operations"/>
+            <entry key="temporaryApprovalsWorkGroup" value="Operations"/>
+            <entry key="byPassBatchApprovals" value="Operations"/>
+             <!-- Operations  End-->
+             <!-- IdentityIQ Artifacts Start-->
+            <entry key="reassignOwnershipToManager" value="TRUE"/>
+            <entry key="reassignmentRule" value=""/>
+            <entry key="removeIIQArtifactsOwnership" value="TRUE"/>
+             <entry key="sailpointArtifacts">
+              <value>
+                <List>
+                  <String>Bundle</String>
+                  <String>Application</String>
+                  <String>Policy</String>
+                  <String>ManagedAttribute</String>
+                  <String>GroupDefinition</String>
+                  <String>CertificationDefinition</String>
+                  <String>TaskDefinition</String>
+                  <String>Identity</String>
+                  <String>WorkItem</String>
+                </List>
+              </value>
+            </entry>
+             <!-- IdentityIQ Artifacts End-->
+             <!-- Business Approvers Start -->
+             <entry key="sailpointBusinessApproversArtifacts">
+              <value>
+                <List>
+                  <String>appBusApprovers</String>
+                  <String>additionalAppBusApprovers</String>
+                  <String>entBusApprovers</String>
+                  <String>additionalEntBusApprovers</String>
+                  <String>roleBusApprovers</String>
+                  <String>additionalRoleBusApprovers</String>
+                </List>
+              </value>
+            </entry>
+            <entry key="businessApproversremoveOwnership" value="TRUE"/>
+            <entry key="businessApproversreassignmentRule" value=""/>
+            <entry key="businessApproversToManager" value="TRUE"/>
+             <!-- Business Approvers End -->
+             <!-- Create Edit Register Start -->
+             <entry key="apCreateEditWorkGroup" value=""/>
+             <!-- Create Edit Register End -->
+             <!-- Service Accounts Artifacts Start -->
+            <entry key="createServiceCubes" value="TRUE"/>
+            <entry key="createEditCtrDateFormat" value="MM/dd/yyyy K:m:s a z"/>
+            <entry key="editServiceCubes" value="TRUE"/>
+            <entry key="serviceAccountremoveOwnership" value="TRUE"/>
+            <entry key="serviceAccountreassignmentRule" value=""/>
+            <entry key="serviceAccountreassignOwnershipToManager" value="TRUE"/>
+            <entry key="serviceAccountOwnerAttrs" value="saccountOwnerone,administrator"/>
+             <!-- Service Accounts Artifacts End -->
+             <!-- Global Wrapper Workflow Start -->
+            <entry key="postWrapperRule" value=""/>
+            <entry key="interceptorPlanRule" value=""/>
+            <entry key="interceptorProjectRule" value=""/>
+             <!-- Global Wrapper Workflow End -->
+            <!-- Workflow CC Settings Start -->
+            <entry key="apCCEmailWorkgroup" value=""/>
+            <entry key="apCCEmailRule" value=""/>
+            <entry key="apDisableStaticManagerEmailContent" value="False"/>
+            <!-- Workflow CC Settings End -->
+             <!-- Rehire Start -->
+            <entry key="rehireBeforePlanRule" value=""/>
+            <entry key="postRehireRule" value=""/>
+             <!-- Rehire End -->
+             <!-- Joiner Start -->
+             <entry key="postJoinerRule" value=""/>
+             <entry key="postRTWLOARule" value=""/>
+             <entry key="postRTWLTDRule" value=""/>
+             <entry key="postReverseLeaverRule" value=""/>
+             <entry key="wgJoinerRehireEmail" value=""/>
+             <entry key="apFilterDetectedRoles" value="TRUE"/>
+             <entry key="apSendEmailToOperationsRLOA" value="FALSE"/>
+             <entry key="apSendEmailToOperationsRLTD" value="FALSE"/>
+             <!-- Joiner End -->
+             <!-- Mover Start -->
+            <entry key="postMoverRule" value=""/>
+            <entry key="postMitigationRule" value=""/>
+             <!-- Mover End -->
+             <!-- Attribute Synchronization Start -->
+            <entry key="postAttributeSyncRule" value=""/>
+            <entry key="attributeSyncParallelRehire" value=""/>
+            <entry key="attributeSyncParallelMover" value=""/>
+            <entry key="apSendEmailToOperations" value="FALSE"/>
+             <!-- Attribute Synchronization End -->
+             <!-- Leaver Start -->
+            <entry key="postLeaverRule" value=""/>
+            <entry key="postLOARule" value=""/>
+            <entry key="postLTDRule" value=""/>
+            <entry key="wgLeaverReverseLeaverEmail" value=""/>
+            <entry key="requestSnapshot">
+              <value>
+                <List>
+                  <String>LEAVER FEATURE</String>
+                  <String>IMMEDIATE TERMINATION FEATURE</String>
+                </List>
+              </value>
+            </entry>
+            <entry key="apSendEmailToOperationsLOA" value="FALSE"/>
+            <entry key="apSendEmailToOperationsLTD" value="FALSE"/>
+            <!-- Leaver End -->
+            <!-- Target Aggregation Start -->
+            <entry key="targetAggregationAttributes">
+              <value>
+                <List>
+                  <String>AC_NewName</String>
+                  <String>AC_NewParent</String>
+                </List>
+              </value>
+            </entry>
+             <!-- Target Aggregation End -->
+            <!-- Policy Start -->
+            <entry key="policyScheme" value="interactive"/>
+            <entry key="policySoftFilter" value=""/>
+            <entry key="policyDenyFilter" value=""/>
+            <entry key="defaultAllowRequest" value="True"/>
+            <entry key="defaultAllowRequestCommentsRequired" value="True"/>
+            <!-- Policy  End -->
+            <!-- Native Change Start-->
+            <entry key="apSendEmailToOperationsNC" value="FALSE"/>
+            <!-- Native Change End-->
+            <!-- Epic SER Start-->
+            <entry key="apSendEmailToOperationsEpicSER" value="FALSE"/>
+            <entry key="postNativeChangeRule" value=""/>
+            <!-- Epic SER End-->
+            <!-- Email References Start -->
+            <!-- Operations Start-->
+            <entry key="OperationsAttributeSync" value="EmailTemplate-FrameworkOperationsAttributeSync"/>
+            <entry key="OperationsSER" value="EmailTemplate-FrameworkOperationsSER"/>
+            <entry key="OperationsRTWLOA" value="EmailTemplate-FrameworkOperationsRTWLOA"/>
+            <entry key="OperationsRTWLTD" value="EmailTemplate-FrameworkOperationsRTWLTD"/>
+            <entry key="OperationsLOA" value="EmailTemplate-FrameworkOperationsLOA"/>
+            <entry key="OperationsLTD" value="EmailTemplate-FrameworkOperationsLTD"/>
+            <entry key="OperationsNativeChange" value="EmailTemplate-FrameworkOperationsNativeChange"/>
+            <!-- Operations End-->
+            <!-- Batch Request and Interactive Request Start-->
+            <entry key="AutoRejection" value="EmailTemplate-FrameworkAutoRejection"/>
+            <entry key="Rejection" value="EmailTemplate-FrameworkRejection"/>
+            <entry key="RequestSubmission" value="EmailTemplate-FrameworkRequestSubmission"/>
+            <entry key="RequestCompletion" value="EmailTemplate-FrameworkRequestCompletion"/>
+            <!-- Batch Request and Interactive Request End-->
+            <!-- Batch Request Start-->
+            <entry key="BatchCompletion" value="EmailTemplate-FrameworkBatchCompletion"/>
+            <!-- Batch Request End-->
+            <!-- Joiner and Rehire Start-->
+            <entry key="JoinerManager" value="EmailTemplate-FrameworkJoinerManager"/>
+            <entry key="PasswordJoinerManager" value="EmailTemplate-FrameworkPasswordJoinerManager"/>
+            <!-- Joiner and Rehire End-->
+            <!-- Reverse Leaver Start-->
+            <entry key="ReverseLeaver" value="EmailTemplate-FrameworkReverseLeaver"/>
+            <!-- Reverse Leaver End-->
+            <!--  Leaver Start-->
+            <entry key="LeaverManager" value="EmailTemplate-FrameworkLeaverManager"/>
+            <entry key="LeaverManagerOwnershipRemoval" value="EmailTemplate-FrameworkLeaverManagerOwnershipRemoval"/>
+            <!--  Leaver End-->
+            <!--  Mitigation Start-->
+            <entry key="MitigationExpiration" value="EmailTemplate-FrameworkMitigationExpiration"/>
+            <!--  Mitigation End-->
+            <!--  Privileged Account Notification Start-->
+            <entry key="PSAPasswordExpiration" value="EmailTemplate-FrameworkPSAPasswordExpiration"/>
+            <!--  Privileged Account Notification End-->
+            <!-- Email References End -->
+          </Map>
+        </value>
+      </entry>
+    </Map>
+  </Attributes>
+</Custom>

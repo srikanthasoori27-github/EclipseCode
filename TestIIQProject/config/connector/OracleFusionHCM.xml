@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE ImportAction PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<ImportAction name="connectorRegistryUpdateAction">
+  <Application connector="sailpoint.connector.OpenConnectorAdapter" featuresString="SEARCH, PROVISIONING" icon="internetIcon" name="Oracle Fusion HCM" type="Oracle Fusion HCM">
+    <Attributes>
+      <Map>
+           <entry key="connectorClass" value="openconnector.connector.oraclefusionhcm.OracleFusionHCMConnector"/>
+           <entry key="formPath" value="OracleFusionHCMConfigForm.xhtml"/>
+           <entry key="authenticationType" value="Basic"/>
+           <entry key="useWorkersApi">
+             <value>
+               <Boolean>true</Boolean>
+             </value>
+           </entry>
+           <entry key="attributeMappings">
+            <value>
+                <Map>
+                    <entry key="ASSIGNMENT_MANAGER_TYPE" value="assignments[?(@.PrimaryWorkRelationFlag==true)].ManagerType" />
+                    <entry key="ASSIGNMENT_STATUS" value="assignments[?(@.PrimaryWorkRelationFlag==true)].AssignmentStatus" />
+                    <entry key="ASSIGNMENT_EFFECTIVE_START_DATE" value="assignments[?(@.PrimaryWorkRelationFlag==true)].EffectiveStartDate" />
+                    <entry key="ASSIGNMENT_DEPARTMENT_ID" value="assignments[?(@.PrimaryWorkRelationFlag==true)].DepartmentId" />
+                    <entry key="PERSON_NUMBER" value="PersonNumber" />
+                    <entry key="ASSIGNMENT_POSITION_ID" value="assignments[?(@.PrimaryWorkRelationFlag==true)].PositionId" />
+                    <entry key="WORK_TELEPHONE" value="WorkPhoneNumber" />
+                    <entry key="WORK_MOBILE" value="WorkMobilePhoneNumber" />
+                    <entry key="LAST_NAME" value="LastName" />
+                    <entry key="ASSIGNMENT_EFFECTIVE_END_DATE" value="assignments[?(@.PrimaryWorkRelationFlag==true)].EffectiveEndDate" />
+                    <entry key="ASSIGNMENT_MANAGER_ID" value="assignments[?(@.PrimaryWorkRelationFlag==true)].ManagerId" />
+                    <entry key="FIRST_NAME" value="FirstName" />
+                    <entry key="ASSIGNMENT_NAME" value="assignments[?(@.PrimaryWorkRelationFlag==true)].AssignmentName" />
+                    <entry key="COUNTRY" value="Country" />
+                    <entry key="HIRE_DATE" value="HireDate" />
+                    <entry key="NATIONAL_ID" value="NationalId" />
+                    <entry key="NATIONAL_ID_EXPIRATION_DATE" value="NationalIdExpirationDate" />
+                    <entry key="ASSIGNMENT_LOCATION_ID" value="assignments[?(@.PrimaryWorkRelationFlag==true)].LocationId" />
+                    <entry key="ASSIGNMENT_ACTION_CODE" value="assignments[?(@.PrimaryWorkRelationFlag==true)].ActionCode" />
+                    <entry key="ADDRESS_LINE_1" value="AddressLine1" />
+                    <entry key="ADDRESS_LINE_2" value="AddressLine2" />
+                    <entry key="ADDRESS_LINE_3" value="AddressLine3" />
+                    <entry key="LEGAL_ENTITY_ID" value="LegalEntityId" />
+                    <entry key="ASSIGNMENT_TERMINATION_DATE" value="assignments[?(@.PrimaryWorkRelationFlag==true)].ActualTerminationDate" />
+                    <entry key="ASSIGNMENT_JOB_ID" value="assignments[?(@.PrimaryWorkRelationFlag==true)].JobId" />
+                    <entry key="USER_NAME" value="UserName" />
+                    <entry key="DISPLAY_NAME" value="DisplayName" />
+                    <entry key="HOME_TELEPHONE" value="HomePhoneNumber" />
+                    <entry key="REGION" value="Region" />
+                    <entry key="TERMINATION_DATE" value="TerminationDate" />
+                    <entry key="CITY" value="City" />
+                    <entry key="NATIONAL_ID_TYPE" value="NationalIdType" />
+                    <entry key="ASSIGNMENT_BUSINESS_UNIT_ID" value="assignments[?(@.PrimaryWorkRelationFlag==true)].BusinessUnitId" />
+                    <entry key="WORKER_TYPE" value="WorkerType" />
+                    <entry key="ASSIGNMENT_WORKER_CATEGORY" value="assignments[?(@.PrimaryWorkRelationFlag==true)].WorkerCategory" />
+                    <entry key="WORK_EMAIL" value="WorkEmail" />
+                    <entry key="Manager_Name" value="['urn:scim:schemas:extension:fa:2.0:faUser'].workerInformation.manager" />
+                    <entry key="Business_Unit_Name" value="['urn:scim:schemas:extension:fa:2.0:faUser'].workerInformation.businessUnit" />
+                    <entry key="Department_Name" value="['urn:scim:schemas:extension:fa:2.0:faUser'].workerInformation.department" />
+                    <entry key="Job_Name" value="['urn:scim:schemas:extension:fa:2.0:faUser'].workerInformation.job" />
+                </Map>
+             </value>
+           </entry>
+      </Map>
+    </Attributes>
+    <Schemas>
+      <Schema displayAttribute="DISPLAY_NAME" identityAttribute="PERSON_NUMBER" nativeObjectType="account" objectType="account">
+        <AttributeDefinition name="PERSON_NUMBER" remediationModificationType="None" required="true" type="string">
+          <Description>Unique identifier of Person</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="DISPLAY_NAME" remediationModificationType="None" required="true" type="string">
+          <Description>Person's display name</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="USER_NAME" remediationModificationType="None" required="true" type="string">
+          <Description>User name of Person</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="HOME_TELEPHONE" remediationModificationType="None" type="string">
+          <Description>Person's home telephone number</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="REGION" remediationModificationType="None" type="string">
+          <Description>Person's region</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="TERMINATION_DATE" remediationModificationType="None" type="string">
+          <Description>Person's termination date</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="CITY" remediationModificationType="None" type="string">
+          <Description>Person's City</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="WORK_EMAIL" remediationModificationType="None" type="string">
+          <Description>Primary work email of person</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="WORKER_TYPE" remediationModificationType="None" type="string">
+          <Description>Person type i.e. Employee, Contingent</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="ASSIGNMENT_NAME" remediationModificationType="None" type="string">
+          <Description>Person's primary assignment name</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="ASSIGNMENT_POSITION_ID" remediationModificationType="None" type="string">
+          <Description>Person's primary assignment position id</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="ASSIGNMENT_DEPARTMENT_ID" remediationModificationType="None" type="string">
+          <Description>Person's primary assignment department id</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="ASSIGNMENT_MANAGER_ID" remediationModificationType="None" type="string">
+          <Description>Person's primary assignment manager id</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="ASSIGNMENT_LOCATION_ID" remediationModificationType="None" type="string">
+          <Description>Person's primary assignment location id</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="ASSIGNMENT_ACTION_CODE" remediationModificationType="None" type="string">
+          <Description>Person's primary assignment's action code i.e. HIRE</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="ASSIGNMENT_TERMINATION_DATE" remediationModificationType="None" type="string">
+          <Description>Person's primary assignment termination date</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="ASSIGNMENT_JOB_ID" remediationModificationType="None" type="string">
+          <Description> Person's primary assignment job id</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="ASSIGNMENT_BUSINESS_UNIT_ID" remediationModificationType="None" type="string">
+          <Description>Person's primary assignment business unit id</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="ASSIGNMENT_WORKER_CATEGORY" remediationModificationType="None" type="string">
+          <Description>Person's primary assignment worker category</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="ASSIGNMENT_MANAGER_TYPE" remediationModificationType="None" type="string">
+          <Description>Person's primary assignment's manager type</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="ASSIGNMENT_EFFECTIVE_START_DATE" remediationModificationType="None" type="string">
+          <Description>Person's primary assignment effective start date</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="ASSIGNMENT_EFFECTIVE_END_DATE" remediationModificationType="None" type="string">
+          <Description>Person's primary assignment effective end date</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="ASSIGNMENT_STATUS" remediationModificationType="None" type="string">
+          <Description>Person's primary assignment status</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="LEGAL_ENTITY_ID" remediationModificationType="None" type="string">
+          <Description>Id of legal employer's legal entity</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="NATIONAL_ID_TYPE" remediationModificationType="None" type="string">
+          <Description>Type of person's national Id</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="NATIONAL_ID" remediationModificationType="None" type="string">
+          <Description>Person's national Id</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="NATIONAL_ID_EXPIRATION_DATE" remediationModificationType="None" type="string">
+          <Description>Person's national Id expiration date</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="LAST_NAME" remediationModificationType="None" type="string">
+          <Description>Last name of Person</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="FIRST_NAME" remediationModificationType="None" type="string">
+          <Description>First name of Person</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="ADDRESS_LINE_1" remediationModificationType="None" type="string">
+          <Description>Address line number 1</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="ADDRESS_LINE_2" remediationModificationType="None" type="string">
+          <Description>Address line number 2</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="ADDRESS_LINE_3" remediationModificationType="None" type="string">
+          <Description>Address line number 3</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="HIRE_DATE" remediationModificationType="None" type="string">
+          <Description>Person's hire date</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="COUNTRY" remediationModificationType="None" type="string">
+          <Description>Person' Country  </Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="WORK_TELEPHONE" remediationModificationType="None" type="string">
+          <Description>Person' telephone number of type work  </Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="WORK_MOBILE" remediationModificationType="None" type="string">
+          <Description>Person' mobile number of type work  </Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="FUTURE_DATE" remediationModificationType="None" type="string">
+          <Description>Person's future hire or termination date </Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="FUTURE_ACTION" remediationModificationType="None" type="string">
+          <Description>Person's future action</Description>
+        </AttributeDefinition>
+      </Schema>
+    </Schemas>
+  </Application>
+</ImportAction>

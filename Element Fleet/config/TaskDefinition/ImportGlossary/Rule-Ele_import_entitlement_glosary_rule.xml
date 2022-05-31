@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Rule PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<Rule language="beanshell" name="ELE_Import_Entitlement_Glosary_Rule" type="IdentityAttribute">
+    <Signature returnType="String">
+        <Inputs>
+            <Argument name="log">
+                <Description>
+          The log object associated with the SailPointContext.
+        </Description>
+            </Argument>
+            <Argument name="context">
+                <Description>
+          A sailpoint.api.SailPointContext object that can be used to query the database if necessary.
+        </Description>
+            </Argument>
+            <Argument name="inputFilePath">
+                <Description>
+            The file path for reading the data
+         </Description>
+            </Argument>
+            <Argument name="outputFilePath">
+                <Description>
+            The file path for writing the data
+         </Description>
+            </Argument>
+        </Inputs>
+    </Signature>
+    <Source><![CDATA[
+	import sailpoint.api.*;
+	import java.util.ArrayList;
+	import java.util.Arrays;
+	import java.util.HashMap;
+	import java.util.Iterator;
+	import java.util.List;
+	import java.util.Map;
+	import sailpoint.tools.RFC4180LineIterator;
+	import sailpoint.tools.RFC4180LineParser;
+	import sailpoint.object.*;
+	import sailpoint.tools.GeneralException;
+	import sailpoint.tools.Util;
+	import sailpoint.tools.Message;
+	import org.apache.commons.logging.LogFactory;
+	import org.apache.commons.logging.Log;
+	private static Log logger = LogFactory.getLog("rule.ELE_Import_Entitlement_Glosary_Rule");
+	if(logger.isDebugEnabled()) logger.debug("Start Rule: ELE_Import_Entitlement_Glosary_Rule");
+	public static void addTaskResultMessage(TaskResult taskResult, String message){
+	   taskResult.addMessage(new Message(Message.Type.Info, message, null));
+	}
+	public static ManagedAttribute getManagedAttribute(SailPointContext context,String appName, String entName) {
+		ManagedAttribute ma = null;
+		Application appObj = context.getObjectByName(Application.class, appName);
+		  if(appObj== null){
+				addTaskResultMessage(taskResult, "Application Not Found for " +spAppName +"\\" + entName);
+				return ma;
+		  }
+		List  entAttrs = appObj.getEntitlementAttributeNames();
+		if(entAttrs != null && !entAttrs.isEmpty()) {
+			for(String entAttr:entAttrs) {
+				QueryOptions qo = new QueryOptions();
+				Filter filter = Filter.and(Filter.eq("application.name", appName), 
+								Filter.eq("attribute", entAttr),
+								Filter.or(Filter.eq("value", entName), Filter.eq("displayName", entName)));
+				if(appObj.getAttributeValue("includeDatabases") != null) {
+					String includeDatabasesName = appObj.getAttributeValue("includeDatabases");
+					filter = Filter.or(filter,Filter.and(Filter.eq("application.name", appName), Filter.eq("attribute", entAttr),Filter.eq("value", entName+"@"+ includeDatabasesName)));
+				}
+				if(appName.equalsIgnoreCase("Element AD")){
+					filter = Filter.or(filter,Filter.and(Filter.eq("application.name", appName), 
+								Filter.eq("attribute", entAttr),
+								Filter.or(Filter.eq("value", "FLEET\\"+entName), Filter.eq("displayName", "FLEET\\"+entName))));
+				}
+				if(appName.equalsIgnoreCase("CEI AD")){
+					filter = Filter.or(filter,Filter.and(Filter.eq("application.name", appName), 
+								Filter.eq("attribute", entAttr),
+								Filter.or(Filter.eq("value", "CEI\\"+entName), Filter.eq("displayName", "CEI\\"+entName))));
+				}
+				qo.addFilter(filter);
+				Iterator  it = context.search(ManagedAttribute.class, qo, "id");
+				while(it.hasNext()){
+					if(ma == null) ma = context.getObjectById(ManagedAttribute.class, (String)it.next()[0]);
+					else {
+						ma=null;
+						break;
+					}
+				}
+				if(ma != null)	break;
+			}
+		}
+		return ma;
+	}	
+	String filename = "/IIQDEV/Glossary.csv";       //this is the file that the applications are generated from
+	if(logger.isDebugEnabled()) logger.debug("filename :" +filename );
+	BufferedInputStream bis = new BufferedInputStream(new FileInputStream(new File(filename)));
+	InputStream stream = (InputStream) bis;
+	RFC4180LineIterator lines = new RFC4180LineIterator( new BufferedReader(new InputStreamReader(stream)));
+	addTaskResultMessage(taskResult, "Start Rule --updated");
+	if ( lines != null ) {
+		RFC4180LineParser parser = new RFC4180LineParser(',');
+		String line = null;
+		// eat the header line
+		lines.readLine();
+		while ( ( line = lines.readLine() ) != null ) {
+			if(logger.isDebugEnabled()) logger.debug("line: " + line);
+			//a line that begins with a # will be ignored (for comments)
+			if(line.charAt(0) == '#')
+			{
+			   continue;
+			}
+			List tokens = parser.parseLine(line);
+			String entName = (String)tokens.get(0);
+			String entDisplayName = (String)tokens.get(1);
+			String spAppName = (String)tokens.get(2);
+			String appName = (String)tokens.get(3);
+			String envName = (String)tokens.get(4);
+			String ownerName = (String)tokens.get(5);
+			String classification = (String)tokens.get(6);
+			String description = (String)tokens.get(7);
+			String accessClassification = (String)tokens.get(8);
+			String accountManagement = (String)tokens.get(9);
+			List entList = new ArrayList();
+			if(spAppName.equalsIgnoreCase("FDC Billing")){
+				addTaskResultMessage(taskResult, "FDC Entitlement");
+				List FDCBillingApp = new ArrayList();
+				FDCBillingApp.add("/Insurance/Billing");
+				FDCBillingApp.add("/Insurance/FDC");
+				FDCBillingApp.add("/United States/Billing");
+				FDCBillingApp.add("/United States/FDC");
+				for(String FDCBillingEnt:FDCBillingApp){
+					ManagedAttribute ma = getManagedAttribute(context,spAppName,entName+FDCBillingEnt);
+					if(ma != null){
+						entList.add(ma);
+						addTaskResultMessage(taskResult, "FDC Entitlement Found " + entName+FDCBillingEnt);
+					}else{
+						addTaskResultMessage(taskResult, "FDC Entitlement Not Found " + entName+FDCBillingEnt);
+					}
+				}
+			}else{
+				ManagedAttribute ma = getManagedAttribute(context,spAppName,entName);
+        if(ma != null){
+          entList.add(ma);
+          addTaskResultMessage(taskResult, "Entitlement Found for " +spAppName +"\\" + entName); 
+        }
+			}
+			if(!entList.isEmpty()){
+				for(ManagedAttribute ma:entList){
+					if(entDisplayName != null && !entDisplayName.isEmpty())	ma.setDisplayName(entDisplayName);
+					ma.setAttribute("appName",appName);
+					ma.setAttribute("classification",classification);
+					ma.setAttribute("accessClassification",accessClassification);
+					ma.setAttribute("accountManagement",accountManagement);
+					if(spAppName.equalsIgnoreCase("Element AD") || spAppName.equalsIgnoreCase("CEI AD")){
+						ma.setAttribute("reviewer","manager");		
+					}
+					ma.addDescription(Locale.US.toString(), description);
+					if(ownerName != null){
+						ownerName = ownerName.replaceAll(","," ");
+						ownerName = ownerName.replaceAll("  "," ");
+						ownerName = ownerName.replaceAll("  "," ");
+						RFC4180LineParser parser = new RFC4180LineParser(" ");
+						List names = parser.parseLine(ownerName);
+						QueryOptions qo1= new QueryOptions();
+						Filter f = Filter.ignoreCase(Filter.like("displayName", names.get(0), Filter.MatchMode.ANYWHERE));
+						if(names.size()>1) f =Filter.and(f,Filter.ignoreCase(Filter.like("displayName", names.get(1), Filter.MatchMode.ANYWHERE)));
+						qo1.addFilter(f);
+						Iterator iter1 = context.search(Identity.class, qo1,"name");
+						boolean found =false;
+						boolean multiple =false;
+						Identity owner=  null;
+						while (iter1.hasNext()){ 
+							if(found) found=false;
+							found=true;
+							multiple = true;
+							Object[] row = (Object[]) iter1.next();
+							String idName = (String) row[0];
+							owner= context.getObjectByName(Identity.class,idName);
+						}
+						if(found){
+							if(spAppName.equalsIgnoreCase("Element AD") || spAppName.equalsIgnoreCase("CEI AD")){
+								ma.setAttribute("accountManagement",accountManagement);
+								ma.setAttribute("reviewer","owner");
+							}
+							ma.setOwner(owner);
+							addTaskResultMessage(taskResult, "Owner Found for " +spAppName +"\\" + entName +" Owner Name : " + ownerName);
+						}
+						else{
+							addTaskResultMessage(taskResult, "Owner Not Found for " +spAppName +"\\" + entName +" Owner Name : " + ownerName);
+						}
+					}
+					context.saveObject(ma);
+					context.commitTransaction();
+				}
+			}else{
+				addTaskResultMessage(taskResult, "Entitlement Not Found for " +spAppName +"\\" + entName);
+			}
+		}
+	}
+	context.commitTransaction();
+	if(logger.isDebugEnabled()) logger.debug("End Rule: ELE_Import_Entitlement_Glosary_Rule");
+	return "success";
+]]></Source>
+</Rule>

@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE sailpoint PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+
+<!-- (c) Copyright 2017 SailPoint Technologies, Inc., All Rights Reserved. -->
+
+<!--
+  Initialization file for new SailPoint PAM functionality.
+-->
+<sailpoint>
+
+  <SPRight name="FullAccessPAM" displayName="right_full_access_pam">
+    <Description>right_desc_full_access_pam</Description>
+  </SPRight>
+
+  <Capability name="PAMAdministrator" displayName="capability_pam_administrator">
+    <Description>capability_desc_pam_administrator</Description>
+    <RightRefs>
+      <!-- Full Access to PAM -->
+      <Reference class="sailpoint.object.SPRight" name="FullAccessPAM" />
+    </RightRefs>
+  </Capability>
+
+  <DynamicScope name="PAMAdministrator">
+    <Selector>
+      <IdentitySelector>
+        <MatchExpression>
+          <MatchTerm name="rights" value="FullAccessPAM" />
+          <MatchTerm name="rights" value="ViewPAMDetail"/>
+        </MatchExpression>
+      </IdentitySelector>
+    </Selector>
+  </DynamicScope>
+
+  <SPRight name="ViewPAMDetail" displayName="right_view_pam">
+    <Description>right_desc_view_pam</Description>
+  </SPRight>
+
+  <SPRight name="PAMModifyIdentities" displayName="right_modify_pam_identities">
+    <Description>right_desc_modify_pam_identities</Description>
+  </SPRight>
+
+  <SPRight name="PAMModifyPrivilegedItems" displayName="right_modify_pam_privileged_items">
+    <Description>right_desc_modify_pam_privileged_items</Description>
+  </SPRight>
+
+  <Capability name="PAMViewer" displayName="capability_pam_viewer">
+    <Description>capability_desc_pam_viewer</Description>
+    <RightRefs>
+      <!-- Read Only Access to PAM -->
+      <Reference class="sailpoint.object.SPRight" name="ViewPAMDetail" />
+    </RightRefs>
+  </Capability>
+
+  <SPRight name="CreatePAMContainer" displayName="right_create_pam_container">
+    <Description>right_desc_create_pam_container</Description>
+  </SPRight>
+
+</sailpoint>

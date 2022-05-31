@@ -1,0 +1,115 @@
+pipeline {
+    agent any
+    stages {
+        stage('Environment Info') {
+            steps {
+                echo 'who am I:'
+                sh 'whoami'
+                echo 'where are we:'
+                sh 'pwd'
+                echo 'what is here:'
+                sh 'ls'
+                echo 'what java version:'
+                sh 'java -version'
+                echo 'where is java:'
+                sh 'readlink -f $(which java)'
+                sh 'which java'
+                echo 'environment variables for java'
+                echo 'JAVA_HOME is: ' + env.JAVA_HOME
+                echo 'what is the path environment variable value:'
+                echo 'env.PATH=' + env.PATH
+                echo 'What version of ant is being used to build?:'
+                sh 'ant -version'
+                // uncomment to see the full environment information
+                echo 'what is the current environment info:'
+                sh 'env'
+            }
+        }
+        stage('PreBuild') {
+            steps {
+                echo 'pre building rapid-ss ..'
+                echo 'rapid-ss needs the identityiq.zip file in the base/ga directoy to build.'
+                // This may be a one time step so we could possibly delete this stage but we might want to have this step do the following:
+                //   create a 'base' directory in the workspace for rapid-ss
+                //   create a 'ga' directory in the base directory created for rapid-ss
+                sh 'mkdir -p base/ga'
+                sh '''
+                    file="base/ga/identityiq-8.2.zip"
+                    if [ -f "$file" ]
+                    then
+                        echo "$file found."
+                    else
+                        echo "$file not found."
+                        echo "copying file from rapid-dependencies directory"
+                        cp ../rapid-dependencies/identityiq-8.2.zip base/ga/identityiq-8.2.zip
+                        echo "contents of base/ga folder:"
+                        ls base/ga/
+                    fi
+                '''
+                //   copy the identityiq zip file (build and version dependent) to the new ga directory
+                echo 'rapid-ss needs a couple more folders to exist to be happy'
+                sh 'mkdir -p base/patch'
+                sh 'mkdir -p base/efix'
+            }
+        }
+        stage('Build') {
+            steps {
+                withEnv(['JAVA_HOME=/usr/java/jdk1.8.0_191-amd64/']) {
+                    echo 'building rapid-ss ..'
+                    // JAVA_HOME is set in the Jenkins configuration pointed to the jre (/usr/java/jdk1.8.0_191-amd64/jre) but that is not working for ACC (worked for SAP).
+                    // Trying to redefine that environent variable for this ant build.
+                    echo 'environment variables for java'
+                    echo 'JAVA_HOME is: ' + env.JAVA_HOME
+                    echo '------------------ calling ant jenkinsbuild to build rapid-ss project ----------------'
+                    sh 'ant jenkinsbuild 2>&1 | tee build.log'
+                }
+            }
+        }
+        stage('Publish') {
+            steps {
+                withAnt(jdk: 'java8') {
+                    echo 'Publishing Build...'
+                    sh 'ant publishbuild'
+                }
+            }
+        }
+    }
+    post {
+        // This 'post' section is guaranteed to run at the end of the pipeline's execution.
+        always {
+            echo 'One way or another, rapid-ss-pipeline has finished'
+            // TODO: archive any unit test documentaiton created
+        }
+        success {
+            echo 'rapid-ss-pipeline succeeeded!'
+            echo 'attempting to archive useful results'
+            // archive the built zip file if it exists
+            archiveArtifacts artifacts: 'AcceleratorPackRelease/*.zip', fingerprint: true
+            // email group to inform of success of build
+            emailext (
+              subject: "SUCCESSFUL: Job ${currentBuild.fullDisplayName}",
+              body: """SUCCESSFUL: Job ${currentBuild.fullDisplayName}:
+              Would you like to know more?
+              Download of artifact and console output available at ${env.BUILD_URL} """,
+              to: "rapid-development@sailpoint.com"
+              )
+        }
+        unstable {
+            echo 'rapid-ss-pipeline is unstable :/'
+        }
+        failure {
+            echo 'rapid-ss-pipeline failed'
+            // email group to inform of failures
+            emailext (
+              subject: "FAILURE: Job ${currentBuild.fullDisplayName}",
+              body: """FAILURE: Job ${currentBuild.fullDisplayName}:
+              The build failed.
+              Investigate console output at ${env.BUILD_URL} """,
+              to: "rapid-development@sailpoint.com"
+             )
+        }
+        changed {
+            echo 'rapid-ss-pipeline result was different before...'
+        }
+    }
+}

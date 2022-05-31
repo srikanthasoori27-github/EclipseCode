@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE ImportAction PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<ImportAction name="connectorRegistryUpdateAction">
+  <Application connector="sailpoint.connector.OpenConnectorAdapter" featuresString="PROVISIONING, SYNC_PROVISIONING, SEARCH, DIRECT_PERMISSIONS, ENABLE, PASSWORD, CURRENT_PASSWORD" icon="internetIcon" name="Atlassian Suite - Server" type="Atlassian Suite - Server">
+    <Attributes>
+      <Map>
+        <entry key="connectorClass" value="openconnector.connector.atlassian.AtlassianServerConnector"/>
+        <entry key="encrypted" value="password"/>
+        <entry key="formPath" value="AtlassianServerConfigForm.xhtml"/>
+      </Map>
+    </Attributes>
+    <Schemas>
+      <Schema displayAttribute="displayName" featuresString="PROVISIONING" identityAttribute="name" nativeObjectType="account" objectType="account">
+        <AttributeDefinition name="name" required="true" type="string">
+          <Description>Username of Atlassian User</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="displayName" required="true" type="string">
+          <Description>The display name of the user</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="emailAddress" required="true" type="string">
+          <Description>The e-mail address of the user</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="timeZone" type="string">
+          <Description>The timezone of the user</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="locale" type="string">
+          <Description>The default location of the user for purpose of localizing items</Description>
+        </AttributeDefinition>
+        <AttributeDefinition entitlement="true" managed="true" multi="true" name="groups" required="true" schemaObjectType="group" type="string">
+          <Description>The list of groups that the user belongs to</Description>
+        </AttributeDefinition>
+        <AttributeDefinition entitlement="true" managed="true" multi="true" name="projectRoles" required="true" schemaObjectType="ProjectRole" type="string">
+          <Description>The list of roles that the user belongs to</Description>
+        </AttributeDefinition>
+      </Schema>
+      <Schema displayAttribute="name" featuresString="PROVISIONING" identityAttribute="name" nativeObjectType="group" objectType="group">
+        <AttributeDefinition name="name" required="true" type="string">
+        <Description>The name of the group</Description>
+        </AttributeDefinition>
+        <AttributeDefinition multi="true" name="labels" type="string">
+        <Description>The description (labels) of the group</Description>
+        </AttributeDefinition>
+      </Schema>
+      <Schema displayAttribute="displayName" identityAttribute="projectRoleId" nativeObjectType="ProjectRole" objectType="ProjectRole">
+        <AttributeDefinition name="name" required="true" type="string">
+        <Description>Name of the Project Role</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="displayName" required="true" type="string">
+        <Description>Display name of the Project Role</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="projectRoleId" required="true" type="string">
+        <Description>An unique identifier for the project specific roles</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="id" required="true" type="string">
+        <Description>An unique identifier for the project role</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="description" required="true" type="string">
+        <Description>The description of the Project Role</Description>
+        </AttributeDefinition>
+      </Schema>
+    </Schemas>
+    <Templates>
+      <Template name="Create Account" schemaObjectType="account" usage="Create">
+        <Field displayName="con_template_atlassian_name" helpKey="help_con_template_atlassian_name" name="name" required="true" section="" type="string"/>
+        <Field displayName="con_template_atlassian_email_address" helpKey="help_con_template_atlassian_email_address" name="emailAddress" required="true" type="string"/>
+        <Field displayName="con_template_atlassian_display_name" helpKey="help_con_template_atlassian_display_name" name="displayName" required="true" section="" type="string"/>
+        <Field displayName="con_template_atlassian_password" helpKey="help_con_template_atlassian_password" name="password" reviewRequired="true" section="" type="secret"/>
+        <Field displayName="con_template_atlassian_notification" helpKey="help_con_template_atlassian_notification" name="notification" reviewRequired="true" section="" type="boolean" value="false"/>
+      </Template>
+      <Template name="Create Group" schemaObjectType="group" usage="Create">
+        <Field displayName="con_template_atlassian_group_name" helpKey="help_con_template_atlassian_group_name" name="name" required="true" section="" type="string"/>
+        <OwnerDefinition value=""/>
+      </Template>
+    </Templates>
+  </Application>
+</ImportAction>

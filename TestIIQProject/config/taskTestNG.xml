@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE sailpoint PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+
+<!-- (c) Copyright 2015 SailPoint Technologies, Inc., All Rights Reserved. -->
+
+<sailpoint>
+    <TaskDefinition name="Run Connector Tests" concurrent="true" resultAction="RenameNew" executor="sailpoint.connector.testframework.TestNGExecutor" template="true"
+                    progressInterval="5000"
+                    progressMode="String" type="Identity">
+        <Description>
+            Template for connector test automation.
+        </Description>
+        <Signature>
+            <Inputs>
+              <Argument helpKey="You can specify one or multiple files here with comma separated list" name="fileNames" type="string">
+                <Prompt>Comma separated file names</Prompt>
+              </Argument>
+              <Argument helpKey="In case you are running tests for IdentityNow or Cloudgateway,                           Specify the Cluster/Proxy/CloudGateway Application name here" name="proxyApp" type="string">
+                <Prompt>Cluster application name</Prompt>
+              </Argument>
+              <Argument helpKey="If you wish to run &apos;sanity&apos; etc test" name="runType" type="string">
+                <Prompt>Input Run Type e.g. sanity </Prompt>
+              </Argument>
+              <Argument helpKey="If you wish to run all tests using single task" name="selectAll" type="boolean">
+                <Prompt>Run for all connectors</Prompt>
+              </Argument>
+              <Argument helpKey="By default usual TestNG suites will be executed but you can choose &apos;AggTests&apos;                          here to run Agg test suites. This flag is only useful if slected above &apos;selectAll&apos; option" name="aggTests" type="boolean">
+                <Prompt>Run Agg Tests</Prompt>
+              </Argument>
+              <Argument helpKey="Import All Apps from &apos;IIQ&apos; Directory to DataBase, No Tests will be executed here" name="importApps" type="boolean">
+                <Prompt>Import All Apps from 'IIQ' Directory to DataBase</Prompt>
+              </Argument>
+            </Inputs>
+            <Returns>
+                <Argument name="testsPassed" type="int">
+                    <Prompt>Number of tests passed</Prompt>
+                </Argument>
+                <Argument name="testsFailed" type="int">
+                    <Prompt>Number of tests failed</Prompt>
+                </Argument>
+                <Argument name="testsSkipped" type="int">
+                    <Prompt>Number of tests skipped</Prompt>
+                </Argument>
+                <Argument name="failedTestNames" type="string">
+                    <Prompt>Name of failed tests</Prompt>
+                </Argument>
+            </Returns>
+        </Signature>
+    </TaskDefinition>
+</sailpoint>

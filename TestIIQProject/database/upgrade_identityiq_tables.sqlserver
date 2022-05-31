@@ -1,0 +1,65 @@
+--
+-- This script contains DDL statements to upgrade a database schema to
+-- reflect changes to the model.  This file should only be used to
+-- upgrade from the last formal release version to the current code base.
+--
+
+USE identityiq
+GO
+
+create table identityiq.spt_bulk_id_join (
+    id nvarchar(32) not null,
+    created numeric(19,0),
+    modified numeric(19,0),
+    join_id nvarchar(128),
+    join_property nvarchar(128),
+    user_id nvarchar(128),
+    primary key (id)
+);
+GO
+
+create index spt_bulkidjoin_id_ci on identityiq.spt_bulk_id_join (join_id);
+GO
+create index spt_bulkidjoin_prop_ci on identityiq.spt_bulk_id_join (join_property);
+GO
+create index spt_bulkidjoin_user_ci on identityiq.spt_bulk_id_join (user_id);
+GO
+
+-- Add TaskResult.live column
+alter table identityiq.spt_task_result add live tinyint null default 0 with values;
+GO
+update identityiq.spt_task_result set live = 0;
+GO
+
+alter table identityiq.spt_role_change_event add status nvarchar(255);
+GO
+alter table identityiq.spt_role_change_event add failed_identity_ids nvarchar(max);
+GO
+alter table identityiq.spt_role_change_event add skipped_identity_ids nvarchar(max);
+GO
+alter table identityiq.spt_role_change_event add affected_identity_count int NOT NULL default(0);
+GO
+alter table identityiq.spt_role_change_event add run_count int NOT NULL default(0);
+GO
+alter table identityiq.spt_role_change_event add failed_attempts int NOT NULL default(0);
+
+-- Increase the field size for spt_sign_off_history.account to match spt_link.native_identity
+ALTER TABLE identityiq.spt_sign_off_history ALTER COLUMN account nvarchar(322);
+GO
+
+-- Add iiq_locked and iiq_disabled fields to link table
+alter table identityiq.spt_link add iiq_disabled tinyint;
+GO
+alter table identityiq.spt_link add iiq_locked tinyint;
+GO
+create index spt_link_iiq_disabled on identityiq.spt_link (iiq_disabled);
+GO
+create index spt_link_iiq_locked on identityiq.spt_link (iiq_locked);
+GO
+
+
+--
+-- This is necessary to maintain the schema version. DO NOT REMOVE.
+--
+update identityiq.spt_database_version set schema_version='8.2-07' where name='main';
+GO

@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE sailpoint PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<!-- Copyright © 2018 SailPoint Technologies, Inc. All Rights Reserved.
+All logos, text, content, and works of authorship, including but not limited to underlying code, programming or scripting language, designs, and/or graphics,
+that are used and/or depicted herein are protected under United States and international copyright and trademark laws and treaties,
+and may not be used or reproduced without the prior express written permission of SailPoint Technologies, Inc. -->
+<sailpoint>
+<ImportAction name='merge'>
+<ObjectConfig name="Application">
+	<!-- MOVER -->
+	<ObjectAttribute categoryName="Mover"
+		defaultValue="" displayName="Mover Options"
+		editMode="Permanent" namedColumn="true" name="moverProcess" required="true">
+		<AllowedValues>
+			<String>Do Nothing</String>
+			<String>Manager Certification</String>
+		</AllowedValues>
+		<Description>Mover Options</Description>
+	</ObjectAttribute>
+	<ObjectAttribute categoryName="Mover" defaultValue="" displayName="Process Attribute Synchronization Before Mover Certification" editMode="Permanent" name="apBeforeMoverAttrSync" type="boolean" >
+	<Description>This can be used when there are common Identity Trigger Attributes for Attribute Sync and Mover</Description>
+	</ObjectAttribute>
+	<ObjectAttribute categoryName="Mover" defaultValue="" displayName="Before Mover Certification Options" editMode="Permanent" name="beforemoverAccount">
+		<AllowedValues>
+			<String>Do Nothing</String>
+			<String>Rename / Move LDAP Account</String>
+			<String>Extended Rule</String>
+		</AllowedValues>
+	 <Description>Before Mover Certification Options</Description>
+	</ObjectAttribute>
+	<ObjectAttribute categoryName="Mover"
+		defaultValue="" displayName="Before Mover Extended Rule" editMode="Permanent" name="moverExtendedRule">
+		<Description>This rule will be executed in case Before Mover Certification Options is Extended Rule</Description>
+	</ObjectAttribute>
+	<ObjectAttribute categoryName="Mover" defaultValue="" displayName="Process Joiner After Mover" editMode="Permanent" name="apAfterMoverJoiner" type="boolean" >
+	<Description>This can be used to recalculate joiner access after mover event</Description>
+	</ObjectAttribute>
+	</ObjectConfig>
+	</ImportAction>
+</sailpoint>

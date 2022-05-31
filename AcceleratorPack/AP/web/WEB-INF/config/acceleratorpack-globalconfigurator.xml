@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE sailpoint PUBLIC 'sailpoint.dtd' 'sailpoint.dtd'>
+<!-- Copyright © 2018 SailPoint Technologies, Inc. All Rights Reserved.
+All logos, text, content, and works of authorship, including but not limited to underlying code, programming or scripting language, designs, and/or graphics,
+that are used and/or depicted herein are protected under United States and international copyright and trademark laws and treaties,
+and may not be used or reproduced without the prior express written permission of SailPoint Technologies, Inc. -->
+<sailpoint>
+  <ImportAction name='include' value='AcceleratorPack/GlobalConfigurator/Source/Form-Global-SmartServices.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/GlobalConfigurator/Configure/QuickLink-Global-Modify-Settings.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/GlobalConfigurator/Source/Rule-FrameWork-IIQ-Artifacts-List.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/GlobalConfigurator/Source/Rule-FrameWork-IIQ-Target-Aggregation-List.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/GlobalConfigurator/Source/Workflow-Modify-Global-SmartServices-Settings.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/GlobalConfigurator/Source/Rule-Modify-Settings-RuleLibrary.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/GlobalConfigurator/Source/Rule-FrameWork-IIQ-Business-Approvers-Artifacts-List.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/GlobalConfigurator/Source/Rule-FrameWork-IIQ-Service-Account-Attributes-List.xml'/>
+</sailpoint>

@@ -1,0 +1,618 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sailpoint PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+
+<!-- Copyright © 2018 SailPoint Technologies, Inc. All Rights Reserved.
+All logos, text, content, and works of authorship, including but not limited to underlying code, programming or scripting language, designs, and/or graphics,
+that are used and/or depicted herein are protected under United States and international copyright and trademark laws and treaties,
+and may not be used or reproduced without the prior express written permission of SailPoint Technologies, Inc. -->
+
+<sailpoint>
+
+<EmailTemplate name="RapidSetup-Email-GlobalFooter">
+  <Body>
+    <![CDATA[<p>Global Footer</p>]]>		
+  </Body>
+  <Subject>Global Footer</Subject>
+</EmailTemplate>
+
+<EmailTemplate name="RapidSetup-Email-GlobalHeader">
+  <Body>
+    <![CDATA[<p>Global Header</p>]]>		
+  </Body>
+  <Subject>Global Header</Subject>
+</EmailTemplate>
+
+<EmailTemplate name="RapidSetup-Email-GlobalStyleSheet">
+  <Body>
+  <![CDATA[<style type="text/css">
+  table {
+		  border: none;
+		  padding: 20px 40px 20px 40px;
+		  margin: 0 auto;
+		  color: #333333;
+		  width: 100%;
+		  border-collapse: separate !important;
+		}
+	</style>]]>	   
+  </Body>
+  <Subject>Global Style Sheet</Subject>
+</EmailTemplate>
+
+<EmailTemplate name="Leaver Ownership Reassignment Notification">
+   <Body>
+<![CDATA[   		 
+		#set($ctx = $spTools.class.forName("sailpoint.api.SailPointFactory").getMethod("getFactory", null).invoke(null,null).getCurrentContext())
+		#set($emailTools = $spTools.class.forName("sailpoint.rapidsetup.tools.EmailTools").getMethod("instance", null).invoke(null,null))
+		#set($reqType = $workflow.requestType)
+		#set($styleSheet = $emailTools.getEmailSection($ctx, "styleSheet"))
+		#set($headerTemplate = $emailTools.getEmailSection($ctx, "headerTemplate"))
+		#set($footerTemplate = $emailTools.getEmailSection($ctx, "footerTemplate"))
+		<html>
+		<head>
+		<meta charset="UTF-8">	    
+		#if( $styleSheet )
+		$styleSheet
+		#end
+		</head>
+	    	<body>
+	    	#if( $headerTemplate )
+			$headerTemplate
+			#end
+			<br/>    
+			#if ( $ownershipMap )
+			    Dear $recipientDisplayName,<br/>
+			    <p>IdentityIQ access for '$refIdentityDisplayName' has been reassigned: </p>
+			    <p>The following IdentityIQ artifacts have been reassigned to you. </p>
+			    <ul>
+			    #foreach ($mapEntry in $ownershipMap.entrySet())
+    				<li>$mapEntry.key - $mapEntry.value</li>
+			    #end 
+			    </ul>  
+			#end
+			#if ($dynamicAppContent)
+			<table>
+			#foreach( $key in $dynamicAppContent.keySet() )
+			<tr><td>$key</td><td>$dynamicAppContent.get($key)</td></tr>
+			#end
+			</table>
+			#end	
+			#if( $footerTemplate )
+			$footerTemplate
+			#end
+			</body>
+		</html>
+		]]>		
+    </Body>
+  <Description>
+      Email Template for notifying the Manager that an Identity had ownerships during Leaver process
+    </Description>
+  <Signature>
+    <Inputs>
+      <Argument name="workflow" type="Workflow">
+        <Description>The Workflow object being executed.</Description>
+      </Argument>
+      <Argument name="refIdentityDisplayName" type="string">
+        <Description>The name of the Identity that is registering.</Description>
+      </Argument>
+      <Argument name="recipientDisplayName" type="string">
+        <Description>The display name of the Identity that is registering.</Description>
+      </Argument>
+    </Inputs>
+  </Signature>
+  <Subject>User '$refIdentityDisplayName' #if($emailSubject) $emailSubject #else Ownership #end reassignments</Subject>
+</EmailTemplate>
+
+  <EmailTemplate name="Terminate Ownership Reassignment Notification">
+    <Body>
+      <![CDATA[
+		#set($ctx = $spTools.class.forName("sailpoint.api.SailPointFactory").getMethod("getFactory", null).invoke(null,null).getCurrentContext())
+		#set($emailTools = $spTools.class.forName("sailpoint.rapidsetup.tools.EmailTools").getMethod("instance", null).invoke(null,null))
+		#set($reqType = $workflow.requestType)
+		#set($styleSheet = $emailTools.getEmailSection($ctx, "styleSheet"))
+		#set($headerTemplate = $emailTools.getEmailSection($ctx, "headerTemplate"))
+		#set($footerTemplate = $emailTools.getEmailSection($ctx, "footerTemplate"))
+		<html>
+		<head>
+		<meta charset="UTF-8">
+		#if( $styleSheet )
+		$styleSheet
+		#end
+		</head>
+	    	<body>
+	    	#if( $headerTemplate )
+			$headerTemplate
+			#end
+			<br/>
+			#if ( $ownershipMap )
+			    Dear $recipientDisplayName,<br/>
+			    <p>IdentityIQ access for '$refIdentityDisplayName' has been reassigned: </p>
+			    <p>The following IdentityIQ artifacts have been reassigned to you. </p>
+			    <ul>
+			    #foreach ($mapEntry in $ownershipMap.entrySet())
+    				<li>$mapEntry.key - $mapEntry.value</li>
+			    #end
+			    </ul>
+			#end
+			#if ($dynamicAppContent)
+			<table>
+			#foreach( $key in $dynamicAppContent.keySet() )
+			<tr><td>$key</td><td>$dynamicAppContent.get($key)</td></tr>
+			#end
+			</table>
+			#end
+			#if( $footerTemplate )
+			$footerTemplate
+			#end
+			</body>
+		</html>
+		]]>
+    </Body>
+    <Description>
+      Email Template for notifying the Manager that an Identity had ownerships during Terminate process
+    </Description>
+    <Signature>
+      <Inputs>
+        <Argument name="workflow" type="Workflow">
+          <Description>The Workflow object being executed.</Description>
+        </Argument>
+        <Argument name="refIdentityDisplayName" type="string">
+          <Description>The name of the Identity that is registering.</Description>
+        </Argument>
+        <Argument name="recipientDisplayName" type="string">
+          <Description>The display name of the Identity that is registering.</Description>
+        </Argument>
+      </Inputs>
+    </Signature>
+    <Subject>User '$refIdentityDisplayName' #if($emailSubject) $emailSubject #else Ownership #end reassignments</Subject>
+  </EmailTemplate>
+
+
+
+<EmailTemplate name="Leaver Completed Notification">
+   <Body>
+<![CDATA[
+  #set($ctx = $spTools.class.forName("sailpoint.api.SailPointFactory").getMethod("getFactory", null).invoke(null,null).getCurrentContext())
+  #set($emailTools = $spTools.class.forName("sailpoint.rapidsetup.tools.EmailTools").getMethod("instance", null).invoke(null,null))
+  #set($reqType = $workflow.requestType)
+  #set($styleSheet = $emailTools.getEmailSection($ctx, "styleSheet"))
+  #set($headerTemplate = $emailTools.getEmailSection($ctx, "headerTemplate")) #set($footerTemplate = $emailTools.getEmailSection($ctx, "footerTemplate"))
+  <html>
+  <head>
+  <meta charset="UTF-8">
+  #if( $styleSheet )
+    $styleSheet
+  #end
+  </head>
+  <body>
+  #if( $headerTemplate )
+    $headerTemplate
+  #end
+  <br/>
+  Dear $recipientDisplayName,<br/>
+  <p>Termination of Identity '$refIdentityDisplayName' completed.</p>
+  #if ( $plan && $plan.accountRequests && !$disableStaticManagerContent )
+    <ul>
+    #set($approvedAccountRequests = $emailTools.getApprovedAccountRequest($plan.accountRequests, $approvalSet, "leaver"))
+    #foreach ( $acctReq in $approvedAccountRequests )
+      <li>Application: $!acctReq.applicationName</li>
+      <ul>
+      #if ( $!{acctReq.arguments["comments"]} )
+        #foreach ( $comment in $!{acctReq.arguments["comments"]} )
+          <li>Completion Comments: $comment</li>
+        #end
+      #end
+      #if ( $!acctReq.nativeIdentity )
+        <li>Account ID : $!acctReq.nativeIdentity</li>
+      #end
+      #if ( $!acctReq.op )
+        <li>Operation: $!acctReq.op</li>
+      #end
+      <ul>
+      #foreach ( $attrReq in $acctReq.attributeRequests )
+        #if ( $!attrReq.name )
+          <li>Attribute Name : $!attrReq.name</li>
+        #end
+        #if ( $!attrReq.displayValue )
+          <li>Display Value: $!attrReq.displayValue</li>
+        #end
+        #if ( $!attrReq.op )
+          <li>Operation: $!attrReq.op</li>
+        #end
+        #if ( $!attrReq.displayValue )
+          <li>Attribute Value: $!attrReq.displayValue</li>
+        #elseif ( $!attrReq.value )
+          <li>Attribute Value: $!attrReq.value</li>
+        #end
+      #end
+      #if ( $!{acctReq.arguments["requesterComments"]} )
+        <li>Requester Comments: $!{acctReq.arguments["requesterComments"]}</li>
+      #end
+      </ul>
+      </ul>
+    #end
+    </ul>
+  #end
+  #if ( $dynamicAppContent )
+    <table>
+    #if ( !$disableStaticManagerContent )
+      #foreach( $key in $dynamicAppContent.keySet() )
+        <tr><td>$key</td><td>$dynamicAppContent.get($key)</td></tr>
+      #end
+    #else
+      #foreach( $key in $dynamicAppContent.keySet() )
+        <tr><td>$dynamicAppContent.get($key)</td></tr>
+      #end
+    #end
+    </table>
+  #end
+  #if ( $provisioningErrors )
+    The following errors occurred during provisioning:
+    <ul>
+    #foreach ( $error in $provisioningErrors )
+      <li>$!error</li>
+    #end
+    </ul>
+  #end
+  #if( $footerTemplate )
+    $footerTemplate
+  #end
+  </body>
+  </html>
+        ]]>
+    </Body>
+  <Description>
+      Email Template for notifying the manager when Leaver process has been completed
+    </Description>
+  <Signature>
+    <Inputs>
+      <Argument name="workflow" type="Workflow">
+        <Description>The Workflow object being executed.</Description>
+      </Argument>
+      <Argument name="approvalSet" type="ApprovalSet">
+        <Description>The ApprovalSet object contained in the workflow.</Description>
+      </Argument>
+      <Argument name="refIdentityDisplayName" type="string">
+        <Description>The name of the Identity that is registering.</Description>
+      </Argument>
+      <Argument name="recipientDisplayName" type="string">
+        <Description>The display name of the Identity that is registering.</Description>
+      </Argument>
+      <Argument name="provisioningErrors" type="List">
+        <Description>Any provisioning errors that may have occurred.</Description>
+      </Argument>
+      <Argument name="disableStaticManagerContent" type="boolean">
+        <Description>if false, then do not hide static content</Description>
+      </Argument>
+    </Inputs>
+  </Signature>
+  <Subject>#if($provisioningErrors) Error:#end User '$refIdentityDisplayName' has been terminated </Subject>
+</EmailTemplate>
+
+<EmailTemplate name="Terminate Completed Notification">
+  <Body>
+    <![CDATA[
+  #set($ctx = $spTools.class.forName("sailpoint.api.SailPointFactory").getMethod("getFactory", null).invoke(null,null).getCurrentContext())
+  #set($emailTools = $spTools.class.forName("sailpoint.rapidsetup.tools.EmailTools").getMethod("instance", null).invoke(null,null))
+  #set($reqType = $workflow.requestType)
+  #set($styleSheet = $emailTools.getEmailSection($ctx, "styleSheet"))
+  #set($headerTemplate = $emailTools.getEmailSection($ctx, "headerTemplate")) #set($footerTemplate = $emailTools.getEmailSection($ctx, "footerTemplate"))
+  <html>
+  <head>
+  <meta charset="UTF-8">
+  #if( $styleSheet )
+    $styleSheet
+  #end
+  </head>
+  <body>
+  #if( $headerTemplate )
+    $headerTemplate
+  #end
+  <br/>
+  Dear $recipientDisplayName,<br/>
+  <p>Termination of Identity '$refIdentityDisplayName' completed.</p>
+  #if ( $plan && $plan.accountRequests && !$disableStaticManagerContent )
+    <ul>
+    #set($approvedAccountRequests = $emailTools.getApprovedAccountRequest($plan.accountRequests, $approvalSet, "terminate"))
+    #foreach ( $acctReq in $approvedAccountRequests )
+      <li>Application: $!acctReq.applicationName</li>
+      <ul>
+      #if ( $!{acctReq.arguments["comments"]} )
+        #foreach ( $comment in $!{acctReq.arguments["comments"]} )
+          <li>Completion Comments: $comment</li>
+        #end
+      #end
+      #if ( $!acctReq.nativeIdentity )
+        <li>Account ID : $!acctReq.nativeIdentity</li>
+      #end
+      #if ( $!acctReq.op )
+        <li>Operation: $!acctReq.op</li>
+      #end
+      <ul>
+      #foreach ( $attrReq in $acctReq.attributeRequests )
+        #if ( $!attrReq.name )
+          <li>Attribute Name : $!attrReq.name</li>
+        #end
+        #if ( $!attrReq.displayValue )
+          <li>Display Value: $!attrReq.displayValue</li>
+        #end
+        #if ( $!attrReq.op )
+          <li>Operation: $!attrReq.op</li>
+        #end
+        #if ( $!attrReq.displayValue )
+          <li>Attribute Value: $!attrReq.displayValue</li>
+        #elseif ( $!attrReq.value )
+          <li>Attribute Value: $!attrReq.value</li>
+        #end
+      #end
+      #if ( $!{acctReq.arguments["requesterComments"]} )
+        <li>Requester Comments: $!{acctReq.arguments["requesterComments"]}</li>
+      #end
+      </ul>
+      </ul>
+    #end
+    </ul>
+  #end
+  #if ( $dynamicAppContent )
+    <table>
+    #if ( !$disableStaticManagerContent )
+      #foreach( $key in $dynamicAppContent.keySet() )
+        <tr><td>$key</td><td>$dynamicAppContent.get($key)</td></tr>
+      #end
+    #else
+      #foreach( $key in $dynamicAppContent.keySet() )
+        <tr><td>$dynamicAppContent.get($key)</td></tr>
+      #end
+    #end
+    </table>
+  #end
+  #if ( $provisioningErrors )
+    The following errors occurred during provisioning:
+    <ul>
+    #foreach ( $error in $provisioningErrors )
+      <li>$!error</li>
+    #end
+    </ul>
+  #end
+  #if( $footerTemplate )
+    $footerTemplate
+  #end
+  </body>
+  </html>
+  ]]>
+  </Body>
+  <Description>
+    Email Template for notifying the manager when Terminate process has been completed
+  </Description>
+  <Signature>
+    <Inputs>
+      <Argument name="workflow" type="Workflow">
+        <Description>The Workflow object being executed.</Description>
+      </Argument>
+      <Argument name="approvalSet" type="ApprovalSet">
+        <Description>The ApprovalSet object contained in the workflow.</Description>
+      </Argument>
+      <Argument name="refIdentityDisplayName" type="string">
+        <Description>The name of the Identity that is registering.</Description>
+      </Argument>
+      <Argument name="recipientDisplayName" type="string">
+        <Description>The display name of the Identity that is registering.</Description>
+      </Argument>
+      <Argument name="provisioningErrors" type="List">
+        <Description>Any provisioning errors that may have occurred.</Description>
+      </Argument>
+      <Argument name="disableStaticManagerContent" type="boolean">
+        <Description>if false, then do not hide static content</Description>
+      </Argument>
+    </Inputs>
+  </Signature>
+  <Subject>#if($provisioningErrors) Error:#end User '$refIdentityDisplayName' has been terminated </Subject>
+</EmailTemplate>
+
+<EmailTemplate name="Joiner Completed Notification">
+   <Body>
+<![CDATA[
+  #set($ctx = $spTools.class.forName("sailpoint.api.SailPointFactory").getMethod("getFactory", null).invoke(null,null).getCurrentContext())
+  #set($emailTools = $spTools.class.forName("sailpoint.rapidsetup.tools.EmailTools").getMethod("instance", null).invoke(null,null))
+  #set($reqType = $workflow.requestType)
+  #set($styleSheet = $emailTools.getEmailSection($ctx, "styleSheet"))
+  #set($headerTemplate = $emailTools.getEmailSection($ctx, "headerTemplate"))
+  #set($footerTemplate = $emailTools.getEmailSection($ctx, "footerTemplate"))
+  <html>
+  <head>
+  <meta charset="UTF-8">
+  #if( $styleSheet )
+  $styleSheet
+  #end
+  </head>
+  <body>
+  #if( $headerTemplate )
+    $headerTemplate
+  #end
+  <br/>
+  Dear $recipientDisplayName,<br/>
+  <p>Joiner Access for Identity '$refIdentityDisplayName' has been granted.</p>
+  #if ( $plan && $plan.accountRequests && !$disableStaticManagerContent )
+    <ul>
+    #set($approvedAccountRequests = $emailTools.getApprovedAccountRequest($plan.accountRequests, $approvalSet, "joiner"))
+    #foreach ( $acctReq in $approvedAccountRequests )
+      <li>Application: $!acctReq.applicationName</li>
+      <ul>
+      #if ( $!{acctReq.arguments["comments"]} )
+        #foreach ( $comment in $!{acctReq.arguments["comments"]} )
+          <li>Completion Comments: $comment</li>
+        #end
+      #end
+      #if ( $!acctReq.nativeIdentity )
+        <li>Account ID : $!acctReq.nativeIdentity</li>
+      #end
+      #if ( $!acctReq.op )
+        <li>Operation: $!acctReq.op</li>
+      #end
+      <ul>
+      #foreach ( $attrReq in $acctReq.attributeRequests )
+        #if ( $!attrReq.name )
+          <li>Attribute Name : $!attrReq.name</li>
+        #end
+        #if ( $!attrReq.displayValue )
+          <li>Display Value: $!attrReq.displayValue</li>
+        #end
+        #if ( $!attrReq.op )
+          <li>Operation: $!attrReq.op</li>
+        #end
+        #if ( $!attrReq.displayValue )
+          <li>Attribute Value: $!attrReq.displayValue</li>
+        #elseif ( $!attrReq.value )
+          <li>Attribute Value: $!attrReq.value</li>
+        #end
+      #end
+      #if ( $!{acctReq.arguments["requesterComments"]} )
+        <li>Requester Comments: $!{acctReq.arguments["requesterComments"]}</li>
+      #end
+      </ul>
+      </ul>
+    #end
+    </ul>
+  #end
+  #if ( $dynamicAppContent )
+    <table>
+    #if ( !$disableStaticManagerContent )
+      #foreach( $key in $dynamicAppContent.keySet() )
+        <tr><td>$key</td><td>$dynamicAppContent.get($key)</td></tr>
+      #end
+    #else
+      #foreach( $key in $dynamicAppContent.keySet() )
+        <tr><td>$dynamicAppContent.get($key)</td></tr>
+      #end
+    #end
+    </table>
+  #end
+  #if ( $provisioningErrors )
+    The following errors occurred during provisioning:
+    <ul>
+    #foreach ( $error in $provisioningErrors )
+      <li>$!error</li>
+    #end
+    </ul>
+  #end
+  #if( $footerTemplate )
+    $footerTemplate
+  #end
+  </body>
+  </html>
+        ]]>
+    </Body>
+  <Description>
+    Email Template for notifying the manager when account creation is completed
+    </Description>
+  <Signature>
+    <Inputs>
+      <Argument name="workflow" type="Workflow">
+        <Description>The Workflow object being executed.</Description>
+      </Argument>
+      <Argument name="approvalSet" type="ApprovalSet">
+        <Description>The ApprovalSet object contained in the workflow.</Description>
+      </Argument>
+      <Argument name="refIdentityDisplayName" type="string">
+        <Description>The name of the Identity that is registering.</Description>
+      </Argument>
+      <Argument name="recipientDisplayName" type="string">
+        <Description>The display name of the Identity that is registering.</Description>
+      </Argument>
+      <Argument name="provisioningErrors" type="List">
+        <Description>Any provisioning errors that may have occurred.</Description>
+      </Argument>
+      <Argument name="disableStaticManagerContent" type="boolean">
+        <Description>if false, then do not hide static content</Description>
+      </Argument>
+    </Inputs>
+  </Signature>
+  <Subject>#if($provisioningErrors) Error:#end User '$refIdentityDisplayName' has been onboarded </Subject>
+</EmailTemplate>
+
+<EmailTemplate name="Joiner Temporary Password Notification">
+  <Body>
+<![CDATA[
+		#set($ctx = $spTools.class.forName("sailpoint.api.SailPointFactory").getMethod("getFactory", null).invoke(null,null).getCurrentContext())
+		#set($emailTools = $spTools.class.forName("sailpoint.rapidsetup.tools.EmailTools").getMethod("instance", null).invoke(null,null))
+		#set($reqType = $workflow.requestType)
+		#set($styleSheet = $emailTools.getEmailSection($ctx, "styleSheet"))
+		#set($headerTemplate = $emailTools.getEmailSection($ctx, "headerTemplate"))
+		#set($footerTemplate = $emailTools.getEmailSection($ctx, "footerTemplate"))
+                <html>
+                <head>
+                <meta charset="UTF-8">
+                #if( $styleSheet )
+                $styleSheet
+                #end
+                </head>
+                <body>
+                #if( $headerTemplate )
+                        $headerTemplate
+                        #end
+                        <br/>
+                        Dear $recipientDisplayName,<br/>
+                        <p>Joiner Send Temporary Password Notification for Identity '$refIdentityDisplayName' has been completed.</p>
+                        <p>Request Id: $requestId</p>
+                        #if ($dynamicAppContent)
+                                <table>
+                                        #if (!$disableStaticManagerContent)
+                                                #foreach( $key in $dynamicAppContent.keySet() )
+                                                <tr><td>$key</td><td>$dynamicAppContent.get($key)</td></tr>
+                                                #end
+                                        #else
+                                                #foreach( $key in $dynamicAppContent.keySet() )
+                                                <tr><td>$dynamicAppContent.get($key)</td></tr>
+                                                #end
+                                        #end
+                                </table>
+                        #else
+                                Please define first time password instructions.<br/>
+                        #end
+
+                        #if ( $provisioningErrors )
+                                The following errors occurred during provisioning:
+                                <ul>
+                                #foreach ($error in $provisioningErrors)
+                                <li>$!error</li>
+                                #end
+                                </ul>
+                        #end
+                        #if( $footerTemplate )
+                        $footerTemplate
+                        #end
+                        </body>
+                </html>
+		]]>
+  </Body>
+  <Description>
+    Email Template for notifying the manager when account creation is completed
+  </Description>
+  <Signature>
+    <Inputs>
+      <Argument name="workflow" type="Workflow">
+        <Description>The Workflow object being executed.</Description>
+      </Argument>
+      <Argument name="approvalSet" type="ApprovalSet">
+        <Description>The ApprovalSet object contained in the workflow.</Description>
+      </Argument>
+      <Argument name="refIdentityDisplayName" type="string">
+        <Description>The name of the Identity that is registering.</Description>
+      </Argument>
+      <Argument name="recipientDisplayName" type="string">
+        <Description>The display name of the Identity that is registering.</Description>
+      </Argument>
+      <Argument name="requestId" type="string">
+        <Description>The requestId of the provisioning plan.</Description>
+      </Argument>
+      <Argument name="provisioningErrors" type="List">
+        <Description>Any provisioning errors that may have occurred.</Description>
+      </Argument>
+      <Argument name="disableStaticManagerContent" type="boolean">
+        <Description>if false, then do not hide static content</Description>
+      </Argument>
+    </Inputs>
+  </Signature>
+  <Subject>#if($provisioningErrors) Error:#end User '$refIdentityDisplayName' has been onboarded </Subject>
+</EmailTemplate>
+
+</sailpoint>

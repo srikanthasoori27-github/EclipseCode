@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Application PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<Application connector="sailpoint.connector.JDBCConnector" featuresString="DISCOVER_SCHEMA, PROVISIONING, SYNC_PROVISIONING, DIRECT_PERMISSIONS, SEARCH, ENABLE, UNLOCK" icon="databaseIcon" name="Great Plains" profileClass="" type="JDBC">
+    <AccountCorrelationConfig>
+        <Reference class="sailpoint.object.CorrelationConfig" name="ele-Great-Plains-correlation-rule"/>
+    </AccountCorrelationConfig>
+    <Attributes>
+        <Map>
+            <entry key="Profiles.SQL" value="select RTRIM(SecurityRoleID) as SecurityRoleID, RTRIM(securityrolename) as securityrolename, RTRIM(securityroledesc) as securityroledesc from sy09100"/>
+            <entry key="Profiles.aggregationMode">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="Profiles.deltaTable"/>
+            <entry key="Profiles.driverClass" value="%%ELE_GREAT_PLAINS_DB_DRIVER%%"/>
+            <entry key="Profiles.getDeltaSQL"/>
+            <entry key="Profiles.getDirectPermObjectSQL"/>
+            <entry key="Profiles.getObjectSQL"/>
+            <entry key="Profiles.isPermissionEnabled">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="Profiles.mergeRows">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="Profiles.password" value="%%ELE_MS_SQL_GP_SVC_ACCOUNT_PWD%%"/>
+            <entry key="Profiles.url" value="%%ELE_GREAT_PLAINS_DB_URL%%"/>
+            <entry key="Profiles.useExecuteQuery">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="Profiles.useStoredProcedureDelta">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="Profiles.useStoredProcedureDirectPermission">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="Profiles.useStoredProcedureGetObject">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="Profiles.useStoredProcedureSqlStmt">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="Profiles.user" value="%%ELE_MS_SQL_GP_SVC_ACCOUNT%%"/>
+            <entry key="SQL" value="SELECT RTRIM(S.USERID) as UserID, RTRIM(S.CMPANYID) as CompanyID, RTRIM(C.CMPNYNAM) as CompanyName, RTRIM(S.SecurityRoleID) as SecurityRoleID&#13;&#10;FROM dynamics.dbo.SY10500 S -- security assignment user role&#13;&#10;LEFT OUTER JOIN&#13;&#10;dynamics.dbo.SY01500 C -- company master&#13;&#10;ON S.CMPANYID = C.CMPANYID&#13;&#10;where s.USERID in (SELECT userid FROM [DYNAMICS].[dbo].[SY01400] where userstatus=1) order by UserID;"/>
+            <entry key="acctAggregationEnd">
+                <value>
+                    <Date>1615988804991</Date>
+                </value>
+            </entry>
+            <entry key="acctAggregationStart">
+                <value>
+                    <Date>1615988799692</Date>
+                </value>
+            </entry>
+            <entry key="afterProvisioningRule"/>
+            <entry key="aggregationMode">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="beforeProvisioningRule"/>
+            <entry key="compositeDefinition"/>
+            <entry key="deltaTable"/>
+            <entry key="disableOrderingCheck" value="true"/>
+            <entry key="driverClass" value="%%ELE_GREAT_PLAINS_DB_DRIVER%%"/>
+            <entry key="getDeltaSQL"/>
+            <entry key="indexColumns">
+                <value>
+                    <List>
+                        <String>UserID</String>
+                    </List>
+                </value>
+            </entry>
+            <entry key="isPermissionEnabled">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="jdbcExceptionBucketing">
+                <value>
+                    <Boolean>true</Boolean>
+                </value>
+            </entry>
+            <entry key="mergeColumns">
+                <value>
+                    <List>
+                        <String>SecurityRoleID</String>
+                    </List>
+                </value>
+            </entry>
+            <entry key="mergeRows">
+                <value>
+                    <Boolean>true</Boolean>
+                </value>
+            </entry>
+            <entry key="nativeChangeDetectionAttributeScope" value="entitlements"/>
+            <entry key="nativeChangeDetectionAttributes"/>
+            <entry key="nativeChangeDetectionEnabled">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="nativeChangeDetectionOperations"/>
+            <entry key="partitionMode">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="partitionStatements"/>
+            <entry key="password" value="%%ELE_MS_SQL_GP_SVC_ACCOUNT_PWD%%"/>
+            <entry key="provisionRule" value="globalRule"/>
+            <entry key="sysDescriptions">
+                <value>
+                    <Map>
+                        <entry key="en_US"/>
+                    </Map>
+                </value>
+            </entry>
+            <entry key="templateApplication" value="JDBC Template"/>
+            <entry key="testConnSQL" value="SELECT * FROM [DYNAMICS].[dbo].[SY01400];"/>
+            <entry key="url" value="%%ELE_GREAT_PLAINS_DB_URL%%"/>
+            <entry key="useExecuteQuery">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="useStoredProcedureDelta">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="useStoredProcedureDirectPermission">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="useStoredProcedureGetObject">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="useStoredProcedurePartition">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="useStoredProcedureSqlStmt">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="useStoredProcedureTestConn">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="user" value="%%ELE_MS_SQL_GP_SVC_ACCOUNT%%"/>
+        </Map>
+    </Attributes>
+    <CorrelationRule>
+        <Reference class="sailpoint.object.Rule" name="ELE_Global_Correlation_Rule"/>
+    </CorrelationRule>
+    <CreationRule>
+        <Reference class="sailpoint.object.Rule" name="ELE_Global_IdentityCreation_Rule"/>
+    </CreationRule>
+    <Owner>
+        <Reference class="sailpoint.object.Identity" name="spadmin"/>
+    </Owner>
+    <Schemas>
+        <Schema displayAttribute="UserID" identityAttribute="UserID" instanceAttribute="" nativeObjectType="account" objectType="account" permissionsRemediationModificationType="None">
+            <AttributeDefinition name="UserID" type="string">
+                <Description/>
+            </AttributeDefinition>
+            <AttributeDefinition name="CompanyID" type="string">
+                <Description/>
+            </AttributeDefinition>
+            <AttributeDefinition name="CompanyName" type="string">
+                <Description/>
+            </AttributeDefinition>
+            <AttributeDefinition entitlement="true" managed="true" multi="true" name="SecurityRoleID" schemaObjectType="Profiles" type="string">
+                <Description/>
+            </AttributeDefinition>
+        </Schema>
+        <Schema aggregationType="group" descriptionAttribute="securityroledesc" displayAttribute="securityrolename" identityAttribute="SecurityRoleID" instanceAttribute="" nativeObjectType="Profiles" objectType="Profiles" permissionsRemediationModificationType="None">
+            <AttributeDefinition name="SecurityRoleID" type="string">
+                <Description/>
+            </AttributeDefinition>
+            <AttributeDefinition name="securityrolename" type="string">
+                <Description/>
+            </AttributeDefinition>
+            <AttributeDefinition name="securityroledesc" type="string">
+                <Description/>
+            </AttributeDefinition>
+        </Schema>
+    </Schemas>
+    <ApplicationScorecard/>
+</Application>

@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE TaskDefinition PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<TaskDefinition name="GovConnect-Task-GenerateRoleImportFiles" resultAction="Delete" subType="task_item_type_generic" type="Generic">
+          
+    
+    <Attributes>
+                    
+        
+        <Map>
+                              
+            
+            <entry key="AAD_application_name" value="Azure AD"/>
+                              
+            
+            <entry key="AD_application_name" value="SNSW Active Directory"/>
+                              
+            
+            <entry key="TaskDefinition.runLengthAverage" value="0"/>
+                              
+            
+            <entry key="TaskDefinition.runLengthTotal" value="1"/>
+                              
+            
+            <entry key="TaskDefinition.runs" value="22"/>
+                              
+            
+            <entry key="TaskSchedule.host"/>
+                              
+            
+            <entry key="aad_entitlement_attribute_name" value="groups"/>
+                              
+            
+            <entry key="aad_it_roles_filepath" value="D:\SNSW\aad_it_roles_import.csv"/>
+                              
+            
+            <entry key="ad_it_roles_filepath" value="D:\SNSW\ad_it_roles_import.csv"/>
+                              
+            
+            <entry key="ad_ou_container" value="OU=Delegation,OU=Groups,OU=Administration,OU=SNSWPILOT,OU=SNSW,OU=Root,DC=GOVD,DC=nsw,DC=gov,DC=au"/>
+                              
+            
+            <entry key="business_roles_filepath" value="D:\SNSW\business_roles_import.csv"/>
+                              
+            
+            <entry key="entitlement_attribute_name" value="memberOf"/>
+                              
+            
+            <entry key="inputFile" value="D:\SNSW\RoleGroups-V1.1.xlsx"/>
+                              
+            
+            <entry key="location_info_header" value="LocationID, Location Text, Business Unit, Site Name"/>
+                              
+            
+            <entry key="locationsMappingTab" value="Location"/>
+                              
+            
+            <entry key="owner" value="spadmin"/>
+                              
+            
+            <entry key="parent_business_role" value="Business Roles SNSW"/>
+                              
+            
+            <entry key="parent_it_role" value="IT Roles SNSW"/>
+                              
+            
+            <entry key="prefix_AAD_ITRole" value="IT Role Azure AD SNSW"/>
+                              
+            
+            <entry key="prefix_AD_ITRole" value="IT Role AD SNSW"/>
+                              
+            
+            <entry key="prefix_BusinessRole" value="Bus Role SNSW"/>
+                              
+            
+            <entry key="role_info_header" value="Business Unit, Lcoation ID, Position Desc  (SAP), Role, Location, Security Group, Distribution Lists"/>
+                              
+            
+            <entry key="rolesInformationTab" value="NEW User Groups"/>
+                              
+            
+            <entry key="ruleName" value="GovConnect-Rule-GenerateRoleInputFiles"/>
+                              
+            
+            <entry key="taskCompletionEmailNotify" value="Disabled"/>
+                              
+            
+            <entry key="taskCompletionEmailRecipients"/>
+                              
+            
+            <entry key="taskCompletionEmailTemplate"/>
+                            
+        
+        </Map>
+                  
+    
+    </Attributes>
+          
+    
+    <Description>A task that can be used to run an arbitrary rule.</Description>
+          
+    
+    <Owner>
+                    
+        
+        <Reference class="sailpoint.object.Identity" name="spadmin"/>
+                  
+    
+    </Owner>
+          
+    
+    <Parent>
+                    
+        
+        <Reference class="sailpoint.object.TaskDefinition" name="Run Rule"/>
+                  
+    
+    </Parent>
+          
+    
+    <Signature>
+                    
+        
+        <Inputs>
+                              
+            
+            <Argument name="inputFile" required="true" type="string">
+                                        
+                
+                <Prompt>Input file in .xslx format with Role Informations and Locations Information</Prompt>
+                                      
+            
+            </Argument>
+                              
+            
+            <Argument name="ad_it_roles_filepath" type="string">
+                                        
+                
+                <Prompt>Output File Path for AD IT Roles</Prompt>
+                                      
+            
+            </Argument>
+                              
+            
+            <Argument name="aad_it_roles_filepath" type="string">
+                                        
+                
+                <Prompt>Output File Path for Azure AD IT Roles</Prompt>
+                                      
+            
+            </Argument>
+                              
+            
+            <Argument name="business_roles_filepath" type="string">
+                                        
+                
+                <Prompt>Output File Path for Business Roles</Prompt>
+                                      
+            
+            </Argument>
+                              
+            
+            <Argument name="prefix_AD_ITRole" type="string">
+                                        
+                
+                <Prompt>AD IT Roles Prefix</Prompt>
+                                      
+            
+            </Argument>
+                              
+            
+            <Argument name="prefix_AAD_ITRole" type="string">
+                                        
+                
+                <Prompt>Azure AD IT Roles Prefix</Prompt>
+                                      
+            
+            </Argument>
+                              
+            
+            <Argument name="prefix_BusinessRole" type="string">
+                                        
+                
+                <Prompt>Business Roles Prefix</Prompt>
+                                      
+            
+            </Argument>
+                              
+            
+            <Argument name="parent_it_role" type="string">
+                                        
+                
+                <Prompt>IT Roles Parent Container Role Name</Prompt>
+                                      
+            
+            </Argument>
+                              
+            
+            <Argument name="parent_business_role" type="string">
+                                        
+                
+                <Prompt>Business Roles Parent Container Role Name</Prompt>
+                                      
+            
+            </Argument>
+                              
+            
+            <Argument name="owner" type="string">
+                                        
+                
+                <Prompt>Role Owner</Prompt>
+                                      
+            
+            </Argument>
+                              
+            
+            <Argument name="AD_application_name" type="string">
+                                        
+                
+                <Prompt>AD Application Name</Prompt>
+                                      
+            
+            </Argument>
+                              
+            
+            <Argument name="entitlement_attribute_name" type="string">
+                                        
+                
+                <Prompt>Entitlement Attribute Name for AD Application</Prompt>
+                                      
+            
+            </Argument>
+                              
+            
+            <Argument name="ad_ou_container" type="string">
+                                        
+                
+                <Prompt>OU Container Information for the Active directory groups</Prompt>
+                                      
+            
+            </Argument>
+            
+            <Argument name="isCompleteADGroupPathSpecified" type="boolean">
+                                        
+                
+                <Prompt>Is Complete Container Path Specified for AD Groups in the input sheet ?</Prompt>
+                                      
+            
+            </Argument>
+                              
+            
+            <Argument name="AAD_application_name" type="string">
+                                        
+                
+                <Prompt>Azure AD Application Name</Prompt>
+                                      
+            
+            </Argument>
+                              
+            
+            <Argument name="aad_entitlement_attribute_name" type="string">
+                                        
+                
+                <Prompt>Entitlement Attribute Name for Azure AD Application</Prompt>
+                                      
+            
+            </Argument>
+                              
+            
+            <Argument name="rolesInformationTab" type="string">
+                                        
+                
+                <Prompt>Roles Information sheet Tab Name in the Input excel sheet</Prompt>
+                                      
+            
+            </Argument>
+                              
+            
+            <Argument name="locationsMappingTab" type="string">
+                                        
+                
+                <Prompt>Locations Information sheet Tab Name in the Input excel sheet</Prompt>
+                                      
+            
+            </Argument>
+                              
+            
+            <Argument name="role_info_header" type="string">
+                                        
+                
+                <Prompt>Header format for the Groups Information Tab</Prompt>
+                                      
+            
+            </Argument>
+                              
+            
+            <Argument name="location_info_header" type="string">
+                                        
+                
+                <Prompt>Header format for the Locations Information Tab</Prompt>
+                                      
+            
+            </Argument>
+                            
+        
+        </Inputs>
+                  
+    
+    </Signature>
+        
+
+</TaskDefinition>

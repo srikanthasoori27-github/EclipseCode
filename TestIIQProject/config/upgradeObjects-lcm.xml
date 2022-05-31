@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE sailpoint PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+
+<!-- (c) Copyright 2020 SailPoint Technologies, Inc., All Rights Reserved. -->
+
+<!--
+  This is used by 'iiq upgrade' to drive upgrading the schema and data between revisions.
+  There are two files that define the upgrade: upgrade.xml and upgradeObjects.xml. If you have LCM enabled, there are
+  an additional two files, upgrade-lcm.xml and upgradeObjects-lcm.xml.
+  upgrade.xml and upgrade-lcm.xml are processed in a special way before Hibernate is started so that changes can be made
+  at the JDBC level. These files should only contain <ImportAction> elements that use the "execute" command to call
+  upgrader classes.
+  *DO NOT PUT STATIC XML OBJECTS IN UPGRADE.XML, UPGRADE-LCM.XML*
+  upgradeObjects-lcm.xml is included by upgrade-lcm.xml and will be imported after Hibernate is started. Any changes to
+  objects that can be represented as static XML or as ImportActions with the "merge" command must go in these files to
+  ensure that they are parsed after Hibernate has been started so that references can be resolved.
+-->
+<sailpoint>
+
+  <!--
+     This will reimport some updated objects
+     and should be safe to do for every release.
+   -->
+  <ImportAction name="include" value="WEB-INF/config/lcmemailtemplates.xml"/>
+  <ImportAction name="include" value="WEB-INF/config/lcmworkflows.xml"/>
+  <ImportAction name="include" value="WEB-INF/config/lcmworkflowConfigForms.xml"/>
+  <ImportAction name="include" value="WEB-INF/config/batchworkflows.xml"/>
+  <ImportAction name="include" value="WEB-INF/config/lcmrules.xml"/>
+  <ImportAction name="include" value="WEB-INF/config/identityRequestWorkflowSubs.xml"/>
+  <ImportAction name='include' value='WEB-INF/config/lcmReportForms.xml'/>
+  <ImportAction name="include" value="WEB-INF/config/lcmReportTasks.xml"/>
+  <!-- End of object updates -->
+
+</sailpoint>

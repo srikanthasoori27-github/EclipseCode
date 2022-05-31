@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE sailpoint PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<!-- Copyright © 2018 SailPoint Technologies, Inc. All Rights Reserved.
+All logos, text, content, and works of authorship, including but not limited to underlying code, programming or scripting language, designs, and/or graphics,
+that are used and/or depicted herein are protected under United States and international copyright and trademark laws and treaties,
+and may not be used or reproduced without the prior express written permission of SailPoint Technologies, Inc. -->
+<sailpoint>
+<ImportAction name='merge'>
+<ObjectConfig name="Application">
+<!-- POLICY VIOLATION -->
+	<ObjectAttribute categoryName="Policy Violation"
+		displayName="Multiple Accounts Policy Type Options" defaultValue="" editMode="Permanent"
+		 name="policyType" required="true">
+		<AllowedValues>
+			<String>Do Nothing</String>
+			<String>Single Entitlement</String>
+			<String>Multiple Entitlement Toxic Combinations</String>
+		</AllowedValues>
+		<Description>Policy Type Options</Description>
+	</ObjectAttribute>
+	<ObjectAttribute defaultValue=""  categoryName="Policy Violation"
+		displayName="Single Entitlement Exceptions Artifact Name" editMode="Permanent"
+		name="policytypeExceptions" type="string">
+		<Description>Single Entitlement Exceptions</Description>
+	</ObjectAttribute>
+	<ObjectAttribute  defaultValue="" categoryName="Policy Violation"
+		displayName="Toxic Combinations Artifact Name" editMode="Permanent"
+		name="txCombinationName" type="string">
+		<Description>Toxic Combination Custom Name</Description>
+	</ObjectAttribute>
+	<ObjectAttribute defaultValue="" categoryName="Policy Violation"
+		displayName="Eligibility Policy Violation Population Identification" editMode="Permanent"
+		name="eligibilityExpression" type="string">
+		<Description>SUPPORTED FORMATS: [Cube Attribute Name]#IIQPolicyEligibility#[Java Regular Expression] OR Population Name</Description>
+	</ObjectAttribute>
+		<ObjectAttribute defaultValue="" categoryName="Policy Violation"
+		displayName="Allow Access Request Policy Names" editMode="Permanent"
+		name="softPolicyviolations"  namedColumn="true" type="string">
+		<Description>Comma Separated Policy Names</Description>
+	</ObjectAttribute>
+		<ObjectAttribute defaultValue="" categoryName="Policy Violation"
+		displayName="Deny Access Request Policy Names" editMode="Permanent"
+		name="hardPolicyviolations" namedColumn="true" type="string">
+		<Description>Comma Separated Policy Names</Description>
+	</ObjectAttribute>
+	</ObjectConfig>
+	</ImportAction>
+</sailpoint>

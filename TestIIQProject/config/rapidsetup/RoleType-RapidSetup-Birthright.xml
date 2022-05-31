@@ -1,0 +1,38 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE sailpoint PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<!--
+  ~ (c) Copyright 2020 SailPoint Technologies, Inc., All Rights Reserved.
+  -->
+<sailpoint>
+  <ImportAction name='merge'>
+    <ObjectConfig name="Bundle">
+      <Attributes>
+        <Map>
+          <entry key="roleTypeDefinitions">
+            <value>
+              <List>
+                <RoleTypeDefinition name="rapidSetupBirthright" displayName="RapidSetup Birthright"
+                                    noSupers="true"
+                                    noSubs="true"
+                                    noDetectionUnlessAssigned="true"
+                                    noAutoAssignment="true"
+                                    noManualAssignment="true"
+                                    noPermits="true"
+                                    notPermittable="true"
+                                    noRequirements="true"
+                                    notRequired="true"
+                                    noIIQ="true"
+                                    icon="birthrightIcon">
+                  <Description>Birthright roles</Description>
+                  <RequiredRights>
+                    <Reference class="sailpoint.object.SPRight" name="ManageRapidSetupBirthrightRoles"/>
+                  </RequiredRights>
+                </RoleTypeDefinition>
+              </List>
+            </value>
+          </entry>
+        </Map>
+      </Attributes>
+    </ObjectConfig>
+  </ImportAction>
+</sailpoint>

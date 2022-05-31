@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!--
+  ~ /* (c) Copyright 2008 SailPoint Technologies, Inc., All Rights Reserved. */
+  -->
+
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" [
+        <!ENTITY SailPointObjectSimple SYSTEM "classpath://sailpoint/object/SailPointObjectSimple.hbm.xml">
+        ]>
+
+<hibernate-mapping>
+  <class name="sailpoint.object.AlertAction">
+
+    &SailPointObjectSimple;
+
+    <property name="alertDef" type="sailpoint.persistence.XmlType" length="100000000"/>
+    <property name="actionType">
+      <type name="sailpoint.persistence.EnumType">
+        <param name="enumClassName">sailpoint.object.AlertDefinition$ActionType</param>
+      </type>
+    </property>
+
+    <property name="resultId" type="string"/>
+    <property name="result" type="sailpoint.persistence.XmlType" length="100000000"/>
+
+  </class>
+
+</hibernate-mapping>

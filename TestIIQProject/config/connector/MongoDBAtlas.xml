@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE ImportAction PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<ImportAction name="connectorRegistryUpdateAction">
+	<Application
+		connector="sailpoint.connector.OpenConnectorAdapter"
+		featuresString="PROVISIONING, SYNC_PROVISIONING"
+		icon="enterpriseIcon" name="MongoDBAtlas Template" type="MongoDB Cloud - Atlas">
+		<Attributes>
+			<Map>
+				<entry key="connectorClass"
+					value="openconnector.connector.mongodb.MongoDBAtlasConnector" />
+				<entry key="formPath" value="MongoAtlasForm.xhtml" />
+				<entry key="encrypted" value="privateKey" />
+				<entry key="pageSize" value="100" />
+				<entry key="connTimeout" value="1" />
+				<entry key="url"
+					value="https://cloud.mongodb.com/api/atlas/v1.0/" />
+				<entry key="MongoOrganisationRoles">
+					<value>
+						<Map>
+							<entry key="ORG_BILLING_ADMIN"
+								value="Organization Billing Admin" />
+							<entry key="ORG_GROUP_CREATOR"
+								value="Organization Project Creator" />
+							<entry key="ORG_MEMBER" value="Organization Member" />
+							<entry key="ORG_OWNER" value="Organization Owner" />
+							<entry key="ORG_READ_ONLY" value="Organization Read Only" />
+						</Map>
+					</value>
+				</entry>
+				<entry key="MongoProjectRoles">
+					<value>
+						<Map>
+							<entry key="GROUP_CLUSTER_MANAGER"
+										value="Project Cluster Manager" />
+							<entry key="GROUP_DATA_ACCESS_ADMIN"
+										value="Project Data Access Admin" />
+							<entry key="GROUP_DATA_ACCESS_READ_ONLY"
+										value="Project Data Access Read Only" />
+							<entry key="GROUP_DATA_ACCESS_READ_WRITE"
+										value="Project Data Access Read/Write" />
+							<entry key="GROUP_OWNER" value="Project Owner" />
+							<entry key="GROUP_READ_ONLY" value="Project Read Only" />
+						</Map>
+					</value>
+				</entry>
+			</Map>
+		</Attributes>
+		<Schemas>
+			<Schema displayAttribute="Display Name"
+				identityAttribute="Id" objectType="account"
+				nativeObjectType="account">
+				<AttributeDefinition name="Display Name"
+					remediationModificationType="None" type="string">
+					<Description>Display name of the user</Description>
+				</AttributeDefinition>
+				<AttributeDefinition name="Username"
+					remediationModificationType="None" type="string">
+					<Description>Username for authentication</Description>
+				</AttributeDefinition>
+ 				<AttributeDefinition name="Id"
+					remediationModificationType="None" type="string">
+					<Description>A unique identifier for the Organization API Key or Atlas User</Description>
+				</AttributeDefinition>
+				<AttributeDefinition name="First Name"
+					remediationModificationType="None" type="string">
+					<Description>First name of the user</Description>
+				</AttributeDefinition>
+				<AttributeDefinition name="Last Name"
+					remediationModificationType="None" type="string">
+					<Description>Last name of the user</Description>
+				</AttributeDefinition>
+				<AttributeDefinition name="Mobile Number"
+					remediationModificationType="None" type="string">
+					<Description>Mobile number of the user</Description>
+				</AttributeDefinition>
+				<AttributeDefinition name="Email Address"
+					remediationModificationType="None" type="string">
+					<Description>Email address of the user</Description>
+				</AttributeDefinition>
+				<AttributeDefinition name="Country"
+					remediationModificationType="None" type="string">
+					<Description>Country code of the user</Description>
+				</AttributeDefinition>
+				<AttributeDefinition name="Roles" multi="true"
+					remediationModificationType="None" schemaObjectType="role"
+					entitlement="true" managed="true" type="string">
+					<Description>Roles assigned to the user</Description>
+				</AttributeDefinition>
+			</Schema>
+			<Schema displayAttribute="Display Name"
+				identityAttribute="Native Identity" objectType="role"
+				aggregationType="group" nativeObjectType="role"
+				descriptionAttribute="">
+				<AttributeDefinition name="Display Name"
+					remediationModificationType="None" required="true" type="string">
+					<Description>Combination of role name and project name</Description>
+				</AttributeDefinition>
+				<AttributeDefinition name="Role Name"
+					remediationModificationType="None" required="true" type="string">
+					<Description>Name of the role</Description>
+				</AttributeDefinition>
+				<AttributeDefinition name="Native Identity"
+					remediationModificationType="None" required="true" type="string">
+					<Description>Internal ID of the role</Description>
+				</AttributeDefinition>
+			</Schema>
+		</Schemas>	
+	</Application>
+</ImportAction>

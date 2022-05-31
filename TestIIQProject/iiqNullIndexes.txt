@@ -1,0 +1,30 @@
+#
+# This file is ready by SailPointSchemaGenerator and is used to declare
+# which indexes on Oracle should use a special form of concatenated index
+# that allows indexing columns with null values.  Oracle does not normally
+# include null values in an index.  For some queries on columns that can
+# can be null this results in table scans.  This can be avoided by defining
+# the index in this way:
+#  
+#    create index foo on some_table (some_column, ' ');
+#
+# The inclusion of the space in the index causes the indexed value
+# to always be non-null.  This technique is being selectively enabled
+# on certain high volume classes.  If you are experiencing performance
+# problems in other classes you can add them here and regenerate the
+# DDL scripts, or alter the index.
+#
+# The file contains lines of the form:
+#
+#    <className>,<propertyName>
+#
+# Where <classname> is the sailpoint.object class without package
+# prefix and without ".class", for example "Identity".  
+#
+# <propertyName> must be the camel cased property name,
+# for example "assignedScopePath".
+#
+
+Identity,assignedScopePath
+ManagedAttribute,assignedScopePath
+

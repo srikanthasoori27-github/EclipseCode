@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<!-- (c) Copyright 2008 SailPoint Technologies, Inc., All Rights Reserved. -->
+
+<hibernate-mapping>
+  <class name="sailpoint.object.ApplicationActivity">
+
+	<id name="id" length="32" unsaved-value="undefined">
+	  <generator class="sailpoint.persistence.AssignedKeyGenerator" />
+	</id>
+
+    <property name="timeStamp" type="sailpoint.persistence.DateType"/>
+    <property name="sourceApplication" type="string" length="128"/>
+    <property name="action">
+      <type name="sailpoint.persistence.EnumType">
+        <param name="enumClassName">sailpoint.object.ApplicationActivity$Action</param>
+      </type>
+    </property>
+    <property name="result">
+      <type name="sailpoint.persistence.EnumType">
+        <param name="enumClassName">sailpoint.object.ApplicationActivity$Result</param>
+      </type>
+    </property>
+    <property name="dataSource" type="string" length="128"/>
+    <property name="instance" type="string" length="128"/>
+    <property name="user" column="username" type="string" length="128"/>
+    <property name="target" type="string" length="128"/>
+    <property name="info" type="string" length="512"/>
+    <property name="identityId" type="string" length="128"/>
+    <property name="identityName" type="string" length="128"/>
+
+    <list name="timePeriods" table="ActivityTimePeriods"
+      cascade="persist,merge,save-update">
+      <key column="applicationActivity"/>
+      <list-index column="idx"/>
+      <many-to-many class="sailpoint.object.TimePeriod" column="timePeriod"/>
+    </list>
+
+    <many-to-one embed-xml="false" name="assignedScope" class="sailpoint.object.Scope" />
+
+  </class>
+</hibernate-mapping>

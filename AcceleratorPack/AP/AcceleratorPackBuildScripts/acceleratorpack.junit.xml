@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright © 2018 SailPoint Technologies, Inc. All Rights Reserved.
+ All logos, text, content, and works of authorship, including but not limited to underlying code, programming or scripting language, designs, and/or graphics,
+that are used and/or depicted herein are protected under United States and international copyright and trademark laws and treaties,
+and may not be used or reproduced without the prior express written permission of SailPoint Technologies, Inc. -->
+<project name="accelerator.pack.junit" basedir="../" default="-runTests">
+    <property name="src.test.dir" location="test"/> 
+    <property name="junit.lib.dir" location="lib"/>
+	<property name="build.test" value="build/test"/>
+	<property name="build.test.class" value="${build.test}/classes"/>
+	<property name="build.junit" value="build/junit"/>
+	<path id="classpath.test">
+		<pathelement path="build/classes/"></pathelement>
+		<pathelement path="build/test/classes"></pathelement>
+		<pathelement path="lib/common-logging-1.1.3.jar"></pathelement>
+		<pathelement path="lib/identityiq.jar"></pathelement>
+		<fileset dir="${junit.lib.dir}" includes="**/*.jar" />
+	</path>
+	<target name="-cleanup">
+		<echo>----- Cleanup Test Folder-----</echo>
+		<delete dir="${build.test}" failonerror="true" />
+		<delete dir="${build.junit}" failonerror="true" />
+	</target>
+    <target name="-compile-tests" depends="-cleanup,-compile">
+    	<echo>----- Compiling test class in ${src.test.dir} folder -----</echo>
+    	<mkdir dir="${build.test.class}"/>
+   	 	<javac srcdir="${src.test.dir}" destdir="${build.test.class}" includeAntRuntime="false">
+   	 		<classpath refid="classpath.test"/>
+   	 	</javac> 
+    </target>
+    <target name="-runTests" depends="-compile-tests">
+    	<echo>----- Running test class in ${src.test.dir} folder -----</echo>
+    	<mkdir dir="${build.junit}"/>
+		<junit dir="${build.test.class}" printsummary="yes" fork="yes" haltonfailure="yes">
+			<classpath refid="classpath.test"/>
+			<formatter type="xml"/>
+			<batchtest todir="${build.junit}">
+				<fileset dir="${build.test.class}">
+				</fileset>
+			</batchtest>
+			<formatter type="xml"/>
+		</junit>            
+    </target>
+</project>

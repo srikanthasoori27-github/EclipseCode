@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sailpoint PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<!-- Copyright © 2018 SailPoint Technologies, Inc. All Rights Reserved.
+All logos, text, content, and works of authorship, including but not limited to underlying code, programming or scripting language, designs, and/or graphics,
+that are used and/or depicted herein are protected under United States and international copyright and trademark laws and treaties,
+and may not be used or reproduced without the prior express written permission of SailPoint Technologies, Inc. -->
+<sailpoint>
+	<ImportAction name="merge">
+		<Configuration name="SystemConfiguration">
+			<Attributes>
+				<Map>
+				       <!-- Send email on work item assignment/de-assignment -->
+					<entry key="workItemAssignmentNotification">
+				        <value>
+				          <Boolean>true</Boolean>
+				        </value>
+			      	</entry>
+			      	<entry key="workItemAssignmentNotificationRemoval">
+				        <value>
+				          <Boolean>true</Boolean>
+				        </value>
+			      	</entry>
+           			<!-- Email Templates -->
+ 					<entry key="accessRequestReminderEmailTemplate" value="EmailTemplate-FrameworkReminder"/>
+ 					<entry key="certificationReminderEmailTemplate" value="EmailTemplate-FrameworkAccessReviewReminder"/>
+ 					<entry key="reminderEmailTemplate" value="EmailTemplate-FrameworkAccessReviewReminder"/>
+ 					<entry key="delegationEmailTemplate" value="EmailTemplate-FrameworkAccessReviewDelegation"/>
+      				<entry key="delegationFinishedEmailTemplate" value="EmailTemplate-FrameworkAccessReviewDelegationCompletion"/>
+      				<entry key="delegationRevocationEmailTemplate" value="EmailTemplate-Framework-DelegationRevocation"/>
+      				<entry key="escalationEmailTemplate" value="EmailTemplate-FrameworkAccessReviewDelinquent"/>
+      				<entry key="workItemForwardEmailTemplate" value="EmailTemplate-FrameworkWorkItemForward" />
+      				<entry key="workItemAssignmentEmailTemplate" value="EmailTemplate-FrameworkWorkItemAssignment"/>
+					<entry key="workItemAssignmentRemovalEmailTemplate" value="EmailTemplate-FrameworkWorkItemAssignmentRemoval"/>
+					<entry key="delegationRevocationEmailTemplate" value="EmailTemplate-Framework-DelegationRevocation"/>
+					<entry key="openCertsEmailTemplate" value="EmailTemplate-Framework-OpenCertifications"/>
+					<entry key="remediationItemAssignmentEmailTemplate" value="EmailTemplate-FrameworkRemediationAssignment"/>
+      				<entry key="remediationItemAssignmentRemovalEmailTemplate" value="EmailTemplate-FrameworkRemediationAssignmentRemoval"/>
+      				<entry key="remediationEmailTemplate" value="EmailTemplate-Framework-RemediationWorkItem"/>
+      				<entry key="signoffEmailTemplate" value="EmailTemplate-Framework-TaskResultSignOff"/>
+					<entry key="policyViolationDelegationEmailTemplate" value="EmailTemplate-Framework-PolicyViolationDelegation"/>
+      				<entry key="policyViolationEmailTemplate" value="EmailTemplate-Framework-PolicyViolation"/>
+      				<entry key="workItemCommentEmailTemplate" value="EmailTemplate-FrameworkWorkItemComment"/>
+				</Map>
+			</Attributes>
+		</Configuration>
+	</ImportAction>
+</sailpoint>

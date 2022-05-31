@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" [
+  <!ENTITY IndexBase "role_index">
+  <!ENTITY SailPointObject SYSTEM "classpath://sailpoint/object/SailPointObject.hbm.xml">
+  <!ENTITY GenericIndex SYSTEM "classpath://sailpoint/object/GenericIndex.hbm.xml">
+]>
+
+<!-- (c) Copyright 2008 SailPoint Technologies, Inc., All Rights Reserved. -->
+
+<hibernate-mapping>
+  <class name="sailpoint.object.RoleIndex">
+
+    &SailPointObject;
+    &GenericIndex;
+
+    <many-to-one embed-xml="false" name="bundle" class="sailpoint.object.Bundle" column="bundle"/>
+
+    <property name="assignedCount"/>
+    <property name="detectedCount"/>
+    <property name="associatedToRole"/>
+    <property name="lastCertifiedMembership" type="sailpoint.persistence.DateType"/>
+    <property name="lastCertifiedComposition" type="sailpoint.persistence.DateType"/>
+    <property name="lastAssigned" type="sailpoint.persistence.DateType"/>
+    <property name="entitlementCount"/>
+    <property name="entitlementCountInheritance"/>
+
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,375 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE Identity PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<Identity bundleSummary="Aev-Gsuite-Agora" correlated="true" name="PFC051978" password="2:ACP:9lb6h3suYHd5ni7NJj366ATILahY9mi1n/tXV7p3IkY=">
+  <Attributes>
+    <Map>
+      <entry key="company" value="Pilmico Animal Nutrition Corporation"/>
+      <entry key="country" value="Philippines"/>
+      <entry key="delete">
+        <value>
+          <Boolean/>
+        </value>
+      </entry>
+      <entry key="department" value="Swine Operations-Nucleus Farm"/>
+      <entry key="displayName" value="Zapanta, Melanie Miranda "/>
+      <entry key="dn" value="CN=Melanie Zapanta,OU=Users,OU=Tarlac,OU=Pilmico,DC=aboitizgroup,DC=net"/>
+      <entry key="dormantAD" value="FALSE"/>
+      <entry key="dormantGSuite" value="FALSE"/>
+      <entry key="email" value="melanie.zapanta@aboitiz.com"/>
+      <entry key="employeeId" value="051978"/>
+      <entry key="employeeStatus" value="N"/>
+      <entry key="employeeType" value="P"/>
+      <entry key="firstname" value="Melanie"/>
+      <entry key="genderCode" value="F"/>
+      <entry key="genderDescription" value="PANC Semi-monthly"/>
+      <entry key="jobCode" value="SUPFRM"/>
+      <entry key="jobTitle" value="Farm Supervisor"/>
+      <entry key="lastLoginTime" value="02/02/2021 08:00:00 AM"/>
+      <entry key="lastname" value="Zapanta"/>
+      <entry key="location" value="Tarlac"/>
+      <entry key="middleName" value="Miranda"/>
+      <entry key="nickname" value="Zapanta, Melanie Miranda "/>
+      <entry key="organizationalUnit" value="/Pilmico/PANC-Tarlac"/>
+      <entry key="positionDescription" value="Farm Supervisor"/>
+      <entry key="positionNumber" value="NP00016"/>
+      <entry key="sAMAccountName" value="MMZapanta"/>
+      <entry key="serviceDate" value="02/01/2021"/>
+      <entry key="source" value="Ramco"/>
+      <entry key="triggerSnapshots">
+        <value>
+          <Map>
+            <entry key="AttributeChange">
+              <value>
+                <Attributes>
+                  <Map>
+                    <entry key="company" value="Pilmico Animal Nutrition Corporation"/>
+                    <entry key="country" value="Philippines"/>
+                    <entry key="delete">
+                      <value>
+                        <Boolean/>
+                      </value>
+                    </entry>
+                    <entry key="department" value="Swine Operations-Nucleus Farm"/>
+                    <entry key="displayName" value="Zapanta, Melanie Miranda "/>
+                    <entry key="dn" value="CN=Melanie Zapanta,OU=Users,OU=Tarlac,OU=Pilmico,DC=aboitizgroup,DC=net"/>
+                    <entry key="dormantAD" value="FALSE"/>
+                    <entry key="dormantGSuite" value="FALSE"/>
+                    <entry key="email" value="melanie.zapanta@aboitiz.com"/>
+                    <entry key="employeeId" value="051978"/>
+                    <entry key="employeeStatus" value="N"/>
+                    <entry key="employeeType" value="P"/>
+                    <entry key="firstname" value="Melanie"/>
+                    <entry key="genderCode" value="F"/>
+                    <entry key="genderDescription" value="PANC Semi-monthly"/>
+                    <entry key="jobCode" value="SUPFRM"/>
+                    <entry key="jobTitle" value="Farm Supervisor"/>
+                    <entry key="lastLoginTime" value="02/02/2021 08:00:00 AM"/>
+                    <entry key="lastname" value="Zapanta"/>
+                    <entry key="location" value="Tarlac"/>
+                    <entry key="middleName" value="Miranda"/>
+                    <entry key="nickname" value="Zapanta, Melanie Miranda "/>
+                    <entry key="organizationalUnit" value="/Pilmico/PANC-Tarlac"/>
+                    <entry key="positionDescription" value="Farm Supervisor"/>
+                    <entry key="positionNumber" value="NP00016"/>
+                    <entry key="sAMAccountName" value="MMZapanta"/>
+                    <entry key="serviceDate" value="02/01/2021"/>
+                    <entry key="source" value="Ramco"/>
+                    <entry key="uniqueIdentifier" value="PFC051978"/>
+                    <entry key="unitName" value="Swine Operations-Nucleus Farm"/>
+                    <entry key="workLocationCountryCode" value="PH"/>
+                  </Map>
+                </Attributes>
+              </value>
+            </entry>
+            <entry key="Rule" value="0a6e031a771911c48177693076803fe8"/>
+          </Map>
+        </value>
+      </entry>
+      <entry key="uniqueIdentifier" value="PFC051978"/>
+      <entry key="unitName" value="Swine Operations-Nucleus Farm"/>
+      <entry key="workLocationCountryCode" value="PH"/>
+    </Map>
+  </Attributes>
+  <AttributeMetaDatas>
+    <AttributeMetaData attribute="delete" source="$AEV-Rule-IdentityAttributeDelete"/>
+    <AttributeMetaData attribute="inactive" source="$AEV-Rule-IdentityAttributeInactive"/>
+    <AttributeMetaData attribute="positionDescription" source="Ramco:positionDescription"/>
+    <AttributeMetaData attribute="genderDescription" source="Ramco:genderDescription"/>
+    <AttributeMetaData attribute="workLocationCountryCode" source="Ramco:workLocationCountryCode"/>
+    <AttributeMetaData attribute="uniqueIdentifier" source="Ramco:uniqueID"/>
+    <AttributeMetaData attribute="company" source="Ramco:businessUnitName"/>
+    <AttributeMetaData attribute="country" source="Ramco:workLocationCountryDescription"/>
+    <AttributeMetaData attribute="department" source="Ramco:departmentDescription"/>
+    <AttributeMetaData attribute="displayName" source="Ramco:knownAs"/>
+    <AttributeMetaData attribute="employeeStatus" source="Ramco:separatedFlag"/>
+    <AttributeMetaData attribute="employeeType" source="Ramco:typeCode"/>
+    <AttributeMetaData attribute="firstname" source="Ramco:firstName"/>
+    <AttributeMetaData attribute="genderCode" source="Ramco:genderCode"/>
+    <AttributeMetaData attribute="serviceDate" source="Ramco:doj"/>
+    <AttributeMetaData attribute="middleName" source="Ramco:middleName"/>
+    <AttributeMetaData attribute="nickname" source="Ramco:knownAs"/>
+    <AttributeMetaData attribute="positionNumber" source="Ramco:positionCode"/>
+    <AttributeMetaData attribute="jobCode" source="Ramco:jobCode"/>
+    <AttributeMetaData attribute="jobTitle" source="Ramco:jobDescription"/>
+    <AttributeMetaData attribute="lastname" source="Ramco:lastName"/>
+    <AttributeMetaData attribute="location" source="Ramco:workLocationDescription"/>
+    <AttributeMetaData attribute="unitName" source="Ramco:departmentDescription"/>
+    <AttributeMetaData attribute="source" source="Ramco:AppRule: AEV-Rule-IdentityMapping-Ramco Ramco$AEV-Rule-IdentityMapping-Ramco"/>
+    <AttributeMetaData attribute="email" source="AEV G Suite:primaryEmail"/>
+    <AttributeMetaData attribute="employeeId" source="Ramco:employeeId"/>
+    <AttributeMetaData attribute="manager" source="Ramco:supervisorCode"/>
+    <AttributeMetaData attribute="dn" source="AEV Active Directory:distinguishedName"/>
+    <AttributeMetaData attribute="dormantAD" source="AEV Active Directory:dormant"/>
+    <AttributeMetaData attribute="sAMAccountName" source="AEV Active Directory:sAMAccountName"/>
+    <AttributeMetaData attribute="lastLoginTimeAD" source="AEV Active Directory:lastLogonTimestamp"/>
+    <AttributeMetaData attribute="lastLoginTime" source="AEV G Suite:lastLoginTime"/>
+    <AttributeMetaData attribute="dormantGSuite" source="AEV G Suite:dormant"/>
+    <AttributeMetaData attribute="organizationalUnit" source="AEV G Suite:orgUnitPath"/>
+  </AttributeMetaDatas>
+  <Bundles>
+    <Reference class="sailpoint.object.Bundle" name="Aev-Gsuite-Agora"/>
+  </Bundles>
+  <Exceptions>
+    <EntitlementGroup displayName="melanie.zapanta@aboitiz.com" nativeIdentity="100201544588083826798">
+      <ApplicationRef>
+        <Reference class="sailpoint.object.Application" name="AEV G Suite"/>
+      </ApplicationRef>
+      <Attributes>
+        <Map>
+          <entry key="Groups" value="03fwokq02zfnop7"/>
+        </Map>
+      </Attributes>
+    </EntitlementGroup>
+  </Exceptions>
+  <Manager>
+    <Reference class="sailpoint.object.Identity" name="PFC050184"/>
+  </Manager>
+  <Preferences>
+    <Map>
+      <entry key="roleDetections">
+        <value>
+          <List>
+            <RoleDetection date="1612209539794" roleId="0a6e031974e61ff18174fcf925a91fee" roleName="Aev-Gsuite-Agora">
+              <RoleTarget applicationId="0a6e031972be138a8173eaf91a657f59" applicationName="AEV G Suite" displayName="melanie.zapanta@aboitiz.com" nativeIdentity="100201544588083826798">
+                <AccountItem name="Groups" value="026in1rg1prynbn"/>
+              </RoleTarget>
+            </RoleDetection>
+          </List>
+        </value>
+      </entry>
+    </Map>
+  </Preferences>
+  <Links>
+    <Link displayName="051978" identity="051978">
+      <ApplicationRef>
+        <Reference class="sailpoint.object.Application" name="Ramco"/>
+      </ApplicationRef>
+      <Attributes>
+        <Map>
+          <entry key="businessUnitName" value="Pilmico Animal Nutrition Corporation"/>
+          <entry key="departmentDescription" value="Swine Operations-Nucleus Farm"/>
+          <entry key="doj" value="02/01/2021"/>
+          <entry key="emailId" value="melanie.zapanta@aboitiz.com"/>
+          <entry key="employeeId" value="051978"/>
+          <entry key="firstName" value="Melanie"/>
+          <entry key="genderCode" value="F"/>
+          <entry key="genderDescription" value="PANC Semi-monthly"/>
+          <entry key="jobCode" value="SUPFRM"/>
+          <entry key="jobDescription" value="Farm Supervisor"/>
+          <entry key="knownAs" value="Zapanta, Melanie Miranda "/>
+          <entry key="lastName" value="Zapanta"/>
+          <entry key="middleName" value="Miranda"/>
+          <entry key="positionCode" value="NP00016"/>
+          <entry key="positionDescription" value="Farm Supervisor"/>
+          <entry key="separatedFlag" value="N"/>
+          <entry key="supervisorCode" value="050184"/>
+          <entry key="typeCode" value="P"/>
+          <entry key="uniqueID" value="PFC051978"/>
+          <entry key="username" value="051978"/>
+          <entry key="workLocationCountryCode" value="PH"/>
+          <entry key="workLocationCountryDescription" value="Philippines"/>
+          <entry key="workLocationDescription" value="Tarlac"/>
+        </Map>
+      </Attributes>
+    </Link>
+    <Link displayName="ABOITIZ\MMZapanta" identity="CN=Melanie Zapanta,OU=Users,OU=Tarlac,OU=Pilmico,DC=aboitizgroup,DC=net" manuallyCorrelated="true" uuid="{94a18567-b293-4dd5-881f-51a07dc6e3ca}">
+      <ApplicationRef>
+        <Reference class="sailpoint.object.Application" name="AEV Active Directory"/>
+      </ApplicationRef>
+      <Attributes>
+        <Map>
+          <entry key="accountFlags">
+            <value>
+              <List>
+                <String>Normal User Account</String>
+              </List>
+            </value>
+          </entry>
+          <entry key="cn" value="Melanie Zapanta"/>
+          <entry key="department" value="Swine Operations-Nucleus Farm"/>
+          <entry key="displayName" value="Melanie Zapanta"/>
+          <entry key="distinguishedName" value="CN=Melanie Zapanta,OU=Users,OU=Tarlac,OU=Pilmico,DC=aboitizgroup,DC=net"/>
+          <entry key="dormant" value="FALSE"/>
+          <entry key="givenName" value="Melanie"/>
+          <entry key="initials" value="M"/>
+          <entry key="l" value="Tarlac"/>
+          <entry key="lastLogonTimestamp"/>
+          <entry key="mail" value="melanie.zapanta@aboitiz.com"/>
+          <entry key="manager" value="CN=Joyce Camille Bamba,OU=Swine Operations,OU=Users,OU=Tarlac,OU=Pilmico,DC=aboitizgroup,DC=net"/>
+          <entry key="memberOf"/>
+          <entry key="msDS-PrincipalName" value="ABOITIZ\MMZapanta"/>
+          <entry key="msNPAllowDialin" value="Not Set"/>
+          <entry key="objectClass">
+            <value>
+              <List>
+                <String>top</String>
+                <String>person</String>
+                <String>organizationalPerson</String>
+                <String>user</String>
+              </List>
+            </value>
+          </entry>
+          <entry key="objectSid" value="S-1-5-21-1417313405-793931198-433219294-112142"/>
+          <entry key="objectType" value="user"/>
+          <entry key="objectguid" value="{94a18567-b293-4dd5-881f-51a07dc6e3ca}"/>
+          <entry key="sAMAccountName" value="MMZapanta"/>
+          <entry key="sn" value="Zapanta"/>
+          <entry key="title" value="Farm Supervisor"/>
+          <entry key="userPrincipalName" value="MMZapanta@aboitizgroup.net"/>
+        </Map>
+      </Attributes>
+    </Link>
+    <Link displayName="melanie.zapanta@aboitiz.com" entitlements="true" identity="100201544588083826798">
+      <ApplicationRef>
+        <Reference class="sailpoint.object.Application" name="AEV G Suite"/>
+      </ApplicationRef>
+      <Attributes>
+        <Map>
+          <entry key="Groups">
+            <value>
+              <List>
+                <String>026in1rg1prynbn</String>
+                <String>03fwokq02zfnop7</String>
+              </List>
+            </value>
+          </entry>
+          <entry key="IIQDisabled">
+            <value>
+              <Boolean/>
+            </value>
+          </entry>
+          <entry key="changePasswordAtNextLogin">
+            <value>
+              <Boolean/>
+            </value>
+          </entry>
+          <entry key="customerId" value="C02l5uxnt"/>
+          <entry key="dormant" value="FALSE"/>
+          <entry key="emails">
+            <value>
+              <List>
+                <String>{"address":"melanie.zapanta@aboitiz.com","primary":true}</String>
+                <String>{"address":"melanie.zapanta@aboitiz.com.ph"}</String>
+                <String>{"address":"melanie.zapanta@aboitiz.com.test-google-a.com"}</String>
+                <String>{"address":"melanie.zapanta@aboitizenergysolutions.com"}</String>
+                <String>{"address":"melanie.zapanta@aboitizequityventures.com"}</String>
+                <String>{"address":"melanie.zapanta@aboitizgroup.com"}</String>
+                <String>{"address":"melanie.zapanta@aboitizland.com"}</String>
+                <String>{"address":"melanie.zapanta@aboitizland.com.ph"}</String>
+                <String>{"address":"melanie.zapanta@aboitizpower.com"}</String>
+                <String>{"address":"melanie.zapanta@apri.com.ph"}</String>
+                <String>{"address":"melanie.zapanta@cotabatolight.com"}</String>
+                <String>{"address":"melanie.zapanta@davaolight.com"}</String>
+                <String>{"address":"melanie.zapanta@enerzone.com.ph"}</String>
+                <String>{"address":"melanie.zapanta@hedcor.com"}</String>
+                <String>{"address":"melanie.zapanta@luzonhydro.com"}</String>
+                <String>{"address":"melanie.zapanta@mactanenerzone.com"}</String>
+                <String>{"address":"melanie.zapanta@pilmico.com"}</String>
+                <String>{"address":"melanie.zapanta@pristinanorth.com"}</String>
+                <String>{"address":"melanie.zapanta@subicenerzone.com"}</String>
+              </List>
+            </value>
+          </entry>
+          <entry key="employeeId"/>
+          <entry key="familyName" value="Zapanta"/>
+          <entry key="fullName" value="Melanie M. Zapanta"/>
+          <entry key="givenName" value="Melanie M."/>
+          <entry key="includeInGlobalAddressList">
+            <value>
+              <Boolean>true</Boolean>
+            </value>
+          </entry>
+          <entry key="ipWhitelisted">
+            <value>
+              <Boolean/>
+            </value>
+          </entry>
+          <entry key="isAdmin">
+            <value>
+              <Boolean/>
+            </value>
+          </entry>
+          <entry key="isDelegatedAdmin">
+            <value>
+              <Boolean/>
+            </value>
+          </entry>
+          <entry key="isMailboxSetup">
+            <value>
+              <Boolean>true</Boolean>
+            </value>
+          </entry>
+          <entry key="lastLoginTime" value="02/02/2021 08:00:00 AM"/>
+          <entry key="name" value="{&quot;familyName&quot;:&quot;Zapanta&quot;,&quot;givenName&quot;:&quot;Melanie M.&quot;}"/>
+          <entry key="nonEditableAliases">
+            <value>
+              <List>
+                <String>melanie.zapanta@aboitiz.com.ph</String>
+                <String>melanie.zapanta@aboitiz.com.test-google-a.com</String>
+                <String>melanie.zapanta@aboitizenergysolutions.com</String>
+                <String>melanie.zapanta@aboitizequityventures.com</String>
+                <String>melanie.zapanta@aboitizgroup.com</String>
+                <String>melanie.zapanta@aboitizland.com</String>
+                <String>melanie.zapanta@aboitizland.com.ph</String>
+                <String>melanie.zapanta@aboitizpower.com</String>
+                <String>melanie.zapanta@apri.com.ph</String>
+                <String>melanie.zapanta@cotabatolight.com</String>
+                <String>melanie.zapanta@davaolight.com</String>
+                <String>melanie.zapanta@enerzone.com.ph</String>
+                <String>melanie.zapanta@hedcor.com</String>
+                <String>melanie.zapanta@luzonhydro.com</String>
+                <String>melanie.zapanta@mactanenerzone.com</String>
+                <String>melanie.zapanta@pilmico.com</String>
+                <String>melanie.zapanta@pristinanorth.com</String>
+                <String>melanie.zapanta@subicenerzone.com</String>
+              </List>
+            </value>
+          </entry>
+          <entry key="objectID" value="100201544588083826798"/>
+          <entry key="orgUnitPath" value="/Pilmico/PANC-Tarlac"/>
+          <entry key="organizations">
+            <value>
+              <List>
+                <String>{"primary":true,"customType":"","department":"Panc-Swine Ops-Nucleus Farm"}</String>
+              </List>
+            </value>
+          </entry>
+          <entry key="primaryEmail" value="melanie.zapanta@aboitiz.com"/>
+          <entry key="suspended">
+            <value>
+              <Boolean/>
+            </value>
+          </entry>
+          <entry key="thumbnailPhotoUrl" value="https://www.google.com/s2/photos/private/AIbEiAIAAABDCO6gjtnC94HmAiILdmNhcmRfcGhvdG8qKGU1ZDgyYzQ0NWEwMTNkYjhkYWIzNTBkMDEwMTkwMWExZWRjYmE1NmQwAYyggljrT_nSUq6Tc9za6fbRblTa"/>
+        </Map>
+      </Attributes>
+    </Link>
+  </Links>
+  <Scorecard certificationScore="1000" compositeScore="250" entitlementScore="1" rawEntitlementScore="1">
+    <ScoreItem compositePercentage="100" displayName="score_def_certificationAge_name" score="1000" scorePercentage="100" type="score_def_certificationAge_shortname">
+      <TargetMessage>
+        <Message key="cert_scorer_target_id_not_certified" type="Info"/>
+      </TargetMessage>
+    </ScoreItem>
+  </Scorecard>
+</Identity>

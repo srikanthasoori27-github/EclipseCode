@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!--
+  ~ /* (c) Copyright 2008 SailPoint Technologies, Inc., All Rights Reserved. */
+  -->
+
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" [
+        <!ENTITY SailPointObjectSimple SYSTEM "classpath://sailpoint/object/SailPointObjectSimple.hbm.xml">
+        ]>
+
+<hibernate-mapping>
+  <class name="sailpoint.object.ServerStatistic">
+
+    &SailPointObjectSimple;
+
+    <property name="name" type="string" length="128" not-null="true"/>
+    <property name="snapshotName" type="string" length="128" index="server_stat_snapshot"/>
+    <property name="value" type="string" length="4000"/>
+    <property name="valueType" type="string" length="128"/>
+    <many-to-one embed-xml="false" name="host" class="sailpoint.object.Server"/>
+    <property name="attributes" type="sailpoint.persistence.XmlType" length="100000000"/>
+    <property name="target" type="string" length="128"/>
+    <property name="targetType" type="string" length="128"/>
+    <many-to-one embed-xml="false" name="monitoringStatistic" class="sailpoint.object.MonitoringStatistic"/>
+
+  </class>
+
+</hibernate-mapping>

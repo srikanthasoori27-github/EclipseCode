@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" [
+  <!ENTITY IndexBase "spt_workflowcase">
+  <!ENTITY SailPointObject SYSTEM "classpath://sailpoint/object/SailPointObject.hbm.xml">
+  <!ENTITY TaskItem SYSTEM "classpath://sailpoint/object/TaskItem.hbm.xml">
+]>
+
+<!-- (c) Copyright 2008 SailPoint Technologies, Inc., All Rights Reserved. -->
+
+<hibernate-mapping>
+  <class name="sailpoint.object.WorkflowCase">
+
+    &TaskItem;
+    <!-- completed moved from TaskItem in 7.0 so it can be selectively indexed -->
+    <property name="completed" type="sailpoint.persistence.DateType"/>
+
+    <!-- 
+      Workflow cases can be named, but they don't have to be unique.
+      Might want to reconsider that, but unique names are kind
+      of a pain for TaskResults.  They can be big though, so make
+      this consistent with ProcessLog.workflowCaseName which is indexed.
+    -->
+    <property name="name" type="string" length="450"/>
+    <property name="description" type="string" length="1024"/>
+    <property name="complete" type="boolean"/>
+
+    <property name="targetClass"/>
+    <property name="targetId" index="spt_workflowcase_target"/>
+    <property name="targetName"/>
+
+    <property name="workflow" type="sailpoint.persistence.XmlType" length="100000000"/>
+    
+    <list name="secondaryTargets" cascade="all" lazy="false">
+      <key column="workflow_case_id" not-null="true"/>
+      <list-index column="idx"/>
+      <one-to-many class="sailpoint.object.WorkflowTarget"/>
+    </list>
+
+    <property name="lock" column="iiqlock" type="string" length="128"/>
+
+    <!--
+      not yet, using soft reference in a workflow variable
+    <many-to-one embed-xml="false" name="result" class="sailpoint.object.TaskResult"/>
+    -->
+
+  </class>
+</hibernate-mapping>

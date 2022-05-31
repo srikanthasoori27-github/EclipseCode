@@ -1,0 +1,269 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE sailpoint PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+
+<!-- (c) Copyright 2017 SailPoint Technologies, Inc., All Rights Reserved. -->
+
+<!--
+  EmailTemplates for PAM
+-->
+
+<sailpoint>
+
+  <!--
+    -  Template used by default when notifying an approver of the changes that 
+    -  are awaiting for them to approve.
+    -->
+  <EmailTemplate name="PAM Approval">
+    <Description>
+      Email Template for notifying approvers when they need to approve a request changes a user's permissions
+      on a PAM container..
+      Note that in addition to the declared arguments, all workflow variables,
+      Step arguments, and Approval arguments defined in the Workflow are
+      also available.
+    </Description>
+    <Signature>
+      <Inputs>
+        <Argument name='workflow' type='Workflow'>
+          <Description>The Workflow object being executed.</Description>
+        </Argument>
+        <Argument name='item' type='WorkItem'>
+          <Description>The WorkItem representing the review.</Description>
+        </Argument>
+        <Argument name='pamRequest' type='PAMRequestDTO'>
+          <Description>The PAMRequestDTO with information about the request.</Description>
+        </Argument>
+        <Argument name='launcher' type='string'>
+          <Description>The name of the Identity that launched the workflow.</Description>
+        </Argument>
+        <Argument name='identityName' type='string'>
+          <Description>The name of the Identity that is being changed.</Description>
+        </Argument>
+        <Argument name='identityDisplayName' type='string'>
+          <Description>The display name of the Identity that is being changed.</Description>
+        </Argument>
+        <Argument name='containerDisplayName' type='string'>
+          <Description>The display name of the PAM container the user is having access modified on.</Description>
+        </Argument>
+      </Inputs>
+    </Signature>
+    <Subject>Changes requested for $identityDisplayName on container '$containerDisplayName' need approval</Subject>
+    <Body>
+      <![CDATA[
+$launcher is requesting the following changes for $identityDisplayName on container '$containerDisplayName'.
+
+#foreach ($acctReq in $pamRequest.accountRequests)
+    Application: $acctReq.application
+        Account: $acctReq.displayName
+#if ($acctReq.addedRightsCSV)
+   Added rights: $acctReq.addedRightsCSV
+#end
+#if ($acctReq.removedRightsCSV)
+ Removed rights: $acctReq.removedRightsCSV
+#end
+#end
+]]>
+    </Body>
+  </EmailTemplate>
+
+  <!--
+    -  Template used by default when notifying the user when changes are made.
+    -->
+  <EmailTemplate name="PAM User Notification">
+    <Description>
+      Email Template for notifying users when they are given access or removed to a PAM container.
+      Note that in addition to the declared arguments, all workflow variables,
+      Step arguments, and Approval arguments defined in the Workflow are
+      also available.
+    </Description>
+    <Signature>
+      <Inputs>
+        <Argument name='workflow' type='Workflow'>
+          <Description>The Workflow object being executed.</Description>
+        </Argument>
+        <Argument name='launcher' type='string'>
+          <Description>The name of the Identity that launched the workflow.</Description>
+        </Argument>
+        <Argument name='identityDisplayName' type='string'>
+          <Description>The display name of the Identity that is being changed.</Description>
+        </Argument>
+        <Argument name='containerDisplayName' type='string'>
+          <Description>The display name of the PAM container the user is having access modified on.</Description>
+        </Argument>
+        <Argument name='pamRequest' type='PAMRequestDTO'>
+          <Description>The PAMRequestDTO with information about the request.</Description>
+        </Argument>
+        <Argument name='approverDisplayName' type='string'>
+          <Description>The display name of the identity that approved this request, or null if the request did not require approval.</Description>
+        </Argument>
+      </Inputs>
+    </Signature>
+    <Subject>Your access to the container '$containerDisplayName' was modified</Subject>
+    <Body><![CDATA[
+$launcher requested the following changes to your access on container '$containerDisplayName' and they were #if($pamRequest.isApproved())approved#{else}rejected#end#if($!approverDisplayName) by ${approverDisplayName}#end.
+
+#foreach ($acctReq in $pamRequest.accountRequests)
+    Application: $acctReq.application
+        Account: $acctReq.displayName
+#if ($acctReq.addedRightsCSV)
+   Added rights: $acctReq.addedRightsCSV
+#end
+#if ($acctReq.removedRightsCSV)
+ Removed rights: $acctReq.removedRightsCSV
+#end
+#end
+]]>
+    </Body>
+  </EmailTemplate>
+
+  <!--
+    -  Template used by default when notifying the requester when changes occur.
+    -->
+  <EmailTemplate name="PAM Requester Notification">
+    <Description>
+      Email Template for notifying requesters when their requests for PAM access modification are completed.
+      Note that in addition to the declared arguments, all workflow variables,
+      Step arguments, and Approval arguments defined in the Workflow are
+      also available.
+    </Description>
+    <Signature>
+      <Inputs>
+        <Argument name='workflow' type='Workflow'>
+          <Description>The Workflow object being executed.</Description>
+        </Argument>
+        <Argument name='launcher' type='string'>
+          <Description>The name of the Identity that launched the workflow.</Description>
+        </Argument>
+        <Argument name='identityDisplayName' type='string'>
+          <Description>The display name of the Identity that is being changed.</Description>
+        </Argument>
+        <Argument name='containerDisplayName' type='string'>
+          <Description>The display name of the PAM container the user is having access modified on.</Description>
+        </Argument>
+        <Argument name='pamRequest' type='PAMRequestDTO'>
+          <Description>The PAMRequestDTO with information about the request.</Description>
+        </Argument>
+        <Argument name='approverDisplayName' type='string'>
+          <Description>The display name of the identity that approved this request, or null if the request did not require approval.</Description>
+        </Argument>
+      </Inputs>
+    </Signature>
+    <Subject>The changes you requested for $identityDisplayName on container '$containerDisplayName' were processed</Subject>
+    <Body><![CDATA[
+The following changes you requested for identity '$identityDisplayName' on container '$containerDisplayName' were #if($pamRequest.isApproved())approved#if($!approverDisplayName) by ${approverDisplayName}#end and have been processed#{else}rejected#if($!approverDisplayName) by ${approverDisplayName}#end#end.
+
+#foreach ($acctReq in $pamRequest.accountRequests)
+    Application: $acctReq.application
+        Account: $acctReq.displayName
+#if ($acctReq.addedRightsCSV)
+   Added rights: $acctReq.addedRightsCSV
+#end
+#if ($acctReq.removedRightsCSV)
+ Removed rights: $acctReq.removedRightsCSV
+#end
+#end
+      ]]>
+    </Body>
+  </EmailTemplate>
+
+  <!--
+    -  Template used by default when notifying the user's manager when changes occur.
+    -->
+  <EmailTemplate name="PAM Manager Notification">
+    <Description>
+      Email Template for notifying managers when an employee's access to PAM containers is modified.
+      Note that in addition to the declared arguments, all workflow variables,
+      Step arguments, and Approval arguments defined in the Workflow are
+      also available.
+    </Description>
+    <Signature>
+      <Inputs>
+        <Argument name='workflow' type='Workflow'>
+          <Description>The Workflow object being executed.</Description>
+        </Argument>
+        <Argument name='launcher' type='string'>
+          <Description>The name of the Identity that launched the workflow.</Description>
+        </Argument>
+        <Argument name='identityDisplayName' type='string'>
+          <Description>The display name of the Identity that is being changed.</Description>
+        </Argument>
+        <Argument name='containerDisplayName' type='string'>
+          <Description>The display name of the PAM container the user is having access modified on.</Description>
+        </Argument>
+        <Argument name='pamRequest' type='PAMRequestDTO'>
+          <Description>The PAMRequestDTO with information about the request.</Description>
+        </Argument>
+        <Argument name='approverDisplayName' type='string'>
+          <Description>The display name of the identity that approved this request, or null if the request did not require approval.</Description>
+        </Argument>
+      </Inputs>
+    </Signature>
+    <Subject>Changes to ${identityDisplayName}'s access on container '$containerDisplayName' were processed</Subject>
+    <Body><![CDATA[
+$launcher requested the following changes for employee '$identityDisplayName' on container '$containerDisplayName' and they were #if($pamRequest.isApproved())approved#{else}rejected#end#if($!approverDisplayName) by ${approverDisplayName}#end.
+
+#foreach ($acctReq in $pamRequest.accountRequests)
+    Application: $acctReq.application
+        Account: $acctReq.displayName
+#if ($acctReq.addedRightsCSV)
+   Added rights: $acctReq.addedRightsCSV
+#end
+#if ($acctReq.removedRightsCSV)
+ Removed rights: $acctReq.removedRightsCSV
+#end
+#end
+      ]]>
+    </Body>
+  </EmailTemplate>
+
+  <!--
+  -  Template used by default when notifying the container owner when changes occur.
+  -->
+  <EmailTemplate name="PAM Owner Notification">
+    <Description>
+      Email Template for notifying container owners when an employee's access to PAM containers they own is modified.
+      Note that in addition to the declared arguments, all workflow variables,
+      Step arguments, and Approval arguments defined in the Workflow are
+      also available.
+    </Description>
+    <Signature>
+      <Inputs>
+        <Argument name='workflow' type='Workflow'>
+          <Description>The Workflow object being executed.</Description>
+        </Argument>
+        <Argument name='launcher' type='string'>
+          <Description>The name of the Identity that launched the workflow.</Description>
+        </Argument>
+        <Argument name='identityDisplayName' type='string'>
+          <Description>The display name of the Identity that is being changed.</Description>
+        </Argument>
+        <Argument name='containerDisplayName' type='string'>
+          <Description>The display name of the PAM container the user is having access modified on.</Description>
+        </Argument>
+        <Argument name='pamRequest' type='PAMRequestDTO'>
+          <Description>The PAMRequestDTO with information about the request.</Description>
+        </Argument>
+        <Argument name='approverDisplayName' type='string'>
+          <Description>The display name of the identity that approved this request, or null if the request did not require approval.</Description>
+        </Argument>
+      </Inputs>
+    </Signature>
+    <Subject>Changes to ${identityDisplayName}'s access on container '$containerDisplayName' were processed</Subject>
+    <Body><![CDATA[
+Changes were processed for a container you own.
+$launcher requested the following changes for identity '$identityDisplayName' on container '$containerDisplayName' and they were #if($pamRequest.isApproved())approved#{else}rejected#end#if($!approverDisplayName) by ${approverDisplayName}#end.
+
+#foreach ($acctReq in $pamRequest.accountRequests)
+    Application: $acctReq.application
+        Account: $acctReq.displayName
+#if ($acctReq.addedRightsCSV)
+   Added rights: $acctReq.addedRightsCSV
+#end
+#if ($acctReq.removedRightsCSV)
+ Removed rights: $acctReq.removedRightsCSV
+#end
+#end
+      ]]>
+    </Body>
+  </EmailTemplate>
+
+</sailpoint>

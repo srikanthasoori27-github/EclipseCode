@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" [
+  <!ENTITY SailPointObject SYSTEM "classpath://sailpoint/object/SailPointObject.hbm.xml">
+]>
+
+<!-- (c) Copyright 2008 SailPoint Technologies, Inc., All Rights Reserved. -->
+
+<hibernate-mapping>
+  <!-- Schema is a reserved word in MySQL (probably others)
+       and cannot be used as a table name
+   -->
+  <class name="sailpoint.object.Schema" table="ApplicationSchema">
+
+    &SailPointObject;
+    <property name="name" type="string" length="128"/>
+
+    <property name="objectType"/>
+    <property name="aggregationType" type="string" length="128"/>
+    <property name="nativeObjectType"/>
+    <property name="identityAttribute"/>
+    <property name="displayAttribute"/>
+    <property name="instanceAttribute"/>
+    <property name="descriptionAttribute"/>
+    <property name="groupAttribute"/>
+    <property name="hierarchyAttribute"/>
+    <property name="oldReferenceAttribute" column="reference_attribute"/>
+    <property name="includePermissions" type="boolean"/>
+    <property name="indexPermissions" type="boolean"/>
+    <property name="childHierarchy" type="boolean"/>
+
+<!-- decide if we want this
+    <property name="noPermissionPrormotion" type="boolean"/>
+-->
+    <property name="permissionsRemediationModificationType" column="perm_remed_mod_type">
+      <type name="sailpoint.persistence.EnumType">
+        <param name="enumClassName">sailpoint.object.AttributeDefinition$UserInterfaceInputType</param>
+      </type>
+    </property>
+
+    <list name='attributes' table='SchemaAttributes' cascade='all' lazy='false'>
+      <!-- "schema" is reserved in MySQL -->
+      <key column="applicationschema"/>
+      <list-index column="idx"/>
+      <composite-element class='sailpoint.object.AttributeDefinition'>
+        <property name="name"/>
+        <property name="type"/>
+        <property name="description" type="materialized_clob" length="8192"/>
+        <property name="required" type="boolean"/>
+        <property name="entitlement" type="boolean"/>
+        <!-- "group" is reserved in MySQL -->
+        <property name="group" column="isGroup" type="boolean"/>
+        <property name="managed" type="boolean"/>
+        <property name="multiValued" type="boolean"/>
+        <property name="minable" type="boolean"/>
+        <property name="indexed" type="boolean"/>
+        <property name="correlationKey"/>
+        <property name="source"/>  
+        <property name="internalName"/>  
+        <!-- "default" is reserved in MySQL -->
+        <property name="defaultValueAsString" column="defaultValue"/>
+        <property name="remediationModificationType" column="remed_mod_type" index="spt_app_attr_mod">
+          <type name="sailpoint.persistence.EnumType">
+            <param name="enumClassName">sailpoint.object.AttributeDefinition$UserInterfaceInputType</param>
+          </type>
+        </property>
+        <property name="schemaObjectType"/>
+        <property name="objectMapping"/>
+      </composite-element>
+    </list>
+
+    <property name="config" type="sailpoint.persistence.XmlType" length="100000000"/>
+    <property name="featuresString" type="string" length="512"/>
+    <property name="associationSchemaName"/>
+
+    <many-to-one embed-xml="false" name="creationRule" class="sailpoint.object.Rule"/>
+    <many-to-one embed-xml="false" name="customizationRule" class="sailpoint.object.Rule"/>
+    <many-to-one embed-xml="false" name="correlationRule" class="sailpoint.object.Rule"/>
+    <many-to-one embed-xml="false" name="refreshRule" class="sailpoint.object.Rule"/>
+
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE ImportAction PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<ImportAction name="connectorRegistryUpdateAction">
+	<Application
+		connector="sailpoint.connector.OpenConnectorAdapter"
+		featuresString="PROVISIONING, SYNC_PROVISIONING, PASSWORD"
+		icon="enterpriseIcon" name="MongoDB Template" type="MongoDB Cloud - Database">
+		<Attributes>
+			<Map>
+				<entry key="connectorClass"
+					value="openconnector.connector.mongodb.MongoDBCloudConnector" />
+				<entry key="formPath" value="MongoAtlasDatabaseForm.xhtml" />
+				<entry key="encrypted" value="privateKey" />
+				<entry key="pageSize" value="100" />
+				<entry key="connTimeout" value="1" />
+				<entry key="url" value="https://cloud.mongodb.com/api/atlas/v1.0/" />
+			</Map>
+		</Attributes>
+		<Schemas>
+			<Schema displayAttribute="Username"
+				identityAttribute="Username" objectType="account"
+				nativeObjectType="account">
+				<AttributeDefinition name="Database Name"
+					remediationModificationType="None" type="string">
+					<Description>Name of the database</Description>
+				</AttributeDefinition>
+				<AttributeDefinition name="Labels"
+					remediationModificationType="None" type="string">
+					<Description>Key-value pairs that tag and categorize the database user</Description>
+				</AttributeDefinition>
+				<AttributeDefinition name="LDAP Auth Type"
+					remediationModificationType="None" type="string">
+					<Description>Describes the type of LDAP authentication</Description>
+				</AttributeDefinition>
+				<AttributeDefinition name="Username"
+					remediationModificationType="None" type="string">
+					<Description>Username for authentication</Description>
+				</AttributeDefinition>
+				<AttributeDefinition name="Delete After Date"
+					remediationModificationType="None" type="string">
+					<Description>Attribute related to temporary user, who will get deleted after this specified date. For example, 2021-04-18T03:28:17+00:00</Description>
+				</AttributeDefinition>
+				<AttributeDefinition name="X509 Type"
+					remediationModificationType="None" type="string">
+					<Description>Describes the type of X509 authentication</Description>
+				</AttributeDefinition>
+
+				<AttributeDefinition name="Roles" multi="true"
+					remediationModificationType="None" schemaObjectType="role"
+					entitlement="true" managed="true" type="string">
+					<Description>Collections on which the roles apply</Description>
+				</AttributeDefinition>
+			</Schema>
+
+			<Schema displayAttribute="Native Identity"
+				identityAttribute="Native Identity" objectType="role"
+				aggregationType="group" nativeObjectType="role">
+				<AttributeDefinition name="Native Identity"
+					remediationModificationType="None" required="true" type="string">
+					<Description>Combination of role name and database name</Description>
+				</AttributeDefinition>
+				<AttributeDefinition name="Role Name"
+					remediationModificationType="None" required="true" type="string">
+					<Description>Name of the role</Description>
+				</AttributeDefinition>
+				<AttributeDefinition name="Actions" 
+					remediationModificationType="None" type="string">
+					<Description>Actions associated to the role in JSON format</Description>
+				</AttributeDefinition>
+				<AttributeDefinition name="Inherited Roles" 
+					remediationModificationType="None" type="string">
+					<Description>Inherited Roles associated to the role in JSON format</Description>
+				</AttributeDefinition>
+			</Schema>
+		</Schemas>
+	<ProvisioningForms>
+	<Form name="account" objectType="account" type="Create">
+		<Field displayName="con_prov_Mongo_database_name"
+			helpKey="help_con_prov_Mongo_database_name" name="Database Name"
+			required="true" section="Account" type="string">
+			<AllowedValuesDefinition>
+				<Value>
+					<List>
+						<String>admin</String>
+						<String>$external</String>
+					</List>
+				</Value>
+			</AllowedValuesDefinition>
+		</Field>
+		<Field displayName="con_prov_Mongo_user_name"
+			helpKey="help_con_prov_Mongo_user_name" name="Username"
+			required="true" section="Account" type="string" />
+		<Field displayName="con_prov_Mongo_authentication_method"
+			helpKey="help_con_prov_Mongo_authentication_method"
+			name="Authentication Method" postBack="true" reviewRequired="true"
+			section="Account" type="string" value="Password Authentication">
+				<AllowedValuesDefinition>
+					<Value>
+						<List>
+							<String>Password Authentication</String>
+							<String>X.509 Authentication</String>
+							<String>LDAP Authentication</String>
+						</List>
+					</Value>
+				</AllowedValuesDefinition>
+				<Attributes>
+					<Map>
+						<entry key="hidden">
+							<value>
+								<Script>
+									<Source>
+										import sailpoint.object.Form;
+										Object objType = field.getValue();
+										for(Form.Section s : form.getSections()) {
+										  if (s != null) {
+										    if (!(objType.equals(s.getName())) &amp;&amp;
+										    !("Account".equals(s.getName())) &amp;&amp;
+										    !("Temporary User".equals(s.getName())) ) {
+										          form.remove(s);
+										    }
+										  }
+										}
+										switch(objType) {
+										case "Password Authentication":
+										      for (Object field : form.getSection("Password Authentication").getFields()) {
+										          field.setRequired(true);
+										      }
+										      break;
+										case "X.509 Authentication":
+										      for (Object field : form.getSection("X.509 Authentication").getFields()) {
+										          field.setRequired(true);
+										      }
+										      break;
+										case "LDAP Authentication":
+										      for (Object field : form.getSection("LDAP Authentication").getFields()) {
+										          field.setRequired(true);
+										      }
+										      break;
+										}
+									</Source>
+								</Script>
+							</value>
+						</entry>
+					</Map>
+				</Attributes>
+			</Field>
+			<Field displayName="con_prov_Mongo_password"
+				helpKey="help_con_prov_Mongo_password" name="Password"
+				reviewRequired="true" section="Password Authentication"
+				type="secret" />
+			<Field displayName="con_prov_Mongo_x509_auth_type"
+				helpKey="help_con_prov_Mongo_x509_auth_type" name="X509 Type"
+				reviewRequired="true" section="X.509 Authentication" type="string">
+				<AllowedValuesDefinition>
+					<Value>
+						<List>
+							<String>MANAGED</String>
+							<String>CUSTOMER</String>
+						</List>
+					</Value>
+				</AllowedValuesDefinition>
+			</Field>
+			<Field displayName="con_prov_Mongo_ldap_auth_type"
+				helpKey="help_con_prov_Mongo_ldap_auth_type" name="LDAP Auth Type"
+				reviewRequired="true" section="LDAP Authentication" type="string">
+				<AllowedValuesDefinition>
+					<Value>
+						<List>
+							<String>USER</String>
+							<String>GROUP</String>
+						</List>
+					</Value>
+				</AllowedValuesDefinition>
+			</Field>
+			<Field displayName="con_prov_Mongo_temporary_user_duration"
+				helpKey="help_con_prov_Mongo_temporary_user_duration"
+				name="Delete After Date" reviewRequired="true"
+				section="Temporary User" />
+		</Form>
+	</ProvisioningForms>
+	</Application>
+</ImportAction>

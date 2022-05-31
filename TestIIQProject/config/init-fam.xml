@@ -1,0 +1,116 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE sailpoint PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+
+<!-- (c) Copyright 2019 SailPoint Technologies, Inc., All Rights Reserved. -->
+
+<!--
+  Initialization file for SailPoint File Access Manager integration with IdentityIQ.
+-->
+<sailpoint>
+
+  <!--  Rights and Capabilities -->
+  <ImportAction name="include" value="WEB-INF/config/fam/authorization-fam.xml"/>
+
+  <!-- 
+    Declare the FAM module
+  -->
+  <Module name="FAM" description="ui_fam_module_desc">
+      <Attributes>
+          <Map>
+              <entry key="healthCheckClass" value="sailpoint.fam.FAMHealthChecker"/>
+              <entry key="enabledConfigKey" value="famEnabled"/>
+          </Map>
+      </Attributes>
+  </Module>
+
+  <!--
+    By setting famEnabled, we enable the configuration and use of File Access Manager.
+  -->
+  <ImportAction name="merge">
+    <Configuration name="SystemConfiguration">
+      <Attributes>
+        <Map>
+          <entry key="famEnabled" value="true" />
+          <!-- List of widgets to be shown by default on home page -->
+          <entry key="defaultHomeWidgets">
+            <value>
+              <List>
+                <String>FamSensitiveDataExposure</String>
+                <String>FamSensitiveResourcesMissingOwners</String>
+              </List>
+            </value>
+          </entry>
+        </Map>
+      </Attributes>
+    </Configuration>
+  </ImportAction>
+
+  <ImportAction name='execute' value='sailpoint.fam.FAMMonitoringConfigUpdater'/>
+
+  <Configuration name="FAMConfiguration">
+    <Attributes>
+      <Map>
+        <entry key="authType" value="OAUTH"/>
+        <entry key="menuPath" value="/identityiqfam/v1/#"/>
+        <entry key="oauthPath" value="identityiqfamapi/token"/>
+        <entry key="password"/>
+        <entry key="scimCorrelationRule"/>
+        <entry key="userName"/>
+      </Map>
+    </Attributes>
+  </Configuration>
+
+  <Widget name="FamSensitiveDataExposure" title="widget_fam_sensitive_data" >
+    <Selector>
+      <IdentitySelector>
+        <MatchExpression>
+          <MatchTerm name="rights" value ="ViewFAMAdminWidgets"></MatchTerm>
+        </MatchExpression>
+      </IdentitySelector>
+    </Selector>
+  </Widget>
+  <Widget name="FamSensitiveResourcesMissingOwners" title="widget_fam_data_ownership" >
+    <Selector>
+      <IdentitySelector>
+        <MatchExpression>
+          <MatchTerm name="rights" value ="ViewFAMAdminWidgets"></MatchTerm>
+        </MatchExpression>
+      </IdentitySelector>
+    </Selector>
+  </Widget>
+
+  <TaskDefinition name="File Access Manager Classification" executor="sailpoint.fam.task.FAMClassificationTask"
+                  resultAction="Delete" type="Classification" progressMode="String" template="true">
+    <Description>
+      Aggregate classifications from File Access Manager
+    </Description>
+    <Signature>
+      <Inputs>
+        <Argument name="classificationCustomizationRule" type="Rule" filterString="type == Rule.Type.ClassificationCustomization" helpKey="help_task_classification_customization_rule">
+          <Prompt>task_in_fam_classification_customization_rule</Prompt>
+        </Argument>
+        <Argument name="descriptionLocale" type="string" helpKey="help_task_fam_classification_description_locale">
+          <Prompt>task_in_fam_classification_description_locale</Prompt>
+        </Argument>
+      </Inputs>
+      <Returns>
+        <Argument name="associationsProcessed" type="int">
+          <Prompt>task_out_fam_associations_processed</Prompt>
+        </Argument>
+        <Argument name="classificationsProcessed" type="int">
+          <Prompt>task_out_fam_classification_processed</Prompt>
+        </Argument>
+        <Argument name="groupsProcessed" type="int">
+          <Prompt>task_out_fam_classification_processed_groups</Prompt>
+        </Argument>
+        <Argument name="classificationsCreated" type="int">
+          <Prompt>task_out_fam_classification_created</Prompt>
+        </Argument>
+        <Argument name="uncorrelatedAssociations" type="int">
+          <Prompt>task_out_fam_classification_uncorrelated</Prompt>
+        </Argument>
+      </Returns>
+    </Signature>
+  </TaskDefinition>
+
+</sailpoint>

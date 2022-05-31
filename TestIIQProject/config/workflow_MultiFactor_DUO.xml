@@ -1,0 +1,281 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE sailpoint PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+
+<sailpoint>
+  
+  <Form name="DUO Device Form" type="Workflow" hidden="true">
+    <Description>This form is used to for mfa.</Description>
+    <Attributes>
+      <Map>
+        <entry key="pageTitle" value="ui_mfa_duo_form_title"/>
+        <entry key="subtitle" value="ui_mfa_duo_form_subtitle"/>
+      </Map>
+    </Attributes>
+
+    <Section name="messageSection" type="text">
+      <Field value="$(mfaResponseMessage)">
+        <Attributes>
+          <Map>
+            <entry key="hidden">
+              <value>
+                <Script><Source>if (mfaResponseMessage == null) return true; else return false;</Source></Script>
+              </value>
+            </entry>
+          </Map>
+        </Attributes>
+      </Field>
+    </Section>
+
+    <Section>
+      <Field displayName="user_name" name="name" readOnly="true" value="ref:identityName"/>
+      <Field name="preAuthResponse" hidden="true" value="ref:preAuthResponse"/>
+      <Field displayName="ui_mfa_duo_form_device" name="device" required="true" dependencies="preAuthResponse" postBack="true">
+        <AllowedValuesDefinition>
+          <Script>
+            <Source>
+              <![CDATA[
+                import sailpoint.workflow.MFALibrary;
+                
+                MFALibrary.responseToDevice(field, preAuthResponse);
+              ]]>             
+            </Source>
+          </Script>
+        </AllowedValuesDefinition>      
+      </Field>
+
+      <Field displayName="ui_mfa_duo_form_method" name="method" required="true" dependencies="preAuthResponse" postBack="true">
+        <AllowedValuesDefinition>
+          <Script>
+            <Source>
+              <![CDATA[
+                import sailpoint.workflow.MFALibrary;
+                import sailpoint.tools.Util;
+                
+                MFALibrary.responseToMethod(field, preAuthResponse, device, Util.otob(allowSMSAuthentication));
+              ]]>       
+            </Source>
+          </Script>
+        </AllowedValuesDefinition>
+      </Field>
+    </Section>
+    <Button label="button_submit" action="next" />
+    <Button label="button_cancel" action="cancel" />
+  </Form>
+  
+  <Form name="MultiFactor Duo Config Form" type="WorkflowConfig" hidden="true">
+    <Section label="wf_config_duo_mfa_section">
+      <Field name="applicationName" displayName="wf_config_duo_mfa_application_name" filterString="type == &quot;Duo&quot;" helpKey="help_wf_duo_mfa_application_name" type="Application">
+        <Attributes>
+          <Map>
+            <entry key="valueProperty" value="name"/>
+          </Map>
+        </Attributes>
+      </Field>
+      <Field name="authStatusPollingSeconds" displayName="wf_config_mfa_duo_auth_status_polling_seconds" helpKey="help_wf_mfa_duo_auth_status_polling_settings" type="integer"/>
+      <Field name="maxStatusChecks" displayName="wf_config_mfa_duo_max_status_checks" helpKey="help_wf_mfa_duo_max_status_checks"  type="integer"/>
+      <Field name="allowSMSAuthentication" displayName="wf_config_mfa_duo_allow_sms_authentication" helpKey="help_wf_mfa_duo_allow_sms_authentication"  type="boolean"/>
+      <Field name="trace" displayName="wf_config_provisioning_advanced_trace" helpKey="help_wf_trace" type="boolean"/>
+    </Section>
+  </Form>
+
+  <Workflow handler="sailpoint.api.StandardWorkflowHandler"
+            name="MFA DUO"
+            libraries="Identity,MFA"
+            explicitTransitions="true"
+            type="MultiFactorAuthentication"
+            configForm="MultiFactor Duo Config Form" >
+    <Variable name="trace" input="true" initializer="true">
+      <Description>
+        Used for debugging this workflow and when set to true trace will be sent to stdout.
+      </Description>
+    </Variable>
+    <Variable name="applicationName" required="true" input="true">
+      <Description>The name of the DUO application configured to connect with the DUO API.</Description>
+    </Variable>
+    <Variable name="nativeUserIdAttribute" required="true" initializer="username">
+      <Description>The application schema attribute name that represents the Duo user id to send during authentication requests.</Description>
+    </Variable>
+    <Variable name="allowSMSAuthentication" input="true" initializer="false" type="boolean">
+      <Description>
+        SMS is no longer considered a safe form of second factor authentication. KNOW WHAT FORM OF ATTACK YOU ARE EXPOSING IF THIS IS ENABLED.
+        Additional workflow customization is required if this option is enabled. 
+      </Description>
+    </Variable>
+    <Variable name="authStatusPollingSeconds" input="true" initializer="script:return new Integer(5)">
+      <Description>
+        The time to wait between calls to check the status of an asynchronous authentication request.
+        Defaults to 5 seconds.
+      </Description>
+    </Variable>
+    <Variable name="maxStatusChecks" type="integer" input="true" initializer="script:return new Integer(8)">
+      <Description>
+        The maximum number of times to poll for the status of an asynchronous authentication request.
+        Defaults to 8 status checks.
+      </Description>
+    </Variable>
+    <Variable name="identityName">
+      <Description>The name of the identity to perform Multi-Factor Authentication.</Description>
+    </Variable>
+    <Variable name="statusChecks" type="integer">
+      <Description>The count of status checks that have occurred.  This is set and maintained internally.</Description>
+    </Variable>
+
+    <Step icon="Start" name="Start" posX="15" posY="12">
+      <Transition to="Initialize"/>
+    </Step>
+
+    <Step action="call:getNativeUserId" name="Initialize" posX="100" posY="12" resultVariable="nativeUserId">
+      <Description>
+         Initialize the data for the identity that we are creating.
+      </Description>
+      <Arg name="identityName" value="ref:identityName"/>
+      <Arg name="applicationName" value="ref:applicationName"/>
+      <Arg name="nativeUserIdAttribute" value="ref:nativeUserIdAttribute"/>
+      <Transition to="PreAuthenticate"/>
+    </Step>
+    
+    <Step name="PreAuthenticate" resultVariable="preAuthResponse" posX="200" posY="12" icon="Provision">
+      <Arg name="nativeUserId" value="ref:nativeUserId"/>
+      <Arg name="applicationName" value="ref:applicationName"/>
+      <Script>
+        <Source>
+        <![CDATA[
+          import sailpoint.workflow.MFALibrary;
+          
+          MFALibrary.duoGetDevices(context, applicationName, nativeUserId);
+        ]]>
+        </Source>
+      </Script>
+      <Transition to="ProcessPreResponse"/>
+    </Step>
+    
+    <Step name="ProcessPreResponse" resultVariable="response" posX="300" posY="12">
+      <Arg name="preAuthResponse" value="ref:preAuthResponse"/>
+      <Script>
+        <Source>
+        <![CDATA[
+          import sailpoint.workflow.MFALibrary;
+          
+          MFALibrary.responseToAuthResponse(preAuthResponse);
+        ]]>
+        </Source>
+      </Script>
+      <Transition to="DUO Device" when="script:(&quot;auth&quot;.equals(response.getResult()))"/>
+      <Transition to="EnrollMessage" when="script:(&quot;enroll&quot;.equals(response.getResult()))"/>
+      <Transition to="End" when="script:(&quot;allow&quot;.equals(response.getResult()))"/>
+      <Transition to="DenyMessage"/>
+    </Step>
+    
+    <Step name="EnrollMessage" action="call:addMessage" posX="266" posY="220">
+      <Description>
+        Adds an enrollment message before completing the workflow
+      </Description>
+      <Arg name="message" value="ui_mfa_error_not_enrolled"/>
+      <Arg name="type" value="Error"/>
+      <Transition to="End"/>
+    </Step>
+    
+    <Step name="DenyMessage" action="call:addMessage" posX="79" posY="220">
+      <Description>
+        Adds a deny message before completing the workflow
+      </Description>
+      <Arg name="message" value="ui_mfa_error_denied"/>
+      <Arg name="type" value="Error"/>
+      <Transition to="End"/>
+    </Step>
+
+    <Step name="DUO Device" posX="420" posY="12">
+      <Approval mode="serial" owner="ref:launcher" return="device,method">
+        <Arg name="workItemType" value="Form"/>
+        <Arg name="workItemDescription" value="MFA form description"/>
+        <Arg name="workItemForm" value="DUO Device Form"/>
+        <Arg name="allowSMSAuthentication" value="ref:allowSMSAuthentication"/>
+        <Arg name="identityName" value="ref:identityName"/>
+        <Arg name="preAuthResponse" value="ref:preAuthResponse"/>
+        <Arg name="mfaResponseMessage" value="ref:mfaResponseMessage"/>
+      </Approval>
+      <Description>
+         Display the MFA form to collect information about the user.
+      </Description>
+      <Transition to="Authenticate"/>
+    </Step>
+
+    <Step name="Authenticate" action="call:duoAuthenticate" resultVariable="txid" posX="420" posY="122" icon="Provision">
+      <Description>
+        Obtains Duo credential information from the applicationName variable, then sends the Duo authentication remote call.
+      </Description>
+      <Transition to="IncrementStatusChecks"/>
+    </Step>
+
+    <Step name="IncrementStatusChecks" posX="510" posY="122">
+      <Description>
+        Increments the count of status checks.  This will allow the workflow to exit when the maximum number of
+        status checks have been performed.
+      </Description>
+      <Script>
+        <Source>
+          if ( statusChecks == null ) {
+              statusChecks = new Integer(0);
+          } else {
+              statusChecks++;
+          }
+          wfcontext.getWorkflowCase().put("statusChecks", statusChecks);
+        </Source>
+      </Script>
+      <Transition to="CheckStatus"/>
+    </Step>
+
+    <Step name="CheckStatus" action="call:duoAuthenticationStatus" resultVariable="response" posX="615" posY="122" icon="Provision">
+      <Description>
+        Calls out to DUO to check the status of an authentication request.  If the maximum number
+        of status checks have been completed, this will transition to the MaximumStatusChecksExceeded
+        step.  If the response is still "waiting" we will loop back and try again.
+      </Description>
+      <Transition to="MaximumStatusChecksExceeded" when="script:(statusChecks &gt; Util.otoi(maxStatusChecks))"/>
+      <Transition to="ProcessResponse" when="script:(!&quot;waiting&quot;.equals(response.getResult()))"/>
+      <Transition to="WaitForNextStatusCheck"/>
+    </Step>
+
+    <Step name="WaitForNextStatusCheck" posX="548" posY="258">
+      <Description>
+        Sleeps for a bit before polling for a status update.
+      </Description>
+      <Script>
+        <Source>
+          int authStatusPollingSeconds = Util.otoi(wfcontext.getWorkflowCase().get("authStatusPollingSeconds"));
+          Thread.sleep(authStatusPollingSeconds * 1000)
+        </Source>
+      </Script>
+      <Transition to="IncrementStatusChecks"/>
+    </Step>
+
+    <Step name="MaximumStatusChecksExceeded" action="call:addMessage" posX="680" posY="301">
+      <Description>
+        Set an appropriate status stating that we couldn't determine if the authentication was allowed
+        or denied.
+      </Description>
+      <Arg name="message" value="ui_mfa_error_max_status_checks_exceeded"/>
+      <Arg name="type" value="Error"/>
+      <Transition to="End"/>
+    </Step>
+    
+    <Step name="ProcessResponse" posX="733" posY="122">
+      <Description>
+        Simple step that directs the response to the end of the workflow or back to the DUO Device step.
+      </Description>
+      <Transition to="End" when="script:(&quot;allow&quot;.equals(response.getResult()))"/>
+      <Transition to="DUO Device Message"/>
+    </Step>
+
+    <Step name="DUO Device Message" action="call:addMFAMessage" posX="518" posY="12">
+      <Description>
+        Adds a response message to the DUO Device Form
+      </Description>
+      <Arg name="response" value="ref:response"/>
+      <Transition to="DUO Device"/>
+    </Step>
+
+    <Step name="End" icon="Stop" posX="360" posY="411"/>
+  </Workflow>
+
+</sailpoint>

@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE ImportAction PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<ImportAction name="connectorRegistryUpdateAction">
+  <Application connector="sailpoint.connector.ForceConnector" featuresString="SEARCH, ENABLE, PROVISIONING, DIRECT_PERMISSIONS, SYNC_PROVISIONING, PASSWORD" icon="internetIcon" name="RemedyForce Template" type="RemedyForce">
+    <Attributes>
+      <Map>
+        <entry key="formPath" value="salesforceConfigForm.xhtml"/>
+        <entry key="encrypted" value="clientSecret, privateKey, privateKeyPassword, refreshToken" />
+      </Map>
+    </Attributes>
+    <ProvisioningConfig deleteToDisable="true"/>
+    <Schemas>
+      <Schema displayAttribute="Username" groupAttribute="ProfileId" identityAttribute="Id" nativeObjectType="User" objectType="account">
+        <AttributeDefinition name="Id" type="string">
+        <Description>RemedyForce Id</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="Alias" type="string">
+        <Description>User's assigned alias</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="City" type="string">
+        <Description>User's city</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="CommunityNickname" type="string">
+        <Description>DisplayNames for user's online communities</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="CompanyName" type="string">
+        <Description>User's Company Name</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="CallCenterId" type="string">
+        <Description>User's call center</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="Country" type="string">
+        <Description>User's Country</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="Department" type="string">
+        <Description>User's Department</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="Email" type="string">
+        <Description>User's Email Address</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="Division" type="string">
+        <Description>User's Division</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="EmployeeNumber" type="string">
+        <Description>User's Employee Number</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="BMCServiceDesk__Extension__c" type="string">
+        <Description>Map to BMCServiceDesk user telephone extension</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="Fax" type="string">
+        <Description>User's Fax Number</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="IsActive" type="boolean">
+        <Description>Flag that indicates if the user is active in SalesForce</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="Username" type="string">
+        <Description>By default, this attribute is the connectors default nativeIdentity AND display name attributes</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="FirstName" type="string">
+        <Description>User's firstname</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="LastName" type="string">
+        <Description>User's lastname</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="EmailEncodingKey" type="string">
+        <Description>Defaults to UTF-8 and there are several selections to choose from in from the web interface</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="Street" type="string">
+        <Description>Street Name</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="Name" type="string">
+        <Description>User's fullname</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="UserPermissionsMarketingUser" type="boolean">
+        <Description>Maps to the Marketing User Flag</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="UserPermissionsMobileUser" type="boolean">
+        <Description>Maps to the Mobile User Flag</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="UserPermissionsOfflineUser" type="boolean">
+        <Description>Maps to the Offline user Flag</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="UserPermissionsSFContentUser" type="boolean">
+        <Description>Maps to Sales Anywhere User.</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="Phone" type="string">
+        <Description>User's phone number</Description>
+        </AttributeDefinition>
+        <AttributeDefinition entitlement="true" managed="true" name="ProfileId" schemaObjectType="group" type="string">
+        <Description>Profile Id</Description>
+        </AttributeDefinition>
+        <AttributeDefinition  name="ProfileName" type="string">
+        <Description>Profile Name</Description>
+        </AttributeDefinition>
+        <AttributeDefinition entitlement="true" managed="true" multi="true" name="PublicGroups" type="string">
+        <Description>Public groups are the entitlements for user</Description>
+        </AttributeDefinition>
+        <AttributeDefinition entitlement="true" managed="true" multi="true" name="PermissionSet" type="string">
+        <Description>PermissionSet assigned to a user.</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="ReceivesAdminInfoEmails" type="string">
+        <Description>Administrator information Mails</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="UserRoleId" type="string">
+        <Description>User Role's Id</Description>
+        </AttributeDefinition>
+        <AttributeDefinition entitlement="true" managed="true" name="UserRoleName" type="string">
+        <Description>User Role's name</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="UserType" type="string">
+        <Description>Type of the user</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="State" type="string">
+        <Description>User's state</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="Title" type="string">
+        <Description>User's title</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="BMCServiceDesk__Account_ID__c" remediationModificationType="None" type="string">
+        <Description>Maps to Account ID</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="BMCServiceDesk__ContactId__c" remediationModificationType="None" type="string">
+        <Description>Maps to Contact Id</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="BMCServiceDesk__IsStaffUser__c" remediationModificationType="None" type="string">
+        <Description>Maps to BMC ServiceDesk Staff</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="BMCServiceDesk__Remedyforce_Knowledge_User__c" remediationModificationType="None" type="string">
+        <Description>Maps to Remedyforce Knowledge User</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="BMCServiceDesk__Account_Name__c" remediationModificationType="None" type="string">
+        <Description>Maps to Account Name</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="BMCServiceDesk__remarks__c" remediationModificationType="None" type="string">
+        <Description>Maps to Remarks</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="BMCServiceDesk__SelfService_Preferences__c" remediationModificationType="None" type="string">
+        <Description>Self Service Preferences</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="BMCServiceDesk__IsOutOfOffice__c" remediationModificationType="None" type="string">
+        <Description>Maps to Out of Office</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="BMCServiceDesk__FPLoginID__c" remediationModificationType="None" type="string">
+        <Description>Maps to FootPrints Login ID</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="BMCServiceDesk__Room__c" remediationModificationType="None" type="string">
+        <Description>Maps to Room attribute</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="ReceivesInfoEmails" type="string">
+        <Description>Receive the salesforce/remedyforce.com newsletter</Description>
+        </AttributeDefinition>
+      </Schema>
+      <Schema displayAttribute="Name" identityAttribute="Id" includePermissions="true" nativeObjectType="Profile"
+              objectType="group" descriptionAttribute="Description">
+        <AttributeDefinition name="Id" type="string">
+        <Description>Profile Id</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="Name" type="string">
+        <Description>Profile Name</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="Description" type="string">
+        <Description>Profile Description</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="UserType" type="string">
+        <Description>Profile Type</Description>
+        </AttributeDefinition>
+      </Schema>
+    </Schemas>
+    <Templates>
+      <Template name="account" schemaObjectType="account" usage="Create">
+        <Field displayName="con_prov_policy_salesforce_direct_Alias" name="Alias" required="true" reviewRequired="true" type="string">
+          <Description> Take first letter of first name and squish it together for an 8 character alias.  Otherwise use first 8 characters of the identity's name.</Description>
+          <Script>
+            <Source>
+                            
+                             String first = identity.getFirstname();
+                             String last = identity.getLastname();
+                             if ( last == null )
+                                 last = identity.getName();
+
+                             String alias = null;
+                             int max = 7;
+                             if ( last.length() &lt; max ) {
+                                 max = last.length();
+                             }
+
+                             if ( first != null ) {
+                                 alias = first.charAt(0) + last.substring(0,max);
+                             } else {
+                                 if ( last.length() &lt; 8 )
+                                     max = last.length();
+                                 alias = last.substring(0,max);
+                             }
+                             return alias;
+                            
+                          </Source>
+          </Script>
+        </Field>
+        <Field defaultValue="true" displayName="con_prov_policy_salesforce_direct_Active" name="IsActive" reviewRequired="true" type="boolean"/>
+        <Field displayName="con_prov_policy_salesforce_direct_Username" helpKey="help_prov_policy_salesforce_direct_Username" name="Username" required="true" reviewRequired="true" type="string">
+          <Script>
+            <Source>
+                            return identity.getEmail();
+                          </Source>
+          </Script>
+        </Field>
+        <Field displayName="con_prov_policy_salesforce_direct_Email" helpKey="help_prov_policy_salesforce_direct_Email" name="Email" required="true" reviewRequired="true" type="string">
+          <Script>
+            <Source>
+                            return identity.getEmail();
+                          </Source>
+          </Script>
+        </Field>
+        <Field displayName="con_prov_policy_salesforce_direct_FirstName" name="FirstName" required="true" reviewRequired="true" type="string">
+          <Script>
+            <Source>
+                            return identity.getFirstname();
+                          </Source>
+          </Script>
+        </Field>
+        <Field displayName="con_prov_policy_salesforce_direct_LastName" name="LastName" required="true" reviewRequired="true" type="string">
+          <Script>
+            <Source>
+                            return identity.getLastname();
+                          </Source>
+          </Script>
+        </Field>
+        <Field displayName="con_prov_policy_salesforce_direct_NickName" name="CommunityNickname" required="true" type="string">
+          <Script>
+            <Source>
+                            return identity.getFullName();
+                          </Source>
+          </Script>
+        </Field>
+        <Field displayName="con_prov_policy_salesforce_direct_TimeZone" name="TimeZoneSidKey" required="true" reviewRequired="true" type="string" value="America/Los_Angeles">
+          <AllowedValues>
+            <String>America/Chicago</String>
+            <String>America/Bogota</String>
+            <String>America/Lima</String>
+            <String>America/Los_Angeles</String>
+            <String>Atlantic/Bermuda</String>
+          </AllowedValues>
+        </Field>
+        <Field displayName="con_prov_policy_salesforce_direct_Locale" name="LocaleSidKey" required="true" reviewRequired="true" type="string" value="en_US"/>
+        <Field displayName="con_prov_policy_salesforce_direct_LanguageLocaleKey" name="LanguageLocaleKey" required="true" reviewRequired="true" type="string" value="en_US"/>
+        <Field displayName="con_prov_policy_salesforce_direct_EmailEncodingKey" name="EmailEncodingKey" required="true" reviewRequired="true" type="string" value="UTF-8"/>
+      </Template>
+    </Templates>
+  </Application>
+</ImportAction>

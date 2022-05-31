@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" [
+  <!ENTITY SailPointObject SYSTEM "classpath://sailpoint/object/SailPointObject.hbm.xml">
+]>
+
+<!-- (c) Copyright 2008 SailPoint Technologies, Inc., All Rights Reserved. -->
+
+<hibernate-mapping>
+  <class name="sailpoint.object.RemoteLoginToken">
+
+    &SailPointObject;
+
+    <property name="name" type="string" length="128" not-null="true"/>
+    <property name="creator" type="string" length="128" not-null="true"/>
+    <property name="remoteHost" type="string" length="128"/>
+    <property name="expiration" type="sailpoint.persistence.DateType" index="spt_remote_login_expiration"/>
+
+  </class>
+</hibernate-mapping>

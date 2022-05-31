@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE ImportAction PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<ImportAction name="connectorRegistryUpdateAction">
+  <Application connector="sailpoint.connector.OpenConnectorAdapter" featuresString="PROVISIONING, SYNC_PROVISIONING, ENABLE, SEARCH" icon="internetIcon" name="GoToMeeting" type="GoToMeeting">
+    <Attributes>
+      <Map>
+        <entry key="connectorClass" value="openconnector.connector.GoToMeeting"/>
+        <entry key="formPath" value="GoToMeeting.xhtml"/>
+        <entry key="encrypted" value="client_secret,refresh_token,oauth_token_info"/>
+        <entry key="restEndPointMap">
+          <value>
+            <Map>
+              <entry key="organizers" value="/organizers" />
+              <entry key="groups" value="/groups" />
+            </Map>
+          </value>
+        </entry>
+      </Map>
+    </Attributes>
+    <Schemas>
+      <Schema displayAttribute="Email" identityAttribute="OrganizerKey" nativeObjectType="account" objectType="account">
+        <AttributeDefinition name="OrganizerKey" remediationModificationType="None" required="true" type="string">
+          <Description>The key of the organizer</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="FirstName" remediationModificationType="None" required="true" type="string">
+          <Description>The first name of the organizer</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="LastName" remediationModificationType="None" required="true" type="string">
+          <Description>The last name of the organizer</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="Email" remediationModificationType="None" required="true" type="string">
+          <Description>Email of the organizer</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="Status" remediationModificationType="None" required="true" type="string">
+          <Description>The status of the organizer</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="GroupKey" remediationModificationType="None" required="true" type="string">
+          <Description>The group key of the organizer</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="MaximumAttendeesAllowed" remediationModificationType="None" required="true" type="string">
+          <Description>Maximum number of allowed attendees for the meeting</Description>
+        </AttributeDefinition>
+        <AttributeDefinition entitlement="true" managed="true" name="Groups" remediationModificationType="None" schemaObjectType="group" type="string">
+          <Description>The groups which the organizer is a member of</Description>
+        </AttributeDefinition>
+      </Schema>
+      <Schema displayAttribute="GroupName" identityAttribute="GroupKey" nativeObjectType="group" objectType="group">
+        <AttributeDefinition name="GroupName" remediationModificationType="None" required="true" type="string">
+          <Description>Name of the group</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="GroupKey" remediationModificationType="None" required="true" type="string">
+          <Description>The key of the group</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="ParentKey" remediationModificationType="None" required="true" type="string">
+          <Description>The parent key of the group</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="GroupStatus" remediationModificationType="None" required="true" type="string">
+          <Description>The status of the group</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="NumberOfOrganizers" remediationModificationType="None" required="true" type="string">
+          <Description>Number of organizers in the group</Description>
+        </AttributeDefinition>
+      </Schema>
+    </Schemas>
+    <Templates>
+      <Template name="account" schemaObjectType="account" usage="Create">
+        <Field displayName="Email" name="email" helpKey="help_con_form_gotomeeting_email" required="true" reviewRequired="true" type="string"/>
+        <Field displayName="First Name" name="firstName" helpKey="help_con_form_gotomeeting_first_name" required="true" reviewRequired="true" type="string"/>
+        <Field displayName="Last Name" name="lastName" helpKey="help_con_form_gotomeeting_last_name" required="true" reviewRequired="true" type="string"/>
+      </Template>
+    </Templates>
+  </Application>
+</ImportAction>

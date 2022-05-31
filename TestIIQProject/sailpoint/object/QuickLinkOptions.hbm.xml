@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" [
+  <!ENTITY SailPointObjectChild SYSTEM "classpath://sailpoint/object/SailPointObjectChild.hbm.xml">
+]>
+
+<!-- (c) Copyright 2008 SailPoint Technologies, Inc., All Rights Reserved. -->
+
+<hibernate-mapping>
+	<class name="sailpoint.object.QuickLinkOptions">
+
+		&SailPointObjectChild;
+		
+		<property name="allowBulk" type="boolean" />
+		<property name="allowOther" type="boolean" />
+		<property name="allowSelf" type="boolean" />
+		<property name="options" type="sailpoint.persistence.XmlType" length="100000000"/>
+		
+		<many-to-one embed-xml="false" name="dynamicScope" class="sailpoint.object.DynamicScope" not-null="true"/>
+        <many-to-one embed-xml="false" name="quickLink" class="sailpoint.object.QuickLink"/>
+
+	</class>
+</hibernate-mapping>

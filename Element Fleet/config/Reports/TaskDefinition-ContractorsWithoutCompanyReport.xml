@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE TaskDefinition PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<TaskDefinition formPath="/analyze/analyzeTabs.jsf" name="Contractors Without Company Report" resultAction="Rename" template="true"  subType="Search" type="GridReport">
+    <Attributes>
+        <Map>
+            <entry key="IdentitySearchTaskItem">
+                <value>
+                    <SearchItem operation="AND" type="AdvancedIdentity">
+                        <IdentityFields>
+                            <String>company</String>
+                            <String>departmentNumber</String>
+                            <String>displayName</String>
+                            <String>email</String>
+                            <String>employeeId</String>
+                            <String>firstName</String>
+                            <String>identityType</String>
+                            <String>lastName</String>
+                            <String>manager</String>
+                            <String>networkid</String>
+                            <String>userName</String>
+                        </IdentityFields>
+                        <SearchFilters>
+                            <SearchItemFilter booleanOperation="AND" logicalOperation="ISNULL" property="Company">
+                                <SearchFilter>
+                                    <Filter operation="ISNULL" property="company"/>
+                                </SearchFilter>
+                            </SearchItemFilter>
+                            <SearchItemFilter booleanOperation="AND" logicalOperation="EQ" property="srch_input_def_advanced_inactive">
+                                <SearchFilter>
+                                    <Filter operation="EQ" property="inactive">
+                                        <Value>
+                                            <Boolean/>
+                                        </Value>
+                                    </Filter>
+                                </SearchFilter>
+                                <Value>
+                                    <String>false</String>
+                                </Value>
+                            </SearchItemFilter>
+                            <SearchItemFilter booleanOperation="OR">
+                                <ChildSearchFilters>
+                                    <SearchItemFilter booleanOperation="AND" logicalOperation="LIKE" property="Identity Type">
+                                        <SearchFilter>
+                                            <Filter ignoreCase="true" matchMode="ANYWHERE" operation="LIKE" property="identityType" value="Contractor"/>
+                                        </SearchFilter>
+                                        <Value>
+                                            <String>Contractor</String>
+                                        </Value>
+                                    </SearchItemFilter>
+                                    <SearchItemFilter booleanOperation="AND" logicalOperation="LIKE" property="Identity Type">
+                                        <SearchFilter>
+                                            <Filter ignoreCase="true" matchMode="ANYWHERE" operation="LIKE" property="identityType" value="External"/>
+                                        </SearchFilter>
+                                        <Value>
+                                            <String>External</String>
+                                        </Value>
+                                    </SearchItemFilter>
+                                    <SearchItemFilter booleanOperation="AND" logicalOperation="LIKE" property="Identity Type">
+                                        <SearchFilter>
+                                            <Filter ignoreCase="true" matchMode="ANYWHERE" operation="LIKE" property="identityType" value="Consultant"/>
+                                        </SearchFilter>
+                                        <Value>
+                                            <String>Consultant</String>
+                                        </Value>
+                                    </SearchItemFilter>
+                                    <SearchItemFilter booleanOperation="AND" logicalOperation="LIKE" property="Identity Type">
+                                        <SearchFilter>
+                                            <Filter ignoreCase="true" matchMode="ANYWHERE" operation="LIKE" property="identityType" value="Fixed Term"/>
+                                        </SearchFilter>
+                                        <Value>
+                                            <String>Fixed Term</String>
+                                        </Value>
+                                    </SearchItemFilter>
+                                    <SearchItemFilter booleanOperation="AND" logicalOperation="LIKE" property="Identity Type">
+                                        <SearchFilter>
+                                            <Filter ignoreCase="true" matchMode="ANYWHERE" operation="LIKE" property="identityType" value="Intern"/>
+                                        </SearchFilter>
+                                        <Value>
+                                            <String>Intern</String>
+                                        </Value>
+                                    </SearchItemFilter>
+                                    <SearchItemFilter booleanOperation="AND" logicalOperation="LIKE" property="Identity Type">
+                                        <SearchFilter>
+                                            <Filter ignoreCase="true" matchMode="ANYWHERE" operation="LIKE" property="identityType" value="Leased"/>
+                                        </SearchFilter>
+                                        <Value>
+                                            <String>Leased</String>
+                                        </Value>
+                                    </SearchItemFilter>
+                                    <SearchItemFilter booleanOperation="AND" logicalOperation="LIKE" property="Identity Type">
+                                        <SearchFilter>
+                                            <Filter ignoreCase="true" matchMode="ANYWHERE" operation="LIKE" property="identityType" value="Netrix User"/>
+                                        </SearchFilter>
+                                        <Value>
+                                            <String>Netrix User</String>
+                                        </Value>
+                                    </SearchItemFilter>
+                                </ChildSearchFilters>
+                            </SearchItemFilter>
+                        </SearchFilters>
+                    </SearchItem>
+                </value>
+            </entry>
+            <entry key="SearchReportFilters">
+                <value>
+                    <CompositeFilter operation="AND">
+                        <Filter operation="ISNULL" property="company"/>
+                        <Filter operation="EQ" property="inactive">
+                            <Value>
+                                <Boolean/>
+                            </Value>
+                        </Filter>
+                        <CompositeFilter operation="OR">
+                            <Filter ignoreCase="true" matchMode="ANYWHERE" operation="LIKE" property="identityType" value="Contractor"/>
+                            <Filter ignoreCase="true" matchMode="ANYWHERE" operation="LIKE" property="identityType" value="External"/>
+                            <Filter ignoreCase="true" matchMode="ANYWHERE" operation="LIKE" property="identityType" value="Consultant"/>
+                            <Filter ignoreCase="true" matchMode="ANYWHERE" operation="LIKE" property="identityType" value="Fixed Term"/>
+                            <Filter ignoreCase="true" matchMode="ANYWHERE" operation="LIKE" property="identityType" value="Intern"/>
+                            <Filter ignoreCase="true" matchMode="ANYWHERE" operation="LIKE" property="identityType" value="Leased"/>
+                            <Filter ignoreCase="true" matchMode="ANYWHERE" operation="LIKE" property="identityType" value="Netrix User"/>
+                        </CompositeFilter>
+                    </CompositeFilter>
+                </value>
+            </entry>
+            <entry key="SearchReportInputDefinitions">
+                <value>
+                    <List>
+                        <SearchInputDefinition description="Company" extendedAttribute="true" headerKey="Company" inputType="Like" matchMode="START" name="company" propertyName="company" propertyType="String" searchType="ExtendedIdentity"/>
+                        <SearchInputDefinition description="Cost Center" extendedAttribute="true" headerKey="Cost Center" inputType="Like" matchMode="START" name="departmentNumber" propertyName="departmentNumber" propertyType="String" searchType="ExtendedIdentity"/>
+                        <SearchInputDefinition description="srch_input_def_display_name" headerKey="srch_input_def_display_name" ignoreCase="true" inputType="Like" matchMode="ANYWHERE" name="displayName" propertyName="displayName" propertyType="String" searchType="None"/>
+                        <SearchInputDefinition description="srch_input_def_email" headerKey="srch_input_def_email" ignoreCase="true" inputType="Like" matchMode="START" name="email" propertyName="email" propertyType="String" searchType="Identity"/>
+                        <SearchInputDefinition description="Employee ID" extendedAttribute="true" headerKey="Employee ID" inputType="Like" matchMode="START" name="employeeId" propertyName="employeeId" propertyType="String" searchType="ExtendedIdentity"/>
+                        <SearchInputDefinition description="srch_input_def_first_name" headerKey="srch_input_def_first_name" ignoreCase="true" inputType="Like" matchMode="START" name="firstName" propertyName="firstname" propertyType="String" searchType="Identity"/>
+                        <SearchInputDefinition description="Identity Type" extendedAttribute="true" headerKey="Identity Type" inputType="Like" matchMode="START" name="identityType" propertyName="identityType" propertyType="String" searchType="ExtendedIdentity"/>
+                        <SearchInputDefinition description="srch_input_def_last_name" headerKey="srch_input_def_last_name" ignoreCase="true" inputType="Like" matchMode="START" name="lastName" propertyName="lastname" propertyType="String" searchType="Identity"/>
+                        <SearchInputDefinition description="srch_input_def_manager" headerKey="srch_input_def_manager" ignoreCase="true" inputType="Like" matchMode="START" name="manager" nullPropertyName="manager" nullPropertyType="String" propertyName="manager.displayName" propertyType="Identity" searchType="Identity"/>
+                        <SearchInputDefinition description="Network Login ID" extendedAttribute="true" headerKey="Network Login ID" inputType="Like" matchMode="START" name="networkid" propertyName="networkid" propertyType="String" searchType="ExtendedIdentity"/>
+                        <SearchInputDefinition description="srch_input_def_user_name" headerKey="srch_input_def_user_name" ignoreCase="true" inputType="Like" matchMode="START" name="userName" propertyName="name" propertyType="String" searchType="None"/>
+                    </List>
+                </value>
+            </entry>
+            <entry key="SearchReportType" value="AdvancedIdentity"/>
+        </Map>
+    </Attributes>
+    <Description/>
+    <Parent>
+        <Reference class="sailpoint.object.TaskDefinition" name="Search Report"/>
+    </Parent>
+</TaskDefinition>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Rule PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<Rule language="beanshell" name="ELE_Common_RuleLibrary" type="IdentityAttribute">
+          
+    
+    <Description>Common Rule Library for the project</Description>
+          
+    
+    <Signature returnType="String"/>
+          
+    
+    <Source><![CDATA[import sailpoint.api.IdentityService;
+  import sailpoint.api.SailPointContext;
+import sailpoint.object.Identity;
+import sailpoint.object.*;
+import sailpoint.tools.*;
+  
+public static Link getPrimaryApplicationLink(SailPointContext context, Identity identity, String appName){
+	Application appObj = context.getObjectByName(Application.class, appName);
+	if(appObj == null) {
+	return null;
+	}
+	IdentityService idService = new IdentityService(context);
+	List<Link> links = idService.getLinks(identity, appObj);
+	Link link = null;
+	if (links != null && !links.isEmpty()) {
+		for(Link appLink:links) {
+			String accountType = (String)appLink.getAttribute("accountType");
+			if(accountType == null || !accountType.equalsIgnoreCase("Admin")) {
+				link=appLink;
+			}
+		}
+	}    
+	context.decache(appObj);
+	return link;
+}
+
+
+]]></Source>
+        
+
+</Rule>

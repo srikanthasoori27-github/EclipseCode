@@ -1,0 +1,459 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE ImportAction PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<ImportAction name="connectorRegistryUpdateAction">
+  <Application connector="sailpoint.connector.OpenConnectorAdapter" featuresString="DISCOVER_SCHEMA, PROVISIONING, SYNC_PROVISIONING, ENABLE, PASSWORD" icon="internetIcon" name="SCIM" type="SCIM">
+    <Attributes>
+      <Map>
+        <entry key="authType" value="oauth2"/>
+        <entry key="grant_type" value="CLIENT_CREDENTIALS"/>
+        <entry key="enableComplexAttributeSupport" value="true"/>
+        <entry key="connectorClass" value="openconnector.connector.SCIMConnector"/>
+        <entry key="encrypted" value="client_secret,refresh_token,oauthBearerToken,oauthTokenInfo,apiToken,private_key,private_key_password"/>
+        <entry key="contentType" value="json"/>
+        <entry key="formPath" value="scimAttributesForm.xhtml"/>
+        <entry key="host"/>
+        <entry key="password"/>
+        <entry key="user"/>
+        <entry key="scimAttrMapping">
+          <value>
+            <Map>
+              <entry key="name">
+                <value>
+                  <Map>
+                    <entry key="familyName" value="familyName"/>
+                    <entry key="formattedName" value="formatted"/>
+                    <entry key="givenName" value="givenName"/>
+                  </Map>
+                </value>
+              </entry>
+              <entry key="emails">
+                <value>
+                  <Map>
+                    <entry key="email" value="value"/>
+                    <entry key="email_primary" value="primary"/>
+                    <entry key="email_type" value="type"/>
+                  </Map>
+                </value>
+              </entry>
+              <entry key="entitlements">
+                <value>
+                  <Map>
+                    <entry key="entitlements_primary" value="primary"/>
+                    <entry key="entitlements_value" value="value"/>
+                  </Map>
+                </value>
+              </entry>
+            </Map>
+          </value>
+        </entry>
+        <entry key="skipSchemaAttributes">
+          <value>
+            <List>
+              <String>alias</String>
+              <String>groups</String>
+            </List>
+          </value>
+        </entry>
+        <entry key="oAuthJwtHeader">
+          <value>
+          <Map>
+            <entry key="alg" value="RS256"/>
+          </Map>
+          </value>
+        </entry>
+        <entry key="oAuthJwtPayload">
+          <value>
+          <Map>
+            <entry key="aud" value=""/>
+            <entry key="exp" value="15f"/>
+            <entry key="iss" value=""/>
+            <entry key="sub" value=""/>
+          </Map>
+          </value>
+        </entry>
+      </Map>
+    </Attributes>
+    <Schemas>
+      <Schema displayAttribute="userName" identityAttribute="id" nativeObjectType="account" objectType="account">
+        <AttributeDefinition name="id" remediationModificationType="None" required="true" type="string">
+          <Description>A unique identifier for a SCIM resource</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="userName" remediationModificationType="None" required="true" type="string">
+          <Description>Name of the user</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="externalId" remediationModificationType="None" type="string">
+          <Description>A String that is an identifier for the resource</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="displayName" remediationModificationType="None" type="string">
+          <Description>The name of the user</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="nickName" remediationModificationType="None" type="string">
+          <Description>The casual way to address the user in real life</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="profileUrl" remediationModificationType="None" type="string">
+          <Description>A fully qualified URL to a page representing the Users Online profile</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="title" remediationModificationType="None" type="string">
+          <Description>The user's title</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="userType" remediationModificationType="None" type="string">
+          <Description>Used to identify the organization to user relationship</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="preferredLanguage" remediationModificationType="None" type="string">
+          <Description>Indicates the User's preferred written or spoken language</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="locale" remediationModificationType="None" type="string">
+          <Description>Used to indicate the User's default location for purposes of localizing items</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="timezone" remediationModificationType="None" type="string">
+          <Description>The User's time zone in the Olson timezone database format</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="formattedName" remediationModificationType="None" type="string">
+          <Description>The full name, including all middle names, titles, and suffixes</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="familyName" remediationModificationType="None" type="string">
+          <Description>The family name (last name) of the User</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="givenName" remediationModificationType="None" type="string">
+          <Description>The family name (last name) of the User</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="middleName" remediationModificationType="None" type="string">
+          <Description>The middle name(s) of the User</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="honorificPrefix" remediationModificationType="None" type="string">
+          <Description>The honorific prefix(es) of the User</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="honorificSuffix" remediationModificationType="None" type="string">
+          <Description>The honorific suffix(es) of the User</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="employeeNumber" remediationModificationType="None" type="string">
+          <Description>Numeric or alphanumeric identifier assigned to a person</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="costCenter" remediationModificationType="None" type="string">
+          <Description>Identifies the name of a cost center</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="organization" remediationModificationType="None" type="string">
+          <Description>Identifies the name of an organization</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="division" remediationModificationType="None" type="string">
+          <Description>Identifies the name of a division</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="department" remediationModificationType="None" type="string">
+          <Description>Identifies the name of a department</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="managerId" remediationModificationType="None" type="string">
+          <Description>The id of the SCIM resource representing the Users manager</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="managerName" remediationModificationType="None" type="string">
+          <Description>Name of the manager</Description>
+        </AttributeDefinition>
+        <AttributeDefinition multi="true" name="emails" remediationModificationType="None" type="string">
+          <Description>E-mail addresses for the User</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="emails.home.primary.value" remediationModificationType="None" type="string">
+          <Description>Primary home e-mail address for the User</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="emails.home.secondary.value" multi="true" remediationModificationType="None" type="string">
+          <Description>Secondary home e-mail addresses for the User</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="emails.work.primary.value" remediationModificationType="None" type="string">
+          <Description>Primary work e-mail address for the User</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="emails.work.secondary.value" multi="true" remediationModificationType="None" type="string">
+          <Description>Secondary work e-mail addresses for the User</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="emails.other.primary.value" remediationModificationType="None" type="string">
+          <Description>Primary other e-mail address for the User</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="emails.other.secondary.value" multi="true" remediationModificationType="None" type="string">
+          <Description>Secondary other e-mail addresses for the User</Description>
+        </AttributeDefinition>
+        <AttributeDefinition multi="true" name="emails_objects" remediationModificationType="None" type="string">
+          <Description>A list of all of the users email addresses</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="emails_primary" remediationModificationType="None" type="boolean">
+          <Description>The users primary email address</Description>
+        </AttributeDefinition>
+        <AttributeDefinition multi="true" name="phoneNumbers" remediationModificationType="None" type="string">
+          <Description>Phone numbers for the User</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="phoneNumbers.home.primary.value" remediationModificationType="None" type="string">
+          <Description>Primary home phone number for the User</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="phoneNumbers.home.secondary.value" multi="true" remediationModificationType="None" type="string">
+          <Description>Secondary home phone numbers for the User</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="phoneNumbers.work.primary.value" remediationModificationType="None" type="string">
+          <Description>Primary work phone number for the User</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="phoneNumbers.work.secondary.value" multi="true" remediationModificationType="None" type="string">
+          <Description>Secondary work phone numbers for the User</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="phoneNumbers.mobile.primary.value" remediationModificationType="None" type="string">
+          <Description>Primary mobile phone number for the User</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="phoneNumbers.mobile.secondary.value" multi="true" remediationModificationType="None" type="string">
+          <Description>Secondary mobile phone numbers for the User</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="phoneNumbers.other.primary.value" remediationModificationType="None" type="string">
+          <Description>Primary other phone number for the User</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="phoneNumbers.other.secondary.value" multi="true" remediationModificationType="None" type="string">
+          <Description>Secondary other phone numbers for the User</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="phoneNumbers.fax.primary.value" remediationModificationType="None" type="string">
+          <Description>Primary fax number for the User</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="phoneNumbers.fax.secondary.value" multi="true" remediationModificationType="None" type="string">
+          <Description>Secondary fax numbers for the User</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="phoneNumbers.pager.primary.value" remediationModificationType="None" type="string">
+          <Description>Primary pager number for the User</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="phoneNumbers.pager.secondary.value" multi="true" remediationModificationType="None" type="string">
+          <Description>Secondary pager numbers for the User</Description>
+        </AttributeDefinition>
+        <AttributeDefinition multi="true" name="phoneNumbers_objects" remediationModificationType="None" type="string">
+          <Description>A list of all of the users phone numbers</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="phoneNumbers_primary" remediationModificationType="None" type="boolean">
+          <Description>The users primary phone number</Description>
+        </AttributeDefinition>
+        <AttributeDefinition multi="true" name="ims" remediationModificationType="None" type="string">
+          <Description>Instant messaging address for the User</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="ims.aim.value" remediationModificationType="None" type="string">
+          <Description>AIM instant messaging address for the User</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="ims.gtalk.value" remediationModificationType="None" type="string">
+          <Description>Gtalk instant messaging address for the User</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="ims.icq.value" remediationModificationType="None" type="string">
+          <Description>ICQ instant messaging address for the User</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="ims.xmpp.value" remediationModificationType="None" type="string">
+          <Description>XMPP instant messaging address for the User</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="ims.msn.value" remediationModificationType="None" type="string">
+          <Description>MSN instant messaging address for the User</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="ims.skype.value" remediationModificationType="None" type="string">
+          <Description>Skype instant messaging address for the User</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="ims.qq.value" remediationModificationType="None" type="string">
+          <Description>QQ instant messaging address for the User</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="ims.yahoo.value" remediationModificationType="None" type="string">
+          <Description>Yahoo instant messaging address for the User</Description>
+        </AttributeDefinition>
+        <AttributeDefinition multi="true" name="ims_objects" remediationModificationType="None" type="string">
+          <Description>A list of all of the instant messaging usernames</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="ims_primary" remediationModificationType="None" type="boolean">
+          <Description>The users primary instant messaging username</Description>
+        </AttributeDefinition>
+        <AttributeDefinition multi="true" name="photos" remediationModificationType="None" type="string">
+          <Description>URL of a photo of the User</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="photos.photo.value" remediationModificationType="None" type="string">
+          <Description>URL of a photo of the User</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="photos.thumbnail.value" remediationModificationType="None" type="string">
+          <Description>URL of a thumbnail photo of the User</Description>
+        </AttributeDefinition>
+        <AttributeDefinition multi="true" name="photos_objects" remediationModificationType="None" type="string">
+          <Description>A list of URLs of all of the users photos</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="photos_primary" remediationModificationType="None" type="boolean">
+          <Description>The URL of the users primary photo</Description>
+        </AttributeDefinition>
+        <AttributeDefinition multi="true" name="addresses" remediationModificationType="None" type="string">
+          <Description>A physical mailing address for this User</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="addresses.home.formatted" remediationModificationType="None" type="string">
+          <Description>Formatted home address for this User</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="addresses.home.streetAddress" remediationModificationType="None" type="string">
+          <Description>Home Street address for this User</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="addresses.home.locality" remediationModificationType="None" type="string">
+          <Description>Home address locality address for this User</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="addresses.home.region" remediationModificationType="None" type="string">
+          <Description>Home address region for this User</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="addresses.home.postalCode" remediationModificationType="None" type="string">
+          <Description>Home address postal code for this User</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="addresses.home.country" remediationModificationType="None" type="string">
+          <Description>Home address country for this User</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="addresses.work.formatted" remediationModificationType="None" type="string">
+          <Description>Formatted work address for this User</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="addresses.work.streetAddress" remediationModificationType="None" type="string">
+          <Description>Work Street address for this User</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="addresses.work.locality" remediationModificationType="None" type="string">
+          <Description>Work address locality address for this User</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="addresses.work.region" remediationModificationType="None" type="string">
+          <Description>Work address region for this User</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="addresses.work.postalCode" remediationModificationType="None" type="string">
+          <Description>Work address postal code for this User</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="addresses.work.country" remediationModificationType="None" type="string">
+          <Description>Work address country for this User</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="addresses.other.formatted" remediationModificationType="None" type="string">
+          <Description>Formatted other address for this User</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="addresses.other.streetAddress" remediationModificationType="None" type="string">
+          <Description>Other Street address for this User</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="addresses.other.locality" remediationModificationType="None" type="string">
+          <Description>Other address locality address for this User</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="addresses.other.region" remediationModificationType="None" type="string">
+          <Description>Other address region for this User</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="addresses.other.postalCode" remediationModificationType="None" type="string">
+          <Description>Other address postal code for this User</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="addresses.other.country" remediationModificationType="None" type="string">
+          <Description>Other address country for this User</Description>
+        </AttributeDefinition>
+        <AttributeDefinition multi="true" name="addresses_objects" remediationModificationType="None" type="string">
+          <Description>A list of all of the users physical mailing addresses</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="addresses_primary" remediationModificationType="None" type="boolean">
+          <Description>The users primary physical mailing address</Description>
+        </AttributeDefinition>
+        <AttributeDefinition entitlement="true" managed="true" multi="true" name="groups" remediationModificationType="None" schemaObjectType="group" type="string">
+          <Description>A list of groups that the user belongs to</Description>
+        </AttributeDefinition>
+        <AttributeDefinition multi="true" name="groups_objects" remediationModificationType="None" type="string">
+          <Description>A list of all of the users group memberships</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="groups_primary" remediationModificationType="None" type="boolean">
+          <Description>The users primary group membership</Description>
+        </AttributeDefinition>
+        <AttributeDefinition entitlement="true" managed="true" multi="true" name="entitlements" remediationModificationType="None" type="string">
+          <Description>A list of entitlements for the User that represent a thing the User has</Description>
+        </AttributeDefinition>
+        <AttributeDefinition managed="true" name="entitlements.primary.value" remediationModificationType="None" type="string">
+          <Description>Primary entitlement for the User that represent a thing the User has</Description>
+        </AttributeDefinition>
+        <AttributeDefinition managed="true" multi="true" name="entitlements.secondary.value" remediationModificationType="None" type="string">
+          <Description>A list of secondary entitlements for the User that represent a thing the User has</Description>
+        </AttributeDefinition>
+        <AttributeDefinition managed="true" name="entitlements.primary.display" remediationModificationType="None" type="string">
+          <Description>Primary entitlement for the User that represent a thing the User has</Description>
+        </AttributeDefinition>
+        <AttributeDefinition managed="true" multi="true" name="entitlements.secondary.display" remediationModificationType="None" type="string">
+          <Description>A list of secondary entitlements for the User that represent a thing the User has</Description>
+        </AttributeDefinition>
+        <AttributeDefinition multi="true" name="entitlements_objects" remediationModificationType="None" type="string">
+          <Description>A list of all of the users entitlements</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="entitlements_primary" remediationModificationType="None" type="boolean">
+          <Description>The users primary entitlement</Description>
+        </AttributeDefinition>
+        <AttributeDefinition entitlement="true" managed="true" multi="true" name="roles" remediationModificationType="None" type="string">
+          <Description>A list of roles for the User that collectively represent who the User is</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="roles.primary.value" remediationModificationType="None" type="string">
+          <Description>Users primary role</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="roles.secondary.value" multi="true" remediationModificationType="None" type="string">
+          <Description>Users secondary roles</Description>
+        </AttributeDefinition>
+        <AttributeDefinition multi="true" name="roles_objects" remediationModificationType="None" type="string">
+          <Description>A list of all of the user's roles, including whether it is their primary role</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="roles_primary" remediationModificationType="None" type="boolean">
+          <Description>The users primary role</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="created" remediationModificationType="None" type="string">
+          <Description>The Date Time details of the Resource was added to the Service Provider</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="lastModified" remediationModificationType="None" type="string">
+          <Description>The most recent Date Time details of this Resource were updated at the Service Provider</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="location" remediationModificationType="None" type="string">
+          <Description>The URL of the Resource being returned</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="version" remediationModificationType="None" type="string">
+          <Description>The version of the Resource being returned</Description>
+        </AttributeDefinition>
+      </Schema>
+      <Schema displayAttribute="displayName" featuresString="PROVISIONING" hierarchyAttribute="memberGroups" identityAttribute="id" nativeObjectType="group" objectType="group">
+        <AttributeDefinition name="id" remediationModificationType="None" type="string">
+          <Description>A unique identifier for the group</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="externalId" remediationModificationType="None" type="string">
+          <Description>A String that is an identifier for the group</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="displayName" remediationModificationType="None" type="string">
+          <Description>The name of the group</Description>
+        </AttributeDefinition>
+        <AttributeDefinition multi="true" name="members" remediationModificationType="None" type="string">
+          <Description>List of user's belongs to the group</Description>
+        </AttributeDefinition>
+        <AttributeDefinition multi="true" name="memberGroups" remediationModificationType="None" type="string">
+          <Description>A list of the sub-groups of this group</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="created" remediationModificationType="None" type="string">
+          <Description>The Date Time the group was added to the Service Provider</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="lastModified" remediationModificationType="None" type="string">
+          <Description>The most recent Date Time details of this group were updated at the Service Provider</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="location" remediationModificationType="None" type="string">
+          <Description>The URL of the Group being returned</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="version" remediationModificationType="None" type="string">
+          <Description>The version of the Group being returned</Description>
+        </AttributeDefinition>
+      </Schema>
+    </Schemas>
+    <Templates>
+      <Template name="Create account" schemaObjectType="account" usage="Create">
+        <Field displayName="User Name" name="userName" required="true" type="string" reviewRequired="true">
+          <Script>
+            <Source>return identity.getName();</Source>
+          </Script>
+        </Field>
+        <Field displayName="First Name" name="givenName" reviewRequired="true" type="string">
+          <Script>
+            <Source>return identity.getFirstname();</Source>
+          </Script>
+        </Field>
+        <Field displayName="Last Name" name="familyName" reviewRequired="true" type="string">
+          <Script>
+            <Source>return identity.getLastname();</Source>
+          </Script>
+        </Field>
+        <Field displayName="Full Name" name="formattedName" reviewRequired="true" type="string">
+          <Script>
+            <Source>return identity.getFullName();</Source>
+          </Script>
+        </Field>
+        <Field displayName="Password" name="password" reviewRequired="true" type="secret"/>
+        <Field displayName="Email Type" name="email_type" reviewRequired="true" type="string">
+          <AllowedValues>
+            <String>work</String>
+            <String>home</String>
+            <String>other</String>
+          </AllowedValues>
+        </Field>
+        <Field displayName="Email" name="email" reviewRequired="true" type="string"/>
+        <Field displayName="Email Primary" name="email_primary" reviewRequired="true" type="boolean"/>
+      </Template>
+      <Template name="Update group" schemaObjectType="group" usage="Update">
+        <Field displayName="Display Name" name="displayName" required="true" type="string"/>
+        <Field displayName="External ID" name="externalId" type="string"/>
+      </Template>
+    </Templates>
+  </Application>
+</ImportAction>

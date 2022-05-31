@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Rule PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<Rule language="beanshell" name="ELE_Manager_IdentityAttribute_Rule" type="IdentityAttribute">
+    <Description>Identity attribute rules are used when the value is not simply a copy of an application account attribute value.  A transformation may be necessary on the account attribute, or several account attributes may need to be combined to produce the identity attribute.
+This rule can be called in two ways: as a global mapping rule and an application mapping rule.  A global mapping rule is called whenever the identity is refreshed.  The rule can look at any account attributes.  An application mapping rule is called only when the identity contains an account link for that application, this link is passed in the "link" argument which is not passed in global mapping rules.</Description>
+    <ReferencedRules>
+        <Reference class="sailpoint.object.Rule" name="ELE_Common_RuleLibrary"/>
+    </ReferencedRules>
+    <Signature returnType="String"/>
+    <Source><![CDATA[
+			import sailpoint.api.IdentityService;
+			import sailpoint.api.SailPointContext;
+			import sailpoint.object.Identity;
+			import sailpoint.object.*;
+			import sailpoint.tools.*;
+			String applicationName = "Element AD";
+			String managerDN = null;
+			String managerName = null;
+			Link primaryLink = getPrimaryApplicationLink(context, identity, applicationName);
+			if(primaryLink != null) managerDN= primaryLink.getAttribute("manager");
+			QueryOptions qo= new QueryOptions();
+			qo.addFilter(Filter.or(Filter.eq("application.name", "Element AD"),Filter.ignoreCase(Filter.eq("application.name", "Element AD"))));
+			qo.addFilter(Filter.ignoreCase(Filter.eq("nativeIdentity", managerDN)));
+			iter = context.search(Link.class, qo,"id");
+			boolean multiple = false;
+			while (iter.hasNext()) {
+					Object[] row = (Object[]) iter.next();
+					String id = (String) row[0];
+					Link adLink = context.getObjectById(Link.class,id);
+					managerName= adLink.getIdentity().getName();
+			}
+			if(managerName == null){
+				primaryLink = getPrimaryApplicationLink(context, identity, "CEI AD");
+				if(primaryLink != null) managerDN= primaryLink.getAttribute("manager");
+				qo= new QueryOptions();
+				qo.addFilter(Filter.or(Filter.eq("application.name", "CEI AD"),Filter.ignoreCase(Filter.eq("application.name", "Element AD"))));
+				qo.addFilter(Filter.ignoreCase(Filter.eq("nativeIdentity", managerDN)));
+				iter = context.search(Link.class, qo,"id");
+				
+				while (iter.hasNext()) {
+					Object[] row = (Object[]) iter.next();
+					String id = (String) row[0];
+					Link adLink = context.getObjectById(Link.class,id);
+					managerName= adLink.getIdentity().getName();
+					
+				}
+			
+			}
+			return managerName;
+	]]></Source>
+</Rule>

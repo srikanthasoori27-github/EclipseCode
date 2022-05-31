@@ -1,0 +1,94 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD//EN"
+  "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" [
+  <!ENTITY SailPointObject SYSTEM "classpath://sailpoint/object/SailPointObject.hbm.xml">
+]>
+
+<!-- (c) Copyright 2008 SailPoint Technologies, Inc., All Rights Reserved. -->
+
+<hibernate-mapping>
+  <class name="sailpoint.object.WorkItem">
+
+    &SailPointObject;
+
+    <!--
+      Ideally name would be unique, but we need to allow multiple null values
+      because we sometimes save before the ID is generated.  Some databases
+      don't like this.
+     -->
+    <property name="name" type="string" length="255" index="spt_work_item_name"/>
+    <property name="description" type="string" length="1024"/>
+    <property name="handler" type="string" length="255"/>
+    <property name="renderer" type="string" length="255"/>
+    <property name="targetClass"/>
+    <property name="targetId" index="spt_work_item_target"/>
+    <property name="targetName"/>
+
+    <property name="type" index="spt_work_item_type">
+      <type name="sailpoint.persistence.EnumType">
+        <param name="enumClassName">sailpoint.object.WorkItem$Type</param>
+      </type>
+    </property>
+
+    <property name="state">
+      <type name="sailpoint.persistence.EnumType">
+        <param name="enumClassName">sailpoint.object.WorkItem$State</param>
+      </type>
+    </property>
+
+    <!-- note that "level" is a reserved word in Oracle, should consider
+       changing the Java model name too!
+     -->
+    <property name="level" column="severity">
+      <type name="sailpoint.persistence.EnumType">
+        <param name="enumClassName">sailpoint.object.WorkItem$Level</param>
+        <param name="enumDefaultValue">Normal</param>
+        <param name="persistOrdinal">true</param>
+      </type>
+    </property>
+
+    <many-to-one embed-xml="false" name="requester" class="sailpoint.object.Identity"/>
+    <property name="completionComments" type="materialized_clob" length="8192"/>
+    <property name="notification" type="sailpoint.persistence.DateType"/>
+    <property name="expiration" type="sailpoint.persistence.DateType"/>
+    <property name="wakeUpDate" type="sailpoint.persistence.DateType"/>
+    <property name="reminders"/>
+    <property name="escalationCount" type="integer" length="3"/>
+    <property name="notificationConfig" type="sailpoint.persistence.XmlType" length="100000000"/>
+
+    <many-to-one embed-xml="false" name="workflowCase" class="sailpoint.object.WorkflowCase"/>
+
+    <property name="attributes" type="sailpoint.persistence.XmlType" length="100000000"/>
+
+    <property name="ownerHistory" type="sailpoint.persistence.XmlType" length="100000000"/>
+
+    <property name="certification" />
+    <property name="certificationEntity" />
+    <property name="certificationItem" />
+
+    <property name="identityRequestId" length="128" index="spt_work_item_ident_req_id"/>
+
+    <list name="remediationItems" cascade="all">
+      <key column="work_item_id"/>
+      <list-index column="idx"/>
+      <one-to-many class="sailpoint.object.RemediationItem"/>
+    </list>
+
+    <list name="comments">
+      <key column="workItem"/>
+      <list-index column="idx"/>
+      <composite-element class="sailpoint.object.Comment">
+        <property name="author"/>
+        <property name="comment" column="comments" type="materialized_clob" length="8192"/>
+        <!-- note that "date" is a reserved word in Oracle -->
+        <property name="date" column="comment_date" type="sailpoint.persistence.DateType"/>
+      </composite-element>
+    </list>
+
+    <many-to-one embed-xml="false" name="assignee" class="sailpoint.object.Identity"/>
+    
+    <property name="lock" column="iiqlock" type="string" length="128"/>
+
+  </class>
+</hibernate-mapping>

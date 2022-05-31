@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ImportAction PUBLIC "sailpoint.dtd" "sailpoint.dtd" >
+<ImportAction name="connectorRegistryUpdateAction">
+  <Application connector="sailpoint.connector.webservices.WebServicesConnector" featuresString="PROVISIONING, ENABLE, PASSWORD, AUTHENTICATE, UNLOCK" name="Web Services" type="Web Services">
+    <Attributes>
+      <Map>
+        <entry key="formPath" value="WebServicesAttributesForm.xhtml"/>
+        <entry key="encrypted" value="accesstoken,refresh_token,oauth_token_info,client_secret,private_key,private_key_password,clientCertificate,clientKeySpec,resourceOwnerPassword,custom_auth_token_info" />
+        <entry key="throwProvBeforeRuleException">
+           <value>
+            <Boolean>true</Boolean>
+          </value>
+        </entry>
+        <entry key="throwProvAfterRuleException">
+           <value>
+            <Boolean>true</Boolean>
+          </value>
+        </entry>
+        <entry key="httpCookieSpecsStandard" value="true"/>
+        <entry key="enableHasMore" value="true"/>
+        <entry key="isGetObjectRequiredForPTA">
+           <value>
+            <Boolean>true</Boolean>
+          </value>
+        </entry>
+        <entry key="createAccountWithEntReq">
+           <value>
+            <Boolean>false</Boolean>
+          </value>
+        </entry>
+         <entry key="oAuthJwtHeader">
+          <value>
+            <Map>
+              <entry key="alg" value="RS256"/>
+            </Map>
+          </value>
+        </entry>
+        <entry key="oAuthJwtPayload">
+          <value>
+            <Map>
+              <entry key="aud" value=""/>
+              <entry key="exp" value="15f"/>
+              <entry key="iss" value=""/>
+              <entry key="sub" value=""/>
+            </Map>
+          </value>
+        </entry>
+        <entry key="version" value="v2"/>
+        <entry key="fixedPlanMultivaluedAttribute" value="true" />
+      </Map>
+    </Attributes>
+    <Schemas>
+        <Schema displayAttribute="" groupAttribute="" identityAttribute="" nativeObjectType="user" objectType="account">
+        </Schema>
+        <Schema displayAttribute="" identityAttribute="" nativeObjectType="group" objectType="group">
+        </Schema>
+    </Schemas>
+  </Application>
+</ImportAction>

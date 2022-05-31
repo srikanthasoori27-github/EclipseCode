@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!--
+  ~ (c) Copyright 2020 SailPoint Technologies, Inc., All Rights Reserved.
+  -->
+
+<!DOCTYPE sailpoint PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<sailpoint>
+
+  <SPRight name="FullAccessIAIConfiguration" displayName="right_view_iai_navigation_menu">
+    <Description>right_desc_view_iai_navigation_menu</Description>
+  </SPRight>
+
+  <Capability name="AIServicesAdministrator" displayName="capability_iai_administrator">
+    <Description>capability_desc_iai_administrator</Description>
+    <RightRefs>
+      <!-- Edit AIServices Configuration -->
+      <Reference class="sailpoint.object.SPRight" name="FullAccessIAIConfiguration" />
+    </RightRefs>
+  </Capability>
+
+</sailpoint>

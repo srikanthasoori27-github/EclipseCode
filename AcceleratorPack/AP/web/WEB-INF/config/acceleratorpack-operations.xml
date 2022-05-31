@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE sailpoint PUBLIC 'sailpoint.dtd' 'sailpoint.dtd'>
+<!-- Copyright © 2018 SailPoint Technologies, Inc. All Rights Reserved.
+All logos, text, content, and works of authorship, including but not limited to underlying code, programming or scripting language, designs, and/or graphics,
+that are used and/or depicted herein are protected under United States and international copyright and trademark laws and treaties,
+and may not be used or reproduced without the prior express written permission of SailPoint Technologies, Inc. -->
+<sailpoint>
+  <ImportAction name='include' value='AcceleratorPack/Operations/Configure/DynamicScope-Operations.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Operations/Source/EmailTemplate-FrameworkOperationsAttributeSync.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Operations/Source/EmailTemplate-FrameworkOperationsLOA.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Operations/Source/EmailTemplate-FrameworkOperationsLTD.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Operations/Source/EmailTemplate-FrameworkOperationsNativeChange.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Operations/Source/EmailTemplate-FrameworkOperationsRTWLOA.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Operations/Source/EmailTemplate-FrameworkOperationsRTWLTD.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Operations/Source/EmailTemplate-FrameworkOperationsReview.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Operations/Configure/QuickLink-ProcessIdentityLifecycleEvent.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Operations/Configure/Capability-Right-FireFighterAccess.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Operations/Configure/DynamicScope-FireFighter.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Operations/Configure/QuickLink-FireFighter.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Operations/Configure/QuickLink-RecoveryTool.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Operations/Configure/QuickLink-TerminateIdentity.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Operations/Source/Rule-Framework-OperationsRuleLibrary.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Operations/Source/Rule-Operations-AttributeSync.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Operations/Source/Rule-Operations-Joiner-Rehire.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Operations/Source/Rule-Operations-Joiner.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Operations/Source/Rule-Operations-Leaver-LOA.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Operations/Source/Rule-Operations-Leaver-LTD.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Operations/Source/Rule-Operations-Leaver-RTW-LOA.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Operations/Source/Rule-Operations-Leaver-RTW-LTD.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Operations/Source/Rule-Operations-Mitigation-Expiration.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Operations/Source/Rule-Operations-Mover.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Operations/Source/Rule-Operations-NativeChange.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Operations/Source/Rule-Operations-Reverse-Leaver.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Operations/Source/Rule-Recover-RuleLibrary.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Operations/Source/TaskDefinition-OperationsLaunchAttributeSync.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Operations/Source/TaskDefinition-OperationsLaunchJoiner-Rehire.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Operations/Source/TaskDefinition-OperationsLaunchJoiner.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Operations/Source/TaskDefinition-OperationsLaunchLeaver-LOA.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Operations/Source/TaskDefinition-OperationsLaunchLeaver-LTD.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Operations/Source/TaskDefinition-OperationsLaunchLeaver-RTW-LOA.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Operations/Source/TaskDefinition-OperationsLaunchLeaver-RTW-LTD.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Operations/Source/TaskDefinition-OperationsLaunchMitigationExpiration.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Operations/Source/TaskDefinition-OperationsLaunchMover.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Operations/Source/TaskDefinition-OperationsLaunchNativeChange.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Operations/Source/TaskDefinition-OperationsLaunchReverse-Leaver.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Operations/Source/Workflow-QuickLink-Immediate-Termination.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Operations/Source/Workflow-QuickLink-Process-Identity-Lifecycle-Event.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Operations/Source/Workflow-QuickLink-Recovery-Tool.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Operations/Source/Configuration-SystemConfiguration.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Operations/Configure/Configuration-SystemConfiguration.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Operations/Source/Rule-Operations-EmergencyAction.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Operations/Source/Workflow-QuickLink-SuspendAllAccess.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Operations/Source/TaskDefinition-OperationsLaunchEmergencyAction.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Operations/Configure/QuickLink-SuspendAllAccess.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Operations/Source/Workflow-Provisioner.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Operations/Source/Rule-Provisioner.xml'/>
+  </sailpoint>

@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" [
+  <!ENTITY SailPointObject SYSTEM "classpath://sailpoint/object/SailPointObject.hbm.xml">
+]>
+
+<!-- (c) Copyright 2008 SailPoint Technologies, Inc., All Rights Reserved. -->
+
+<hibernate-mapping>
+  <class name="sailpoint.object.TargetAssociation">
+
+    &SailPointObject;
+
+    <property name="objectId" type="string" length="32" index="spt_target_assoc_id"/>
+    <!-- starting in 7.1 these are single letter codes, leave a little extra room for growth,
+         changed the property name to be more obvious -->
+    <property name="ownerType" column="type" type="string" length="8"/>
+
+    <property name="hierarchy" type="string" length="512"/>
+    <property name="flattened" type="boolean"/>
+    <property name="applicationName" type="string" length="128"/>
+    <property name="targetType" type="string" length="128"/>
+    <property name="targetName" type="string" index="spt_target_assoc_targ_name_ci"/>
+
+    <many-to-one embed-xml="false" name="target" column="targetId" class="sailpoint.object.Target"/>
+
+    <property name="rights" type="string" length="512"/>
+    <property name="inherited" type="boolean"/>
+    <property name="effective" type="int"/>
+    <property name="denyPermission" type="boolean"/>
+    <property name="lastAggregation" type="sailpoint.persistence.DateType" index="spt_target_assoc_last_agg"/>
+    <property name="attributes" type="sailpoint.persistence.XmlType" length="100000000"/>
+
+  </class>
+</hibernate-mapping>

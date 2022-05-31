@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Application PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<Application connector="sailpoint.connector.DelimitedFileConnector" featuresString="DIRECT_PERMISSIONS, NO_RANDOM_ACCESS, DISCOVER_SCHEMA" icon="enterpriseIcon" name="Oasis" profileClass="" type="DelimitedFile">
+    <Attributes>
+        <Map>
+            <entry key="Group.columnNames"/>
+            <entry key="Group.commentCharacter"/>
+            <entry key="Group.delimiter" value=","/>
+            <entry key="Group.file" value="%%ELE_OASIS_FILE_PATH%%"/>
+            <entry key="Group.fileEncoding"/>
+            <entry key="Group.filterEmptyRecords">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="Group.filterString"/>
+            <entry key="Group.hasHeader">
+                <value>
+                    <Boolean>true</Boolean>
+                </value>
+            </entry>
+            <entry key="Group.indexColumn"/>
+            <entry key="Group.isCaseInsensitiveMerge">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="Group.isSortedByIndexColumn">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="Group.mergeColumns"/>
+            <entry key="Group.mergeRows">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="Group.numberOfLinesToSkip"/>
+            <entry key="Group.regularExpression"/>
+            <entry key="Group.stopIfLineHasWrongColumnLength">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="PassphraseForPrivateKey"/>
+            <entry key="PrivateKeyFilePath"/>
+            <entry key="afterProvisioningRule"/>
+            <entry key="beforeProvisioningRule"/>
+            <entry key="compositeDefinition"/>
+            <entry key="delimiter" value=","/>
+            <entry key="file" value="/opt/sailpoint/apache-tomcat-9.0.37/webapps/identityiq/WEB-INF/config/data/Oasis.csv"/>
+            <entry key="filetransport" value="local"/>
+            <entry key="filterEmptyRecords">
+                <value>
+                    <Boolean>true</Boolean>
+                </value>
+            </entry>
+            <entry key="group.filetransport" value="local"/>
+            <entry key="group.filterEmptyRecords">
+                <value>
+                    <Boolean>true</Boolean>
+                </value>
+            </entry>
+            <entry key="group.partitionMode" value="auto"/>
+            <entry key="hasHeader">
+                <value>
+                    <Boolean>true</Boolean>
+                </value>
+            </entry>
+            <entry key="indexColumn" value="﻿OASIS UserID"/>
+            <entry key="isCaseInsensitiveMerge">
+                <value>
+                    <Boolean>true</Boolean>
+                </value>
+            </entry>
+            <entry key="isSortedByIndexColumn">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="mergeColumns">
+                <value>
+                    <List>
+                        <String>Group Name</String>
+                    </List>
+                </value>
+            </entry>
+            <entry key="mergeRows">
+                <value>
+                    <Boolean>true</Boolean>
+                </value>
+            </entry>
+            <entry key="nativeChangeDetectionAttributeScope" value="entitlements"/>
+            <entry key="nativeChangeDetectionAttributes"/>
+            <entry key="nativeChangeDetectionEnabled">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="nativeChangeDetectionOperations"/>
+            <entry key="parseType" value="delimited"/>
+            <entry key="partitionMode" value="auto"/>
+            <entry key="port"/>
+            <entry key="sftpAuthMethod" value="password"/>
+            <entry key="stopIfLineHasWrongColumnLength">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="sysDescriptions">
+                <value>
+                    <Map>
+                        <entry key="en_US"/>
+                    </Map>
+                </value>
+            </entry>
+            <entry key="templateApplication" value="DelimitedFile Template"/>
+        </Map>
+    </Attributes>
+    <Owner>
+        <Reference class="sailpoint.object.Identity" name="spadmin"/>
+    </Owner>
+    <CorrelationRule>
+        <Reference class="sailpoint.object.Rule" name="ELE_Global_Correlation_Rule"/>
+    </CorrelationRule>
+    <CreationRule>
+        <Reference class="sailpoint.object.Rule" name="ELE_Global_IdentityCreation_Rule"/>
+    </CreationRule>      
+    <Schemas>
+        <Schema displayAttribute="Username" identityAttribute="﻿OASIS UserID" instanceAttribute="" nativeObjectType="account" objectType="account" permissionsRemediationModificationType="None">
+            <AttributeDefinition name="﻿OASIS UserID" type="string">
+                <Description/>
+            </AttributeDefinition>
+            <AttributeDefinition name="Username" type="string">
+                <Description/>
+            </AttributeDefinition>
+            <AttributeDefinition name="Full Name" type="string">
+                <Description/>
+            </AttributeDefinition>
+            <AttributeDefinition name="Email Address" type="string">
+                <Description/>
+            </AttributeDefinition>
+            <AttributeDefinition name="Status" type="string">
+                <Description/>
+            </AttributeDefinition>
+            <AttributeDefinition name="Last Logon Time" type="string">
+                <Description/>
+            </AttributeDefinition>
+            <AttributeDefinition entitlement="true" managed="true" multi="true" name="Group Name" schemaObjectType="Group" type="string">
+                <Description/>
+            </AttributeDefinition>
+        </Schema>
+        <Schema aggregationType="group" descriptionAttribute="" displayAttribute="Group Name" identityAttribute="Group Name" instanceAttribute="" nativeObjectType="Group" objectType="Group" permissionsRemediationModificationType="None">
+            <AttributeDefinition name="Group Type" type="string">
+                <Description/>
+            </AttributeDefinition>
+            <AttributeDefinition name="Group Name" type="string">
+                <Description/>
+            </AttributeDefinition>
+        </Schema>
+    </Schemas>
+    <ApplicationScorecard/>
+</Application>

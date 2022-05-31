@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE Custom PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<!-- Copyright © 2018 SailPoint Technologies, Inc. All Rights Reserved.
+All logos, text, content, and works of authorship, including but not limited to underlying code, programming or scripting language, designs, and/or graphics,
+that are used and/or depicted herein are protected under United States and international copyright and trademark laws and treaties,
+and may not be used or reproduced without the prior express written permission of SailPoint Technologies, Inc. -->
+<Custom name="Custom-Framework-Exclusion-Logical-BusinessApplications-PrivilegedAccess">
+	<Attributes>
+		<Map>
+		<!-- Mover and Manager certification -->
+			<entry key="LogicalBusinessApps">
+				<value>
+					<List>
+                   </List>
+				</value>
+			</entry>		
+			<!-- Mover Certification -->
+			<entry key="excludePrivilegedAccess" value="FALSE"/>
+			<!-- Manager Certification -->
+			<entry key="excludePrivilegedAccessRegularCert" value="FALSE"/>
+			<!-- Application Owner Certification -->
+			<entry key="includeOnlyPrivilegedAccessApplicationOwnerCert" value="FALSE"/>
+			<!-- Entitlement Owner Certification -->
+			<entry key="includeOnlyPrivilegedAccessEntitlementOwnerCert" value="FALSE"/>
+			<!-- Account Group Membership Certification -->
+			<entry key="includeOnlyPrivilegedAccessAccountGroupMemCert" value="FALSE"/>
+			<!-- Native Change Certification -->
+			<entry key="includeOnlyPrivilegedAccessNativeChangeCert" value="FALSE"/>
+		</Map>
+	</Attributes>
+</Custom>

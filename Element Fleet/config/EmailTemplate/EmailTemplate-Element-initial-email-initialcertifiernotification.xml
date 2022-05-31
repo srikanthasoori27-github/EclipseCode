@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE EmailTemplate PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<EmailTemplate name="Element-Initial-Email-InitialCertifierNotification">
+          
+    
+    <Body>
+  <![CDATA[
+	
+<html> 
+<body>
+  <p>Review Owners,</p>
+<p>In response to General IT Controls (GITC) for ”Review of User Access”, the review of access to GEAC for your direct reports starts on $dayReviewBegins $reviewBeginDate. </p>
+<p>Element managers are responsible for ensuring that only authorized individuals have appropriate access to our key financial reporting applications. User access reviews are performed quarterly. These reviews help safeguard Element's assets and financial reporting data and support the CEO/CFO controls certification. </p>
+ <p>User Review Completion Process </p>
+<p>Take the following steps to complete the review:</p>
+<p><table border="2">
+<th align="center">Step</th>
+<th aligh="left">Action</th>
+<tr><td align="center">1</td><td aligh="left">Log in to the $applicationName</td></tr>
+<tr><td align="center">2</td><td aligh="left">Locate your name</td></tr>
+<tr><td align="center">3</td><td aligh="left">Review your listed direct reports and their access to GEAC on columns 1 to 4 </td></tr>
+<tr><td align="center">4</td><td aligh="left">Click on the “SAVE” icon to save your responses </td></tr>
+</table>
+<p>
+<p>This round of reviews must be completed no later than $dayReviewEnds $reviewEndDate EOD. </p>
+<p>Review Owners Responsibility </p>
+<ul>
+<li>It is the manager’s responsibility to review system access for each direct report. </li>
+
+<li>If response or confirmation is not completed by $dayReviewEnds $reviewEndDate  then your direct manager will receive notification that the target date was missed, and responsibility will shift to your direct manager. <lo>
+
+<li>If no response is received by $dayReviewEnds $reviewEndDate  then the GEAC mainframe access for the identified users will be disabled. </li>
+</ul>
+<p>Here is our standard review schedule: </p>
+<p>
+<table border="2">
+<th align="center">Step</th>
+<th aligh="center">Entitlement review <br/>Communication/Action </th>
+<th aligh="center">Sent To</th>
+<th aligh="center">Responsibilible Party for Entitlement Review</th>
+<th aligh="center">Due Date</th>
+<tr>
+<td align="center">1</td>
+<td aligh="left">Start of the Entitlement Review</td>
+<td aligh="left">Review Owners (1st tier Managers)</td>
+<td aligh="left">Review Owners (1st tier Managers)</td>
+<td aligh="left">Day 0</td>
+</tr>
+<tr>
+<td align="center">2</td>
+<td aligh="left">Friendly reminder that reviewes are due soon(by day 10)</td>
+<td aligh="left">Review Owners (1st tier Managers)</td>
+<td aligh="left">Review Owners (1st tier Managers)</td>
+<td aligh="left">Day 7</td>
+</tr>
+<tr>
+<td align="center">3</td>
+<td aligh="left">First overdue reminder</td>
+<td aligh="left">Review Owners (1st tier Managers)</td>
+<td aligh="left">Review Owners (1st tier Managers)</td>
+<td aligh="left">Day 10</td>
+</tr>
+<tr>
+<td align="center">4</td>
+<td aligh="left">Second overdue reminder</td>
+<td aligh="left">Review Owners (2nd tier Managers)</td>
+<td aligh="left">Review Owners (2nd tier Managers)</td>
+<td aligh="left">Day 13</td>
+</tr>
+<tr>
+<td align="center">5</td>
+<td aligh="left">Final overdue reminder</td>
+<td aligh="left">Review Owners (2nd tier Managers)</td>
+<td aligh="left">Review Owners (2nd tier Managers)</td>
+<td aligh="left">Day 16</td>
+</tr>
+<tr>
+<td align="center">6</td>
+<td aligh="left">User will be disabled</td>
+<td aligh="left">Review Owners (2nd tier Managers)</td>
+<td aligh="left"></td>
+<td aligh="left">Day 20</td>
+</tr>
+</table>
+<p>
+<p>Consequence of Noncompliance </p>
+<p>Access to this system will be disabled for any user not reviewed by the Review Owner or their Direct Manager. We have obtained Executive team’s support for this, and EVPs will receive an update on compliance with this control on an exception basis. </p>
+
+<p><b>Contact</b></p>
+
+<p>If you have any questions about the process, please contact Clifton Sookdeo. </p>
+<p><u>Attachments: </u><p>
+<p>Attachment 1 – EVP pre-communication e-mail </p>
+<p>Attachment 2 – GEAC Role Glossary </p>
+<p><b>QER Process Administrator </b></p?
+</body>
+</html>
+
+  
+	]]>
+    </Body>
+          
+    
+    <Description>
+      Email Template for intitial notification of Access Review.
+    </Description>
+          
+    
+    <Signature>
+                    
+        
+        <Inputs>
+                              
+            
+            <Argument name="applicationName" type="string">
+                                        
+                
+                <Description>The name of the application.</Description>
+                                      
+            
+            </Argument>
+                              
+            
+            <Argument name="workItem" type="WorkItem">
+                                        
+                
+                <Description>The WorkItem object for the certification.</Description>
+                                      
+            
+            </Argument>
+                              
+            
+            <Argument name="certification" type="Certification">
+                                        
+                
+                <Description>The Certification object.</Description>
+                                      
+            
+            </Argument>
+                              
+            
+            <Argument name="ownerName" type="string">
+                                        
+                
+                <Description>The display name of the Identity that owns the certification.</Description>
+                                      
+            
+            </Argument>
+                              
+            
+            <Argument name="reviewBeginDate" type="string">
+                                        
+                
+                <Description>Date the access review begins. </Description>
+                                      
+            
+            </Argument>
+                              
+            
+            <Argument name="dayReviewEnds" type="string">
+                                        
+                
+                <Description>Date the access review begins. </Description>
+                                      
+            
+            </Argument>
+                              
+            
+            <Argument name="reviewEndDate" type="string">
+                                        
+                
+                <Description>Date the access review enda. </Description>
+                                      
+            
+            </Argument>
+                              
+            
+            <Argument name="dayReviewEnds" type="string">
+                                        
+                
+                <Description>Day the access review begins. </Description>
+                                      
+            
+            </Argument>
+                            
+        
+        </Inputs>
+                  
+    
+    </Signature>
+          
+    
+    <Subject>ACTION REQUIRED: 4th Quarter 2020 Review of User Access permissions to $applicationName</Subject>
+        
+
+</EmailTemplate>

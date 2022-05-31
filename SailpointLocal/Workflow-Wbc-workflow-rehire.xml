@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Workflow PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<Workflow explicitTransitions="true" libraries="RapidSetup" name="WBC-Workflow-ReHire" type="IdentityLifecycle">
+          
+    
+    <Variable input="true" name="trigger">
+                    
+        
+        <Description>The IdentityTrigger</Description>
+                  
+    
+    </Variable>
+          
+    
+    <Variable input="true" name="event" transient="true">
+                    
+        
+        <Description>The IdentityChangeEvent.  It can be used to build
+            the provisioning plan, but does not need to be
+            persisted with the case, so marked as transient.</Description>
+                  
+    
+    </Variable>
+          
+    
+    <Variable input="true" name="identityName">
+                    
+        
+        <Description>The name of the identity.</Description>
+                  
+    
+    </Variable>
+          
+    
+    <Variable initializer="RapidSetup" input="true" name="source">
+                    
+        
+        <Description>
+            String version of sailpoint.object.Source to indicate
+            where the request originated.  Defaults to RapidSetup.
+        </Description>
+                  
+    
+    </Variable>
+          
+    
+    <Variable initializer="true" name="trace"/>
+          
+    
+    <Variable initializer="none" input="true" name="policyScheme">
+                    
+        
+        <Description>
+            A String that specifies how policy checks effect the overall
+            process.
+
+            none - disabled policy checking
+
+            interactive -  allow requester to remove request items which are causing violations
+
+            continue -  continue if policy violations are found
+
+            fail -  fail and exit the workflow if any policy violations are found
+        </Description>
+                  
+    
+    </Variable>
+          
+    
+    <Variable initializer="none" input="true" name="notificationScheme">
+                    
+        
+        <Description>
+            A string that specifies who should be notified via the LCM workflows when the request has been completed.
+            The value can be null or a csv of one or more of the following options.
+
+            none or null
+            disable notifications
+
+            user
+            Identity that is being update will be notified.
+
+            manager
+            The manager of the Identity that is being updated will be notified.
+
+            requester
+            The person that has requested the update will be notified.
+        </Description>
+                  
+    
+    </Variable>
+          
+    
+    <Variable name="plan"/>
+          
+    
+    <Variable name="birthrightRoles"/>
+          
+    
+    <Variable name="joinerPlan"/>
+          
+    
+    <Variable name="project"/>
+          
+    
+    <Variable input="true" name="approvalScheme" output="true"/>
+          
+    
+    <RuleLibraries>
+                    
+        
+        <Reference class="sailpoint.object.Rule" name="RuleLibrary-WBC-ReHire"/>
+                  
+    
+    </RuleLibraries>
+          
+    
+    <Step icon="Start" name="Start" posX="28" posY="10">
+                    
+        
+        <Transition to="DeleteDeferredRequests"/>
+                  
+    
+    </Step>
+          
+    
+    <Step icon="Default" name="DeleteDeferredRequests" posX="98" posY="10">
+                    
+        
+        <Script>
+                              
+            
+            <Source><![CDATA[
+      log.error("Before deleteDeffer plan ");
+      deleteDeferredLeaverPlans(identityName);
+      ]]></Source>
+                            
+        
+        </Script>
+                    
+        
+        <Transition to="Build Enable Accounts Plan"/>
+                  
+    
+    </Step>
+          
+    
+    <Step icon="Default" name="Build Enable Accounts Plan" posX="309" posY="6" resultVariable="plan">
+                    
+        
+        <Script>
+                              
+            
+            <Source><![CDATA[
+         log.error("inside buildEnable Accounts plan");
+         return buildEnableAccountsPlan(context,workflow,identityName);
+      ]]></Source>
+                            
+        
+        </Script>
+                    
+        
+        <Transition to="Process Plan" when="plan != null &amp;&amp; plan.getAccountRequests() != null &amp;&amp; plan.getAccountRequests().size() &gt; 0"/>
+                    
+        
+        <Transition to="Calculate Birthright Roles"/>
+                  
+    
+    </Step>
+          
+    
+    <Step icon="Default" name="Process Plan" posX="598" posY="10">
+                    
+        
+        <Arg name="identityEmailTemplate"/>
+                    
+        
+        <Arg name="enableRetryRequest"/>
+                    
+        
+        <Arg name="securityOfficerElectronicSignature"/>
+                    
+        
+        <Arg name="fallbackApprover"/>
+                    
+        
+        <Arg name="endOnManualWorkItems"/>
+                    
+        
+        <Arg name="userEmailTemplate"/>
+                    
+        
+        <Arg name="policiesToCheck"/>
+                    
+        
+        <Arg name="workItemComments"/>
+                    
+        
+        <Arg name="identityRequestId"/>
+                    
+        
+        <Arg name="approvalSplitPoint"/>
+                    
+        
+        <Arg name="source" value="ref:source"/>
+                    
+        
+        <Arg name="identityDisplayName"/>
+                    
+        
+        <Arg name="foregroundProvisioning"/>
+                    
+        
+        <Arg name="ownerElectronicSignature"/>
+                    
+        
+        <Arg name="batchRequestItemId"/>
+                    
+        
+        <Arg name="saveUnmanagedPlan_WithProjectArgument"/>
+                    
+        
+        <Arg name="splitPlans"/>
+                    
+        
+        <Arg name="doRefresh"/>
+                    
+        
+        <Arg name="plan" value="ref:plan"/>
+                    
+        
+        <Arg name="flow" value="ref:flow"/>
+                    
+        
+        <Arg name="identityElectronicSignature"/>
+                    
+        
+        <Arg name="identityName" value="ref:identityName"/>
+                    
+        
+        <Arg name="violationReviewDecision"/>
+                    
+        
+        <Arg name="filterRejects"/>
+                    
+        
+        <Arg name="splitProjects"/>
+                    
+        
+        <Arg name="noTriggers" value="true"/>
+                    
+        
+        <Arg name="requesterEmailTemplate"/>
+                    
+        
+        <Arg name="approvalEmailTemplate"/>
+                    
+        
+        <Arg name="ticketManagementApplication"/>
+                    
+        
+        <Arg name="securityOfficerName"/>
+                    
+        
+        <Arg name="approvingIdentities"/>
+                    
+        
+        <Arg name="managerEmailTemplate"/>
+                    
+        
+        <Arg name="ticketId"/>
+                    
+        
+        <Arg name="approvalScheme" value="ref:approvalScheme"/>
+                    
+        
+        <Arg name="allowRequestsWithViolations"/>
+                    
+        
+        <Arg name="workItemPriority"/>
+                    
+        
+        <Arg name="managerElectronicSignature"/>
+                    
+        
+        <Arg name="requireViolationReviewComments"/>
+                    
+        
+        <Arg name="splitApprovalSet"/>
+                    
+        
+        <Arg name="approvalMode"/>
+                    
+        
+        <Arg name="trace"/>
+                    
+        
+        <Arg name="endOnProvisioningForms"/>
+                    
+        
+        <Arg name="splitWorkItemComments"/>
+                    
+        
+        <Arg name="notificationScheme" value="ref:notificationScheme"/>
+                    
+        
+        <Arg name="policyViolations"/>
+                    
+        
+        <Arg name="policyScheme" value="ref:policyScheme"/>
+                    
+        
+        <Arg name="setPreviousApprovalDecisions"/>
+                    
+        
+        <Arg name="optimisticProvisioning"/>
+                    
+        
+        <Arg name="securityOfficerEmailTemplate"/>
+                    
+        
+        <Return name="approvalSet" to="approvalSet"/>
+                    
+        
+        <Return name="project" to="project"/>
+                    
+        
+        <WorkflowRef>
+                              
+            
+            <Reference class="sailpoint.object.Workflow" name="LCM Provisioning"/>
+                            
+        
+        </WorkflowRef>
+                    
+        
+        <Transition to="Calculate Birthright Roles"/>
+                  
+    
+    </Step>
+          
+    
+    <Step action="call:calculateBirthrightRoles" name="Calculate Birthright Roles" posX="593" posY="126" resultVariable="birthrightRoles">
+                    
+        
+        <Arg name="identityName" value="ref:identityName"/>
+                    
+        
+        <Transition to="Build Joiner Plan"/>
+                  
+    
+    </Step>
+          
+    
+    <Step action="call:buildJoinerPlan" name="Build Joiner Plan" posX="780" posY="126" resultVariable="joinerPlan">
+                    
+        
+        <Arg name="identityName" value="ref:identityName"/>
+                    
+        
+        <Arg name="birthrightRoles" value="ref:birthrightRoles"/>
+                    
+        
+        <Transition to="Process Joiner Plan"/>
+                  
+    
+    </Step>
+          
+    
+    <Step icon="Default" name="Process Joiner Plan" posX="946" posY="126">
+                    
+        
+        <Script>
+                              
+            
+            <Source><![CDATA[
+    processJoinerAccounts(context,workflow,joinerPlan);
+        ]]></Source>
+                            
+        
+        </Script>
+                    
+        
+        <Transition to="After Provision"/>
+                  
+    
+    </Step>
+          
+    
+    <Step icon="Default" name="After Provision" posX="788" posY="10">
+                    
+        
+        <Transition to="Stop"/>
+                  
+    
+    </Step>
+          
+    
+    <Step icon="Stop" name="Stop" posX="1006" posY="10"/>
+        
+
+</Workflow>

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE Application PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<ImportAction name="connectorRegistryUpdateAction">
+  <Application connector="sailpoint.connector.O365SharepointOnlineConnector" featuresString="PROVISIONING, SYNC_PROVISIONING, NO_PERMISSIONS_PROVISIONING" icon="internetIcon" name="Microsoft SharePoint Online" type="Microsoft SharePoint Online">
+    <Attributes>
+      <Map>
+        <entry key="formPath" value="SharePointOnlineAttributesForm.xhtml"/>
+		<entry key="encrypted" value="client_Secret,refresh_token,clientCertificate,private_key,privateKeyPassword"/>
+		<entry key="userExclusionList" value="_SPOCache, _SPOCrawler, _SPOCacheRead,_spocrawler,System Account"/>
+		<entry key="userPartitions" value="A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z,0,1,2,3,4,5,6,7,8,9,-,',_"/> 
+      </Map>
+    </Attributes>
+    <Schemas>
+      <Schema displayAttribute="Name" identityAttribute="LoginName" nativeObjectType="user" objectType="account">
+        <AttributeDefinition name="LoginName" type="string">
+          <Description>Login Name of the user.</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="Name" type="string">
+          <Description>Display Name of user.</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="Email" type="string">
+          <Description>E-mail address of the user.</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="FirstName" type="string">
+          <Description>First Name of the user.</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="LastName" type="string">
+          <Description>Last Name of the user.</Description>
+        </AttributeDefinition>  
+        <AttributeDefinition name="ID" type="string">
+          <Description>Member ID of the user.</Description>
+        </AttributeDefinition>
+        <AttributeDefinition entitlement="true" managed="true" multi="true" name="Groups" schemaObjectType="group" type="string">
+          <Description>It specifies all the groups to which user belongs to.</Description>
+        </AttributeDefinition>
+        <AttributeDefinition multi="true" name="SiteCollections" type="string">
+          <Description>It specifies all the Site Collections to which user belongs to.</Description>
+        </AttributeDefinition>
+		 <AttributeDefinition multi="true" name="AdminOfSites" type="string">
+          <Description>It specifies all the Site Collections to which user is admin of.</Description>
+        </AttributeDefinition>
+      </Schema>
+      <Schema displayAttribute="Name" featuresString="PROVISIONING, NO_PERMISSIONS_PROVISIONING" identityAttribute="Group URL"
+              nativeObjectType="group" objectType="group" descriptionAttribute="Description">
+	<AttributeDefinition name="ID" type="string">
+          <Description>Identifier (ID) for the group.</Description>
+        </AttributeDefinition>
+         <AttributeDefinition name="Group URL" type="string">
+          <Description>URL to group in a site collection.</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="Name" type="string">
+          <Description>Display name of the group.</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="Description" type="string">
+          <Description>Description of the group.</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="OwnerTitle" type="string">
+          <Description>Owner title of the group.</Description>
+        </AttributeDefinition> 
+        <AttributeDefinition name="Azure AD Groups" type="string" multi="true">
+          <Description>Security DomainGroups for SharePoint Online.</Description>
+        </AttributeDefinition>
+       <AttributeDefinition name="AutoAcceptRequestToJoinLeave" type="string">
+          <Description>Gets or sets a value that indicates whether the request to join or leave the group can be accepted automatically.</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="AllowMembersEditMembership" type="string">
+          <Description>Gets or sets a value that indicates whether the group members can edit membership in the group.</Description> 
+        </AttributeDefinition>
+        <AttributeDefinition name="RequestToJoinLeaveEmailSetting" type="string">
+          <Description>Gets or sets the email address to which the requests of the membership are sent.</Description>
+        </AttributeDefinition>
+	    <AttributeDefinition name="OnlyAllowMembersViewMembership" type="string">
+          <Description>Gets or sets a value that indicates whether only group members are allowed to view the membership of the group.</Description>
+        </AttributeDefinition>	    
+	    <AttributeDefinition name="AllowRequestToJoinLeave" type="string">
+          <Description>Gets or sets a value that indicates whether to allow users to request membership in the group and request to leave the group.</Description>
+        </AttributeDefinition>
+      </Schema>
+    </Schemas>
+	 <Templates>
+      <Template name="Account" schemaObjectType="account" usage="Create">
+        <Field displayName="con_prov_policy_o365_sharepoint_online_UserName" helpKey="help_con_prov_policy_o365_sharepoint_online_UserName" name="UserName" required="true" section="" type="string"/>
+      </Template>
+	  <Template name="Create Group" schemaObjectType="group" usage="Create">
+	    <Field displayName="con_prov_policy_o365_sharepoint_online_Title" helpKey="help_con_prov_policy_o365_sharepoint_online_Title" name="Title" required="true" type="string"/>
+        <Field displayName="con_prov_policy_o365_sharepoint_online_SiteCollection" helpKey="help_con_prov_policy_o365_sharepoint_online_SiteCollection" name="SiteCollection" required="true" type="string"/>
+	  </Template>
+	  <Template name="Update Group" schemaObjectType="group" usage="Update">
+        <Field displayName="con_prov_policy_o365_sharepoint_online_Description" helpKey="help_con_prov_policy_o365_sharepoint_online_Description" name="Description" reviewRequired="true" type="string"/>
+		<Field displayName="con_prov_policy_o365_sharepoint_online_GroupOwner"  name="OwnerTitle" helpKey="help_con_prov_policy_o365_sharepoint_online_OwnwerTitle"  reviewRequired="false" type="string">
+		<Attributes>
+            <Map>
+              <entry key="readOnly" value="true"/>
+            </Map>
+          </Attributes>
+        </Field>
+		<Field displayName="con_prov_policy_o365_sharepoint_online_View_Membership" helpKey="help_con_prov_policy_o365_sharepoint_online_View_Membership" name="OnlyAllowMembersViewMembership" reviewRequired="true" type="string" value="Group Members">
+          <AllowedValuesDefinition>
+            <Value>
+              <List>
+                <String>Group Members</String>
+                <String>Everyone</String>
+              </List>
+            </Value>
+          </AllowedValuesDefinition>
+        </Field>
+        <Field displayName="con_prov_policy_o365_sharepoint_online_Edit_Group_Membership" helpKey="help_con_prov_policy_o365_sharepoint_online_Edit_Membership" name="AllowMembersEditMembership" reviewRequired="true" type="string" value="Group Owner">
+          <AllowedValuesDefinition>
+            <Value>
+              <List>
+                <String>Group Owner</String>
+                <String>Group Members</String>
+              </List>
+            </Value>
+          </AllowedValuesDefinition>
+        </Field>
+        <Field displayName="con_prov_policy_o365_sharepoint_online_Allow_Request_To" helpKey="help_con_prov_policy_o365_sharepoint_online_Allow_Request" name="AllowRequestToJoinLeave" reviewRequired="true" type="string" value="No">
+          <AllowedValuesDefinition>
+            <Value>
+              <List>
+                <String>Yes</String>
+                <String>No</String>
+              </List>
+            </Value>
+          </AllowedValuesDefinition>
+        </Field>
+        <Field displayName="con_prov_policy_o365_sharepoint_online_Auto_Accept_Request" helpKey="help_con_prov_policy_o365_sharepoint_online_Auto_Accept_Membership" name="AutoAcceptRequestToJoinLeave" reviewRequired="true" type="string" value="No">
+          <AllowedValuesDefinition>
+            <Value>
+              <List>
+                <String>Yes</String>
+                <String>No</String>
+              </List>
+            </Value>
+          </AllowedValuesDefinition>
+        </Field>        
+        <Field displayName="con_prov_policy_o365_sharepoint_online_Email_Membership" helpKey="help_con_prov_policy_o365_sharepoint_online_Request_Email" name="RequestToJoinLeaveEmailSetting" reviewRequired="true" type="string"/>
+        <Field displayName="con_prov_policy_o365_sharepoint_online_AzureGroups" helpKey="help_con_prov_policy_o365_sharepoint_online_ADAzureGroup" multi="true" name="Azure AD Groups" reviewRequired="true" type="string"/>
+	  </Template>
+     </Templates>
+  </Application>
+</ImportAction>

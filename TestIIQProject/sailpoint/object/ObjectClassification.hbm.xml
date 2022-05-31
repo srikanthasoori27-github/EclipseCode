@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!--
+  ~ (c) Copyright 2019 SailPoint Technologies, Inc., All Rights Reserved.
+  -->
+
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" [
+    <!ENTITY SailPointObjectSimple SYSTEM "classpath://sailpoint/object/SailPointObjectSimple.hbm.xml">
+    ]>
+
+<hibernate-mapping>
+  <class name="sailpoint.object.ObjectClassification">
+
+    &SailPointObjectSimple;
+
+
+    <property name="ownerId" type="string" length="32" index="spt_classification_owner_id"/>
+
+    <property name="ownerType" type="string" length="128" index="spt_class_owner_type"/>
+
+    <property name="source" type="string" length="128"/>
+
+    <property name="effective" type="boolean"/>
+
+    <many-to-one embed-xml="false" not-null="true" name="classification" column="classificationId" class="sailpoint.object.Classification"/>
+
+  </class>
+</hibernate-mapping>

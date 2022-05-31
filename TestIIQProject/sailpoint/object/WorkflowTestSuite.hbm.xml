@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" [
+  <!ENTITY SailPointObjectSimple SYSTEM "classpath://sailpoint/object/SailPointObjectSimple.hbm.xml">
+]>
+
+<!-- (c) Copyright 2008 SailPoint Technologies, Inc., All Rights Reserved. -->
+
+<hibernate-mapping>
+  <class name="sailpoint.object.WorkflowTestSuite">
+
+    &SailPointObjectSimple;
+
+    <property name="name" type="string" length="128" unique="true" not-null="true"/>
+    <property name="description" type="string" length="4000"/>
+    <property name="replicated" type="boolean"/>
+    <property name="caseName" type="string"/>
+
+    <property name="tests" type="sailpoint.persistence.XmlType" length="100000000"/>
+    <property name="responses" type="sailpoint.persistence.XmlType" length="100000000"/>
+    <property name="attributes" type="sailpoint.persistence.XmlType" length="100000000"/>
+
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,429 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE ImportAction PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<ImportAction name="connectorRegistryUpdateAction">
+  <Application connector="sailpoint.connector.OpenConnectorAdapter" featuresString="PROVISIONING, SYNC_PROVISIONING, ENABLE, SEARCH, NO_PERMISSIONS_PROVISIONING, DIRECT_PERMISSIONS, PASSWORD" icon="internetIcon" name="AWS" type="AWS">
+    <Attributes>
+      <Map>
+        <entry key="connectorClass" value="openconnector.connector.aws.AWSConnectorSDK"/>
+        <entry key="formPath" value="AWSForm.xhtml"/>
+        <entry key="encrypted" value="secret"/>
+        <entry key="pageSize" value="100"/>
+      </Map>
+    </Attributes>
+    <Schemas>
+      <Schema displayAttribute="UserName" identityAttribute="ARN" includePermissions="false" nativeObjectType="account" objectType="account">
+          <AttributeDefinition name="UserName" remediationModificationType="None" required="true" type="string">
+              <Description>The friendly name of the user</Description>
+          </AttributeDefinition>
+          <AttributeDefinition name="UserId" remediationModificationType="None" required="true" type="string">
+              <Description>The unique ID of the user</Description>
+          </AttributeDefinition>
+          <AttributeDefinition name="Path" remediationModificationType="None" required="true" type="string">
+              <Description>Path to the user</Description>
+          </AttributeDefinition>
+          <AttributeDefinition name="ARN" remediationModificationType="None" required="true" type="string">
+              <Description>Amazon Resource Name of the user</Description>
+          </AttributeDefinition>
+          <AttributeDefinition name="CreateDate" remediationModificationType="None" required="true" type="string">
+              <Description>Creation date of the user</Description>
+          </AttributeDefinition>
+          <AttributeDefinition name="ConsoleAccess" remediationModificationType="None" required="true" type="string">
+              <Description>Password status of the user</Description>
+          </AttributeDefinition>
+          <AttributeDefinition entitlement="true" managed="true" multi="true" name="Groups" remediationModificationType="None" schemaObjectType="group" type="string">
+              <Description>Groups the user is a part of</Description>
+          </AttributeDefinition>
+          <AttributeDefinition entitlement="true" managed="true" multi="true" name="AWSManagedPolicies" remediationModificationType="None" schemaObjectType="AWSManagedPolicy" type="string">
+              <Description>AWS Managed Policies directly assigned to the user</Description>  
+          </AttributeDefinition>
+          <AttributeDefinition entitlement="true" managed="true" multi="true" name="CustomerManagedPolicies" remediationModificationType="None" schemaObjectType="CustomerManagedPolicy" type="string">
+              <Description>Customer Managed Policies directly assigned to the user</Description>  
+          </AttributeDefinition>
+          <AttributeDefinition entitlement="true" managed="true" multi="true" name="InlinePolicies" remediationModificationType="None" schemaObjectType="InlinePolicy" type="string">
+              <Description>Inline Policies directly assigned to the user</Description>
+          </AttributeDefinition>
+          <AttributeDefinition multi="true" name="Access Keys" remediationModificationType="None" required="true" type="string">
+              <Description>Access keys associated with the user</Description>
+          </AttributeDefinition>
+          <AttributeDefinition multi="true" name="AWS CodeCommit HTTPS Credentials" remediationModificationType="None" required="true" type="string">
+              <Description>AWS CodeCommit HTTPS Git credentials associated with the user</Description>
+          </AttributeDefinition>
+          <AttributeDefinition multi="true" name="AWS CodeCommit SSH Keys" remediationModificationType="None" required="true" type="string">
+              <Description>AWS CodeCommit SSH public keys associated with the user</Description>
+          </AttributeDefinition>
+          <AttributeDefinition multi="true" name="Signing Certificates" remediationModificationType="None" required="true" type="string">
+              <Description>Signing Certificates associated with the user</Description>
+          </AttributeDefinition>
+          <AttributeDefinition name="Multi-Factor Authentication Device" remediationModificationType="None" required="true" type="string">
+              <Description>Multi-Factor Authentication device associated with the user</Description>
+          </AttributeDefinition>
+           <AttributeDefinition name="PasswordLastUsed" remediationModificationType="None" required="true" type="string">
+              <Description>Password last used date of the user</Description>
+          </AttributeDefinition>
+          <AttributeDefinition multi="true" name="AccessKeyLastUsed" remediationModificationType="None" required="true" type="string">
+              <Description>Access key last used details of the user </Description>
+          </AttributeDefinition>
+      </Schema>
+      <Schema displayAttribute="GroupName" featuresString="PROVISIONING, NO_GROUP_PERMISSIONS_PROVISIONING" identityAttribute="ARN" nativeObjectType="group" objectType="group">
+          <AttributeDefinition name="GroupName" remediationModificationType="None" required="true" type="string">
+              <Description>The friendly name of the group</Description>
+          </AttributeDefinition>
+          <AttributeDefinition name="GroupId" remediationModificationType="None" required="true" type="string">
+              <Description>The unique ID of the group</Description>
+          </AttributeDefinition>
+          <AttributeDefinition name="Path" remediationModificationType="None" required="true" type="string">
+              <Description>Path to the group</Description>
+          </AttributeDefinition>
+          <AttributeDefinition name="ARN" remediationModificationType="None" required="true" type="string">
+              <Description>Amazon Resource Name of the group</Description>
+          </AttributeDefinition>
+          <AttributeDefinition name="CreateDate" remediationModificationType="None" required="true" type="string">
+              <Description>Creation date of the group</Description>
+          </AttributeDefinition>
+          <AttributeDefinition entitlement="true" multi="true" name="AWSManagedPolicies" remediationModificationType="None" schemaObjectType="AWSManagedPolicy" type="string">  
+              <Description>AWS Managed Policies directly assigned to the group</Description>
+          </AttributeDefinition>
+          <AttributeDefinition entitlement="true" multi="true" name="CustomerManagedPolicies" remediationModificationType="None" schemaObjectType="CustomerManagedPolicy" type="string">  
+              <Description>Customer Managed Policies directly assigned to the group</Description>
+          </AttributeDefinition>
+          <AttributeDefinition entitlement="true" multi="true" name="InlinePolicies" remediationModificationType="None" schemaObjectType="InlinePolicy" type="string">  
+              <Description>Inline Policies directly assigned to the group</Description>
+          </AttributeDefinition> 
+      </Schema>
+      <Schema displayAttribute="PolicyName" featuresString="NO_GROUP_PERMISSIONS_PROVISIONING" identityAttribute="ARN" nativeObjectType="AWSManagedPolicy" objectType="AWSManagedPolicy" aggregationType="group">
+          <AttributeDefinition name="PolicyName" remediationModificationType="None" type="string">
+              <Description>The friendly name of the AWS managed policy</Description>
+          </AttributeDefinition>
+          <AttributeDefinition name="PolicyId" remediationModificationType="None" type="string">
+              <Description>The unique ID of the AWS managed policy</Description>
+          </AttributeDefinition>
+          <AttributeDefinition name="Description" remediationModificationType="None" type="string">
+              <Description>A friendly description of the AWS managed policy</Description>
+          </AttributeDefinition>
+          <AttributeDefinition name="ARN" remediationModificationType="None" type="string">
+              <Description>Amazon Resource Name of the AWS managed policy</Description>
+          </AttributeDefinition>
+          <AttributeDefinition name="Path" remediationModificationType="None" type="string">
+              <Description>The path to the AWS managed policy</Description>
+          </AttributeDefinition>
+          <AttributeDefinition name="CreateDate" remediationModificationType="None" type="string">
+                <Description>The creation date of the AWS managed policy</Description>
+          </AttributeDefinition>
+          <AttributeDefinition name="UpdateDate" remediationModificationType="None" type="string">
+                <Description>The last update date of the AWS managed policy</Description>
+          </AttributeDefinition>
+          <AttributeDefinition name="DefaultVersionId" remediationModificationType="None" type="string">
+              <Description>The currently enabled version ID of the AWS managed policy</Description>
+          </AttributeDefinition>
+          <AttributeDefinition name="PolicyJSON" remediationModificationType="None" type="string">
+              <Description>The JSON document for the AWS managed policy</Description>
+          </AttributeDefinition>
+      </Schema>
+      <Schema displayAttribute="PolicyName" featuresString="PROVISIONING, NO_GROUP_PERMISSIONS_PROVISIONING" identityAttribute="ARN" nativeObjectType="CustomerManagedPolicy" objectType="CustomerManagedPolicy" aggregationType="group">
+          <AttributeDefinition name="PolicyName" remediationModificationType="None" type="string">
+              <Description>The friendly name of the customer managed policy</Description>
+          </AttributeDefinition>
+          <AttributeDefinition name="PolicyId" remediationModificationType="None" type="string">
+              <Description>The unique ID of the customer managed policy</Description>
+          </AttributeDefinition>
+          <AttributeDefinition name="Description" remediationModificationType="None" type="string">
+              <Description>A friendly description of the customer managed policy</Description>
+          </AttributeDefinition>
+          <AttributeDefinition name="CreateDate" remediationModificationType="None" type="string">
+                <Description>The creation date of the customer managed policy</Description>
+          </AttributeDefinition>
+          <AttributeDefinition name="UpdateDate" remediationModificationType="None" type="string">
+                <Description>The last update date of the customer managed policy</Description>
+          </AttributeDefinition>
+          <AttributeDefinition name="ARN" remediationModificationType="None" type="string">
+              <Description>Amazon Resource Name of the customer managed policy</Description>
+          </AttributeDefinition>
+          <AttributeDefinition name="Path" remediationModificationType="None" type="string">
+              <Description>The path to the customer managed policy</Description>
+          </AttributeDefinition>
+          <AttributeDefinition name="DefaultVersionId" remediationModificationType="None" type="string">
+              <Description>The currently enabled version ID of the customer managed policy</Description>
+          </AttributeDefinition>
+          <AttributeDefinition name="PolicyJSON" remediationModificationType="None" type="string">
+              <Description>The JSON document for the customer managed policy</Description>
+          </AttributeDefinition>
+          <AttributeDefinition name="PolicyGroups" remediationModificationType="None" type="string" schemaObjectType="group" entitlement="true" multi="true">
+              <Description>Groups attached to the customer managed policy</Description>
+          </AttributeDefinition>
+          <AttributeDefinition name="PolicyRoles" remediationModificationType="None" type="string" schemaObjectType="Role" entitlement="true" multi="true">
+              <Description>Roles attached to the customer managed policy</Description>
+          </AttributeDefinition>
+
+      </Schema>
+      <Schema displayAttribute="Name" featuresString="NO_GROUP_PERMISSIONS_PROVISIONING" identityAttribute="Id" nativeObjectType="InlinePolicy" objectType="InlinePolicy">
+          <AttributeDefinition name="Name" remediationModificationType="None" type="string">
+              <Description>The friendly name of the policy</Description>
+          </AttributeDefinition>
+          <AttributeDefinition name="Id" remediationModificationType="None" type="string">
+              <Description>The unique ID of the policy</Description>
+          </AttributeDefinition>
+          <AttributeDefinition name="PolicyJSON" remediationModificationType="None" type="string">
+              <Description>The JSON document for the policy</Description>
+          </AttributeDefinition>
+      </Schema>
+      <Schema aggregationType="group" displayAttribute="RoleName" featuresString="PROVISIONING, NO_GROUP_PERMISSIONS_PROVISIONING" identityAttribute="ARN" instanceAttribute="" nativeObjectType="Role" objectType="Role" permissionsRemediationModificationType="None">
+          <AttributeDefinition name="RoleName" remediationModificationType="None" required="true" type="string">
+            <Description>The friendly name of the role</Description>
+          </AttributeDefinition>
+          <AttributeDefinition name="RoleId" remediationModificationType="None" required="true" type="string">
+              <Description>The unique ID of the role</Description>
+          </AttributeDefinition>
+          <AttributeDefinition name="Path" remediationModificationType="None" required="true" type="string">
+            <Description>Path to the Role</Description>
+          </AttributeDefinition>
+          <AttributeDefinition name="ARN" remediationModificationType="None" required="true" type="string">
+            <Description>Amazon Resource Name of the role</Description>
+          </AttributeDefinition>
+          <AttributeDefinition name="Description" remediationModificationType="None" required="true" type="string">  
+            <Description>Role Description</Description>  
+          </AttributeDefinition>
+          <AttributeDefinition name="CreateDate" remediationModificationType="None" required="true" type="string">
+            <Description>Creation date of the role</Description>
+          </AttributeDefinition>
+          <AttributeDefinition entitlement="true" multi="true" name="AWSManagedPolicies" remediationModificationType="None" schemaObjectType="AWSManagedPolicy" type="string">
+            <Description>AWS Managed Policies directly assigned to the role</Description>
+          </AttributeDefinition>
+          <AttributeDefinition entitlement="true" multi="true" name="CustomerManagedPolicies" remediationModificationType="None" schemaObjectType="CustomerManagedPolicy" type="string">
+            <Description>Customer Managed Policies directly assigned to the role</Description>
+          </AttributeDefinition>
+          <AttributeDefinition entitlement="true" multi="true" name="InlinePolicies" remediationModificationType="None" schemaObjectType="InlinePolicy" type="string">
+            <Description>Inline Policies directly assigned to the role</Description>
+          </AttributeDefinition>
+          <AttributeDefinition name="TrustPolicyJSON" remediationModificationType="None" required="true" type="string">
+            <Description>Trust Relationship Policy JSON</Description>
+          </AttributeDefinition>
+          <AttributeDefinition name="MaxSessionDuration" remediationModificationType="None" required="true" type="string">
+            <Description>Maximum CLI/API session duration</Description>
+          </AttributeDefinition>
+     </Schema>
+     <Schema displayAttribute="SCPName" identityAttribute="ARN" featuresString="NO_GROUP_PERMISSIONS_PROVISIONING" nativeObjectType="SCP" objectType="SCP" aggregationType="group">
+          <AttributeDefinition name="SCPName" remediationModificationType="None" type="string">
+              <Description>The friendly name of the Service Control Policy</Description>
+          </AttributeDefinition>
+          <AttributeDefinition name="SCPId" remediationModificationType="None" type="string">
+              <Description>The unique ID of the Service Control Policy</Description>
+          </AttributeDefinition>
+          <AttributeDefinition name="ARN" remediationModificationType="None" type="string">
+              <Description>Amazon Resource Name of the Service Control Policy</Description>
+          </AttributeDefinition>
+          <AttributeDefinition name="Description" remediationModificationType="None" type="string">
+              <Description>A friendly description of the Service Control Policy</Description>
+          </AttributeDefinition>
+          <AttributeDefinition name="AWSManaged" remediationModificationType="None" type="string">
+              <Description>A boolean value that indicates whether the Service Control Policy is an AWS managed policy</Description>
+          </AttributeDefinition>
+          <AttributeDefinition name="PolicyJSON" remediationModificationType="None" required="true" type="string">
+              <Description>The JSON document for the Service Control Policy</Description>
+          </AttributeDefinition>
+      </Schema>
+     <Schema displayAttribute="AWSAccountName" identityAttribute="ARN" nativeObjectType="AWSAccount" objectType="AWSAccount" aggregationType="group">
+         <AttributeDefinition name="AWSAccountName" type="string">
+             <Description>The friendly name of the AWS account.</Description>
+         </AttributeDefinition>
+         <AttributeDefinition name="AWSAccountId" type="string">
+             <Description>The unique ID of the AWS account.</Description>
+         </AttributeDefinition>
+         <AttributeDefinition name="ARN" type="string">
+             <Description>Amazon Resource Name of the AWS account.</Description>
+         </AttributeDefinition>
+         <AttributeDefinition name="Email" type="string">
+             <Description>The email address associated with the AWS account.</Description>
+         </AttributeDefinition>
+           <AttributeDefinition name="Status" type="string">
+             <Description>The status of the AWS account in the organization.</Description>
+         </AttributeDefinition>
+         <AttributeDefinition name="JoinedMethod" type="string">
+             <Description>The method by which the AWS account joined the organization.</Description>
+         </AttributeDefinition>
+         <AttributeDefinition name="JoinedTimestamp" type="string">
+             <Description>The date the AWS account became a part of the organization.</Description>
+         </AttributeDefinition>
+         <AttributeDefinition name="OrganizationUnit" schemaObjectType="OrganizationUnit" type="string">
+             <Description>Organization unit holding the AWS Account</Description>
+         </AttributeDefinition>
+     </Schema>
+     <Schema displayAttribute="OUName" hierarchyAttribute="Parent" identityAttribute="ARN" nativeObjectType="OrganizationUnit" objectType="OrganizationUnit" aggregationType="group">
+         <AttributeDefinition name="OUName" type="string">  
+             <Description>The friendly name of the Organization Unit</Description>  
+         </AttributeDefinition>  
+         <AttributeDefinition name="OUId" type="string">  
+             <Description>The unique ID of the Organization Unit</Description>  
+         </AttributeDefinition>  
+         <AttributeDefinition name="ARN" type="string">  
+             <Description>Amazon Resource Name of the Organization Unit</Description>  
+         </AttributeDefinition>  
+         <AttributeDefinition entitlement="true" multi="true" name="ServiceControlPolicies" schemaObjectType="SCP" type="string">
+             <Description>Service Control Policies attached to the Organization Unit</Description>  
+         </AttributeDefinition>  
+         <AttributeDefinition name="Parent" schemaObjectType="OrganizationUnit" type="string">
+             <Description>Parent Organization Unit</Description>  
+         </AttributeDefinition>  
+         <AttributeDefinition entitlement="true" managed="true" multi="true" name="AWSAccounts" schemaObjectType="AWSAccount" type="string">  
+             <Description>AWS Accounts attached to the Organization Unit</Description>  
+         </AttributeDefinition>  
+     </Schema>
+    </Schemas>
+    <Templates>
+      <Template name="account" schemaObjectType="account" usage="Create">
+        <Field displayName="con_prov_policy_AWS_UserName" helpKey="help_con_form_AWS_UserName" name="UserName" required="true" section="" type="string"/>
+        <Field displayName="con_prov_policy_AWS_AccountId" filterString="type == &quot;AWSAccount&quot;" helpKey="help_con_form_AWS_AccountId" name="AccountId" required="true" section="" type="ManagedAttribute"/>
+        <Field displayName="con_prov_policy_AWS_password" helpKey="help_con_form_AWS_password" name="password" postBack="true" reviewRequired="true" type="secret"/>
+        <Field displayName="con_prov_policy_AWS_PasswordResetRequired" dynamic="true" helpKey="help_con_form_AWS_PasswordResetRequired" name="PasswordResetRequired" reviewRequired="true" type="boolean" value="true">
+          <Attributes>
+            <Map>
+              <entry key="hidden">
+                <value>
+                  <Script>
+                    <Source>
+                            if (password == null) {
+                                return true;
+                            }
+                    </Source>
+                  </Script>
+                </value>
+              </entry>
+            </Map>
+          </Attributes>
+        </Field>
+        <Field displayName="con_prov_policy_AWS_AccessKey" helpKey="help_con_form_AWS_AccessKey" name="AccessKey" reviewRequired="true" type="boolean">
+          <ValidationScript>
+            <Source>
+                    if ((null == password) &amp;&amp; (null == value)) {
+                        return "Either password or programmatic access is mandatory.";
+                    }
+            </Source>
+          </ValidationScript>
+        </Field>
+        <Field displayName="con_prov_policy_AWS_Path" helpKey="help_con_form_AWS_Path" name="Path" reviewRequired="true" section="" type="string"/>
+      </Template>
+      <Template name="EnableAccount" schemaObjectType="account" usage="Enable">
+        <Field displayName="con_prov_policy_AWS_password" helpKey="help_con_form_AWS_password" name="password" reviewRequired="true" type="secret"/>
+        <Field displayName="con_prov_policy_AWS_Enable_AccessKeys" helpKey="help_con_form_AWS_Enable_AccessKeys" name="EnableAccessKeys" reviewRequired="true" type="boolean"/>
+        <Field displayName="con_prov_policy_AWS_Enable_SSHKeys" helpKey="help_con_form_AWS_Enable_SSHKeys" name="EnableSSHKeys" reviewRequired="true" type="boolean"/>
+        <Field displayName="con_prov_policy_AWS_Enable_HTTPSCredentials" helpKey="help_con_form_AWS_Enable_HTTPSCredentials" name="EnableHTTPSCredentials" reviewRequired="true" type="boolean"/>
+      </Template>
+      <Template name="CustomerManagedPolicy" schemaObjectType="CustomerManagedPolicy" usage="Create">
+        <Field displayName="con_prov_policy_AWS_Policy_Name" helpKey="help_con_form_AWS_Policy_Name" name="PolicyName" required="true" type="string"/>
+        <Field displayName="con_prov_policy_AWS_AccountId" filterString="type == &quot;AWSAccount&quot;" helpKey="help_con_form_AWS_Policy_AccountId" name="AccountId" required="true" section="" type="ManagedAttribute"/>
+        <Field displayName="con_prov_policy_AWS_Policy_Description" helpKey="help_con_form_AWS_Policy_Description" name="Description" reviewRequired="true" type="string"/>
+        <Field displayName="con_prov_policy_AWS_Policy_Document" helpKey="help_con_form_AWS_Policy_Document" name="PolicyJSON" required="true" type="string"/>
+        <Field displayName="con_prov_policy_AWS_Policy_Path" helpKey="help_con_form_AWS_Policy_Path" name="Path" reviewRequired="true" type="string"/>
+      </Template>
+      <Template name="group" schemaObjectType="group" usage="Create">
+        <Field displayName="con_prov_policy_AWS_GroupName" helpKey="help_con_form_AWS_GroupName" name="GroupName" required="true" section="" type="string"/>
+        <Field displayName="con_prov_policy_AWS_AccountId" filterString="type == &quot;AWSAccount&quot;" helpKey="help_con_form_AWS_Group_AccountId" name="AccountId" required="true" section="" type="ManagedAttribute"/>
+        <Field displayName="con_prov_policy_AWS_Group_Path" helpKey="help_con_form_AWS_Group_Path" name="Path" reviewRequired="true" type="string"/>
+      </Template>
+      <Template name="UpdateGroup" schemaObjectType="group" usage="Update">
+        <Field displayName="con_prov_policy_AWS_GroupName" helpKey="help_con_form_AWS_GroupName" name="GroupName" section="" type="string">
+        <Attributes>
+            <Map>
+              <entry key="readOnly" value="true"/>
+            </Map>
+          </Attributes>
+        </Field>
+        <Field displayName="con_prov_policy_AWS_GroupId" helpKey="help_con_form_AWS_GroupId" name="GroupId" section="" type="string">
+        <Attributes>
+            <Map>
+              <entry key="readOnly" value="true"/>
+            </Map>
+          </Attributes>
+        </Field>
+        <Field displayName="con_prov_policy_AWS_Group_Path" helpKey="help_con_form_AWS_Group_Path" name="Path" reviewRequired="true" type="string">
+        <Attributes>
+            <Map>
+              <entry key="readOnly" value="true"/>
+            </Map>
+          </Attributes>
+        </Field>
+        <Field displayName="con_prov_policy_AWS_Group_ARN" helpKey="help_con_form_AWS_Group_ARN" name="ARN" reviewRequired="true" type="string">
+        <Attributes>
+            <Map>
+              <entry key="readOnly" value="true"/>
+            </Map>
+          </Attributes>
+        </Field>
+        <Field displayName="con_prov_policy_AWS_Group_CreateDate" helpKey="help_con_form_AWS_Group_CreateDate" name="CreateDate" reviewRequired="true" type="string">
+        <Attributes>
+            <Map>
+              <entry key="readOnly" value="true"/>
+            </Map>
+          </Attributes>
+        </Field>
+        <Field filterString="type == &quot;AWSManagedPolicy&quot;" displayName="con_prov_policy_AWS_AWSManagedPolicies" helpKey="help_con_form_AWS_AWSManagedPolicies" multi="true" name="AWSManagedPolicies" type="ManagedAttribute"/>
+        <Field filterString="type == &quot;CustomerManagedPolicy&quot;" displayName="con_prov_policy_AWS_CustomerManagedPolicies" helpKey="help_con_form_AWS_CustomeManagedPolicies" multi="true" name="CustomerManagedPolicies" type="ManagedAttribute"/>
+        <Field filterString="type == &quot;InlinePolicy&quot;" displayName="con_prov_policy_AWS_InlinePolicies" helpKey="help_con_form_AWS_InlinePolicies" multi="true" name="InlinePolicies" type="ManagedAttribute">
+        <Attributes>
+            <Map>
+              <entry key="readOnly" value="true"/>
+            </Map>
+          </Attributes>
+        </Field>
+      </Template>
+      <Template name="UpdateRole" schemaObjectType="Role" usage="Update">
+        <Field displayName="con_prov_policy_AWS_RoleName" helpKey="help_con_form_AWS_RoleName" name="RoleName" section="" type="string">
+        <Attributes>
+            <Map>
+              <entry key="readOnly" value="true"/>
+            </Map>
+          </Attributes>
+        </Field>
+        <Field displayName="con_prov_policy_AWS_RoleId" helpKey="help_con_form_AWS_RoleId" name="RoleId" section="" type="string">
+        <Attributes>
+            <Map>
+              <entry key="readOnly" value="true"/>
+            </Map>
+          </Attributes>
+        </Field>
+        <Field displayName="con_prov_policy_AWS_Role_Path" helpKey="help_con_form_AWS_Role_Path" name="Path" reviewRequired="true" type="string">
+        <Attributes>
+            <Map>
+              <entry key="readOnly" value="true"/>
+            </Map>
+          </Attributes>
+        </Field>
+        <Field displayName="con_prov_policy_AWS_Role_ARN" helpKey="help_con_form_AWS_Role_ARN" name="ARN" reviewRequired="true" type="string">
+        <Attributes>
+            <Map>
+              <entry key="readOnly" value="true"/>
+            </Map>
+          </Attributes>
+        </Field>
+        <Field displayName="con_prov_policy_AWS_Role_CreateDate" helpKey="help_con_form_AWS_Role_CreateDate" name="CreateDate" reviewRequired="true" type="string">
+        <Attributes>
+            <Map>
+              <entry key="readOnly" value="true"/>
+            </Map>
+          </Attributes>
+        </Field>
+        <Field displayName="con_prov_policy_AWS_Role_MaxSessionDuration" helpKey="help_con_form_AWS_Role_MaxSessionDuration" name="MaxSessionDuration" reviewRequired="true" type="string">
+        <Attributes>
+            <Map>
+              <entry key="readOnly" value="true"/>
+            </Map>
+          </Attributes>
+        </Field>
+        <Field displayName="con_prov_policy_AWS_Role_Trust_Policy_JSON" helpKey="help_con_form_AWS_Role_Trust_Policy_JSON" name="TrustPolicyJSON" reviewRequired="true" type="string">
+        <Attributes>
+            <Map>
+              <entry key="readOnly" value="true"/>
+            </Map>
+          </Attributes>
+        </Field>
+        <Field filterString="type == &quot;AWSManagedPolicy&quot;" displayName="con_prov_policy_AWS_AWSManagedPolicies" helpKey="help_con_form_AWS_AWSManagedPolicies" multi="true" name="AWSManagedPolicies" type="ManagedAttribute"/>
+        <Field filterString="type == &quot;CustomerManagedPolicy&quot;" displayName="con_prov_policy_AWS_CustomerManagedPolicies" helpKey="help_con_form_AWS_CustomeManagedPolicies" multi="true" name="CustomerManagedPolicies" type="ManagedAttribute"/>
+        <Field filterString="type == &quot;InlinePolicy&quot;" displayName="con_prov_policy_AWS_InlinePolicies" helpKey="help_con_form_AWS_InlinePolicies" multi="true" name="InlinePolicies" type="ManagedAttribute">
+        <Attributes>
+            <Map>
+              <entry key="readOnly" value="true"/>
+            </Map>
+          </Attributes>
+        </Field>
+      </Template>
+    </Templates>
+  </Application>
+</ImportAction>

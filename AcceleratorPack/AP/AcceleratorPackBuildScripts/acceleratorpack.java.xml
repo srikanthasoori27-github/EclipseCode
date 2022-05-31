@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright © 2018 SailPoint Technologies, Inc. All Rights Reserved.
+All logos, text, content, and works of authorship, including but not limited to underlying code, programming or scripting language, designs, and/or graphics,
+that are used and/or depicted herein are protected under United States and international copyright and trademark laws and treaties,
+and may not be used or reproduced without the prior express written permission of SailPoint Technologies, Inc. -->
+<project name="accelerator.pack.java">
+  <property name="build" location="build"/>
+  <property name="build.iiqBinaryExtract" location="${build}/extract"/>
+  <property name="src" location="src"/>
+  <property name="tmpSrc" location="tmp/src"/>
+  <property name="version.tmpl" location="${src}/sailpoint/rapidonboarding/VersionConstants.tmpl"/>
+  <property name="version.file" location="${tmpSrc}/sailpoint/rapidonboarding/VersionConstants.java"/>
+  <exec executable="hostname" outputproperty="build.host"
+              failifexecutionfails="false" />
+
+  <path id="build.compile.classpath">
+    <pathelement path="${build.iiqBinaryExtract}/WEB-INF/classes"/>
+    <fileset dir="${build.iiqBinaryExtract}/WEB-INF/lib">
+      <include name="**/*.jar"/>
+    </fileset>
+    <fileset dir="./lib">
+      <include name="**/*.jar"/>
+    </fileset>
+  </path>
+  <!-- ********************************************************** -->
+  <!-- Target: init                                               -->
+  <!-- ********************************************************** -->
+  <target name="init">
+
+    <uptodate property="versionfiles.uptodate"
+        srcfile="${version.tmpl}" targetfile="${version.file}" />
+
+    <tstamp>
+      <format property="build.tstamp" pattern="MM/dd/yyyy hh:mm aa Z"/>
+    </tstamp>
+
+    <!-- Use git to find the hash tag and format a date into
+           YYYYMMDD-hhmmss format -->
+    <exec executable="git" failifexecutionfails="false">
+      <arg value="--no-pager"/>
+      <arg value="log"/>
+      <arg value="--date=local"/>
+      <arg value="--pretty=format:%h %cd"/>
+      <arg value="-1"/>
+      <redirector outputproperty="build.revision">
+        <outputfilterchain>
+          <tokenfilter>
+            <replaceregex pattern="... (...) (.) (..:..:..) (....)"
+                            replace="\4\10\2-\3" />
+            <replaceregex pattern="... (...) (..) (..:..:..) (....)"
+                            replace="\4\1\2-\3" />
+            <replacestring from=":" to=""/>
+            <replacestring from=" " to="-"/>
+            <replacestring from="Jan" to="01"/>
+            <replacestring from="Feb" to="02"/>
+            <replacestring from="Mar" to="03"/>
+            <replacestring from="Apr" to="04"/>
+            <replacestring from="May" to="05"/>
+            <replacestring from="Jun" to="06"/>
+            <replacestring from="Jul" to="07"/>
+            <replacestring from="Aug" to="08"/>
+            <replacestring from="Sep" to="09"/>
+            <replacestring from="Oct" to="10"/>
+            <replacestring from="Nov" to="11"/>
+            <replacestring from="Dec" to="12"/>
+          </tokenfilter>
+        </outputfilterchain>
+      </redirector>
+    </exec>
+
+    <loadresource property="build.revision.timestamp">
+      <propertyresource name="build.revision"/>
+      <filterchain>
+        <tokenfilter>
+          <replaceregex pattern=".+-(.+)-(.+)" replace="\1\2"/>
+        </tokenfilter>
+      </filterchain>
+    </loadresource>
+
+    <!-- Use git to find the origin repository location -->
+    <exec executable="git" failifexecutionfails="false">
+      <arg value="--no-pager"/>
+      <arg value="config"/>
+      <arg value="--get"/>
+      <arg value="remote.origin.url"/>
+      <redirector outputproperty="build.repoRoot" />
+    </exec>
+
+    <!-- Use the Jenkins environment to find branch if available -->
+    <condition property="build.repoLocation" value="${env.BRANCH_NAME}">
+      <isset property="env.BRANCH_NAME"/>
+    </condition>
+
+    <!-- Use git to find the branch -->
+    <exec executable="git" failifexecutionfails="false">
+      <arg value="--no-pager"/>
+      <arg value="branch"/>
+      <arg value="--no-color"/>
+      <redirector outputproperty="build.repoLocation">
+        <outputfilterchain>
+          <linecontainsregexp>
+            <regexp pattern="^\*"/>
+          </linecontainsregexp>
+          <tokenfilter>
+            <replacestring from="* " to=""/>
+          </tokenfilter>
+        </outputfilterchain>
+      </redirector>
+    </exec>
+
+    <condition property="isReleaseCandidate" value="true">
+        <matches string="${build.repoLocation}" pattern="^RC_.+"/>
+    </condition>
+  </target>
+
+  <target name="-compile" depends="version">
+    <mkdir dir="${build}/classes"/>
+    <javac source="1.8" target="1.8" destdir="${build}/classes" debug="true"
+      classpathref="build.compile.classpath" includeantruntime="last">
+      <src path="${src}"/>
+      <src path="${tmpSrc}"/>
+    </javac>
+  </target>
+  <target name="-moveAcceleratorPackJar" depends="-createJar">
+    <move todir="${build.iiqBinaryExtract}/WEB-INF/lib">
+      <fileset dir="${build}">
+        <include name="AcceleratorPack.jar"/>
+      </fileset>
+    </move>
+  </target>
+  <target name="-generateDTD">
+    <if>
+      <not>
+        <available file="${dtd}"/>
+      </not>
+      <then>
+        <echo>Generating
+          ${build.iiqBinaryExtract}/sailpoint.${IIQVersion}${IIQPatchLevel}.dtd...</echo>
+        <java classname="sailpoint.launch.Launcher" fork="true">
+          <arg line="sailpoint.tools.xml.DTDGenerator &quot;${dtd}&quot;"/>
+          <classpath>
+            <pathelement path="${build.iiqBinaryExtract}/WEB-INF/classes"/>
+            <pathelement location="${build.iiqBinaryExtract}/WEB-INF/lib/identityiq.jar"/>
+          </classpath>
+        </java>
+        <echo>DTD ${dtd}</echo>
+      </then>
+    </if>
+  </target>
+  <!-- ********************************************************** -->
+  <!-- Target: version                                            -->
+  <!-- ********************************************************** -->
+  <target name="version" depends="init" unless="versionfiles.uptodate">
+    <dirname property="version.destdir" file="${version.file}"/>
+    <mkdir dir="${version.destdir}"/>
+    <delete file="${version.file}"/>
+
+    <filter token="VERSION" value="${AcceleratorPack.Version}"/>
+    <filter token="BUILDER" value="${user.name}"/>
+    <filter token="BUILDTIME" value="${build.tstamp}"/>
+    <filter token="REVISION" value="${build.revision}"/>
+    <filter token="PATCH_LEVEL" value="${AcceleratorPack.PatchLevel}"/>
+    <filter token="REPO_LOCATION" value="${build.repoLocation}"/>
+    <filter token="BUILDHOST" value="${build.host}"/>
+    <copy file="${version.tmpl}" tofile="${version.file}" filtering="on"/>
+
+    <echo message="            Build version: ${AcceleratorPack.Version}"/>
+    <echo message="                  Builder: ${user.name}"/>
+    <echo message="           Build revision: ${build.revision}"/>
+    <echo message=" Build revision timestamp: ${build.revision.timestamp}"/>
+    <echo message="      Build repo location: ${build.repoLocation}"/>
+    <echo message="          Build timestamp: ${build.tstamp}"/>
+    <echo message="               Build host: ${build.host}"/>
+    <echo message="             Java Version: ${java.version}"/>
+    <echo message="                Java Home: ${java.home}"/>
+    <echo message="              Ant Version: ${ant.version}"/>
+    <echo message="                 Ant Home: ${ant.home}"/>
+    <echo message="                  OS Arch: ${os.arch}"/>
+    <echo message="                  OS Name: ${os.name}"/>
+    <echo message="               OS Version: ${os.version}"/>
+  </target>
+
+</project>

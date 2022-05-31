@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE QuickLink PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<!-- Copyright © 2018 SailPoint Technologies, Inc. All Rights Reserved.
+All logos, text, content, and works of authorship, including but not limited to underlying code, programming or scripting language, designs, and/or graphics,
+that are used and/or depicted herein are protected under United States and international copyright and trademark laws and treaties,
+and may not be used or reproduced without the prior express written permission of SailPoint Technologies, Inc. -->
+<QuickLink action="requestAccess" category="Access" cssClass="quicklink-request-access"  messageKey="Request Privileged Access"  name="Request Privileged Access">
+  <Attributes>
+    <Map>
+      <entry key="labelScript">
+        <value>
+          <Script>
+            <Source>
+              <![CDATA[
+			return (quickLinkWrapper.isAllowSelf() && !quickLinkWrapper.isAllowOthers()) ? "Manage My Privileged Access" : "Manage Privileged Access";
+			  ]]>
+			</Source>
+          </Script>
+        </value>
+      </entry>
+    </Map>
+  </Attributes>
+  <Description>Request privileged access</Description>
+      <QuickLinkOptions allowSelf="true">
+      <Attributes>
+        <Map>
+          <entry key="allowRequestEntitlements" value="true" />
+          <entry key="allowRequestEntitlementsAdditionalAccountRequests" value="false" />
+          <entry key="allowRequestEntitlementsShowPopulation" value="true"/>
+          <entry key="allowRequestRoles" value="true" />
+          <entry key="allowRequestRolesAdditionalAccountRequests" value="false" />
+          <entry key="allowRequestRolesShowPopulation" value="true"/>
+          <entry key="allowRequestRolesRemove" value="true" />
+          <entry key="allowRequestEntitlementsRemove" value="true" />
+        </Map>
+      </Attributes>
+      <DynamicScopeRef>
+        <Reference class="sailpoint.object.DynamicScope" name="Self Service Privileged Access"/>
+      </DynamicScopeRef>
+    </QuickLinkOptions>
+    <QuickLinkOptions allowSelf="false" allowBulk="true">
+      <Attributes>
+        <Map>
+          <entry key="allowRequestEntitlements" value="true" />
+          <entry key="allowRequestEntitlementsAdditionalAccountRequests" value="false" />
+          <entry key="allowRequestEntitlementsShowPopulation" value="true"/>
+          <entry key="allowRequestRoles" value="true" />
+          <entry key="allowRequestRolesAdditionalAccountRequests" value="false" />
+          <entry key="allowRequestRolesShowPopulation" value="true"/>
+          <entry key="allowRequestRolesRemove" value="true" />
+          <entry key="allowRequestEntitlementsRemove" value="true" />
+        </Map>
+      </Attributes>
+      <DynamicScopeRef>
+        <Reference class="sailpoint.object.DynamicScope" name="Manager Privileged Access"/>
+      </DynamicScopeRef>
+    </QuickLinkOptions>
+    <QuickLinkOptions allowSelf="false" allowBulk="true">
+      <Attributes>
+        <Map>
+          <entry key="allowRequestEntitlements" value="true" />
+          <entry key="allowRequestEntitlementsAdditionalAccountRequests" value="false" />
+          <entry key="allowRequestEntitlementsShowPopulation" value="true"/>
+          <entry key="allowRequestRoles" value="true" />
+          <entry key="allowRequestRolesAdditionalAccountRequests" value="false" />
+          <entry key="allowRequestRolesShowPopulation" value="true"/>
+          <entry key="allowRequestRolesRemove" value="true" />
+          <entry key="allowRequestEntitlementsRemove" value="true" />
+        </Map>
+      </Attributes>
+      <DynamicScopeRef>
+        <Reference class="sailpoint.object.DynamicScope" name="Help Desk Privileged Access"/>
+      </DynamicScopeRef>
+    </QuickLinkOptions>
+</QuickLink>

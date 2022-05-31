@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ObjectConfig PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<ObjectConfig name="ManagedAttribute">
+    <ObjectAttribute displayName="Privileged" extendedNumber="1" name="isPrivileged" type="boolean">
+        <DefaultValue>
+            <Boolean/>
+        </DefaultValue>
+    </ObjectAttribute>
+    <ObjectAttribute displayName="Business Application Name" extendedNumber="2" name="appName"/>
+    <ObjectAttribute displayName="Classification" extendedNumber="3" name="classification">
+        <Description>Can have two values: “LPA” or “HPA" (HPA = Highly Privileged Access accounts)
+An LPA Account is an account with the practice of limiting access to the minimal level that will allow normal functioning. Applied to employees, the principle of least privilege translates to giving people the lowest level of user rights that they can have and still do their jobs
+An HPA account is a system account with increased rights above a standard user. At a minimum, this group must include accounts with the following ability:
+•  System level administrative or super user access to devices, systems, applications or databases
+•  Administration of accounts and/or passwords on a system, application, or database
+•  Any additional accounts considered by the business or system owner to pose a high risk</Description>
+    </ObjectAttribute>
+    <ObjectAttribute displayName="Access Classification" name="accessClassification">
+        <Description>Flag or identifier to identify if role permits to write/read Element Confidential data (or above). R=Read, W=Write</Description>
+    </ObjectAttribute>
+    <ObjectAttribute displayName="Account Management" name="accountManagement">
+        <Description>Flag or identifier for account management that would allow to identify roles that can create/remove access</Description>
+    </ObjectAttribute>
+</ObjectConfig>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE TaskDefinition PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<TaskDefinition name="Element Import Entitlement Glossary" resultAction="Delete" subType="task_item_type_generic" type="Generic">
+    <Attributes>
+        <Map>
+            <entry key="TaskDefinition.runLengthAverage" value="128"/>
+            <entry key="TaskDefinition.runLengthTotal" value="773"/>
+            <entry key="TaskDefinition.runs" value="6"/>
+            <entry key="TaskSchedule.host"/>
+            <entry key="ruleName" value="ELE_Import_Entitlement_Glosary_Rule"/>
+            <entry key="taskCompletionEmailNotify" value="Disabled"/>
+            <entry key="taskCompletionEmailRecipients"/>
+            <entry key="taskCompletionEmailTemplate"/>
+        </Map>
+    </Attributes>
+    <Description>A task that can be used to run an arbitrary rule.</Description>
+    <Owner>
+        <Reference class="sailpoint.object.Identity" name="spadmin"/>
+    </Owner>
+    <Parent>
+        <Reference class="sailpoint.object.TaskDefinition" name="Run Rule"/>
+    </Parent>
+</TaskDefinition>

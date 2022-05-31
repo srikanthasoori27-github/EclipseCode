@@ -1,0 +1,191 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE sailpoint PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+
+<sailpoint>
+  
+  <Form name="MultiFactor RSA Config Form" type="WorkflowConfig" hidden="true">
+    <Section label="wf_config_mfa_rsa_section">
+      <Field name="applicationName" displayName="wf_config_mfa_rsa_application_name" filterString="type == &quot;RSA Authentication Manager - Direct&quot;" helpKey="help_wf_rsa_mfa_application_name" type="Application">
+        <Attributes>
+          <Map>
+            <entry key="valueProperty" value="name"/>
+          </Map>
+        </Attributes>
+      </Field>
+      <Field name="trace" displayName="wf_config_provisioning_advanced_trace" helpKey="help_wf_trace" type="boolean"/>
+    </Section>
+  </Form>
+
+  <Form name="RSA Token Form" type="Workflow" hidden="true">
+    <Description>This form is used to for mfa.</Description>
+    <Attributes>
+      <Map>
+        <entry key="pageTitle" value="ui_mfa_rsa_form_title"/>
+        <entry key="subtitle" value="ui_mfa_rsa_form_subtitle"/>
+      </Map>
+    </Attributes>
+
+    <Section name="messageSection" type="text">
+      <Field value="$(mfaResponseMessage)">
+        <Attributes>
+          <Map>
+            <entry key="hidden">
+              <value>
+                <Script><Source>if (mfaResponseMessage == null) return true; else return false;</Source></Script>
+              </value>
+            </entry>
+          </Map>
+        </Attributes>
+      </Field>
+    </Section>
+
+    <Section>
+      <Field displayName="user_name" name="name" readOnly="true" value="ref:identityName"/>
+      <Field displayName="ui_mfa_rsa_form_token" name="token" required="true" type="string"/>
+    </Section>
+    <Button label="button_submit" action="next" />
+    <Button label="button_cancel" action="cancel" />
+  </Form>
+
+  <Workflow handler="sailpoint.api.StandardWorkflowHandler"
+            name="MFA RSA"
+            libraries="Identity,MFA"
+            explicitTransitions="true"
+            type="MultiFactorAuthentication"
+            configForm="MultiFactor RSA Config Form" >
+    <Variable name="trace" initializer="false">
+      <Description>
+        Used for debugging this workflow and when set to true trace will be sent to stdout.
+      </Description>
+    </Variable>
+    <Variable name="applicationName" required="true">
+      <Description>The name of the RSA application configured to connect with the RSA Manager.</Description>
+    </Variable>
+    <Variable name="nativeUserIdAttribute" required="true" initializer="userID">
+      <Description>The application schema attribute name that represents the RSA user id to send during authentication requests.</Description>
+    </Variable>
+    <Variable name="identityName">
+      <Description>The name of the identity to perform Multi-Factor Authentication.</Description>
+    </Variable>
+
+    <Step icon="Start" name="Start" posX="15" posY="12">
+      <Transition to="Initialize"/>
+    </Step>
+
+    <Step action="call:getNativeUserId" name="Initialize" posX="106" posY="12" resultVariable="nativeUserId">
+      <Description>
+         Initialize the data for the identity that we are creating.
+      </Description>
+      <Arg name="identityName" value="ref:identityName"/>
+      <Arg name="applicationName" value="ref:applicationName"/>
+      <Arg name="nativeUserIdAttribute" value="ref:nativeUserIdAttribute"/>
+      <Transition to="RSA Token"/>
+    </Step>
+
+    <Step icon="Provision" name="RSA Token" posX="200" posY="12">
+      <Approval mode="serial" owner="ref:launcher" return="token">
+        <Arg name="workItemType" value="Form"/>
+        <Arg name="workItemDescription" value="MFA form description"/>
+        <Arg name="workItemForm" value="RSA Token Form"/>
+        <Arg name="identityName" value="ref:identityName"/>
+        <Arg name="applicationName" value="ref:applicationName"/>
+        <Arg name="mfaResponseMessage" value="ref:mfaResponseMessage"/>
+      </Approval>
+      <Description>
+         Display the MFA form to collect information about the user.
+      </Description>
+      <Transition to="AttemptLogin"/>
+    </Step>
+
+    <Step action="call:rsaLogin" name="AttemptLogin" resultVariable="response" posX="200" posY="127" icon="Provision">
+      <Description>
+        Authenticate RSA token.
+      </Description>
+      <Arg name="nativeUserId" value="ref:nativeUserId"/>
+      <Arg name="token" value="ref:token"/>
+      <Transition to="RSA Prepare Additional Information Form" when="script:(&quot;ACCESS_IN_PROGRESS&quot;.equals(response.getResult()))"/>
+      <Transition to="End" when="script:(&quot;ACCESS_OK&quot;.equals(response.getResult()))"/>
+      <Transition to="RSA Token" when="script:(&quot;FAILED&quot;.equals(response.getResult()))"/>
+      <Transition to="DenyMessage"/>
+    </Step>
+
+    <Step name="DenyMessage" action="call:addMessage" posX="79" posY="220">
+      <Description>
+        Adds a deny message before completing the workflow
+      </Description>
+      <Arg name="message" value="ui_mfa_error_denied"/>
+      <Arg name="type" value="Error"/>
+      <Transition to="End"/>
+    </Step>
+
+    <Step action="call:addFieldsToForm" name="RSA Prepare Additional Information Form" posX="394" posY="127" >
+      <Description>
+        Add additional information fields to the additional information form.
+      </Description>
+      <Arg name="stepName" value="RSA Get Additional Information"/>
+      <Arg name="sectionName" value="additionalInfo"/>
+      <Transition to="RSA Get Additional Information"/>
+    </Step>
+
+    <Step icon="Approval" name="RSA Get Additional Information" posX="394" posY="243">
+      <Description>
+         Display the mfa form to collect information about the user.
+      </Description>
+      <Approval owner="ref:launcher" return="nativeUserId" mode="serial">
+        <!-- using embedded forms here, MFALibrary dynamically adds fields to the additionalInfo section -->
+        <Form name="RSA Additional Information Form" type="Workflow" hidden="true">
+          <Description>This form is used to for RSA Next Token.</Description>
+          <Attributes>
+            <Map>
+              <entry key="pageTitle" value="ui_mfa_rsa_form_title"/>
+              <entry key="subtitle" value="ui_mfa_rsa_form_subtitle"/>
+            </Map>
+          </Attributes>
+          <Section name="messageSection" type="text">
+            <Field value="ref:mfaResponseMessage">
+              <Attributes>
+                <Map>
+                  <entry key="hidden">
+                    <value>
+                      <Script><Source>if (mfaResponseMessage == null) return true; else return false;</Source></Script>
+                    </value>
+                  </entry>
+                </Map>
+              </Attributes>
+            </Field>
+          </Section>
+          <Section name="additionalInfo" />
+          <Button label="button_submit" action="next" />
+          <Button label="button_cancel" action="cancel" />
+        </Form>
+        <Arg name="mfaResponseMessage" value="ref:mfaResponseMessage"/>
+      </Approval>
+      <Transition to="RSA Post Process Additional Information Form"/>
+    </Step>
+
+    <Step action="call:postProcessFormFields" name="RSA Post Process Additional Information Form" posX="200" posY="243" >
+      <Description>
+        Post process additional information fields in the additional information form.
+      </Description>
+      <Arg name="stepName" value="RSA Get Additional Information"/>
+      <Arg name="sectionName" value="additionalInfo"/>
+      <Transition to="AttemptLoginWithAdditionalInfo"/>
+    </Step>
+
+    <Step action="call:rsaLogin" name="AttemptLoginWithAdditionalInfo" resultVariable="response" posX="200" posY="356" icon="Provision">
+      <Description>
+        Authenticate RSA token with additional information.
+      </Description>
+      <Arg name="nativeUserId" value="ref:nativeUserId"/>
+      <Arg name="mfaResponseMessage" value="ref:mfaResponseMessage"/>
+      <Transition to="RSA Prepare Additional Information Form" when="script:(&quot;ACCESS_IN_PROGRESS&quot;.equals(response.getResult()))"/>
+      <Transition to="RSA Prepare Additional Information Form" when="script:(&quot;FAILED&quot;.equals(response.getResult()))"/>
+      <Transition to="End" when="script:(&quot;ACCESS_OK&quot;.equals(response.getResult()))"/>
+      <Transition to="DenyMessage"/>
+    </Step>
+
+
+    <Step name="End" icon="Stop" posX="394" posY="12"/>
+  </Workflow>
+
+</sailpoint>

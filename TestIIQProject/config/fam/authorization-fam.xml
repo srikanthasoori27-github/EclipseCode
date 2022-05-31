@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE sailpoint PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<!-- (c) Copyright 2019 SailPoint Technologies, Inc., All Rights Reserved. -->
+<sailpoint>
+
+  <!--  Rights and Capabilities -->
+  <SPRight name="ViewFAMNavigationMenu" displayName="right_view_fam_navigation_menu">
+    <Description>right_desc_view_fam_navigation_menu</Description>
+  </SPRight>
+
+  <SPRight name="ViewFAMAdminWidgets" displayName="right_view_fam_admin_widgets">
+    <Description>right_desc_view_fam_admin_widgets</Description>
+  </SPRight>
+
+  <SPRight name="FullAccessFAMConfiguration" displayName="right_full_access_fam_configuration">
+    <Description>right_desc_full_access_fam_configuration</Description>
+  </SPRight>
+
+  <Capability name="FAMAdministrator" displayName="capability_fam_administrator">
+    <Description>capability_desc_fam_administrator</Description>
+    <RightRefs>
+      <!-- View Fam navigation menu -->
+      <Reference class="sailpoint.object.SPRight" name="ViewFAMNavigationMenu" />
+      <!-- View Fam widgets -->
+      <Reference class="sailpoint.object.SPRight" name="ViewFAMAdminWidgets" />
+      <Reference class="sailpoint.object.SPRight" name="FullAccessFAMConfiguration" />
+    </RightRefs>
+  </Capability>
+
+</sailpoint>

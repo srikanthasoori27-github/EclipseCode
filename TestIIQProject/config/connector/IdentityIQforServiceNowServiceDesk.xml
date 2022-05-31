@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Application PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<Application connector="sailpoint.connector.OpenConnectorAdapter" featuresString="NO_AGGREGATION, PROVISIONING, UNLOCK, ENABLE, PASSWORD" name="IdentityIQ for ServiceNow Service Desk" type="ServiceNow Service Desk">
+  <Attributes>
+    <Map>
+      <entry key="connectorClass" value="openconnector.connector.servicedesk.ServiceDeskConnector" />
+      <!-- 'authenticationType' can be Basic or OAuth2-->
+      <entry key="authenticationType" value="" />
+      <entry key="url" value="https://demo.service-now.com" />
+      <entry key="username" value="" />
+      <entry key="password" value="" />
+
+      <!-- When OAuth2, the token_url, grant_type, client_id, client_secret 
+           and refresh_token requires to generate an access token. 
+      -->
+      <entry key="token_url" value="https://demo.service-now.com/oauth_token.do" />
+      <!-- 'grant_type' can be REFRESH_TOKEN -->
+      <entry key="grant_type" value="" />
+      <entry key="client_id" value=""/>
+      <entry key="client_secret" value=""/>
+      <entry key="refresh_token" value=""/>
+
+      <!-- Name of the ServiceNow Connector Application in IdentityIQ.
+           It is used to determine opened_by and requested_for in a plan initializer script.
+           Empty value meaning plan initializer to determine a Link object based on type of the ServiceNow
+           Connector Application which is 'ServiceNow', whereas nonempty value promotes plan initializer to 
+           determine a Link object based on name of the ServiceNow Connector Application.
+      -->
+      <entry key="connectorAppForServiceNow" value="" />
+      <entry key="encrypted" value="client_secret,refresh_token,oauth_token_info"/>
+      <entry key="templateApplication" value="ServiceNow Service Desk"/>
+      <!-- 'ticketType' can be serviceRequest or incident or changeRequest -->
+      <entry key="ticketType" value="serviceRequest" />
+      <entry key="serviceRequest">
+        <value>
+          <Map>
+            <entry key="provision">
+              <value>
+                <Map>
+                  <entry key="resource" value="/api/x_sap_sdim/sailpoint_cart_js_api/create_ticket"/>
+                  <entry key="catalogItem">
+                    <value>
+                      <Map>
+                        <!-- The 'key' is the managed application name and 'value' is catalog item sys_id -->
+                        <entry key="Procurement_System" value="8053818edbffb300e90690b3db9619c4" />
+                      </Map>
+                    </value>
+                  </entry>
+                  <entry key="responseElement" value="$.result.request_number"/>
+                  <entry key="requestObject" value="items" />
+                  <entry key="request">
+                    <value>
+                      <Map>
+                        <entry key="description" value="#if($request.operation == 'Create') Create Account on application $request.resource #else For $request.id in application $request.resource #end #if ($request.items) $newline  #foreach ($item in $request.items) #if ($item.name == '*disabled*' &amp;&amp; $item.value == 'true') Disable Account. $newline #elseif ($item.name == '*disabled*' &amp;&amp; $item.value == 'false') Enable Account. $newline #elseif ($item.name == '*locked*' &amp;&amp; $item.value == 'false') Unlock Account. $newline #else $!item.Operation $item.name: $item.value $newline #end #end #else $newline $!request.Operation Account #end"/>
+                        <entry key="req_description" value="Service Request created by Service Integration Module (SIM) - IdentityIQ for ServiceNow Service Desk" />
+                        <entry key="short_description" value="IdentityIQ Access Request $!plan.arguments.identityRequestId" />
+                        <entry key="requested_for" value="$!plan.arguments.requested_for" />
+                        <entry key="opened_by" value="$!plan.arguments.opened_by" />
+                      </Map>
+                    </value>
+                  </entry>
+                </Map>
+              </value>
+            </entry>
+            <entry key="checkStatus">
+              <value>
+                <Map>
+                  <entry key="resource" value="/api/now/table/sc_request" />
+                  <entry key="responseElement" value="$.result[0].request_state"/>
+                  <entry key="checkStatusQueryParam">
+                    <value>
+                      <Map>
+                        <entry key="sysparm_query" value="number=$ticketId" />
+                        <entry key="sysparm_fields" value="request_state" />
+                      </Map>
+                    </value>
+                  </entry>
+                  <entry key="statusMap">
+                    <value>
+                      <Map>
+                        <entry key="closed_cancelled" value="Failed" />
+                        <entry key="closed_complete" value="Committed" />
+                        <entry key="closed_incomplete" value="Failed" />
+                        <entry key="closed_rejected" value="Failed" />
+                        <entry key="closed_skipped" value="Failed" />
+                        <entry key="in_process" value="Queued" />
+                        <entry key="requested" value="Queued" />
+                      </Map>
+                    </value>
+                  </entry>
+                </Map>
+              </value>
+            </entry>
+          </Map>
+        </value>
+      </entry>
+      <entry key="incident">
+        <value>
+          <Map>
+            <entry key="provision">
+              <value>
+                <Map>
+                  <entry key="resource" value="/api/now/import/x_sap_sdim_incident"/>
+                  <entry key="responseElement" value="result[0].display_value"/>
+                  <entry key="request">
+                    <value>
+                      <Map>
+                        <entry key="u_description" value="#foreach($req in $plan.requests) #if($req.operation == 'Create') Create Account on application $req.resource #else For $req.id in application $req.resource #end #if($req.items) $newline  #foreach($item in $req.items) #if ($item.name == '*disabled*' &amp;&amp; $item.value == 'true') Disable Account. $newline #elseif ($item.name == '*disabled*' &amp;&amp; $item.value == 'false') Enable Account. $newline #elseif ($item.name == '*locked*' &amp;&amp; $item.value == 'false') Unlock Account. $newline #else $!item.Operation $item.name: $item.value $newline #end #end #else $newline $!req.Operation Account #end #end" />
+                        <entry key="u_short_description" value="IdentityIQ Access Request $!plan.arguments.identityRequestId" />
+                        <entry key="u_opened_by" value="$!plan.arguments.opened_by" />
+                        <entry key="u_caller_id" value="$!plan.arguments.requested_for" />
+                        <entry key="u_impact" value="3" />
+                        <entry key="u_urgency" value="3" />
+                        <entry key="u_assignment_group" value="Service Desk" />
+                        <entry key="u_contact_type" value="email" />
+                      </Map>
+                    </value>
+                  </entry>
+                </Map>
+              </value>
+            </entry>
+            <entry key="checkStatus">
+              <value>
+                <Map>
+                  <entry key="resource" value="/api/now/table/incident" />
+                  <entry key="responseElement" value="$.result[0].incident_state"/>
+                  <entry key="closureCodeResponseElement" value="$.result[0].close_code"/>
+                  <entry key="checkStatusQueryParam">
+                    <value>
+                      <Map>
+                        <entry key="sysparm_query" value="number=$ticketId" />
+                        <entry key="sysparm_fields" value="incident_state,close_code" />
+                      </Map>
+                    </value>
+                  </entry>
+                  <entry key="statusMap">
+                    <value>
+                      <Map>
+                        <entry key="1" value="Queued" />
+                        <entry key="2" value="Queued" />
+                        <entry key="3" value="Queued" />
+                        <entry key="6" value="Committed" />
+                        <entry key="7" value="Committed" />
+                        <entry key="8" value="Failed" />
+                      </Map>
+                    </value>
+                  </entry>
+                  <entry key="statusMapClosureCode">
+                    <value>
+                      <Map>
+                        <entry key="Solved (Work Around)" value="Committed"/>
+                        <entry key="Solved (Permanently)" value="Committed"/>
+                        <entry key="Solved Remotely (Work Around)" value="Committed"/>
+                        <entry key="Solved Remotely (Permanently)" value="Committed"/>
+                        <entry key="Closed/Resolved by Caller" value="Committed"/>
+                        <entry key="Not Solved (Not Reproducible)" value="Failed"/>
+                        <entry key="Not Solved (Too Costly)" value="Failed"/>
+                      </Map>
+                    </value>
+                  </entry>
+                </Map>
+              </value>
+            </entry>
+          </Map>
+        </value>
+      </entry>
+      <entry key="changeRequest">
+        <value>
+          <Map>
+            <entry key="provision">
+              <value>
+                <Map>
+                  <entry key="resource" value="/api/now/import/x_sap_sdim_change_request" />
+                  <entry key="responseElement" value="$.result[0].display_value"/>
+                  <entry key="request">
+                    <value>
+                      <Map>
+                        <entry key="u_description" value="#foreach($req in $plan.requests) #if($req.operation == 'Create') Create Account on application $req.resource #else For $req.id in application $req.resource #end #if($req.items) $newline  #foreach($item in $req.items) #if ($item.name == '*disabled*' &amp;&amp; $item.value == 'true') Disable Account. $newline #elseif ($item.name == '*disabled*' &amp;&amp; $item.value == 'false') Enable Account. $newline #elseif ($item.name == '*locked*' &amp;&amp; $item.value == 'false') Unlock Account. $newline #else $!item.Operation $item.name: $item.value $newline #end #end #else $newline $!req.Operation Account #end #end" />
+                        <entry key="u_short_description" value="IdentityIQ Access Request $!plan.arguments.identityRequestId" />
+                        <entry key="u_requested_by" value="$!plan.arguments.opened_by" />
+                        <entry key="u_category" value="Other" />
+                        <entry key="u_priority" value="4" />
+                        <entry key="u_risk" value="4" />
+                        <entry key="u_impact" value="3" />
+                        <entry key="u_assignment_group" value="Service Desk" />
+                      </Map>
+                    </value>
+                  </entry>
+                </Map>
+              </value>
+            </entry>
+            <entry key="checkStatus">
+              <value>
+                <Map>
+                  <entry key="resource" value="/api/now/table/change_request" />
+                  <entry key="responseElement" value="$.result[0].state"/>
+                  <entry key="closureCodeResponseElement" value="$.result[0].close_code"/>
+                  <entry key="checkStatusQueryParam">
+                    <value>
+                      <Map>
+                        <entry key="sysparm_query" value="number=$ticketId" />
+                        <entry key="sysparm_fields" value="state,close_code" />
+                      </Map>
+                    </value>
+                  </entry>
+                  <entry key="statusMap">
+                    <value>
+                      <Map>
+                        <entry key="-1" value="Queued" />
+                        <entry key="-2" value="Queued" />
+                        <entry key="-3" value="Queued" />
+                        <entry key="-4" value="Queued" />
+                        <entry key="-5" value="Queued" />
+                        <entry key="0" value="Queued" />
+                        <entry key="3" value="Committed" />
+                        <entry key="4" value="Failed" />
+                      </Map>
+                    </value>
+                  </entry>
+                  <entry key="statusMapClosureCode">
+                    <value>
+                      <Map>
+                        <entry key='successful' value='Committed'/>
+                        <entry key='successful_issues' value='Committed'/>
+                        <entry key='unsuccessful' value='Failed'/>
+                      </Map>
+                    </value>
+                  </entry>
+                </Map>
+              </value>
+            </entry>
+          </Map>
+        </value>
+      </entry>
+    </Map>
+  </Attributes>
+  <ProvisioningConfig>
+    <ManagedResource>
+      <ApplicationRef>
+        <Reference class="sailpoint.object.Application" name="Procurement_System" />
+      </ApplicationRef>
+    </ManagedResource>
+    <PlanInitializerScript>
+      <Source>
+        <![CDATA[import sailpoint.object.Identity;
+        import sailpoint.object.Link;
+        import sailpoint.object.IntegrationConfig;
+        import sailpoint.object.Application;
+        import sailpoint.api.IdentityService;
+
+        /**
+         * Fields
+         */
+        String applicationType = "ServiceNow";
+        // Identity attribute on SailPoint/ UserID on ServiceNow
+        String userId = "sys_id";
+
+        /**
+         * Get ServiceNow Account name for identity using application type - ServiceNow
+         */
+        private String getLinkByAppType(Identity identity) {
+            if (identity == null) {
+                return null;
+            }
+
+            List links = identity.getLinks();
+            String linkName = null;
+            if (links != null ) {
+                for (Link link : links) {
+                    String appType = link.getApplication().getType();
+                    if (appType != null && appType.equals(applicationType)) {
+                        if(link.getAttribute(userId) != null) {
+                            String userName = link.getAttribute(userId);
+                            if(userName != null) {
+                                linkName = userName;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
+            return linkName;
+        }
+
+        /**
+         * Get ServiceNow Account name for Identity using application name
+         */
+        private String getLinkByAppName(Identity identity, String connectorAppForServiceNow) {
+            if (identity == null) {
+                return null;
+            }
+
+            String linkName = null;
+            if (connectorAppForServiceNow != null) {
+                Application app = context.getObjectByName(Application.class, connectorAppForServiceNow);
+                IdentityService identService = new IdentityService(context);
+                List links = identService.getLinks(identity, app);
+                Link link = null;
+                if (links != null && links.size() > 0) {
+                    link = links.get(0);
+                }
+
+                if (link != null) {
+                    String userName = (String) link.getAttribute(userId);
+                    if (userName != null) {
+                        linkName = userName;
+                    }
+                }
+            }
+
+            return linkName;
+        }
+
+        ////////////////////////////////////////////////////////////////
+        // Main
+        ////////////////////////////////////////////////////////////////
+        Map arguments = (Map)plan.getArguments();
+        List requesterList = plan.getRequesters();
+        Identity requester = null;
+        if (requesterList != null) {
+            requester = requesterList.get(0);
+            if (requester != null && requester.getName() != null) {
+                requester = context.getObjectByName(Identity.class, requester.getName());
+            }
+        }
+
+        String appName = integration.getName();
+        if (appName != null) {
+            Application appObject = context.getObjectByName(Application.class, appName);
+            connectorAppForServiceNow = appObject.getAttributeValue("connectorAppForServiceNow");
+        }
+
+        // Get ServiceNow Account name
+        if (connectorAppForServiceNow != null) {
+            openedBy = getLinkByAppName(requester, connectorAppForServiceNow);
+            requestedFor = getLinkByAppName(identity, connectorAppForServiceNow);
+        } else {
+            openedBy = getLinkByAppType(requester);
+            requestedFor = getLinkByAppType(identity);
+        }
+
+        if (requestedFor != null) {
+            arguments.put("requested_for", requestedFor);
+        }
+
+        if (openedBy != null) {
+            arguments.put("opened_by", openedBy);
+        }]]>
+      </Source>
+    </PlanInitializerScript>
+  </ProvisioningConfig>
+</Application>

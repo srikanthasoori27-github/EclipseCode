@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Rule PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<Rule language="beanshell" name="ELE_Global_Correlation_Rule" type="Correlation">
+    <Description>Identity Correlation Rules are used to find identities to which new accounts can be attached.
+A correlation rule must return a Map with one of the specified Return arguments.</Description>
+    <Signature returnType="Map">
+        <Inputs>
+            <Argument name="log">
+                <Description>
+          The log object associated with the SailPointContext.
+        </Description>
+            </Argument>
+            <Argument name="context">
+                <Description>
+          A sailpoint.api.SailPointContext object that can be used to query the database if necessary.
+        </Description>
+            </Argument>
+            <Argument name="environment" type="Map">
+                <Description>
+          Arguments passed to the aggregation task.
+        </Description>
+            </Argument>
+            <Argument name="application">
+                <Description>
+          Application being aggregated.
+        </Description>
+            </Argument>
+            <Argument name="account">
+                <Description>
+          A sailpoint.object.ResourceObject returned from the
+          collector.
+        </Description>
+            </Argument>
+            <Argument name="link">
+                <Description>
+          Existing link to this account.
+        </Description>
+            </Argument>
+        </Inputs>
+        <Returns>
+            <Argument name="identityName">
+                <Description>
+          The name of an Identity object.
+        </Description>
+            </Argument>
+            <Argument name="identity">
+                <Description>
+          A fully resolved Identity object if the rule wants
+          to do its own queries to locate the identity.
+        </Description>
+            </Argument>
+            <Argument name="identityAttributeName">
+                <Description>
+          The name of the extended attribute that can be used
+          to locate an existing identity.
+        </Description>
+            </Argument>
+            <Argument name="identityAttributeValue">
+                <Description>
+          The value of the named extended attribute that can be used
+          to locate an existing identity. This attribute is used
+          together with the identityAttributeName argument.
+        </Description>
+            </Argument>
+        </Returns>
+    </Signature>
+    <Source><![CDATA[
+			import sailpoint.object.*;
+			import sailpoint.object.Filter.MatchMode;
+			import sailpoint.tools.RFC4180LineParser;
+			Map returnMap = new HashMap();
+			String userId = account.getIdentity();
+			String appName = application.getName().toLowerCase();
+			if(application.getType().equalsIgnoreCase("Microsoft SQL Server - Direct"))		appName="database";
+			boolean found = false;
+			Custom correlationCustomObject = context.getObjectByName(Custom.class,"ELE_Correlation_Custom_Object");
+			if(correlationCustomObject != null){
+				Map correlationMap = correlationCustomObject.get(appName);
+				if(correlationMap != null){
+					String accountAttribute = correlationMap.get("accountAttribute");
+					String searchAttribute = correlationMap.get("searchAttribute");
+					String searchClass = correlationMap.get("searchClass");
+					String accountAttributeValue = account.getStringAttribute(accountAttribute);
+					if(appName.equalsIgnoreCase("database"))	if(accountAttributeValue.indexOf("\\")>0) accountAttributeValue= accountAttributeValue.substring(accountAttributeValue.indexOf("\\")+1);
+					QueryOptions qo= new QueryOptions();
+					qo.addFilter(Filter.or(Filter.eq("application.name", "CEI AD"),Filter.ignoreCase(Filter.eq("application.name", "Element AD"))));
+					qo.addFilter(Filter.ignoreCase(Filter.eq(searchAttribute, accountAttributeValue)));
+					if(searchClass.equalsIgnoreCase("Link")){
+						Iterator iter = context.search(Link.class, qo,"id");
+						while (iter.hasNext()) {
+							found=true;
+							Object[] row = (Object[]) iter.next();
+							String id = (String) row[0];
+							Link adLink = context.getObjectById(Link.class,id);
+							String idName= adLink.getIdentity().getName();
+							returnMap.put("identityName",idName);
+						}
+					}else{
+						Iterator iter = context.search(Identity.class, qo,"name");
+						while (iter.hasNext()){		
+							found=true;
+							Object[] row = (Object[]) iter.next();
+							String idName = (String) row[0];
+							returnMap.put("identityName",idName);
+						}
+					}
+				}else if(application.getName().equalsIgnoreCase("FSP")){
+					String displayName = account.getStringAttribute("USERNAME");
+					displayName = displayName.replaceAll(","," ");
+					displayName = displayName.replaceAll("\\."," ");
+					displayName = displayName.replaceAll("  "," ");
+					displayName = displayName.replaceAll("  "," ");
+					RFC4180LineParser parser = new RFC4180LineParser(" ");
+					List names = parser.parseLine(displayName);
+					QueryOptions qo= new QueryOptions();
+					Filter f = Filter.ignoreCase(Filter.like("displayName", names.get(0), MatchMode.ANYWHERE));
+					if(names.size()>1) f =Filter.and(f,Filter.ignoreCase(Filter.like("displayName", names.get(1), MatchMode.ANYWHERE)));
+					qo.addFilter(f);
+					Iterator iter = context.search(Identity.class, qo,"name");
+					boolean multiple =false;
+					while (iter.hasNext()){	
+						if(multiple)	found=false;
+						else 			found=true;
+						multiple = true;
+						Object[] row = (Object[]) iter.next();
+						String idName = (String) row[0];
+						returnMap.put("identityName",idName);
+					}
+				}else if(application.getName().equalsIgnoreCase("GEAC")){
+					String displayName = account.getStringAttribute("USERNAME");
+					if(displayName!=null){
+						displayName = displayName.replaceAll(","," ");
+						displayName = displayName.replaceAll("\\."," ");
+						displayName = displayName.replaceAll("  "," ");
+						displayName = displayName.replaceAll("  "," ");
+						RFC4180LineParser parser = new RFC4180LineParser(" ");
+						List names = parser.parseLine(displayName);
+						QueryOptions qo= new QueryOptions();
+						Filter f = Filter.ignoreCase(Filter.like("displayName", names.get(0), MatchMode.ANYWHERE));
+						if(names.size()>1) f =Filter.and(f,Filter.ignoreCase(Filter.like("displayName", names.get(1), MatchMode.ANYWHERE)));
+						qo.addFilter(f);
+						Iterator iter = context.search(Identity.class, qo,"name");
+						boolean multiple =false;
+						while (iter.hasNext()){	
+							if(multiple)	found=false;
+							else 			found=true;
+							multiple = true;
+							Object[] row = (Object[]) iter.next();
+							String idName = (String) row[0];
+							returnMap.put("identityName",idName);
+						}
+					}
+				}
+			}
+ 
+			if(!found){
+			 /*
+				Custom userUniverse = context.getObjectByName(Custom.class,"UserUniverse");
+				if(userUniverse!=null){
+					Map appCorrelationMap = userUniverse.get(application.getName());
+					if(appCorrelationMap !=null){
+						String userUniqueId = appCorrelationMap.get(userId);
+						if(userUniqueId!=null){
+							QueryOptions qo1= new QueryOptions();
+							qo1.addFilter(Filter.or(Filter.eq("application.name", "CEI AD"),Filter.ignoreCase(Filter.eq("application.name", "Element AD"))));
+							qo1.addFilter(Filter.ignoreCase(Filter.eq("loginid", userUniqueId)));
+							Iterator iter1 = context.search(Link.class, qo1,"id");
+							while (iter1.hasNext()) {
+								found=true;
+								Object[] row = (Object[]) iter1.next();
+								String id = (String) row[0];
+								Link adLink = context.getObjectById(Link.class,id);
+								String idName= adLink.getIdentity().getName();
+								returnMap.put("identityName",idName);
+							}
+						}
+					}
+				}
+				if(!found){
+					Custom UserEmailUniverse = context.getObjectByName(Custom.class,"UserEmailUniverse");
+					if(UserEmailUniverse!=null){
+						Map appCorrelationMap = UserEmailUniverse.get(application.getName());
+						if(appCorrelationMap !=null){
+							String userUniqueId = appCorrelationMap.get(userId);
+							if(userUniqueId!=null){
+								QueryOptions qo1= new QueryOptions();
+								qo1.addFilter(Filter.or(Filter.eq("application.name", "CEI AD"),Filter.ignoreCase(Filter.eq("application.name", "Element AD"))));
+								qo1.addFilter(Filter.ignoreCase(Filter.eq("emailAddress", userUniqueId)));
+								Iterator iter1 = context.search(Link.class, qo1,"id");
+								while (iter1.hasNext()) {
+									found=true;
+									Object[] row = (Object[]) iter1.next();
+									String id = (String) row[0];
+									Link adLink = context.getObjectById(Link.class,id);
+									String idName= adLink.getIdentity().getName();
+									returnMap.put("identityName",idName);
+								}
+							}
+						}
+					}		
+				}
+				if(!found){
+					Custom UserDispayNameUniverse = context.getObjectByName(Custom.class,"UserDispayNameUniverse");
+					if(UserDispayNameUniverse!=null){
+						Map appCorrelationMap = UserDispayNameUniverse.get(application.getName());
+						if(appCorrelationMap !=null){
+							String userDisplayName = appCorrelationMap.get(userId);
+							if(userDisplayName!=null){
+								QueryOptions qo= new QueryOptions();
+								Filter f = Filter.ignoreCase(Filter.eq("displayName", userDisplayName));
+								qo.addFilter(f);
+								Iterator iter = context.search(Identity.class, qo,"name");
+								boolean multiple =false;
+								while (iter.hasNext()){	
+									if(multiple)	found=false;
+									else 			found=true;
+									multiple = true;
+									Object[] row = (Object[]) iter.next();
+									String idName = (String) row[0];
+									returnMap.put("identityName",idName);
+								}
+							}
+						}
+					}		
+				}*/
+				if(!found){
+					String identityName =application.getName()+"-"+userId;
+					returnMap.put("identityName",identityName);				
+				}		
+			}
+			return returnMap;
+	]]></Source>
+</Rule>

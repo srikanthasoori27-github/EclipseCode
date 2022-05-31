@@ -1,0 +1,312 @@
+/* (c) Copyright 2008 SailPoint Technologies, Inc., All Rights Reserved. */
+/*
+ * Wrap a java.sql.Connection and proxy methods to it.
+ * This was originally intended for use with SailPointDataSource
+ * to track leaking database connections, but it could be subclassed
+ * for other uses.
+ *
+ * Author: Jeff
+ *
+ * Some might chest thump about AOP being a better way to do this.  Save
+ * your breath, I hate AOP.
+ *
+ */
+
+package sailpoint.persistence;
+
+import java.util.Map;
+import java.util.Properties;
+
+import java.sql.Array;
+import java.sql.Blob;
+import java.sql.CallableStatement;
+import java.sql.Clob;
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.NClob;
+import java.sql.PreparedStatement;
+import java.sql.Savepoint;
+import java.sql.Statement;
+import java.sql.Struct;
+import java.sql.SQLClientInfoException;
+import java.sql.SQLException;
+import java.sql.SQLWarning;
+import java.sql.SQLXML;
+import java.util.concurrent.Executor;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+public class ConnectionWrapper implements Connection {
+
+    static private Log log = LogFactory.getLog(ConnectionWrapper.class);
+
+    Connection _con;
+
+    ConnectionWrapper(Connection src) {
+        _con = src;
+    }
+
+    public void clearWarnings() throws SQLException {
+        _con.clearWarnings();
+    }
+
+    public void close() throws SQLException {
+        _con.close();
+    }
+
+    public void commit() throws SQLException {
+        _con.commit();
+    }
+    
+    public Array createArrayOf(String typeName, Object[] elements) throws SQLException {
+        return _con.createArrayOf(typeName, elements);
+    }
+
+    public Blob createBlob() throws SQLException {
+        return _con.createBlob();
+    }
+
+    public Clob createClob() throws SQLException {
+        return _con.createClob();
+    }
+
+    public NClob createNClob() throws SQLException {
+        return _con.createNClob();
+    }
+
+    public SQLXML createSQLXML() throws SQLException {
+        return _con.createSQLXML();
+    }
+
+    public Statement createStatement() throws SQLException {
+        return _con.createStatement();
+    }
+
+    public Statement createStatement(int resultSetType, int resultSetConcurrency) throws SQLException {
+        return _con.createStatement(resultSetType, resultSetConcurrency);
+    }
+
+    public Statement createStatement(int resultSetType, int resultSetConcurrency, int resultSetHoldability) throws SQLException {
+        return _con.createStatement(resultSetType, resultSetConcurrency, resultSetHoldability);
+    }
+
+    public Struct createStruct(String typeName, Object[] attributes) throws SQLException {
+        return _con.createStruct(typeName, attributes);
+    }
+
+    public boolean getAutoCommit() throws SQLException {
+        return _con.getAutoCommit();
+    }
+
+    public String getCatalog() throws SQLException {
+        return _con.getCatalog();
+    }
+
+    public Properties getClientInfo() throws SQLException {
+        return _con.getClientInfo();
+    }
+
+    public String getClientInfo(String name) throws SQLException {
+        return _con.getClientInfo(name);
+    }
+
+    public int getHoldability() throws SQLException {
+        return _con.getHoldability();
+    }
+
+    public DatabaseMetaData getMetaData() throws SQLException {
+        return _con.getMetaData();
+    }
+
+    public int getTransactionIsolation() throws SQLException {
+        return _con.getTransactionIsolation();
+    }
+
+    public Map<String,Class<?>> getTypeMap() throws SQLException {
+        return _con.getTypeMap();
+    }
+
+    public SQLWarning getWarnings() throws SQLException {
+        return _con.getWarnings();
+    }
+
+    public boolean isClosed() throws SQLException {
+        return _con.isClosed();
+    }
+
+    public boolean isReadOnly() throws SQLException {
+        return _con.isReadOnly();
+    }
+
+    public boolean isValid(int timeout) throws SQLException {
+        return _con.isValid(timeout);
+    }
+
+    public String nativeSQL(String sql) throws SQLException {
+        return _con.nativeSQL(sql);
+    }
+
+    public CallableStatement prepareCall(String sql) throws SQLException {
+        return _con.prepareCall(sql);
+    }
+
+    public CallableStatement prepareCall(String sql, int resultType, int resultSetConcurrency) throws SQLException {
+        return _con.prepareCall(sql, resultType, resultSetConcurrency);
+    }
+
+    public CallableStatement prepareCall(String sql, int resultType, int resultSetConcurrency, int resultSetHoldability) throws SQLException {
+        return _con.prepareCall(sql, resultType, resultSetConcurrency, resultSetHoldability);
+    }
+
+    public PreparedStatement prepareStatement(String sql) throws SQLException {
+        return _con.prepareStatement(sql);
+    }
+
+    public PreparedStatement prepareStatement(String sql, int autoGeneratedKeys) throws SQLException {
+        return _con.prepareStatement(sql, autoGeneratedKeys);
+    }
+
+    public PreparedStatement prepareStatement(String sql, int[] columnIndexes) throws SQLException {
+        return _con.prepareStatement(sql, columnIndexes);
+    }
+
+    public PreparedStatement prepareStatement(String sql, int resultType, int resultSetConcurrency) throws SQLException {
+        return _con.prepareStatement(sql, resultType, resultSetConcurrency);
+    }
+
+    public PreparedStatement prepareStatement(String sql, int resultType, int resultSetConcurrency, int resultSetHoldability) throws SQLException {
+        return _con.prepareStatement(sql, resultType, resultSetConcurrency, resultSetHoldability);
+    }
+
+    public PreparedStatement prepareStatement(String sql, String[] columnNames) throws SQLException {
+        return _con.prepareStatement(sql, columnNames);
+    }
+
+    public void releaseSavepoint(Savepoint savepoint) throws SQLException {
+        _con.releaseSavepoint(savepoint);
+    }
+
+    public void rollback() throws SQLException {
+        _con.rollback();
+    }
+
+    public void rollback(Savepoint savepoint) throws SQLException {
+        _con.rollback(savepoint);
+    }
+
+    public void setAutoCommit(boolean autoCommit) throws SQLException {
+        _con.setAutoCommit(autoCommit);
+    }
+
+    public void setCatalog(String catalog) throws SQLException {
+        _con.setCatalog(catalog);
+    }
+
+    public void setClientInfo(Properties properties) throws SQLClientInfoException {
+        _con.setClientInfo(properties);
+    }
+
+    public void setClientInfo(String name, String value) throws SQLClientInfoException {
+        _con.setClientInfo(name, value);
+    }
+
+    public void setHoldability(int holdability) throws SQLException {
+        _con.setHoldability(holdability);
+    }
+
+    public void setReadOnly(boolean readOnly) throws SQLException {
+        _con.setReadOnly(readOnly);
+    }
+
+    public Savepoint setSavepoint() throws SQLException {
+        return _con.setSavepoint();
+    }
+
+    public Savepoint setSavepoint(String name) throws SQLException {
+        return _con.setSavepoint(name);
+    }
+
+    public void setTransactionIsolation(int level) throws SQLException {
+        _con.setTransactionIsolation(level);
+    }
+
+    public void setTypeMap(Map<String, Class<?>> map) throws SQLException {
+        _con.setTypeMap(map);
+    }
+    
+    /**
+     * Note that since we don't implement the interface we can't return true here?
+     * I suppose we could as long as unwrap does the right thing.
+     */
+    public boolean isWrapperFor(Class<?> iface) throws SQLException {
+        return _con.isWrapperFor(iface);
+    }
+
+    /**
+     * Not sure what to do here.
+     */
+    public <T> T unwrap(Class<T> iface) throws SQLException {
+        return _con.unwrap(iface);
+    }
+
+    //////////////////////////////////////////////////////////////////////
+    //
+    // JDK 1.7 Additions
+    //
+    // We're going to stub these since this class has to compile in both
+    // 1.6 and 1.7 and we can't conditionally call the wrapped Connection
+    // without using reflection.  Since we're using an old version of Hibernate
+    // it is unlikely that any of these will be used.
+    //
+    //////////////////////////////////////////////////////////////////////
+
+    public void setNetworkTimeout(Executor paramExecutor, int paramInt) throws SQLException {
+
+        log.warn("setNetworkTimeout not supported");
+    }
+
+    /**
+     * The number of milliseconds the driver will wait for a database request to complete.
+     * Zero means no limit.
+     */
+    public int getNetworkTimeout() throws SQLException {
+        return 0;
+    }
+
+    /**
+     * Sets the current schema name to access.
+     * If the driver does not support schemas it will silently ignore this request.
+     */
+    public void setSchema(String paramString) throws SQLException {
+
+        log.warn("setSchema not supported");
+    }
+
+    /**
+     * The current schema name, null if none.  Since drivers are allowed to ignore 
+     * setSchema, it seems okay to return null here.  The Javadocs are unclear, I suppose
+     * there may be some callers that expect this to return whatever was passed to 
+     * the last call to setSchema.  But if it was ignored it should logically be null since
+     * that is what is in effect.
+     */
+    public String getSchema() throws SQLException {
+        return null;
+    }
+
+    /**
+     * Terminates an open connection.  
+     * Marks the connection closed and releases any resources.  Calling this on a closed
+     * connection is a noop.    This appears to be a bigger hammer than close() among other
+     * things the docs say this "insure that any thread that is currently accessing the
+     * connection will either progress to completion or throw an SQLException".
+     *
+     * I suppose we could redirect this to close() but that may not be right.
+     */
+    public void abort(Executor paramExecutor) throws SQLException {
+
+        log.warn("abort not supported");
+    }
+
+
+}

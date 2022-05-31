@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE sailpoint PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+
+<!-- (c) Copyright 2019 SailPoint Technologies, Inc., All Rights Reserved. -->
+
+<!--
+  File to update objects for a patch.
+  Add xml file that should be reimported during a patch update.
+  This file is only used for patches.  For major version release, update 
+  the file web/WEB-INF/config/upgrade-acceleratorpack.xml
+-->
+<sailpoint>
+
+</sailpoint>

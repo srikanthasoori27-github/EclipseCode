@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE sailpoint PUBLIC 'sailpoint.dtd' 'sailpoint.dtd'>
+<!-- Copyright © 2018 SailPoint Technologies, Inc. All Rights Reserved.
+All logos, text, content, and works of authorship, including but not limited to underlying code, programming or scripting language, designs, and/or graphics,
+that are used and/or depicted herein are protected under United States and international copyright and trademark laws and treaties,
+and may not be used or reproduced without the prior express written permission of SailPoint Technologies, Inc. -->
+<sailpoint>
+<ImportAction name='include' value='AcceleratorPack/InteractiveRequest/Source/Configuration-SystemConfiguration.xml'/>
+<ImportAction name='include' value='AcceleratorPack/InteractiveRequest/Source/EmailTemplate-FrameworkAccountSelectionNotification.xml'/>
+<ImportAction name='include' value='AcceleratorPack/InteractiveRequest/Source/EmailTemplate-FrameworkApproval.xml'/>
+<ImportAction name='include' value='AcceleratorPack/InteractiveRequest/Source/EmailTemplate-FrameworkAutoRejection.xml'/>
+<ImportAction name='include' value='AcceleratorPack/InteractiveRequest/Source/EmailTemplate-FrameworkEscalation.xml'/>
+<ImportAction name='include' value='AcceleratorPack/InteractiveRequest/Source/EmailTemplate-FrameworkRejection.xml'/>
+<ImportAction name='include' value='AcceleratorPack/InteractiveRequest/Source/EmailTemplate-FrameworkReminder.xml'/>
+<ImportAction name='include' value='AcceleratorPack/InteractiveRequest/Source/EmailTemplate-FrameworkRequestCompletion.xml'/>
+<ImportAction name='include' value='AcceleratorPack/InteractiveRequest/Source/EmailTemplate-FrameworkRequestSubmission.xml'/>
+<ImportAction name='include' value='AcceleratorPack/InteractiveRequest/Source/Interactive_Request_CheckStatusQueuedItems.xml'/>
+<ImportAction name='include' value='AcceleratorPack/InteractiveRequest/Source/Interactive_Request_Do_Provisioning_Forms.xml'/>
+<ImportAction name='include' value='AcceleratorPack/InteractiveRequest/Source/Interactive_Request_DynamicApproval.xml'/>
+<ImportAction name='include' value='AcceleratorPack/InteractiveRequest/Source/Interactive_Request_IdentityRequestInitialize.xml'/>
+<ImportAction name='include' value='AcceleratorPack/InteractiveRequest/Source/Interactive_Request_IdentityRequestProvision.xml'/>
+<ImportAction name='include' value='AcceleratorPack/InteractiveRequest/Source/Interactive_Request_IdentityRequest_ViolationReview.xml'/>
+<ImportAction name='include' value='AcceleratorPack/InteractiveRequest/Source/Interactive_Request_ProvisionRetries.xml'/>
+<ImportAction name='include' value='AcceleratorPack/InteractiveRequest/Source/Interactive_Request_Provisioning_RuleLibrary.xml'/>
+<ImportAction name='include' value='AcceleratorPack/InteractiveRequest/Source/Interactive_Request_Split_Approval_Provision_Processor.xml'/>
+<ImportAction name='include' value='AcceleratorPack/InteractiveRequest/Source/ObjectConfig-Application.xml'/>
+<ImportAction name='include' value='AcceleratorPack/InteractiveRequest/Source/ObjectConfig-Managedattribute.xml'/>
+<ImportAction name='include' value='AcceleratorPack/InteractiveRequest/Source/ObjectConfig-Bundle.xml'/>
+<ImportAction name='include' value='AcceleratorPack/InteractiveRequest/Source/Rule-ApprovalFrameWorkLibrary.xml'/>
+<ImportAction name='include' value='AcceleratorPack/InteractiveRequest/Source/Rule-FrameWork-GetApprovalTypes.xml'/>
+<ImportAction name='include' value='AcceleratorPack/InteractiveRequest/Source/Rule-FrameWorkApproversRule.xml'/>
+<ImportAction name='include' value='AcceleratorPack/InteractiveRequest/Source/Rule-FrameworkEscalationType.xml'/>
+<ImportAction name='include' value='AcceleratorPack/InteractiveRequest/Source/Rule-FrameWorkRegularEntitlements.xml'/>
+<ImportAction name='include' value='AcceleratorPack/InteractiveRequest/Source/Rule-FrameWorkRegularRoles.xml'/>
+<ImportAction name='include' value='AcceleratorPack/InteractiveRequest/Configure/Workgroup-AutoRejection.xml'/>
+<ImportAction name='include' value='AcceleratorPack/InteractiveRequest/Configure/DynamicScope-Everyone.xml'/>
+<ImportAction name='include' value='AcceleratorPack/InteractiveRequest/Configure/DynamicScope-HelpDesk.xml'/>
+<ImportAction name='include' value='AcceleratorPack/InteractiveRequest/Configure/DynamicScope-Managers.xml'/>
+<ImportAction name='include' value='AcceleratorPack/InteractiveRequest/Configure/QuickLink-ManageAccounts.xml'/>
+<ImportAction name='include' value='AcceleratorPack/InteractiveRequest/Configure/QuickLink-RequestAccess.xml'/>
+<ImportAction name='include' value='AcceleratorPack/InteractiveRequest/Configure/DynamicScope-SelfService.xml'/>
+<ImportAction name='include' value='AcceleratorPack/InteractiveRequest/Configure/Custom-ApprovalFrameWorkMappings.xml'/>
+<ImportAction name='include' value='AcceleratorPack/InteractiveRequest/Configure/Configuration-Electronic-Signature.xml'/>
+<ImportAction name='include' value='AcceleratorPack/InteractiveRequest/Configure/Application-Extended-Form.xml'/>
+<ImportAction name='include' value='AcceleratorPack/InteractiveRequest/Configure/Interactive_Request_GRC_Integration.xml'/>
+<ImportAction name='include' value='AcceleratorPack/InteractiveRequest/Configure/Rule-Accelerator-Pack-GRC-Dates.xml'/>
+</sailpoint>

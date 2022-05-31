@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE sailpoint PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+
+<!-- Copyright © 2020 SailPoint Technologies, Inc. All Rights Reserved.
+All logos, text, content, and works of authorship, including but not limited to underlying code, programming or scripting language, designs, and/or graphics,
+that are used and/or depicted herein are protected under United States and international copyright and trademark laws and treaties,
+and may not be used or reproduced without the prior express written permission of SailPoint Technologies, Inc. -->
+
+<sailpoint>
+
+<IdentityTrigger  name="RapidSetup Joiner" disabled="false" handler="sailpoint.api.AsynchronousWorkflowTriggerHandler" type="RapidSetup">
+  <Description>Rapid Setup Joiner processed a lifecycle event.</Description>
+  <HandlerParameters>
+    <Attributes>
+      <Map>
+        <entry key="workflow" value="RapidSetup - Joiner"/>
+        <entry key="businessProcess" value="joiner"/>
+      </Map>
+    </Attributes>
+  </HandlerParameters>
+</IdentityTrigger>
+
+<IdentityTrigger  name="RapidSetup Leaver" disabled="false" handler="sailpoint.api.AsynchronousWorkflowTriggerHandler" type="RapidSetup">
+  <Description>Rapid Setup Leaver processed a lifecycle event.</Description>
+  <HandlerParameters>
+    <Attributes>
+      <Map>
+        <entry key="workflow" value="RapidSetup - Leaver"/>
+        <entry key="businessProcess" value="leaver"/>
+      </Map>
+    </Attributes>
+  </HandlerParameters>
+</IdentityTrigger>
+
+<IdentityTrigger  name="RapidSetup Mover" disabled="false" handler="sailpoint.api.AsynchronousWorkflowTriggerHandler" type="RapidSetup">
+  <Description>Rapid Setup Mover processed a lifecycle event.</Description>
+  <HandlerParameters>
+    <Attributes>
+      <Map>
+        <entry key="workflow" value="RapidSetup - Mover"/>
+        <entry key="businessProcess" value="mover"/>
+      </Map>
+    </Attributes>
+  </HandlerParameters>
+</IdentityTrigger>
+
+</sailpoint>

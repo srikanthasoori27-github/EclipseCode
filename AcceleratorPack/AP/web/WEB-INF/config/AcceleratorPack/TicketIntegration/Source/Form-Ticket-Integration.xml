@@ -1,0 +1,779 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Form PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<!-- Copyright © 2018 SailPoint Technologies, Inc. All Rights Reserved.
+All logos, text, content, and works of authorship, including but not limited to underlying code, programming or scripting language, designs, and/or graphics,
+that are used and/or depicted herein are protected under United States and international copyright and trademark laws and treaties,
+and may not be used or reproduced without the prior express written permission of SailPoint Technologies, Inc. -->
+<Form name="Form-Ticket-Integration" type="Workflow">
+  <Attributes>
+    <Map>
+      <entry key="title" value="Ticket Integration"/>
+    </Map>
+  </Attributes>
+  <Description>Ticket Integration</Description>
+  <Section label="Ticket Integration" name="roadTicketIntegration" columns="2">
+   <Field displayName="Group Ticket By" name="groupTicketBy" type="string">
+      <Attributes>
+	        <Map>
+	           <entry key="hidden">
+          <value>
+            <Script>
+              <Source><![CDATA[
+					 if(ticketIntegrationFieldHiddenAttrs!=null && ticketIntegrationFieldHiddenAttrs.containsKey("groupTicketBy"))
+					 {
+					 return false;
+					 }
+					 else
+					 {
+					 return true;
+					 }
+				]]></Source>
+            </Script>
+          </value>
+        </entry>
+	        </Map>
+     	 </Attributes>
+          <AllowedValuesDefinition>
+        <Script>
+         <Source><![CDATA[
+			List displayList = new ArrayList();
+			displayList.add("Application");
+			displayList.add("None");
+			return displayList;
+			]]></Source>
+           </Script>
+        </AllowedValuesDefinition>
+    </Field>
+     <Field displayName="Executor" name="executor" type="string" readOnly="true">
+     <Attributes>
+     <Map>
+     <entry key="hidden">
+          <value>
+            <Script>
+              <Source><![CDATA[
+					 if(ticketIntegrationFieldHiddenAttrs!=null && ticketIntegrationFieldHiddenAttrs.containsKey("executor"))
+					 {
+					 return false;
+					 }
+					 else
+					 {
+					 return true;
+					 }
+				]]></Source>
+            </Script>
+          </value>
+        </entry>
+        </Map>
+        </Attributes>
+    </Field>
+    <Field displayName="Universal Manager" name="universalManager" type="string">
+     <Attributes>
+     <Map>
+     <entry key="hidden">
+          <value>
+            <Script>
+              <Source><![CDATA[
+					 if(ticketIntegrationFieldHiddenAttrs!=null && ticketIntegrationFieldHiddenAttrs.containsKey("universalManager"))
+					 {
+					 return false;
+					 }
+					 else
+					 {
+					 return true;
+					 }
+				]]></Source>
+            </Script>
+          </value>
+        </entry>
+        </Map>
+        </Attributes>
+         <AllowedValuesDefinition>
+        <Script>
+          <Source><![CDATA[
+			List list = new ArrayList();	
+			List displayList = new ArrayList();
+			displayList.add("True");
+			displayList.add("ON");
+			list.add(displayList);
+			displayList = new ArrayList();
+			displayList.add("False");
+			displayList.add("OFF");
+			list.add(displayList);
+			return list;
+			]]></Source>
+        </Script>
+      </AllowedValuesDefinition>
+    </Field>
+     <Field displayName="Plan Initializer Rule" name="planInitializerRule" type="Rule" helpKey="Please Select Accelerator Pack Rule-Framework-Plan-Initializer">
+     <Attributes>
+	        <Map>
+	          <entry key="valueProperty" value="name"/>
+	           <entry key="hidden">
+          <value>
+            <Script>
+              <Source><![CDATA[
+					 if(ticketIntegrationFieldHiddenAttrs!=null && ticketIntegrationFieldHiddenAttrs.containsKey("planInitializerRule"))
+					 {
+					 return false;
+					 }
+					 else
+					 {
+					 return true;
+					 }
+				]]></Source>
+            </Script>
+          </value>
+        </entry>
+	        </Map>
+     	 </Attributes>
+     	 <ValidationScript>
+     	      <Source><![CDATA[
+			         String rule=$(roadTicketModel.planInitializerRule);
+					if(rule!=null && !rule.equalsIgnoreCase("Rule-Framework-Plan-Initializer"))
+					{
+					return "Invalid Plan Initializer Rule";
+					}
+				]]></Source>
+     	 </ValidationScript>
+    </Field>
+     <Field displayName="Authentication Type" name="authType" type="string">
+       <Attributes>
+	        <Map>
+	           <entry key="hidden">
+          <value>
+            <Script>
+              <Source><![CDATA[
+					 if(ticketIntegrationFieldHiddenAttrs!=null && ticketIntegrationFieldHiddenAttrs.containsKey("authType"))
+					 {
+					 return false;
+					 }
+					 else
+					 {
+					 return true;
+					 }
+				]]></Source>
+            </Script>
+          </value>
+        </entry>
+	        </Map>
+     	 </Attributes>
+      <AllowedValuesDefinition>
+        <Script>
+         <Source><![CDATA[
+			List displayList = new ArrayList();
+			displayList.add("Basic");
+			displayList.add("WS-Security");
+			displayList.add("Basic And WS-Security");
+			displayList.add("WS-Security And UsernameToken");
+			return displayList;
+			]]></Source>
+           </Script>
+        </AllowedValuesDefinition>
+    </Field>
+     <Field displayName="User Name" name="username" type="string">
+       <Attributes>
+	        <Map>
+	           <entry key="hidden">
+          <value>
+            <Script>
+              <Source><![CDATA[
+					 if(ticketIntegrationFieldHiddenAttrs!=null && ticketIntegrationFieldHiddenAttrs.containsKey("username"))
+					 {
+					 return false;
+					 }
+					 else
+					 {
+					 return true;
+					 }
+				]]></Source>
+            </Script>
+          </value>
+        </entry>
+	        </Map>
+     	 </Attributes>
+    </Field>
+    <Field displayName="Encrypted User Password" name="password" type="string">
+      <Attributes>
+	        <Map>
+	           <entry key="hidden">
+          <value>
+            <Script>
+              <Source><![CDATA[
+					 if(ticketIntegrationFieldHiddenAttrs!=null && ticketIntegrationFieldHiddenAttrs.containsKey("password"))
+					 {
+					 return false;
+					 }
+					 else
+					 {
+					 return true;
+					 }
+				]]></Source>
+            </Script>
+          </value>
+        </entry>
+	        </Map>
+     	 </Attributes>
+    </Field>
+     <!--Remedy-->
+     <Field displayName="Remedy Authentication Type" name="basicAuthType" type="string">
+       <Attributes>
+	        <Map>
+	           <entry key="hidden">
+          <value>
+            <Script>
+              <Source><![CDATA[
+					 if(ticketIntegrationFieldHiddenAttrs!=null && ticketIntegrationFieldHiddenAttrs.containsKey("basicAuthType"))
+					 {
+					 return false;
+					 }
+					 else
+					 {
+					 return true;
+					 }
+				]]></Source>
+            </Script>
+          </value>
+        </entry>
+	        </Map>
+     	 </Attributes>
+    </Field>
+     <!--Remedy-->
+     <Field displayName="Remedy Encrypted User Name" name="httpUserName" type="string">
+       <Attributes>
+	        <Map>
+	           <entry key="hidden">
+          <value>
+            <Script>
+              <Source><![CDATA[
+					 if(ticketIntegrationFieldHiddenAttrs!=null && ticketIntegrationFieldHiddenAttrs.containsKey("httpUserName"))
+					 {
+					 return false;
+					 }
+					 else
+					 {
+					 return true;
+					 }
+				]]></Source>
+            </Script>
+          </value>
+        </entry>
+	        </Map>
+     	 </Attributes>
+    </Field>
+     <!--Remedy-->
+    <Field displayName="Remedy User Password" name="httpUserPass" type="string">
+      <Attributes>
+	        <Map>
+	           <entry key="hidden">
+          <value>
+            <Script>
+              <Source><![CDATA[
+					 if(ticketIntegrationFieldHiddenAttrs!=null && ticketIntegrationFieldHiddenAttrs.containsKey("httpUserPass"))
+					 {
+					 return false;
+					 }
+					 else
+					 {
+					 return true;
+					 }
+				]]></Source>
+            </Script>
+          </value>
+        </entry>
+	        </Map>
+     	 </Attributes>
+    </Field>
+    <Field displayName="WS-Security KeyStore Path" name="keystorePath" type="string">
+      <Attributes>
+	        <Map>
+	           <entry key="hidden">
+          <value>
+            <Script>
+              <Source><![CDATA[
+					 if(ticketIntegrationFieldHiddenAttrs!=null && ticketIntegrationFieldHiddenAttrs.containsKey("keystorePath"))
+					 {
+					 return false;
+					 }
+					 else
+					 {
+					 return true;
+					 }
+				]]></Source>
+            </Script>
+          </value>
+        </entry>
+	        </Map>
+     	 </Attributes>
+    </Field>
+    <Field displayName="WS-SecurityKeyStore Type" name="keystoreType" type="string">
+      <Attributes>
+	        <Map>
+	           <entry key="hidden">
+          <value>
+            <Script>
+              <Source><![CDATA[
+					 if(ticketIntegrationFieldHiddenAttrs!=null && ticketIntegrationFieldHiddenAttrs.containsKey("keystoreType"))
+					 {
+					 return false;
+					 }
+					 else
+					 {
+					 return true;
+					 }
+				]]></Source>
+            </Script>
+          </value>
+        </entry>
+	        </Map>
+     	 </Attributes>
+    </Field>
+    <Field displayName="WS-Security Key Pass" name="keyPass" type="string">
+      <Attributes>
+	        <Map>
+	           <entry key="hidden">
+          <value>
+            <Script>
+              <Source><![CDATA[
+					 if(ticketIntegrationFieldHiddenAttrs!=null && ticketIntegrationFieldHiddenAttrs.containsKey("keyPass"))
+					 {
+					 return false;
+					 }
+					 else
+					 {
+					 return true;
+					 }
+				]]></Source>
+            </Script>
+          </value>
+        </entry>
+	        </Map>
+     	 </Attributes>
+    </Field>
+    <Field displayName="WS-Security Alias" name="alias" type="string">
+      <Attributes>
+	        <Map>
+	           <entry key="hidden">
+          <value>
+            <Script>
+              <Source><![CDATA[
+					 if(ticketIntegrationFieldHiddenAttrs!=null && ticketIntegrationFieldHiddenAttrs.containsKey("alias"))
+					 {
+					 return false;
+					 }
+					 else
+					 {
+					 return true;
+					 }
+				]]></Source>
+            </Script>
+          </value>
+        </entry>
+	        </Map>
+     	 </Attributes>
+    </Field>
+     <Field displayName="Multiple Tickets" name="multipleTicket" type="string">
+       <Attributes>
+	        <Map>
+	           <entry key="hidden">
+          <value>
+            <Script>
+              <Source><![CDATA[
+					 if(ticketIntegrationFieldHiddenAttrs!=null && ticketIntegrationFieldHiddenAttrs.containsKey("multipleTicket"))
+					 {
+					 return false;
+					 }
+					 else
+					 {
+					 return true;
+					 }
+				]]></Source>
+            </Script>
+          </value>
+        </entry>
+	        </Map>
+     	 </Attributes>
+    </Field>
+     <Field displayName="Retryable Errors" name="retryableErrors"  columnSpan="2" type="string" multi="true">
+       <Attributes>
+	        <Map>
+	           <entry key="hidden">
+          <value>
+            <Script>
+              <Source><![CDATA[
+					 if(ticketIntegrationFieldHiddenAttrs!=null && ticketIntegrationFieldHiddenAttrs.containsKey("retryableErrors"))
+					 {
+					 return false;
+					 }
+					 else
+					 {
+					 return true;
+					 }
+				]]></Source>
+            </Script>
+          </value>
+        </entry>
+	        </Map>
+     	 </Attributes>
+    </Field>
+     <Field displayName="No Provisioning Requests" name="noProvisioningRequests" type="string">
+       <Attributes>
+	        <Map>
+	           <entry key="hidden">
+          <value>
+            <Script>
+              <Source><![CDATA[
+					 if(ticketIntegrationFieldHiddenAttrs!=null && ticketIntegrationFieldHiddenAttrs.containsKey("noProvisioningRequests"))
+					 {
+					 return false;
+					 }
+					 else
+					 {
+					 return true;
+					 }
+				]]></Source>
+            </Script>
+          </value>
+        </entry>
+	        </Map>
+     	 </Attributes>
+    </Field>
+      <Field displayName="Provisioning Request Expiration Days" name="provisioningRequestExpiration" type="string">
+        <Attributes>
+	        <Map>
+	           <entry key="hidden">
+          <value>
+            <Script>
+              <Source><![CDATA[
+					 if(ticketIntegrationFieldHiddenAttrs!=null && ticketIntegrationFieldHiddenAttrs.containsKey("provisioningRequestExpiration"))
+					 {
+					 return false;
+					 }
+					 else
+					 {
+					 return true;
+					 }
+				]]></Source>
+            </Script>
+          </value>
+        </entry>
+	        </Map>
+     	 </Attributes>
+    </Field>
+    <Field displayName="Supported Operations" name="operations" type="string" multi="true" columnSpan="2">
+      <Attributes>
+	        <Map>
+	           <entry key="hidden">
+          <value>
+            <Script>
+              <Source><![CDATA[
+					 if(ticketIntegrationFieldHiddenAttrs!=null && ticketIntegrationFieldHiddenAttrs.containsKey("operations"))
+					 {
+					 return false;
+					 }
+					 else
+					 {
+					 return true;
+					 }
+				]]></Source>
+            </Script>
+          </value>
+        </entry>
+	        </Map>
+     	 </Attributes>
+    </Field>
+    <Field displayName="Failed Ticket Status" helpKey="IdentityIQ translates all these codes into failure Status"  columnSpan="2" name="failure" type="string" multi="true">
+      <Attributes>
+	        <Map>
+	           <entry key="hidden">
+          <value>
+            <Script>
+              <Source><![CDATA[
+					 if(ticketIntegrationFieldHiddenAttrs!=null && ticketIntegrationFieldHiddenAttrs.containsKey("failure"))
+					 {
+					 return false;
+					 }
+					 else
+					 {
+					 return true;
+					 }
+				]]></Source>
+            </Script>
+          </value>
+        </entry>
+	        </Map>
+     	 </Attributes>
+    </Field>
+     <Field displayName="Pending Ticket Status"  helpKey="IdentityIQ translates all these codes into inProcess Status" name="inProcess"  columnSpan="2" type="string" multi="true">
+      <Attributes>
+	        <Map>
+	           <entry key="hidden">
+          <value>
+            <Script>
+              <Source><![CDATA[
+					 if(ticketIntegrationFieldHiddenAttrs!=null && ticketIntegrationFieldHiddenAttrs.containsKey("inProcess"))
+					 {
+					 return false;
+					 }
+					 else
+					 {
+					 return true;
+					 }
+				]]></Source>
+            </Script>
+          </value>
+        </entry>
+	        </Map>
+     	 </Attributes>
+    </Field>
+    <Field displayName="Completed Ticket Status" helpKey="IdentityIQ translates all these codes into committed Status" name="committed"  columnSpan="2" type="string" multi="true">
+      <Attributes>
+	        <Map>
+	           <entry key="hidden">
+          <value>
+            <Script>
+              <Source><![CDATA[
+					 if(ticketIntegrationFieldHiddenAttrs!=null && ticketIntegrationFieldHiddenAttrs.containsKey("committed"))
+					 {
+					 return false;
+					 }
+					 else
+					 {
+					 return true;
+					 }
+				]]></Source>
+            </Script>
+          </value>
+        </entry>
+	        </Map>
+     	 </Attributes>
+    </Field>
+     <Field displayName="Pending Ticket Closure Code" helpKey="IdentityIQ translates all these closure codes into inProcess Status"  columnSpan="2" name="inProcessClosureCode" type="string" multi="true">
+       <Attributes>
+	        <Map>
+	           <entry key="hidden">
+          <value>
+            <Script>
+              <Source><![CDATA[
+					 if(ticketIntegrationFieldHiddenAttrs!=null && ticketIntegrationFieldHiddenAttrs.containsKey("inProcessClosureCode"))
+					 {
+					 return false;
+					 }
+					 else
+					 {
+					 return true;
+					 }
+				]]></Source>
+            </Script>
+          </value>
+        </entry>
+	        </Map>
+     	 </Attributes>
+    </Field>
+     <Field displayName="Failed Ticket Closure Code" helpKey="IdentityIQ translates all these closure codes into failure Status"  columnSpan="2" name="failureClosureCode" type="string" multi="true">
+       <Attributes>
+	        <Map>
+	           <entry key="hidden">
+          <value>
+            <Script>
+              <Source><![CDATA[
+					 if(ticketIntegrationFieldHiddenAttrs!=null && ticketIntegrationFieldHiddenAttrs.containsKey("failureClosureCode"))
+					 {
+					 return false;
+					 }
+					 else
+					 {
+					 return true;
+					 }
+				]]></Source>
+            </Script>
+          </value>
+        </entry>
+	        </Map>
+     	 </Attributes>
+    </Field>
+      <Field displayName="Completed Ticket Closure Code" helpKey="IdentityIQ translates all these committed codes into failure Status"  columnSpan="2" name="committedClosureCode" type="string" multi="true">
+       <Attributes>
+	        <Map>
+	           <entry key="hidden">
+          <value>
+            <Script>
+              <Source><![CDATA[
+					 if(ticketIntegrationFieldHiddenAttrs!=null && ticketIntegrationFieldHiddenAttrs.containsKey("committedClosureCode"))
+					 {
+					 return false;
+					 }
+					 else
+					 {
+					 return true;
+					 }
+				]]></Source>
+            </Script>
+          </value>
+        </entry>
+	        </Map>
+     	 </Attributes>
+    </Field>
+     <!-- Both HP and ServiceNow has catalogItem -->
+     <Field displayName="Catalog Item Per Application"  columnSpan="2" name="catalogItemList" type="string" multi="true">
+       <Attributes>
+	        <Map>
+	           <entry key="hidden">
+          <value>
+            <Script>
+              <Source><![CDATA[
+					 if(ticketIntegrationFieldHiddenAttrs!=null && ticketIntegrationFieldHiddenAttrs.containsKey("catalogItemList"))
+					 {
+					 return false;
+					 }
+					 else
+					 {
+					 return true;
+					 }
+				]]></Source>
+            </Script>
+          </value>
+        </entry>
+	        </Map>
+     	 </Attributes>
+    </Field>
+     <Field displayName="Managed Applications" name="managedResources"  columnSpan="2" type="Application" multi="true">
+       <Attributes>
+	        <Map>
+	            <entry key="valueProperty" value="name"/>
+	           <entry key="hidden">
+          <value>
+            <Script>
+              <Source><![CDATA[
+					 if(ticketIntegrationFieldHiddenAttrs!=null && ticketIntegrationFieldHiddenAttrs.containsKey("managedResources"))
+					 {
+					 return false;
+					 }
+					 else
+					 {
+					 return true;
+					 }
+				]]></Source>
+            </Script>
+          </value>
+        </entry>
+	        </Map>
+     	 </Attributes>
+    </Field>
+      <!--  HP Only -->
+    <Field displayName="Multiple Provisioning Steps HP Service Only" name="multipleProvisioningSteps" type="string">
+      <Attributes>
+	        <Map>
+	           <entry key="hidden">
+          <value>
+            <Script>
+              <Source><![CDATA[
+					 if(ticketIntegrationFieldHiddenAttrs!=null && ticketIntegrationFieldHiddenAttrs.containsKey("multipleProvisioningSteps"))
+					 {
+					 return false;
+					 }
+					 else
+					 {
+					 return true;
+					 }
+				]]></Source>
+            </Script>
+          </value>
+        </entry>
+	        </Map>
+     	 </Attributes>
+    </Field>
+      <!--  HP Only CreateSubmitCartStep -->
+     <Field displayName="Last Provisioning Step HP Service Only" name="lastProvisioningStep" type="string">
+       <Attributes>
+	        <Map>
+	           <entry key="hidden">
+          <value>
+            <Script>
+              <Source><![CDATA[
+					 if(ticketIntegrationFieldHiddenAttrs!=null && ticketIntegrationFieldHiddenAttrs.containsKey("lastProvisioningStep"))
+					 {
+					 return false;
+					 }
+					 else
+					 {
+					 return true;
+					 }
+				]]></Source>
+            </Script>
+          </value>
+        </entry>
+	        </Map>
+     	 </Attributes>
+    </Field>
+      <!--  HP Only -->
+     <Field displayName="Check Ticket Status Provisioning Step HP Service Only" name="checkStatusProvisioningStep" type="string">
+       <Attributes>
+	        <Map>
+	           <entry key="hidden">
+          <value>
+            <Script>
+              <Source><![CDATA[
+					 if(ticketIntegrationFieldHiddenAttrs!=null && ticketIntegrationFieldHiddenAttrs.containsKey("checkStatusProvisioningStep"))
+					 {
+					 return false;
+					 }
+					 else
+					 {
+					 return true;
+					 }
+				]]></Source>
+            </Script>
+          </value>
+        </entry>
+	        </Map>
+     	 </Attributes>
+    </Field>
+    <Field displayName="Default Assignment Group Name" name="defaultAssignmentGroupName" type="string">
+       <Attributes>
+	        <Map>
+	           <entry key="hidden">
+          <value>
+            <Script>
+              <Source><![CDATA[
+			         if(ticketIntegrationFieldHiddenAttrs!=null && ticketIntegrationFieldHiddenAttrs.containsKey("defaultAssignmentGroupName"))
+					 {
+					 return false;
+					 }
+					 else
+					 {
+					 return true;
+					 }
+				]]></Source>
+            </Script>
+          </value>
+        </entry>
+	        </Map>
+     	 </Attributes>
+    </Field>
+        <Field displayName="Default Requested By" name="defaultRequestedBy" type="Identity" >
+       <Attributes>
+	        <Map>
+	           <entry key="hidden">
+          <value>
+            <Script>
+              <Source><![CDATA[
+			        if(ticketIntegrationFieldHiddenAttrs!=null && ticketIntegrationFieldHiddenAttrs.containsKey("defaultRequestedBy"))
+					 {
+					 return false;
+					 }
+					 else
+					 {
+					 return true;
+					 }
+					]]></Source>
+            </Script>
+          </value>
+        </entry>
+	        </Map>
+     	 </Attributes>
+    </Field>
+  </Section>
+  <Button action="cancel" label="Cancel"/>
+  <Button action="back" label="Change Integration Configuration"/>
+  <Button action="next" label="Next"/>
+</Form>

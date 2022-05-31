@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" [
+  <!ENTITY SailPointObject SYSTEM "classpath://sailpoint/object/SailPointObject.hbm.xml">
+  <!ENTITY LinkExtensions SYSTEM "classpath://sailpoint/object/LinkExtended.hbm.xml">
+]>
+
+<!-- (c) Copyright 2008 SailPoint Technologies, Inc., All Rights Reserved. -->
+
+<hibernate-mapping>
+  <class name="sailpoint.object.Link" dynamic-update="true" dynamic-insert="true">
+
+    &SailPointObject;
+    &LinkExtensions;
+
+    <!-- uuid has a composite index defined with a class annotation -->
+    <property name="uuid" type="string" length="128"/>
+    <property name="displayName" type="string" length="128" index="spt_link_dispname_ci"/>
+    <property name="instance" type="string" length="128"/>
+    <property name="nativeIdentity" type="string" length="322" not-null="true" index="spt_link_nativeIdentity_ci"/>
+    <property name="lastRefresh" type="sailpoint.persistence.DateType" index="spt_link_lastRefresh"/>
+    <property name="lastTargetAggregation" type="sailpoint.persistence.DateType" index="spt_link_lastAggregation"/>
+    <property name="manuallyCorrelated" type="boolean"/>
+    <property name="entitlements" type="boolean" not-null="true" index="spt_link_entitlements"/>
+
+    <many-to-one embed-xml="false" name="identity" column="identityId" class="sailpoint.object.Identity"/>
+    <many-to-one embed-xml="false" name="application" class="sailpoint.object.Application"/>
+
+    <property name="iiqDisabled" type="boolean" index="spt_link_iiq_disabled"/>
+    <property name="iiqLocked" type="boolean" index="spt_link_iiq_locked"/>
+
+    <property name="attributes" type="sailpoint.persistence.XmlType" length="100000000"/>
+
+    <property name="passwordHistory" type="string" length="2000"/>
+    <!-- This has to be big enough to hold the database ids for
+         all the accounts in the stack.   A Hibernate id is 32 chars long
+         so 256 would give us 7 accounts with space left over for commas.
+    -->
+    <property name="componentIds" type="string" length="256"/>
+
+    <property name="attributeMetaData" type="sailpoint.persistence.ListXmlType"
+              length="100000000"/>
+
+  </class>
+</hibernate-mapping>

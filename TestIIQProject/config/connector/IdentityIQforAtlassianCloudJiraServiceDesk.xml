@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Application PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<Application connector="sailpoint.connector.OpenConnectorAdapter" featuresString="NO_AGGREGATION, PROVISIONING, UNLOCK, ENABLE, PASSWORD" name="IdentityIQ for Atlassian Cloud Jira Service Desk" type="Atlassian Cloud Jira SDIM">
+  <Attributes>
+    <Map>
+      <entry key="connectorClass" value="openconnector.connector.servicedesk.ServiceDeskConnector" />
+      <!-- 'authenticationType' can be Basic or OAuth2 -->
+      <entry key="authenticationType" value="" />
+      <!-- The 'url' differs based on 'authenticationType'
+           For 'Basic', 'url' is https://your-domain.atlassian.net
+           For 'OAuth2', 'url' is https://api.atlassian.com/ex/jira/{cloudid}
+      -->
+      <entry key="url" value="" />
+      <entry key="username" value="" />
+      <entry key="password" value="" />
+      <!-- When OAuth2, the token_url, grant_type, client_id, client_secret 
+           and refresh_token requires to generate an access token. 
+      -->
+      <!-- 'token_url can be https://auth.atlassian.com/oauth/token -->
+      <entry key="token_url" value="" />
+      <!-- 'grant_type' can be REFRESH_TOKEN -->
+      <entry key="grant_type" value="" />
+      <entry key="client_id" value="" />
+      <entry key="client_secret" value="" />
+      <entry key="refresh_token" value="" />
+      <!-- Name of the Atlassian Suite - Cloud Application in IdentityIQ.
+           It is used to determine opened_by in a plan initializer script.
+           Empty value meaning plan initializer to determine a Link object based on type of the Atlassian Suite 
+           Application which is 'Atlassian Suite - Cloud', whereas nonempty value promotes plan initializer to 
+           determine a Link object based on name of Atlassian Suite - Cloud Application.
+      -->
+      <entry key="requesterSource" value="" />
+      <entry key="encrypted" value="client_secret,refresh_token,oauth_token_info" />
+      <entry key="templateApplication" value="Atlassian Cloud Jira SDIM" />
+      <!-- 'ticketType' can be serviceRequest or incident or changeRequest -->
+      <entry key="ticketType" value="serviceRequest" />
+      <entry key="serviceRequest">
+        <value>
+          <Map>
+            <entry key="provision">
+              <value>
+                <Map>
+                  <entry key="resource" value="/rest/servicedeskapi/request" />
+                  <entry key="responseElement" value="$.issueKey" />
+                  <entry key="request">
+                    <value>
+                      <Map>
+                        <entry key="requestTypeId" value="10002" />
+                        <entry key="serviceDeskId" value="2" />
+                        <entry key="raiseOnBehalfOf" value="$!plan.arguments.opened_by" />
+                        <entry key="requestFieldValues">
+                          <value>
+                            <Map>
+                              <entry key="description" value="#foreach($req in $plan.requests) #if($req.operation == 'Create') Create Account on application $req.resource #else For $req.id in application $req.resource #end #if($req.items) $newline #foreach($item in $req.items) #if ($item.name == '*disabled*' &amp;&amp; $item.value == 'true') Disable Account. $newline #elseif ($item.name == '*disabled*' &amp;&amp; $item.value == 'false') Enable Account. $newline #elseif ($item.name == '*locked*' &amp;&amp; $item.value == 'false') Unlock Account. $newline #else $!item.Operation $item.name: $item.value $newline #end #end #else $newline $!req.Operation Account #end #end" />
+                              <entry key="summary" value="SailPoint Access Request $!plan.arguments.identityRequestId #if($plan.arguments.identityName) for the user $plan.arguments.identityName #end"/>
+                            </Map>
+                          </value>
+                        </entry>
+                      </Map>
+                    </value>
+                  </entry>
+                </Map>
+              </value>
+            </entry>
+            <entry key="checkStatus">
+              <value>
+                <Map>
+                  <entry key="resource" value="/rest/servicedeskapi/request/$ticketId" />
+                  <entry key="responseElement" value="$.currentStatus.status" />
+                  <entry key="statusMap">
+                    <value>
+                      <Map>
+                        <entry key="Completed" value="Committed" />
+                        <entry key="Canceled" value="Failed" />
+                        <entry key="Blocked" value="Queued" />
+                        <entry key="Waiting for support" value="Queued" />
+                        <entry key="Waiting for customer" value="Queued" />
+                        <entry key="Escalated" value="Queued" />
+                        <entry key="In Progress" value="Queued" />
+                        <entry key="Pending" value="Queued" />
+                        <entry key="Closed" value="Committed" />
+                        <entry key="Resolved" value="Committed" />
+                      </Map>
+                    </value>
+                  </entry>
+                </Map>
+              </value>
+            </entry>
+          </Map>
+        </value>
+      </entry>
+      <entry key="incident">
+        <value>
+          <Map>
+            <entry key="provision">
+              <value>
+                <Map>
+                  <entry key="resource" value="/rest/servicedeskapi/request" />
+                  <entry key="responseElement" value="$.issueKey" />
+                  <entry key="request">
+                    <value>
+                      <Map>
+                        <entry key="requestTypeId" value="10004" />
+                        <entry key="serviceDeskId" value="2" />
+                        <entry key="raiseOnBehalfOf" value="$!plan.arguments.opened_by" />
+                        <entry key="requestFieldValues">
+                          <value>
+                            <Map>
+                              <entry key="description" value="#foreach($req in $plan.requests) #if($req.operation == 'Create') Create Account on application $req.resource #else For $req.id in application $req.resource #end #if($req.items) $newline #foreach($item in $req.items) #if ($item.name == '*disabled*' &amp;&amp; $item.value == 'true') Disable Account. $newline #elseif ($item.name == '*disabled*' &amp;&amp; $item.value == 'false') Enable Account. $newline #elseif ($item.name == '*locked*' &amp;&amp; $item.value == 'false') Unlock Account. $newline #else $!item.Operation $item.name: $item.value $newline #end #end #else $newline $!req.Operation Account #end #end" />
+                              <entry key="summary" value="SailPoint Access Request $!plan.arguments.identityRequestId #if($plan.arguments.identityName) for the user $plan.arguments.identityName #end"/>
+                            </Map>
+                          </value>
+                        </entry>
+                      </Map>
+                    </value>
+                  </entry>
+                </Map>
+              </value>
+            </entry>
+            <entry key="checkStatus">
+              <value>
+                <Map>
+                  <entry key="resource" value="/rest/servicedeskapi/request/$ticketId" />
+                  <entry key="responseElement" value="$.currentStatus.status" />
+                  <entry key="statusMap">
+                    <value>
+                      <Map>
+                        <entry key="Resolved" value="Committed" />
+                        <entry key="Closed" value="Committed" />
+                        <entry key="Canceled" value="Failed" />
+                        <entry key="Open" value="Queued" />
+                        <entry key="Work in progress" value="Queued" />
+                        <entry key="Blocked" value="Queued" />
+                        <entry key="Pending" value="Queued" />
+                        <entry key="Completed" value="Committed" />
+                      </Map>
+                    </value>
+                  </entry>
+                </Map>
+              </value>
+            </entry>
+          </Map>
+        </value>
+      </entry>
+      <entry key="changeRequest">
+        <value>
+          <Map>
+            <entry key="provision">
+              <value>
+                <Map>
+                  <entry key="resource" value="/rest/servicedeskapi/request" />
+                  <entry key="responseElement" value="$.issueKey" />
+                  <entry key="request">
+                    <value>
+                      <Map>
+                        <entry key="requestTypeId" value="10003" />
+                        <entry key="serviceDeskId" value="2" />
+                        <entry key="raiseOnBehalfOf" value="$!plan.arguments.opened_by" />
+                        <entry key="requestFieldValues">
+                          <value>
+                            <Map>
+                              <entry key="description" value="#foreach($req in $plan.requests) #if($req.operation == 'Create') Create Account on application $req.resource #else For $req.id in application $req.resource #end #if($req.items) $newline #foreach($item in $req.items) #if ($item.name == '*disabled*' &amp;&amp; $item.value == 'true') Disable Account. $newline #elseif ($item.name == '*disabled*' &amp;&amp; $item.value == 'false') Enable Account. $newline #elseif ($item.name == '*locked*' &amp;&amp; $item.value == 'false') Unlock Account. $newline #else $!item.Operation $item.name: $item.value $newline #end #end #else $newline $!req.Operation Account #end #end" />
+                              <entry key="summary" value="SailPoint Access Request $!plan.arguments.identityRequestId #if($plan.arguments.identityName) for the user $plan.arguments.identityName #end"/>
+                              <entry key="customfield_10033">
+                                <value>
+                                  <Map>
+                                    <entry key="value" value="Normal" />
+                                  </Map>
+                                </value>
+                              </entry>
+                            </Map>
+                          </value>
+                        </entry>
+                      </Map>
+                    </value>
+                  </entry>
+                </Map>
+              </value>
+            </entry>
+            <entry key="checkStatus">
+              <value>
+                <Map>
+                  <entry key="resource" value="/rest/servicedeskapi/request/$ticketId" />
+                  <entry key="responseElement" value="$.currentStatus.status" />
+                  <entry key="statusMap">
+                    <value>
+                      <Map>
+                        <entry key="Completed" value="Committed" />
+                        <entry key="Canceled" value="Failed" />
+                        <entry key="Declined" value="Failed" />
+                        <entry key="Blocked" value="Queued" />
+                        <entry key="Planning" value="Queued" />
+                        <entry key="Review" value="Queued" />
+                        <entry key="Implementing" value="Queued" />
+                        <entry key="Waiting for support" value="Queued" />
+                        <entry key="Triage" value="Queued" />
+                        <entry key="Peer review / change manager approval" value="Queued" />
+                        <entry key="Resolved" value="Committed" />
+                        <entry key="Closed" value="Committed" />
+                        <entry key="Pending" value="Queued" />
+                        <entry key="Awaiting CAB approval" value="Queued" />
+                        <entry key="Awaiting implementation" value="Queued" />
+                      </Map>
+                    </value>
+                  </entry>
+                </Map>
+              </value>
+            </entry>
+          </Map>
+        </value>
+      </entry>
+    </Map>
+  </Attributes>
+  <ProvisioningConfig>
+    <ManagedResource>
+      <ApplicationRef>
+        <Reference class="sailpoint.object.Application" name="Procurement_System" />
+      </ApplicationRef>
+    </ManagedResource>
+    <PlanInitializerScript>
+      <Source>
+        <![CDATA[
+        import sailpoint.object.Identity;
+        import sailpoint.object.Link;
+        import sailpoint.object.IntegrationConfig;
+        import sailpoint.object.Application;
+        import sailpoint.api.IdentityService;
+
+        /**
+         * Fields
+         */
+        String applicationType = "Atlassian Suite - Cloud";
+        // Identity attribute on SailPoint/ UserID on Jira
+        String userId = "accountId";
+
+        /**
+         * Get Jira Account name for identity using application type - Jira
+         */
+        private String getLinkByAppType(Identity identity) {
+            if (identity == null) {
+                return null;
+            }
+
+            List links = identity.getLinks();
+            String linkName = null;
+            if (links != null ) {
+                for (Link link : links) {
+                    String appType = link.getApplication().getType();
+                    if (appType != null && appType.equals(applicationType)) {
+                        if(link.getAttribute(userId) != null) {
+                            String userName = link.getAttribute(userId);
+                            if(userName != null) {
+                                linkName = userName;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
+            return linkName;
+        }
+
+        /**
+         * Get Jira Account name for Identity using application name
+         */
+        private String getLinkByAppName(Identity identity, String requesterSource) {
+            if (identity == null) {
+                return null;
+            }
+
+            String linkName = null;
+            if (requesterSource != null) {
+                Application app = context.getObjectByName(Application.class, requesterSource);
+                IdentityService identService = new IdentityService(context);
+                List links = identService.getLinks(identity, app);
+                Link link = null;
+                if (links != null && links.size() > 0) {
+                    link = links.get(0);
+                }
+
+                if (link != null) {
+                    String userName = (String) link.getAttribute(userId);
+                    if (userName != null) {
+                        linkName = userName;
+                    }
+                }
+            }
+
+            return linkName;
+        }
+
+        ////////////////////////////////////////////////////////////////
+        // Main
+        ////////////////////////////////////////////////////////////////
+        Map arguments = (Map)plan.getArguments();
+        List requesterList = plan.getRequesters();
+        Identity requester = null;
+        if (requesterList != null) {
+            requester = requesterList.get(0);
+            if (requester != null && requester.getName() != null) {
+                requester = context.getObjectByName(Identity.class, requester.getName());
+            }
+        }
+
+        String appName = integration.getName();
+        if (appName != null) {
+            Application appObject = context.getObjectByName(Application.class, appName);
+            requesterSource = appObject.getAttributeValue("requesterSource");
+        }
+
+        // Get Jira Account name
+        if (requesterSource != null) {
+            openedBy = getLinkByAppName(requester, requesterSource);
+            requestedFor = getLinkByAppName(identity, requesterSource);
+        } else {
+            openedBy = getLinkByAppType(requester);
+            requestedFor = getLinkByAppType(identity);
+        }
+
+        if (requestedFor != null) {
+            arguments.put("requested_for", requestedFor);
+        }
+
+        if (openedBy != null) {
+            arguments.put("opened_by", openedBy);
+        }
+
+        if (identity.getName() != null) {
+            arguments.put("identityName", identity.getName());
+        }]]>
+      </Source>
+    </PlanInitializerScript>
+  </ProvisioningConfig>
+</Application>

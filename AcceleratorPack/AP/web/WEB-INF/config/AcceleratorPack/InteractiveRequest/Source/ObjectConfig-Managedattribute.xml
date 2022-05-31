@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE sailpoint PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<!-- Copyright © 2018 SailPoint Technologies, Inc. All Rights Reserved.
+All logos, text, content, and works of authorship, including but not limited to underlying code, programming or scripting language, designs, and/or graphics,
+that are used and/or depicted herein are protected under United States and international copyright and trademark laws and treaties,
+and may not be used or reproduced without the prior express written permission of SailPoint Technologies, Inc. -->
+<sailpoint>
+<ImportAction name='merge'>
+<ObjectConfig name="ManagedAttribute">
+  <ObjectAttribute categoryName="Approval" displayName="1st Level Business Approvers" editMode="Permanent" namedColumn="true" name="entBusApprovers">
+    	<Description>Enter a comma separated  Cube Ids or WorkGroups</Description>
+  </ObjectAttribute>
+  <ObjectAttribute categoryName="Approval" defaultValue="" displayName="Omit or Override 1st Level Approvers" editMode="Permanent" name="entBusApprovalRule">
+   <Description> This rule can be used to override 1st Level Business Approvers</Description>
+  </ObjectAttribute>
+  <ObjectAttribute categoryName="Approval" displayName="2nd Level Business Approvers" editMode="Permanent" namedColumn="true" name="additionalEntBusApprovers">
+ 	<Description>Enter a comma separated  Cube Ids or WorkGroups</Description>
+  </ObjectAttribute>
+  <ObjectAttribute categoryName="Approval" defaultValue=""  displayName="Omit or Override 2nd Level Approvers" editMode="Permanent" name="additionalEntBusApproversRule">
+    <Description> This rule can be used to override 2nd Level Business Approvers</Description>
+  </ObjectAttribute>
+ </ObjectConfig>
+</ImportAction>
+</sailpoint>

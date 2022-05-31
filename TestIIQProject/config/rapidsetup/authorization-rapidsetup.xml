@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!--
+  ~ (c) Copyright 2020 SailPoint Technologies, Inc., All Rights Reserved.
+  -->
+
+<!DOCTYPE sailpoint PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<sailpoint>
+
+  <SPRight name="ViewRapidSetup" displayName="right_view_rapid_setup">
+    <Description>right_desc_view_rapid_setup</Description>
+  </SPRight>
+  <SPRight name="FullAccessRapidSetup" displayName="right_full_access_rapid_setup">
+    <Description>right_desc_full_access_rapid_setup</Description>
+  </SPRight>
+  <SPRight name="ViewRapidSetupConfiguration" displayName="right_view_rapidsetup_configuration">
+    <Description>right_desc_view_rapidsetup_configuration</Description>
+  </SPRight>
+  <SPRight name="FullAccessRapidSetupConfiguration" displayName="right_full_access_rapidsetup_configuration">
+    <Description>right_desc_full_access_rapidsetup_configuration</Description>
+  </SPRight>
+  <SPRight name="ManageRapidSetupBirthrightRoles" displayName="right_manage_rapidsetup_birthright_roles">
+    <Description>right_desc_manage_rapidsetup_birthright_roles</Description>
+  </SPRight>
+  <SPRight name="FullAccessTerminateIdentity" displayName="right_full_access_terminate_identity">
+    <Description>right_desc_full_access_terminate_identity</Description>
+  </SPRight>
+
+  <Capability name="RapidSetupConfigurationReadOnly" displayName="capability_rapidsetup_configuration_read_only">
+    <Description>capability_desc_rapidsetup_configuration_read_only</Description>
+    <RightRefs>
+      <Reference class="sailpoint.object.SPRight" name="ViewRapidSetupConfiguration" />
+    </RightRefs>
+  </Capability>
+
+  <Capability name="RapidSetupConfigurationAdministrator" displayName="capability_rapidsetup_configuration_administrator">
+    <Description>capability_desc_rapidsetup_configuration_administrator</Description>
+    <RightRefs>
+      <Reference class="sailpoint.object.SPRight" name="FullAccessRapidSetupConfiguration" />
+    </RightRefs>
+  </Capability>
+
+  <Capability name="RapidSetupReadOnly" displayName="capability_rapid_setup_read_only">
+    <Description>capability_desc_rapid_setup_read_only</Description>
+    <RightRefs>
+      <Reference class="sailpoint.object.SPRight" name="ViewRapidSetup" />
+    </RightRefs>
+  </Capability>
+
+  <Capability name="RapidSetupAdministrator" displayName="capability_rapid_setup">
+    <Description>capability_desc_rapid_setup</Description>
+    <RightRefs>
+      <Reference class="sailpoint.object.SPRight" name="FullAccessRapidSetup" />
+    </RightRefs>
+  </Capability>
+
+  <Capability name="RapidSetupIdentityOperationsAdministrator" displayName="capability_rapidsetup_identity_operations_administrator">
+    <Description>capability_desc_rapidsetup_identity_operations_administrator</Description>
+    <RightRefs>
+      <Reference class="sailpoint.object.SPRight" name="FullAccessTerminateIdentity" />
+    </RightRefs>
+  </Capability>
+
+  <Capability name="RapidSetupBirthrightRoleAdministrator" displayName="capability_rapidsetup_birthright_role_administrator">
+    <Description>capability_desc_rapidsetup_birthright_role_administrator</Description>
+    <RightRefs>
+      <Reference class="sailpoint.object.SPRight" name="ViewRole" />
+      <Reference class="sailpoint.object.SPRight" name="ManageRole" />
+      <Reference class="sailpoint.object.SPRight" name="ManageRapidSetupBirthrightRoles" />
+      <Reference class="sailpoint.object.SPRight" name="FullAccessForms" />
+    </RightRefs>
+  </Capability>
+
+  <ImportAction name='merge'>
+    <Capability name="RoleAdministrator">
+      <InheritedCapabilities>
+        <Reference class="sailpoint.object.Capability" name="RapidSetupBirthrightRoleAdministrator" />
+      </InheritedCapabilities>
+    </Capability>
+  </ImportAction>
+
+</sailpoint>

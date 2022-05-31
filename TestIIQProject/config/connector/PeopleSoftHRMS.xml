@@ -1,0 +1,143 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ImportAction name="connectorRegistryUpdateAction">
+    <Application connector="sailpoint.connector.PeopleSoftHRMSConnector" featuresString="PROVISIONING, SYNC_PROVISIONING, SEARCH,MANAGER_LOOKUP, ENABLE" icon="enterpriseIcon" name="PeopleSoft HR/HCM" type="PeopleSoft HCM Database">
+        <Attributes>
+            <Map>
+                <entry key="formPath" value="PeopleSoftHRMS.xhtml" />
+                <entry key="formPathRules" value="PeopleSoftRuleForm.xhtml"/>
+                <entry key="encrypted" value="domainConnPassword,pspassword"/>
+                <entry key="useConnectorClassloader" value="true"/>
+            </Map>
+        </Attributes>
+        <Schemas>
+            <Schema displayAttribute="NAME" identityAttribute="EMPLID" objectType="account"  nativeObjectType="account">
+                <AttributeDefinition name="EMPLID" type="string">
+                    <Description>ID of the employee</Description>
+                </AttributeDefinition>
+                <AttributeDefinition name="NAME_PREFIX" type="string">
+                    <Description>Prefix of the employee</Description>
+                </AttributeDefinition>
+                <AttributeDefinition name="NAME_TITLE" type="string">
+                    <Description>Title of the employee</Description>
+                </AttributeDefinition>
+                <AttributeDefinition name="NAME_SUFFIX" type="string">
+                    <Description>Suffix of the employee</Description>
+                </AttributeDefinition>
+                <AttributeDefinition name="FIRST_NAME" type="string">
+                    <Description>First Name of the employee</Description>
+                </AttributeDefinition>
+                <AttributeDefinition name="PREF_FIRST_NAME" type="string">
+                    <Description>Preferred first name of the employee</Description>
+                </AttributeDefinition>
+                <AttributeDefinition name="MIDDLE_NAME" type="string">
+                    <Description>Middle Name of the employee</Description>
+                </AttributeDefinition>
+                <AttributeDefinition name="LAST_NAME" type="string">
+                    <Description>Last Name of the employee</Description>
+                </AttributeDefinition>
+                <AttributeDefinition name="NAME" type="string">
+                    <Description>Name of the employee</Description>
+                </AttributeDefinition>
+                <AttributeDefinition name="BIRTHDATE" type="string">
+                    <Description>BirthDate of the employee</Description>
+                </AttributeDefinition>
+                <AttributeDefinition name="EMAIL_ADDR" type="string">
+                    <Description>Email Address of the employee</Description>
+                </AttributeDefinition>
+                <AttributeDefinition name="PHONE" type="string">
+                    <Description>Personal Phone of the employee</Description>
+                </AttributeDefinition>
+                <AttributeDefinition name="ADDRESS1" type="string">
+                    <Description>Postal address1 of the employee</Description>
+                </AttributeDefinition>
+                <AttributeDefinition name="ADDRESS2" type="string">
+                    <Description>Postal address2 of the employee</Description>
+                </AttributeDefinition>
+                <AttributeDefinition name="ADDRESS3" type="string">
+                    <Description>Postal address3 of the employee</Description>
+                </AttributeDefinition>
+                <AttributeDefinition name="CITY" type="string">
+                    <Description>City of the employee</Description>
+                </AttributeDefinition>
+                <AttributeDefinition name="STATE" type="string">
+                    <Description>State of the employee</Description>
+                </AttributeDefinition>
+                <AttributeDefinition name="POSTAL" type="string">
+                    <Description>Postal pincode of the employee</Description>
+                </AttributeDefinition>
+                <AttributeDefinition name="COUNTRY" type="string">
+                    <Description>Country of the employee</Description>
+                </AttributeDefinition>
+                <AttributeDefinition name="EMPL_RCD" type="string">
+                    <Description>Job employee record</Description>
+                </AttributeDefinition>
+                <AttributeDefinition name="PER_ORG" type="string">
+                    <Description>Organization of the employee</Description>
+                </AttributeDefinition>
+                <AttributeDefinition name="EFFDT" type="string">
+                    <Description>Effective date of the job</Description>
+                </AttributeDefinition>
+                <AttributeDefinition name="EMPL_STATUS" type="string">
+                    <Description>Employee status of the employee</Description>
+                </AttributeDefinition>
+                <AttributeDefinition name="DEPTID" type="string">
+                    <Description>Department ID of the job</Description>
+                </AttributeDefinition>
+                <AttributeDefinition name="COMPANY" type="string">
+                    <Description>Company of the employee for current job</Description>
+                </AttributeDefinition>
+                <AttributeDefinition name="JOBCODE" type="string">
+                    <Description>Job Code of the job</Description>
+                </AttributeDefinition>
+                <AttributeDefinition name="HR_STATUS" type="string">
+                    <Description>HR status of the job</Description>
+                </AttributeDefinition>
+                <AttributeDefinition name="ACTION" type="string">
+                    <Description>Action code of the job</Description>
+                </AttributeDefinition>
+                <AttributeDefinition name="ACTION_REASON" type="string">
+                    <Description>Action reason of the job</Description>
+                </AttributeDefinition>
+                <AttributeDefinition name="LOCATION" type="string">
+                    <Description>Location of the job</Description>
+                </AttributeDefinition>
+                <AttributeDefinition name="POSITION_NBR" type="string">
+                    <Description>Position number of the job</Description>
+                </AttributeDefinition>
+                <AttributeDefinition name="SUPERVISOR_ID" type="string">
+                    <Description>Supervisior ID of the job</Description>
+                </AttributeDefinition>
+                <AttributeDefinition name="FULL_PART_TIME" type="string">
+                    <Description>Full part time of the job</Description>
+                </AttributeDefinition>
+                <AttributeDefinition name="EMPL_TYPE" type="string">
+                    <Description>Employee type of the job</Description>
+                </AttributeDefinition>
+                <AttributeDefinition name="OFFICER_CD" type="string">
+                    <Description>Officer Code of the job</Description>
+                </AttributeDefinition>
+                <AttributeDefinition name="EMPL_CLASS" type="string">
+                    <Description>Employee class of the job</Description>
+                </AttributeDefinition>
+                <AttributeDefinition name="ACCT_CD" type="string">
+                    <Description>Account code of the job</Description>
+                </AttributeDefinition>
+                <AttributeDefinition name="BUSINESS_UNIT" type="string">
+                    <Description>Business unit of the job</Description>
+                </AttributeDefinition>
+                <AttributeDefinition name="HR_RESPONSIBLE_ID" type="string">
+                    <Description>HR Responsible ID of the employee</Description>
+                </AttributeDefinition>
+                <AttributeDefinition name="HIRE_DT" type="string">
+                    <Description>Hiring date of the employee</Description>
+                </AttributeDefinition>
+                <AttributeDefinition name="TERMINATION_DT" type="string">
+                    <Description>Termination date of the employee</Description>
+                </AttributeDefinition>
+                <AttributeDefinition name="REPORTS_TO" type="string">
+                    <Description>Reporting to of the employee</Description>
+                </AttributeDefinition>
+            </Schema>
+        </Schemas>
+    </Application>
+</ImportAction>

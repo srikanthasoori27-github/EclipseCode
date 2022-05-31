@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" [
+  <!ENTITY SailPointObject SYSTEM "classpath://sailpoint/object/SailPointObject.hbm.xml">
+]>
+
+<!-- (c) Copyright 2008 SailPoint Technologies, Inc., All Rights Reserved. -->
+
+<hibernate-mapping>
+  <class name="sailpoint.object.TimePeriod">
+
+    &SailPointObject;
+
+    <property name="name" type="string" length="128"/>
+    <property name="classifier">
+      <type name="sailpoint.persistence.EnumType">
+        <param name="enumClassName">sailpoint.object.TimePeriod$ClassifierType</param>
+      </type>
+    </property>
+    <property name="initParameters" type="sailpoint.persistence.XmlType" length="100000000"/>
+  </class>
+</hibernate-mapping>

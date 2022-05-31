@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!--
+  ~ /* (c) Copyright 2008 SailPoint Technologies, Inc., All Rights Reserved. */
+  -->
+
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" [
+        <!ENTITY SailPointObjectSimple SYSTEM "classpath://sailpoint/object/SailPointObjectSimple.hbm.xml">
+        <!ENTITY AlertExtensions SYSTEM "classpath://sailpoint/object/AlertExtended.hbm.xml">
+        ]>
+
+<hibernate-mapping>
+  <class name="sailpoint.object.Alert">
+
+  &SailPointObjectSimple;
+  &AlertExtensions;
+
+    <property name="attributes" type="sailpoint.persistence.XmlType" length="100000000"/>
+    <many-to-one embed-xml="false" name="source" class="sailpoint.object.Application"/>
+    <bag name="actions" cascade="all">
+      <key column="alert"/>
+      <one-to-many class="sailpoint.object.AlertAction"/>
+    </bag>
+    <property name="alertDate" type="sailpoint.persistence.DateType"/>
+    <property name="nativeId" type="string"/>
+    <property name="targetId" type="string"/>
+    <property name="targetType" type="string"/>
+    <property name="targetDisplayName" type="string"/>
+    <property name="lastProcessed" type="sailpoint.persistence.DateType" index="spt_alert_last_processed"/>
+    <property name="displayName" type="string" length="128"/>
+    <property name="name" type="string" length="255" index="spt_alert_name"/>
+    <property name="type" type="string"/>
+
+  </class>
+
+</hibernate-mapping>

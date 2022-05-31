@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sailpoint PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<sailpoint>
+<ImportAction name="merge">
+<Configuration name="SystemConfiguration">
+  <Attributes>
+    <Map>  
+     <entry key="workItemAssignmentNotification">
+        <value>
+          <Boolean>true</Boolean>
+        </value>
+      </entry>      
+	   <entry key="searchInputDefinitions">
+        <value>
+          <List>
+          	  <SearchInputDefinition description="employeeId" headerKey="employeeId" ignoreCase="true" inputType="Like" matchMode="START" name="employeeId" propertyName="employeeId" propertyType="String" searchType="Identity"/>
+			  <SearchInputDefinition description="networkid" headerKey="networkid" ignoreCase="true" inputType="Like" matchMode="START" name="networkid" propertyName="networkid" propertyType="String" searchType="Identity"/>	
+              <SearchInputDefinition description="srch_input_def_display_name" headerKey="srch_input_def_display_name" ignoreCase="true" inputType="Like" matchMode="ANYWHERE" name="displayName" propertyName="displayName" propertyType="String" searchType="None"/>
+   		  </List>
+        </value>
+      </entry>
+	
+	  <entry key="SAMLEnabled">
+        <value>
+          <Boolean>true</Boolean>
+        </value>
+      </entry>
+      <entry key="workItemArchiveTypes" value="Certification, Remediation, Delegation, Approval, ViolationReview, Form, PolicyViolation, Challenge, ImpactAnalysis, Signoff, ManualAction"/>
+      <entry key="smtp_encryptionType">
+        <value>
+          <SmtpEncryptionType>%%SMTP_ENCRYPTIONTYPE%%</SmtpEncryptionType>
+        </value>
+      </entry>
+      <entry key="emailNotifierType" value="%%EMAIL_NOTIFIER_TYPE%%"/>
+      <entry key="defaultEmailFromAddress" value="%%DEFAULT_EMAIL_FROM_ADDRESS%%"/>
+      <entry key="defaultEmailHost" value="%%DEFAULT_EMAIL_HOST%%"/>
+      <entry key="redirectingEmailNotifierAddress" value="%%REDIRECTING_EMAIL_NOTIFIER_ADDRESS%%"/>
+      <entry key="inactiveOwnerWorkItemForwadRule" value="ELE Escalate to Active Manager Rule"/>  
+      <entry key="workItemForwardRule" value="ELE Global Workitem Forwarding Rule"/>
+    </Map>
+  </Attributes>
+</Configuration>
+</ImportAction>
+</sailpoint>

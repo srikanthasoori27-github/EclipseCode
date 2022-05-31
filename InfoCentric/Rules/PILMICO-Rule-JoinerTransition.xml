@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE Rule PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<Rule language="beanshell" name="PILMICO-Rule-JoinerTransition" type="Workflow">
+  <Description>A rule used by a Workflow to determine a step action or variable value.
+
+Note that an Attributes map of all variables from the current WorkflowContext, merged with the arguments from the Step, is also passed into the workflow rule.</Description>
+  <ReferencedRules>
+    <Reference class="sailpoint.object.Rule" name="Pilmico-RuleLibrary-SalesforceRoles"/>
+  </ReferencedRules>
+  <Signature returnType="Object"/>
+  <Source>import sailpoint.object.Identity;
+
+Identity identity = context.getObjectByName(Identity.class,identityName);
+
+String identBU = identity.getAttribute("company");
+String identDept = identity.getAttribute("department");
+String identJobDept = identity.getAttribute("jobTitle");
+
+String transition = Transition(identBU,identDept,identJobDept);
+
+return transition;</Source>
+</Rule>

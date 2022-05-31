@@ -1,0 +1,151 @@
+/* (c) Copyright 2017 SailPoint Technologies, Inc., All Rights Reserved. */
+package sailpoint.web.modeler;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import sailpoint.object.Filter;
+import sailpoint.object.Filter.BaseFilterVisitor;
+import sailpoint.object.Filter.CompositeFilter;
+import sailpoint.object.Filter.FilterVisitor;
+import sailpoint.object.Filter.LeafFilter;
+import sailpoint.object.ProvisioningPlan.AttributeRequest;
+import sailpoint.object.ProvisioningPlan.Operation;
+import sailpoint.tools.GeneralException;
+import sailpoint.tools.Util;
+
+/**
+ * This class converts a Profile's constraints into a list of ProvisioningPlan.AttributeRequests
+ * @author <a href="mailto:bernie.margolis@sailpoint.com">Bernie Margolis</a>
+ */
+public class ProfilePlanner extends BaseFilterVisitor implements FilterVisitor {
+    private List<AttributeRequest> requests;
+
+    ProfilePlanner() {
+        requests = new ArrayList<AttributeRequest>();
+    }
+
+    @Override
+    public void visitAnd(CompositeFilter filter) throws GeneralException {
+        // Add everything.
+        List<Filter> children = filter.getChildren();
+        for (Filter child : Util.iterate(children)) {
+            child.accept(this);
+        }
+    }
+
+    @Override
+    public void visitOr(CompositeFilter filter) throws GeneralException {
+        // Only add the first available constraint.
+        List<Filter> children = filter.getChildren();
+        children.get(0).accept(this);
+    }
+
+    @Override
+    public void visitNot(CompositeFilter filter) throws GeneralException {
+        // Profiles only provision.  They don't deprovision.
+    }
+    
+
+    @Override
+    public void visitEQ(LeafFilter filter) throws GeneralException {
+        String attributeName = filter.getProperty();
+        String attributeValue = Util.otos(filter.getValue());
+        AttributeRequest request = new AttributeRequest(attributeName, Operation.Set, attributeValue);
+        requests.add(request);
+    }
+
+    @Override
+    public void visitNE(LeafFilter filter) throws GeneralException {
+        // This is ambiguous.  Don't provision it.
+    }
+
+    @Override
+    public void visitLT(LeafFilter filter) throws GeneralException {
+        // This is ambiguous.  Don't provision it.
+    }
+
+    @Override
+    public void visitGT(LeafFilter filter) throws GeneralException {
+        // This is ambiguous.  Don't provision it.
+    }
+
+    @Override
+    public void visitLE(LeafFilter filter) throws GeneralException {
+        // This is ambiguous.  Don't provision it.
+    }
+
+    @Override
+    public void visitGE(LeafFilter filter) throws GeneralException {
+        // This is ambiguous.  Don't provision it.
+    }
+
+    @Override
+    public void visitIn(LeafFilter filter) throws GeneralException {
+        // "In" implies than an of these will do.  Just provision the first one we find
+        String attributeName = filter.getProperty();
+        List<String> attributeValues = (List<String>)filter.getValue();
+        AttributeRequest request = new AttributeRequest(attributeName, Operation.Set, attributeValues.get(0));
+        requests.add(request);
+    }
+
+    @Override
+    public void visitContainsAll(LeafFilter filter) throws GeneralException {
+        String attributeName = filter.getProperty();
+        List<String> attributeValues = (List<String>)filter.getValue();
+        AttributeRequest request = new AttributeRequest(attributeName, Operation.Add, attributeValues);
+        requests.add(request);
+    }
+
+    @Override
+    public void visitLike(LeafFilter filter) throws GeneralException {
+        // This is ambiguous.  Don't provision it.
+    }
+
+    @Override
+    public void visitNotNull(LeafFilter filter) throws GeneralException {
+        // This is ambiguous.  Don't provision it.
+    }
+
+    @Override
+    public void visitIsNull(LeafFilter filter) throws GeneralException {
+        // Profiles only provision.  They don't deprovision.
+    }
+
+    @Override
+    public void visitIsEmpty(LeafFilter filter) throws GeneralException {
+        // Profiles only provision.  They don't deprovision.
+    }
+
+    @Override
+    public void visitJoin(LeafFilter filter) throws GeneralException {
+        // This is unsupported in profiles.  Don't provision it.
+    }
+
+    @Override
+    public void visitLeftJoin(LeafFilter filter) throws GeneralException {
+        // This is unsupported in profiles.  Don't provision it.
+    }
+
+    @Override
+    public void visitCollectionCondition(LeafFilter filter) throws GeneralException {
+        // This is unsupported in profiles.  Don't provision it.
+    }
+
+    @Override
+    public void visitSubquery(LeafFilter filter) throws GeneralException {
+        // This is unsupported in profiles.  Don't provision it.
+    }
+
+    // Reset this visitor in order to visit a new Profile
+    public void reset() {
+        requests.clear();
+    }
+
+    /**
+     * @return the AttributeRequests that were generated by this FilterVisitor 
+     */
+    public List<AttributeRequest> getRequests() {
+        return requests;
+    }
+}

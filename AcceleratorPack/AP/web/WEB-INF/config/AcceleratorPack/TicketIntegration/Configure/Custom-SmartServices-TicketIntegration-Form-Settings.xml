@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE Custom PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<!-- Copyright © 2018 SailPoint Technologies, Inc. All Rights Reserved.
+All logos, text, content, and works of authorship, including but not limited to underlying code, programming or scripting language, designs, and/or graphics,
+that are used and/or depicted herein are protected under United States and international copyright and trademark laws and treaties,
+and may not be used or reproduced without the prior express written permission of SailPoint Technologies, Inc. -->
+  <!-- ServiceNow executor="sailpoint.integration.servicenow.ServiceNowIntegrationExecutor" -->
+  <!-- HP executor="sailpoint.integration.hpservicemanager.HPServiceManagerIntegrationExecutor" -->
+  <!-- Remedy executor="sailpoint.integration.remedy.RemedyIntegrationExecutor" -->
+  <!-- Accelerator Pack executor="sailpoint.rapidapponboarding.testing.ROADTicketIntegrationExecutor" -->
+<Custom name="Custom-SmartServices-TicketIntegration-Form-Settings">
+	<Description></Description>
+	<Attributes>
+					<Map>
+						<entry key="ServiceNowIntegrationExecutor" value="keystorePath,keystorePass,keystoreType,alias,keyPass,catalogItem,catalogItemList,username,password,authType" />
+						<entry key="HPServiceManagerIntegrationExecutor" value="multipleProvisioningSteps,lastProvisioningStep,
+						checkStatusProvisioningStep,catalogItem,catalogItemList,username,password,committedClosureCode,failureClosureCode,inProcessClosureCode" />
+						<entry key="RemedyIntegrationExecutor" value="basicAuthType,httpUserName,httpUserPass" />
+						<entry key="ROADTicketIntegrationExecutor" value="" />
+						<entry key="commonExecutor" value="executor,universalManager,planInitializerRule,multipleTicket,groupTicketBy,
+						retryableErrors,noProvisioningRequests,provisioningRequestExpiration,managedResources,operations,defaultAssignmentGroupName,defaultRequestedBy
+						,inProcess,failure,committed" />
+						</Map>
+	</Attributes>
+</Custom>

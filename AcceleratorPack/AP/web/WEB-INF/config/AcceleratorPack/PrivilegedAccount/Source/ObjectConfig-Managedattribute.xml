@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE sailpoint PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<!-- Copyright © 2018 SailPoint Technologies, Inc. All Rights Reserved.
+All logos, text, content, and works of authorship, including but not limited to underlying code, programming or scripting language, designs, and/or graphics,
+that are used and/or depicted herein are protected under United States and international copyright and trademark laws and treaties,
+and may not be used or reproduced without the prior express written permission of SailPoint Technologies, Inc. -->
+<sailpoint>
+<ImportAction name='merge'>
+<ObjectConfig name="ManagedAttribute">
+    <ObjectAttribute categoryName="Privileged Entitlement" defaultValue="" displayName="Privileged Entitlement" editMode="Permanent" namedColumn="true" name="entPrivileged">
+    <Description>Privileged Entitlement</Description>
+  </ObjectAttribute>
+  <ObjectAttribute categoryName="Privileged Entitlement" defaultValue="" displayName="Privileged Entitlement Account Types" editMode="Permanent" name="apaccountType">
+    <Description>Comma Separated Privileged Entitlement Types</Description>
+  </ObjectAttribute>
+</ObjectConfig>
+</ImportAction>
+</sailpoint>

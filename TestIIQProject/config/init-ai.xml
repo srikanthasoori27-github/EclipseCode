@@ -1,0 +1,89 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE sailpoint PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+
+<!-- (c) Copyright 2019 SailPoint Technologies, Inc., All Rights Reserved. -->
+
+<!--
+  Initialization file for SailPoint AI Services integration with IdentityIQ.
+-->
+<sailpoint>
+
+    <!--  Rights and Capabilities -->
+    <ImportAction name="include" value="WEB-INF/config/ai/authorization-ai.xml"/>
+
+    <!--
+  Declare the AI Services module
+    -->
+    <Module name="AIServices" description="ui_identityai_module_desc">
+        <Attributes>
+            <Map>
+                <entry key="healthCheckClass" value="sailpoint.identityai.IdentityAIHealthChecker"/>
+                <entry key="enabledConfigKey" value="identityAIEnabled"/>
+            </Map>
+        </Attributes>
+    </Module>
+
+    <!--
+  By setting IdentityAIEnabled, we enable the configuration and use of AI Services.
+
+  By setting recommenderSelected, IdentityIQ will use the recommender
+  defined by the RecommenderDefinition named "AI Services", which
+  is loaded by the plugin.
+
+  If lcmEnableApprovalRecommendations is true, then LCM workflows will calculate
+  recommendations for approvals, assuming that a recommender
+  like AI Services is properly configured.
+
+  If certificationShowRecommendations is true, the default behavior is for
+  certifications to generate and show recommendations. This can be overridden on
+  a per-certification basis at creation or during Staging phase
+    -->
+    <ImportAction name="merge">
+        <Configuration name="SystemConfiguration">
+            <Attributes>
+                <Map>
+                    <entry key="identityAIEnabled" value="true" />
+                    <entry key="recommenderSelected" value="AIServices" />
+                    <entry key="lcmEnableApprovalRecommendations" value="true" />
+                    <entry key="certificationShowRecommendations" value="true" />
+                </Map>
+            </Attributes>
+        </Configuration>
+    </ImportAction>
+
+    <ImportAction name="installPlugin" value="plugins/identityai-recommender-plugin.zip" >
+        <Attributes>
+            <Map>
+                <entry key="throwOnError" value="true"/>
+            </Map>
+        </Attributes>
+    </ImportAction>
+
+    <ImportAction name='execute' value='sailpoint.identityai.IdentityAIMonitoringConfigUpdater'/>
+
+    <Configuration name='IdentityAIConfiguration'>
+        <Attributes>
+            <Map>
+                <entry key="readTimeoutSeconds" value="60" />
+                <entry key="connectTimeoutSeconds" value="10" />
+                <entry key="catalogCacheTTLMillis" value="86400000" />
+                <entry key="recommendationsEndpoint" value="beta/recommendations/request" />
+                <entry key="recommendationsCatalogEndpoint" value="beta/translation-catalogs/recommender" />
+            </Map>
+        </Attributes>
+    </Configuration>
+
+    <Identity name="AIServices" protected="true" workgroup="true">
+        <Attributes>
+            <Map>
+                <entry key="displayName" value="AI Services"/>
+                <entry key="systemUser">
+                    <value>
+                        <Boolean>true</Boolean>
+                    </value>
+                </entry>
+            </Map>
+        </Attributes>
+    </Identity>
+
+</sailpoint>

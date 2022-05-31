@@ -1,0 +1,8 @@
+<!--
+  ~ (c) Copyright 2019 SailPoint Technologies, Inc., All Rights Reserved.
+  -->
+
+<bag name="classifications" cascade="all">
+  <key foreign-key="none" column="ownerId"/>
+  <one-to-many class="sailpoint.object.ObjectClassification"/>
+</bag>

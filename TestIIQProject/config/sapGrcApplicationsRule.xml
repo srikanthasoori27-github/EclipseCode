@@ -1,0 +1,177 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE Rule PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+
+<!-- (c) Copyright 2015 SailPoint Technologies, Inc., All Rights Reserved. -->
+
+<!-- ********************************************************************** 
+  Rule modifies the 'SAP GRC Connector Name' configuration parameter 
+  for SAP-Direct or SAPPortal-UMWebService applications.
+  It provides the flexibility to add 'SAP GRC Connector Name' for applications.
+ ********************************************************************** -->
+
+
+<Rule language="beanshell" name="Mapping GRC Connector Name to SAP based application">
+  <Description>
+   This rule will modify the 'SAP GRC Connector Name' configuration parameter
+   for SAP-Direct or SAPPortal-UMWebService applications.
+   Rule requires application name and corresponding SAP GRC Connector name from .csv file.
+   Input to the rule are the .csv file path and the separator.
+  </Description>
+  <Signature returnType='void'>
+    <Inputs>
+      <Argument name='context'>
+        <Description>
+          A sailpoint.api.SailPointContext object that can be used to
+          query the database to aid in correlation.
+        </Description>
+      </Argument>
+      <Argument name="log">
+        <Description>
+          The log object associated with the SailPointContext.
+        </Description>
+      </Argument>
+      <Argument name='path'>
+        <Description>
+          Path of the .csv file
+        </Description>
+      </Argument>
+      <Argument name='separator'>
+        <Description>
+         Separator used in .csv file to separate SAP based application name and SAP GRC Connector name
+        </Description>
+      </Argument>
+     </Inputs>
+  </Signature>
+  <Source>
+    <![CDATA[
+      import sailpoint.api.SailPointContext;
+      import sailpoint.api.SailPointFactory;
+      import sailpoint.object.Attributes;
+      import java.io.BufferedReader;
+      import java.io.FileNotFoundException;
+      import java.io.FileReader;
+      import java.io.IOException;
+      import java.util.HashMap;
+      import sailpoint.object.Application;
+      import sailpoint.object.Application.Feature;
+      import sailpoint.object.ProvisioningPlan;
+      import sailpoint.tools.Util;
+      import org.apache.log4j.Logger;
+      import java.util.regex.Pattern;
+      String ATTR_SAPGRC_ENABLE = "isGRCEnabled";
+      String ATTR_SAPGRC_CONN_NAME = "GRCConnectorName";
+      String csvFileName = "SAPGRCApplications.csv";
+      String sapDirectType = "SAP - Direct";
+      String sapPortalType = "SAP Portal - UMWebService";
+      HashMap applicationConnectorMap = new HashMap();
+      HashMap attributes = new HashMap();
+      
+      int appModifiedCount  = 0;//number of applications modified.
+      int columnCount = 2; //the .csv should contain 2 columns for Application name and SAP GRC Connector name.
+      int applicationNameCount = 1; //Count will be 1 if .csv contains only Application name and not Connector name.
+      boolean enableSAPGRC = true;
+      String line;
+      String csvSeparator = ","; //the default separator used in .csv is comma
+      String csvComment = "#"; //'#' is treated as comment so it is ignored.
+      BufferedReader br = null;
+      
+      Logger custLog = Logger.getLogger("SAPGRC.sapGrcApplicationsRule"); // need to provide following in log4j2.properties file for logging (log4j.logger.SAPGRC.sapGrcApplicationsRule=debug)
+
+      
+      //read data from .csv file
+      try {
+          custLog.debug("Mapping GRC Connector Name to SAP based application Rule");
+          if ( Util.isNotNullOrEmpty(path) ) {
+            csvFileName = path ;
+          }
+          if ( Util.isNotNullOrEmpty(separator) ) {
+            csvSeparator = separator ;
+          }
+          br = new BufferedReader(new FileReader (csvFileName) );
+          while ( ( line = br.readLine() )!=null ) { 
+              try {
+                  if ( !(line.startsWith(csvComment) ) ) {
+                      custLog.debug("Line : " + line);
+                      custLog.debug("Separator used: " + csvSeparator);
+                      String applicationName = null, connectorName = null;
+                      if ( line.contains(csvSeparator) ) {
+                          /* 
+                           (Bug #26906: The split() method expects a regular-expression, not a literal string, and
+                           the "+" character has a special meaning in regular expressions.
+                           To split on a literal "+" character, used Pattern.quote() method.
+                          */
+                          String[] appConnMapColumns = line.split(Pattern.quote(csvSeparator));
+                          int applicationConnMapColumnsCount = appConnMapColumns.length;
+                          custLog.debug("columnCount: " + columnCount + " applicationConnMapColumnsCount: " + applicationConnMapColumnsCount);
+                          applicationName = appConnMapColumns[0];
+                          //means second column exist
+                          if ( columnCount == applicationConnMapColumnsCount ) {
+                              connectorName = appConnMapColumns[1];
+                              if ( ( Util.isNotNullOrEmpty(applicationName) ) && ( Util.isNotNullOrEmpty(connectorName) ) ) {
+                                  applicationConnectorMap.put(applicationName, connectorName);
+                              } else {
+                                  custLog.error("Please provide proper data in the " + csvFileName + " file at line: " + line);
+                              }
+                          } else {
+                             //Application name with separator is provided so connector name would be same as application name
+                             if ( (Util.isNotNullOrEmpty(applicationName)) && ( applicationNameCount == applicationConnMapColumnsCount) ) {
+                                 applicationConnectorMap.put(applicationName,applicationName);
+                             } else {
+                                  custLog.error("Please provide proper data in the " + csvFileName + " file at line: " + line);
+                              }
+                          }
+                      } else {
+                          if ( Util.isNotNullOrEmpty(line) ) {
+                              //only application name is provided so connector name would be same as application name
+                              applicationConnectorMap.put(line,line);
+                          }
+                      }
+                  }
+              }
+              catch(Exception e) {
+                  custLog.error("Please provide proper data in the " + csvFileName + " file at line: " + line,e);
+              }
+          }
+          custLog.debug("Application Connector Map: " + applicationConnectorMap);
+          //iterate map
+          Iterator entries = applicationConnectorMap.entrySet().iterator();
+          while ( entries.hasNext() ) {
+              Map.Entry entry = (Map.Entry) entries.next();
+              if ( entry.getKey() != null ) {
+                  String appName = entry.getKey().toString();
+                  String connectorName = entry.getValue().toString();
+                  try {
+                      Application app = context.getObjectByName(Application.class,appName);
+                      if( app != null )
+                      {
+                          String applicationType =  app.getType();
+                          attributes = app.getAttributes();
+                          if ( ( applicationType.equals(sapDirectType) ) || ( applicationType.equals(sapPortalType) ) )
+                          {
+                              app.setAttribute(ATTR_SAPGRC_ENABLE,enableSAPGRC);
+                              app.setAttribute(ATTR_SAPGRC_CONN_NAME,connectorName);
+                              context.saveObject(app);
+                              context.commitTransaction();
+                              appModifiedCount ++;
+                              custLog.info("Attribute 'SAP GRC Connector Name' value: '" + connectorName + "' updated for Application: '" + appName + "'");
+                          } else {
+                              custLog.error("Not able to set SAP GRC Connector Name for application: '" + appName + "'");
+                          }
+                      }  else{
+                          custLog.error("Application Not found: '" + appName + "'");
+                      }
+                  } catch(Exception e) {
+                      custLog.error("Rule processing failed ",e);
+                  }
+              }
+          }
+          custLog.info("Number of Applications modified for SAP GRC Connector Mapping " +appModifiedCount );
+      } catch(FileNotFoundException e) {
+          custLog.error("The file " + csvFileName + " was not found ",e);
+      } catch(Exception e) {
+          custLog.error("Rule processing failed ",e);
+      }
+]]>
+
+  </Source>
+</Rule>

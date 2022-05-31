@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="warn" monitorInterval="20" name="identityiq_default" packages="sailpoint.api.logging" >
+
+  <!-- This sample file will only be used for log4j config if:      -->
+  <!-- a) this is re-named to WEB-INF/classes/log4j2.xml             -->
+  <!-- b) there is no file WEB-INF/classes/log4j2.properties present -->
+
+  <!--
+  # See https://logging.apache.org/log4j/2.x/manual/configuration.html
+  # for syntax description
+  -->
+
+  <Appenders>
+    <Console name="stdout" target="SYSTEM_OUT">
+      <PatternLayout pattern="%d{ISO8601} %5p %t %c{4}:%L - %m%n"/>
+    </Console>
+
+    <!-- direct log messages to the db -->
+    <syslog name="syslog" />
+
+    <!--
+        Below is an example of how to create a logger that writes to a file.
+        Uncomment the following block, set fileName attribute value, then 
+        add an AppenderRef for "file" to a Logger (e.g. see under Root Logger)
+    -->
+    <!--
+    <File name="file" fileName="C:/Windows/Temp/sailpoint.log" >
+        <PatternLayout pattern="%d{ISO8601} %5p %t %c{4}:%L - %m%n"/>
+    </File>
+    -->
+
+
+    <!--
+        SailPoint metering is useful to help diagnose performance issues.
+        Some critical sections of code will gather performance data
+        metrics, and will log the data to the meter appender.
+
+        Below is an example of how to create a csv of metered data.
+        Uncomment the following 9 lines, set the fileName and filePattern
+        attributes appropriately, then uncomment the Logger for sailpoint.api.Meter
+        near the end of this file
+    -->
+    <!--
+    <RollingFile name="meter"
+          fileName="C:/Windows/Temp/meter.log"
+          filePattern="C:/Windows/Temp/meter-%d{yyyy-MM-dd}-%i.log.gz">
+            <PatternLayout pattern="%m%n"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10 mB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10" />
+    </RollingFile>
+    -->
+
+  </Appenders>
+
+  <Loggers>
+
+    <!--
+        ### set default log levels and appender
+        ### valid log levels in increasing order of severity are:
+        ###     trace, debug, info, warn, error, fatal, off
+        ### trace is required to get method entry and exit logging
+    -->
+    <Root level="warn">
+      <AppenderRef ref="stdout"/>
+
+      <!--
+      # Uncomment to also write to file appender by default.
+      # Also need to uncomment the file appender definition above.
+      -->
+      <!-- <AppenderRef ref="file"/> -->
+    </Root>
+
+    <!-- Suppress a warning about using a default configuration -->
+    <Logger name="net.sf.ehcache" level="error" />
+
+    <!-- Suppress "narrowing proxy" hibernate warning -->
+    <Logger name="org.hibernate.engine.StatefulPersistenceContext" level="error" />
+
+    <!-- Suppress warnings about deprecated gadgets during import -->
+    <Logger name="net.sf.jasperreports.engine.xml" level="error" />
+
+    <!--
+        Note:  The following logging properties turn off warnings that result from our
+        combination of technologies (Tomahawk/Faceletes/A4J, etc.).
+        Commenting them out will result in a slew of parser warnings.
+        If you don't want to clutter your logs with a bunch of useless warning
+        messages please leave these as they are.
+    -->
+    <!-- Suppress warning message about Unparsable lastModified -->
+    <Logger name="org.apache.myfaces.renderkit.html.util.MyFacesResourceLoader" level="error" />
+    <!-- Suppress warning message about response not having <head> or <body> tags -->
+    <Logger name="org.apache.myfaces.renderkit.html.util.DefaultAddResource" level="error" />
+    <!-- Suppress warning message about invalid HTML inside javascript 
+          See http://www.mail-archive.com/users@myfaces.apache.org/msg50391.html -->
+    <Logger name="org.apache.myfaces.renderkit.html.util.ReducedHTMLParser" level="error" />
+
+
+    <Logger name="sailpoint" level="warn" >
+      <AppenderRef ref="syslog"/>
+    </Logger>
+
+    <!-- Make sure the syslog code doesn't call if there is
+         a problem.   
+         NOTE: The additivity flag is critical here.
+    -->
+    <Logger name="sailpoint.api.logging.SyslogAppender" level="error" additivity="false" >
+      <AppenderRef ref="stdout"/>
+    </Logger>
+    <Logger name="sailpoint.object.SyslogEvent" level="error" additivity="false" >
+      <AppenderRef ref="stdout"/>
+    </Logger>
+
+    <!-- Uncomment to log all SQL and prepared statement parameter values. -->
+    <!--
+    <Logger name="org.hibernate.SQL" level="debug" />
+    <Logger name="org.hibernate.type" level="trace" />
+    -->
+
+    <!-- Uncomment this to log all SailPoint generated HQL queries and
+         query parameters. -->
+    <!--
+    <Logger name="sailpoint.persistence.hql" level="trace" />
+    -->
+
+    <!-- Uncomment to view JSF logging -->
+    <!--
+    <Logger name="sailpoint.web.util.PhaseTracker" level="trace" />
+    <Logger name="com.sun.faces" level="trace" />
+    <Logger name="javax.faces" level="trace" />
+    -->
+
+    <!-- Uncomment to enable logging of performance metering data -->
+    <!--
+    <Logger name="sailpoint.api.Meter" level="info" additivity="false">
+        <AppenderRef ref="meter" />
+    </Logger>
+    -->
+
+    <!-- Uncomment to enable detailed multi-factor authentication logging -->
+    <!--
+    <Logger name="sailpoint.web.MFAFilter" level="debug" />
+    <Logger name="sailpoint.workflow.MFALibrary" level="info" />
+    -->
+
+    <!-- Uncomment to enable detailed statistics monitoring logging -->
+    <!--
+    <Logger name="sailpoint.server.MonitoringService" level="debug" />
+    -->
+
+    <!--
+        Additional common log level settings.  
+        To enable any Logger listed below, move the Logger out of the comment block
+    -->
+    <!--
+    <Logger name="org.hibernate" level="info" />
+    <Logger name="org.hibernate" level="debug" />
+    <Logger name="org.hibernate" level="trace" />
+    <Logger name="org.hibernate.cache" level="trace" />
+    <Logger name="org.springframework" level="info" />
+    <Logger name="org.quartz" level="info" />
+    <Logger name="sailpoint.api.Aggregator" level="trace" />
+    <Logger name="sailpoint.api.CacheTracker" level="trace" />
+    <Logger name="sailpoint.api.Certificationer" level="info" />
+    <Logger name="sailpoint.api.certification.RemediationManager" level="info" />
+    <Logger name="sailpoint.api.CertificationPhaser" level="info" />
+    <Logger name="sailpoint.api.CorrelationModel" level="info" />
+    <Logger name="sailpoint.api.LockTracker" level="trace" />
+    <Logger name="sailpoint.api.ManagedAttributer" level="info" />
+    <Logger name="sailpoint.api.Provisioner" level="info" />
+    <Logger name="sailpoint.integration.oim.OIMClient" level="info" />
+    <Logger name="sailpoint.object.ObjectConfig" level="info" />
+    <Logger name="sailpoint.persistence.DateType" level="info" />
+    <Logger name="sailpoint.persistence.DebugInterceptor" level="debug" />
+    <Logger name="sailpoint.persistence.HibernatePersistenceManager" level="info" />
+    <Logger name="sailpoint.persistence.HibernatePersistenceManager" level="trace" />
+    <Logger name="sailpoint.persistence.NewXmlType" level="info" />
+    <Logger name="sailpoint.persistence.SailPointInterceptor" level="info" />
+    <Logger name="sailpoint.persistence.XmlType" level="info" />
+    <Logger name="sailpoint.reporting" level="trace" />
+    <Logger name="sailpoint.server.BSFRuleRunner" level="trace" />
+    <Logger name="sailpoint.server.CacheService" level="info" />
+    <Logger name="sailpoint.server.Environment" level="trace" />
+    <Logger name="sailpoint.service.IIQRestService" level="info" />
+    <Logger name="sailpoint.task.IdentityRefreshExecutor" level="trace" />
+    <Logger name="sailpoint.task.RoleSynchronizer" level="info" />
+    <Logger name="sailpoint.web.util.TimingFilter" level="trace" />
+    <Logger name="sailpoint.server.HeartbeatService" level="trace" />
+    <Logger name="sailpoint.connector.sm" level="debug" />
+    -->
+
+  </Loggers>
+
+</Configuration>

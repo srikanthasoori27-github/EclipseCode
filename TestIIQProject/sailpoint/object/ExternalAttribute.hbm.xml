@@ -1,0 +1,18 @@
+<!-- (c) Copyright 2008 SailPoint Technologies, Inc., All Rights Reserved. -->
+<!-- 
+  Note that since we create composite indexes on all three of these values
+  you have to arrange for the total size not to exceed 450 for SQL Server.
+  With the usual sizes of 128 for object ids and names that leaves
+  only 194 characters for the value.  
+
+  Hibernate ids are only 32 characters and a 128 character attribute
+  name feels too long.  So dropping both of those to 64 to transfer 
+  some space
+
+-->
+	<id name="id" length="32" unsaved-value="undefined">
+	  <generator class="sailpoint.persistence.AssignedKeyGenerator" />
+	</id>
+    <property name="objectId" type="string" length="64"/>
+    <property name="attributeName" type="string" length="64"/>
+    <property name="value" type="string" length="322"/>

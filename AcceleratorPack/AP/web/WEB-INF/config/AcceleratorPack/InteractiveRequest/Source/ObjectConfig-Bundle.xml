@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE sailpoint PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<!-- Copyright © 2018 SailPoint Technologies, Inc. All Rights Reserved.
+All logos, text, content, and works of authorship, including but not limited to underlying code, programming or scripting language, designs, and/or graphics,
+that are used and/or depicted herein are protected under United States and international copyright and trademark laws and treaties,
+and may not be used or reproduced without the prior express written permission of SailPoint Technologies, Inc. -->
+<sailpoint>
+<ImportAction name='merge'>
+<ObjectConfig name="Bundle">
+  <ObjectAttribute categoryName="Joiner" defaultValue="" editMode="Permanent" namedColumn="true" name="isBirthright" displayName="Birthright Role">
+    <Description>Exclude Birthright Entitlements</Description>
+  </ObjectAttribute>
+  <ObjectAttribute categoryName="Approval" displayName="Requestor Form Application Name" editMode="Permanent" name="formappName">
+	<Description>Input Form For Requestor / Application</Description>
+  </ObjectAttribute>
+  <ObjectAttribute categoryName="Approval" displayName="IdentityIQ 1st Level Business Approvers" editMode="Permanent" namedColumn="true" name="roleBusApprovers">
+   	<Description>Enter a comma separated  Cube Ids or WorkGroups</Description>
+  </ObjectAttribute>
+  <ObjectAttribute categoryName="Approval" defaultValue="" displayName="Omit or Override IdentityIQ 1st Level Business Approvers Rule" editMode="Permanent" name="roleBusApprovalRule">
+    <Description> This rule can be used to override 1st Level Business Approvers</Description>
+  </ObjectAttribute>
+   <ObjectAttribute categoryName="Approval" displayName="IdentityIQ 2nd Level Business Approvers" editMode="Permanent" namedColumn="true" name="additionalRoleBusApprovers">
+   	<Description>Enter a comma separated  Cube Ids or WorkGroups</Description>
+  </ObjectAttribute>
+  <ObjectAttribute categoryName="Approval" defaultValue="" displayName="Omit or Override IdentityIQ 2nd Level Business Approvers Rule" editMode="Permanent" name="additionalRoleBusApprovalRule">
+    <Description> This rule can be used to override 2nd Level Business Approvers</Description>
+  </ObjectAttribute>
+   <ObjectAttribute categoryName="Multiple Acces Request Workflows" displayName="Accelerator Pack Enabled" editMode="Permanent" name="acceleratorPackEnabled">
+    <Description>Used to make sure access request is redirected to Accelerator Pack Wrapper Workflow</Description>
+  </ObjectAttribute>
+</ObjectConfig>
+</ImportAction>
+</sailpoint>

@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE ImportAction PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<ImportAction name="connectorRegistryUpdateAction">
+  <Application connector="sailpoint.connector.cib.CIBConnector" featuresString="PROXY, SEARCH" name="Cloud Gateway Template" type="Cloud Gateway">
+    <Attributes>
+      <Map>
+        <entry key="formPath" value="cibAttributesForm.xhtml"/>
+        <entry key="sslOpts">
+          <value>
+            <Integer>0</Integer>
+          </value>
+        </entry>
+      </Map>
+    </Attributes>
+  </Application>
+</ImportAction>

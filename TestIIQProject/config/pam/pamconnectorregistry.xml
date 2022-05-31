@@ -1,0 +1,393 @@
+<?xml version='1.0' encoding='UTF-8'?><!--
+  ~ (c) Copyright 2020 SailPoint Technologies, Inc., All Rights Reserved.
+  -->
+
+<!DOCTYPE sailpoint PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+
+<!--
+  ApplicationTemplates used by PAM
+-->
+<sailpoint>
+  <ImportAction name="merge">
+    <Configuration name="ConnectorRegistry">
+      <Attributes>
+        <Map>
+          <entry key="applicationTemplates">
+            <value>
+              <List>
+                <Application connector="sailpoint.connector.OpenConnectorAdapter"
+                             featuresString="DISCOVER_SCHEMA, PROVISIONING, SYNC_PROVISIONING, ENABLE, PASSWORD, UNSTRUCTURED_TARGETS" icon="internetIcon"
+                             name="Privileged Account Management"
+                             type="Privileged Account Management">
+                  <Attributes>
+                    <Map>
+                      <entry key="connectorClass" value="openconnector.connector.scim2.SCIM2Connector"/>
+                      <entry key="load-by-sysclassloader">
+                          <value>
+                              <List>
+                                  <String>json.jar</String>
+                              </List>
+                          </value>
+                      </entry>
+                      <entry key="pageSize" value="5000"/>
+                      <entry key="explicitAttributesRequest"/>
+                      <entry key="formPath" value="pamAttributesForm.xhtml"/>
+                      <entry key="encrypted" value="password,client_secret,refresh_token,oauthBearerToken"/>
+                      <entry key="beforeProvisioningRule" value="PAM Privileged Data Mapping"/>
+                      <entry key="schemaPropertyMappings">
+                        <value>
+                          <List>
+                            <SchemaPropertyMapping urn="urn:ietf:params:scim:schemas:core:2.0:User">
+                              <AttributePropertyMapping getter="openconnector.connector.scim2.SCIM2PropertyGetter" name="id" property="id" setter="openconnector.connector.scim2.SCIM2PropertySetter"/>
+                              <AttributePropertyMapping getter="openconnector.connector.scim2.SCIM2PropertyGetter" name="userName" property="userName" setter="openconnector.connector.scim2.SCIM2PropertySetter"/>
+                              <AttributePropertyMapping name="name">
+                                <AttributePropertyMapping getter="openconnector.connector.scim2.SCIM2PropertyGetter" name="formatted" property="name.formatted" setter="openconnector.connector.scim2.SCIM2PropertySetter"/>
+                                <AttributePropertyMapping getter="openconnector.connector.scim2.SCIM2PropertyGetter" name="familyName" property="name.familyName" setter="openconnector.connector.scim2.SCIM2PropertySetter"/>
+                                <AttributePropertyMapping getter="openconnector.connector.scim2.SCIM2PropertyGetter" name="givenName" property="name.givenName" setter="openconnector.connector.scim2.SCIM2PropertySetter"/>
+                                <AttributePropertyMapping getter="openconnector.connector.scim2.SCIM2PropertyGetter" name="middleName" property="name.middleName" setter="openconnector.connector.scim2.SCIM2PropertySetter"/>
+                                <AttributePropertyMapping getter="openconnector.connector.scim2.SCIM2PropertyGetter" name="honorificPrefix" property="name.honorificPrefix" setter="openconnector.connector.scim2.SCIM2PropertySetter"/>
+                                <AttributePropertyMapping getter="openconnector.connector.scim2.SCIM2PropertyGetter" name="honorificSuffix" property="name.honorificSuffix" setter="openconnector.connector.scim2.SCIM2PropertySetter"/>
+                              </AttributePropertyMapping>
+                              <AttributePropertyMapping getter="openconnector.connector.scim2.SCIM2PropertyGetter" name="displayName" property="displayName" setter="openconnector.connector.scim2.SCIM2PropertySetter"/>
+                              <AttributePropertyMapping getter="openconnector.connector.scim2.SCIM2PropertyGetter" name="nickName" property="nickName" setter="openconnector.connector.scim2.SCIM2PropertySetter"/>
+                              <AttributePropertyMapping getter="openconnector.connector.scim2.SCIM2PropertyGetter" name="profileUrl" property="profileUrl" setter="openconnector.connector.scim2.SCIM2PropertySetter"/>
+                              <AttributePropertyMapping getter="openconnector.connector.scim2.SCIM2PropertyGetter" name="title" property="title" setter="openconnector.connector.scim2.SCIM2PropertySetter"/>
+                              <AttributePropertyMapping getter="openconnector.connector.scim2.SCIM2PropertyGetter" name="userType" property="userType" setter="openconnector.connector.scim2.SCIM2PropertySetter"/>
+                              <AttributePropertyMapping getter="openconnector.connector.scim2.SCIM2PropertyGetter" name="preferredLanguage" property="preferredLanguage" setter="openconnector.connector.scim2.SCIM2PropertySetter"/>
+                              <AttributePropertyMapping getter="openconnector.connector.scim2.SCIM2PropertyGetter" name="locale" property="locale" setter="openconnector.connector.scim2.SCIM2PropertySetter"/>
+                              <AttributePropertyMapping getter="openconnector.connector.scim2.SCIM2PropertyGetter" name="timezone" property="timezone" setter="openconnector.connector.scim2.SCIM2PropertySetter"/>
+                              <AttributePropertyMapping getter="openconnector.connector.scim2.SCIM2PropertyGetter" name="active" property="active" setter="openconnector.connector.scim2.SCIM2PropertySetter"/>
+                              <AttributePropertyMapping getter="openconnector.connector.scim2.SCIM2PropertyGetter" name="password" property="password" setter="openconnector.connector.scim2.SCIM2PropertySetter"/>
+                              <AttributePropertyMapping getter="openconnector.connector.scim2.SCIM2MultiValuedPropertyGetter" name="emails" setter="openconnector.connector.scim2.SCIM2MultiValuedPropertySetter">
+                                <AttributePropertyMapping name="value" property="value"/>
+                                <AttributePropertyMapping name="display" property="display"/>
+                                <AttributePropertyMapping name="type" property="type"/>
+                                <AttributePropertyMapping name="primary" property="primary"/>
+                              </AttributePropertyMapping>
+                              <AttributePropertyMapping getter="openconnector.connector.scim2.SCIM2MultiValuedPropertyGetter" name="groups" property="groups" setter="openconnector.connector.scim2.SCIM2PropertySetter">
+                                <AttributePropertyMapping name="value" property="value"/>
+                                <AttributePropertyMapping name="$ref" property="$ref"/>
+                                <AttributePropertyMapping name="display" property="display"/>
+                                <AttributePropertyMapping name="type" property="type"/>
+                              </AttributePropertyMapping>
+                              <AttributePropertyMapping getter="openconnector.connector.scim2.SCIM2MultiValuedPropertyGetter" name="entitlements" property="entitlements" setter="openconnector.connector.scim2.SCIM2PropertySetter">
+                                <AttributePropertyMapping name="value" property="value"/>
+                                <AttributePropertyMapping name="display" property="display"/>
+                                <AttributePropertyMapping name="type" property="type"/>
+                                <AttributePropertyMapping name="primary" property="primary"/>
+                              </AttributePropertyMapping>
+                              <AttributePropertyMapping getter="openconnector.connector.scim2.SCIM2MultiValuedPropertyGetter" name="roles" property="roles" setter="openconnector.connector.scim2.SCIM2PropertySetter">
+                                <AttributePropertyMapping name="value" property="value"/>
+                                <AttributePropertyMapping name="display" property="display"/>
+                                <AttributePropertyMapping name="type" property="type"/>
+                                <AttributePropertyMapping name="primary" property="primary"/>
+                              </AttributePropertyMapping>
+                            </SchemaPropertyMapping>
+                            <SchemaPropertyMapping urn="urn:ietf:params:scim:schemas:pam:1.0:LinkedObject">
+                              <AttributePropertyMapping getter="openconnector.connector.scim2.SCIM2PropertyGetter" name="source" property="source" setter="openconnector.connector.scim2.SCIM2ExtendedPropertySetter"/>
+                              <AttributePropertyMapping getter="openconnector.connector.scim2.SCIM2PropertyGetter" name="nativeIdentifier" property="nativeIdentifier" setter="openconnector.connector.scim2.SCIM2ExtendedPropertySetter"/>
+                            </SchemaPropertyMapping>
+                            <SchemaPropertyMapping urn="urn:ietf:params:scim:schemas:pam:1.0:Container">
+                              <AttributePropertyMapping getter="openconnector.connector.scim2.SCIM2PropertyGetter" name="id" property="id" setter="openconnector.connector.scim2.SCIM2PropertySetter"/>
+                              <AttributePropertyMapping getter="openconnector.connector.scim2.SCIM2PropertyGetter" name="name" property="name" setter="openconnector.connector.scim2.SCIM2PropertySetter"/>
+                              <AttributePropertyMapping getter="openconnector.connector.scim2.SCIM2PropertyGetter" name="displayName" property="displayName" setter="openconnector.connector.scim2.SCIM2PropertySetter"/>
+                              <AttributePropertyMapping getter="openconnector.connector.scim2.SCIM2PropertyGetter" name="description" property="description" setter="openconnector.connector.scim2.SCIM2PropertySetter"/>
+                              <AttributePropertyMapping getter="openconnector.connector.scim2.SCIM2PropertyGetter" name="type" property="type" setter="openconnector.connector.scim2.SCIM2PropertySetter"/>
+                              <AttributePropertyMapping name="owner">
+                                <AttributePropertyMapping getter="openconnector.connector.scim2.SCIM2PropertyGetter" name="value" property="owner.value" setter="openconnector.connector.scim2.SCIM2PropertySetter"/>
+                                <AttributePropertyMapping getter="openconnector.connector.scim2.SCIM2PropertyGetter" name="$ref" property="owner.$ref" setter="openconnector.connector.scim2.SCIM2PropertySetter"/>
+                                <AttributePropertyMapping getter="openconnector.connector.scim2.SCIM2PropertyGetter" name="display" property="owner.display" setter="openconnector.connector.scim2.SCIM2PropertySetter"/>
+                              </AttributePropertyMapping>
+                              <AttributePropertyMapping getter="openconnector.connector.scim2.SCIM2ExtendedPropertyGetter" name="privilegedData" property="privilegedData" setter="openconnector.connector.scim2.SCIM2MultiValuedPropertySetter">
+                                <Attributes>
+                                  <Map>
+                                    <entry key="excludeTypeFromAttributeName" value="true" />
+                                  </Map>
+                                </Attributes>
+                                <AttributePropertyMapping name="value" property="value"/>
+                                <AttributePropertyMapping name="$ref" property="$ref"/>
+                                <AttributePropertyMapping name="display" property="display"/>
+                                <AttributePropertyMapping name="type" property="type"/>
+                              </AttributePropertyMapping>
+                            </SchemaPropertyMapping>
+                            <SchemaPropertyMapping urn="urn:ietf:params:scim:schemas:pam:1.0:PrivilegedData">
+                              <AttributePropertyMapping getter="openconnector.connector.scim2.SCIM2PropertyGetter" name="id" property="id" setter="openconnector.connector.scim2.SCIM2PropertySetter"/>
+                              <AttributePropertyMapping getter="openconnector.connector.scim2.SCIM2PropertyGetter" name="name" property="name" setter="openconnector.connector.scim2.SCIM2PropertySetter"/>
+                              <AttributePropertyMapping getter="openconnector.connector.scim2.SCIM2PropertyGetter" name="description" property="description" setter="openconnector.connector.scim2.SCIM2PropertySetter"/>
+                              <AttributePropertyMapping getter="openconnector.connector.scim2.SCIM2PropertyGetter" name="type" property="type" setter="openconnector.connector.scim2.SCIM2PropertySetter"/>
+                            </SchemaPropertyMapping>
+                            <SchemaPropertyMapping urn="urn:ietf:params:scim:schemas:core:2.0:Group">
+                              <AttributePropertyMapping getter="openconnector.connector.scim2.SCIM2PropertyGetter" name="id" property="id" setter="openconnector.connector.scim2.SCIM2PropertySetter"/>
+                              <AttributePropertyMapping getter="openconnector.connector.scim2.SCIM2PropertyGetter" name="displayName" property="displayName" setter="openconnector.connector.scim2.SCIM2PropertySetter"/>
+                              <AttributePropertyMapping getter="openconnector.connector.scim2.SCIM2MultiValuedPropertyGetter" name="members" property="members" setter="openconnector.connector.scim2.SCIM2PropertySetter">
+                                <AttributePropertyMapping name="value" property="value"/>
+                                <AttributePropertyMapping name="$ref" property="$ref"/>
+                                <AttributePropertyMapping name="type" property="type"/>
+                              </AttributePropertyMapping>
+                            </SchemaPropertyMapping>
+                          </List>
+                        </value>
+                      </entry>
+                    </Map>
+                  </Attributes>
+                  <Schemas>
+                    <Schema displayAttribute="userName" identityAttribute="id" nativeObjectType="User" objectType="account">
+                      <AttributeDefinition name="id" type="string">
+                        <Description>The unique identifier of the User.</Description>
+                      </AttributeDefinition>
+                      <AttributeDefinition name="userName" type="string">
+                        <Description>Unique identifier for the User, typically used by the user to directly authenticate to the service provider.</Description>
+                      </AttributeDefinition>
+                      <AttributeDefinition name="name.formatted" type="string">
+                        <Description>The full name, including all middle names, titles, and suffixes as appropriate, formatted for display (e.g., 'Ms. Barbara J Jensen, III').</Description>
+                      </AttributeDefinition>
+                      <AttributeDefinition name="name.familyName" type="string">
+                        <Description>The family name of the User, or last name in most Western languages (e.g., 'Jensen' given the full name 'Ms. Barbara J Jensen, III').</Description>
+                      </AttributeDefinition>
+                      <AttributeDefinition name="name.givenName" type="string">
+                        <Description>The given name of the User, or first name in most Western languages (e.g., 'Barbara' given the full name 'Ms. Barbara J Jensen, III').</Description>
+                      </AttributeDefinition>
+                      <AttributeDefinition name="name.middleName" type="string">
+                        <Description>The middle name(s) of the User (e.g., 'Jane' given the full name 'Ms. Barbara J Jensen, III').</Description>
+                      </AttributeDefinition>
+                      <AttributeDefinition name="name.honorificPrefix" type="string">
+                        <Description>The honorific prefix(es) of the User, or title in most Western languages (e.g., 'Ms.' given the full name 'Ms. Barbara J Jensen, III').</Description>
+                      </AttributeDefinition>
+                      <AttributeDefinition name="name.honorificSuffix" type="string">
+                        <Description>The honorific suffix(es) of the User, or suffix in most Western languages (e.g., 'III' given the full name 'Ms. Barbara J Jensen, III').</Description>
+                      </AttributeDefinition>
+                      <AttributeDefinition name="displayName" type="string">
+                        <Description>The name of the User, suitable for display to end-users.  The name SHOULD be the full name of the User being described, if known.</Description>
+                      </AttributeDefinition>
+                      <AttributeDefinition name="nickName" type="string">
+                        <Description>The casual way to address the user in real life, e.g., 'Bob' or 'Bobby' instead of 'Robert'.  This attribute SHOULD NOT be used to represent a User's username (e.g., 'bjensen' or 'mpepperidge').</Description>
+                      </AttributeDefinition>
+                      <AttributeDefinition name="profileUrl" type="string">
+                        <Description>A fully qualified URL pointing to a page representing the User's online profile.</Description>
+                      </AttributeDefinition>
+                      <AttributeDefinition name="title" type="string">
+                        <Description>The user's title, such as "Vice President."</Description>
+                      </AttributeDefinition>
+                      <AttributeDefinition name="userType" type="string">
+                        <Description>Used to identify the relationship between the organization and the user.  Typical values used might be 'Contractor', 'Employee', 'Intern', 'Temp', 'External', and 'Unknown', but any value may be used.</Description>
+                      </AttributeDefinition>
+                      <AttributeDefinition name="preferredLanguage" type="string">
+                        <Description>Indicates the User's preferred written or spoken language.  Generally used for selecting a localized user interface; e.g., 'en_US' specifies the language English and country US.</Description>
+                      </AttributeDefinition>
+                      <AttributeDefinition name="locale" type="string">
+                        <Description>Used to indicate the User's default location for purposes of localizing items such as currency, date time format, or numerical representations.</Description>
+                      </AttributeDefinition>
+                      <AttributeDefinition name="timezone" type="string">
+                        <Description>The User's time zone in the 'Olson' time zone database format, e.g., 'America/Los_Angeles'.</Description>
+                      </AttributeDefinition>
+                      <AttributeDefinition name="active" type="boolean">
+                        <Description>A Boolean value indicating the User's administrative status.</Description>
+                      </AttributeDefinition>
+                      <AttributeDefinition name="emails.work.primary.value" type="string">
+                        <Description>Email addresses for the user.  The value SHOULD be canonicalized by the service provider, e.g., 'bjensen@example.com' instead of 'bjensen@EXAMPLE.COM'. Canonical type values of 'work', 'home', and 'other'.</Description>
+                      </AttributeDefinition>
+                      <AttributeDefinition name="emails.work.secondary.value" type="string">
+                        <Description>Email addresses for the user.  The value SHOULD be canonicalized by the service provider, e.g., 'bjensen@example.com' instead of 'bjensen@EXAMPLE.COM'. Canonical type values of 'work', 'home', and 'other'.</Description>
+                      </AttributeDefinition>
+                      <AttributeDefinition name="emails.work.primary.display" type="string">
+                        <Description>A human-readable name, primarily used for display purposes.  READ-ONLY.</Description>
+                      </AttributeDefinition>
+                      <AttributeDefinition name="emails.work.secondary.display" type="string">
+                        <Description>A human-readable name, primarily used for display purposes.  READ-ONLY.</Description>
+                      </AttributeDefinition>
+                      <AttributeDefinition name="emails.home.primary.value" type="string">
+                        <Description>Email addresses for the user.  The value SHOULD be canonicalized by the service provider, e.g., 'bjensen@example.com' instead of 'bjensen@EXAMPLE.COM'. Canonical type values of 'work', 'home', and 'other'.</Description>
+                      </AttributeDefinition>
+                      <AttributeDefinition name="emails.home.secondary.value" type="string">
+                        <Description>Email addresses for the user.  The value SHOULD be canonicalized by the service provider, e.g., 'bjensen@example.com' instead of 'bjensen@EXAMPLE.COM'. Canonical type values of 'work', 'home', and 'other'.</Description>
+                      </AttributeDefinition>
+                      <AttributeDefinition name="emails.home.primary.display" type="string">
+                        <Description>A human-readable name, primarily used for display purposes.  READ-ONLY.</Description>
+                      </AttributeDefinition>
+                      <AttributeDefinition name="emails.home.secondary.display" type="string">
+                        <Description>A human-readable name, primarily used for display purposes.  READ-ONLY.</Description>
+                      </AttributeDefinition>
+                      <AttributeDefinition name="emails.other.primary.value" type="string">
+                        <Description>Email addresses for the user.  The value SHOULD be canonicalized by the service provider, e.g., 'bjensen@example.com' instead of 'bjensen@EXAMPLE.COM'. Canonical type values of 'work', 'home', and 'other'.</Description>
+                      </AttributeDefinition>
+                      <AttributeDefinition name="emails.other.secondary.value" type="string">
+                        <Description>Email addresses for the user.  The value SHOULD be canonicalized by the service provider, e.g., 'bjensen@example.com' instead of 'bjensen@EXAMPLE.COM'. Canonical type values of 'work', 'home', and 'other'.</Description>
+                      </AttributeDefinition>
+                      <AttributeDefinition name="emails.other.primary.display" type="string">
+                        <Description>A human-readable name, primarily used for display purposes.  READ-ONLY.</Description>
+                      </AttributeDefinition>
+                      <AttributeDefinition name="emails.other.secondary.display" type="string">
+                        <Description>A human-readable name, primarily used for display purposes.  READ-ONLY.</Description>
+                      </AttributeDefinition>
+                      <AttributeDefinition entitlement="true" managed="true" multi="true" name="groups" schemaObjectType="group" type="string">
+                        <Description>A list of groups to which the user belongs, either through direct membership, through nested groups, or dynamically calculated.</Description>
+                      </AttributeDefinition>
+                      <AttributeDefinition entitlement="true" managed="true" multi="true" name="entitlements" type="string">
+                        <Description>A list of entitlements for the User that represent a thing the User has.</Description>
+                      </AttributeDefinition>
+                      <AttributeDefinition entitlement="true" managed="true" multi="true" name="roles" type="string">
+                        <Description>A list of roles for the User that collectively represent who the User is, e.g., 'Student', 'Faculty'.</Description>
+                      </AttributeDefinition>
+                      <AttributeDefinition correlationKey="1" name="source" type="string">
+                        <Description>The name of the external application on which the object lives.  If this is a PAM local object, this is null.</Description>
+                      </AttributeDefinition>
+                      <AttributeDefinition correlationKey="2" name="nativeIdentifier" type="string">
+                        <Description>The native identifier of the object on the external application (eg - the LDAP DN).  If this is a PAM local object, this is null.</Description>
+                      </AttributeDefinition>
+                    </Schema>
+                    <Schema aggregationType="group" displayAttribute="displayName" featuresString="PROVISIONING"
+                            identityAttribute="id" nativeObjectType="Container" objectType="Container"
+                            descriptionAttribute="description">
+                      <AttributeDefinition name="id" type="string">
+                        <Description>The unique identifier of the Container</Description>
+                      </AttributeDefinition>
+                      <AttributeDefinition name="name" type="string">
+                        <Description>The name of the container.</Description>
+                      </AttributeDefinition>
+                      <AttributeDefinition name="displayName" type="string">
+                        <Description>The display name of the container.  This is optional.  If null, the name will be used as the display name.</Description>
+                      </AttributeDefinition>
+                      <AttributeDefinition name="description" type="string">
+                        <Description>The description of the container.</Description>
+                      </AttributeDefinition>
+                      <AttributeDefinition name="type" type="string">
+                        <Description>The type of container (eg - management set or account store).  This is optional if the PAM system does not support multiple types of containers.</Description>
+                      </AttributeDefinition>
+                      <AttributeDefinition name="owner.value" type="string">
+                        <Description>The ID of the user that owns this container</Description>
+                      </AttributeDefinition>
+                      <AttributeDefinition name="owner.$ref" type="string">
+                        <Description>A URI reference to the user that owns this container.</Description>
+                      </AttributeDefinition>
+                      <AttributeDefinition name="owner.display" type="string">
+                        <Description>The display name of the user that owns this container</Description>
+                      </AttributeDefinition>
+                      <AttributeDefinition multi="true" name="privilegedData.value" type="string">
+                        <Description>The ID of the privileged data.</Description>
+                      </AttributeDefinition>
+                      <AttributeDefinition multi="true" name="privilegedData.$ref" type="string">
+                        <Description>A URI reference to the PrivilegedData</Description>
+                      </AttributeDefinition>
+                      <AttributeDefinition multi="true" name="privilegedData.display" type="string">
+                        <Description>The displayable value of the PrivilegedData</Description>
+                      </AttributeDefinition>
+                      <AttributeDefinition multi="true" name="privilegedData.type" type="string">
+                        <Description>The type of the PrivilegedData</Description>
+                      </AttributeDefinition>
+                    </Schema>
+                    <Schema aggregationType="group" displayAttribute="name" featuresString="PROVISIONING"
+                            identityAttribute="id" nativeObjectType="PrivilegedData" objectType="PrivilegedData"
+                            descriptionAttribute="description">
+                      <AttributeDefinition name="id" type="string">
+                        <Description>The unique identifier of the PrivilegedData.</Description>
+                      </AttributeDefinition>
+                      <AttributeDefinition name="name" type="string">
+                        <Description>A descriptive name for this piece of PrivilegedData.  For example, root@mylinuxhost</Description>
+                      </AttributeDefinition>
+                      <AttributeDefinition name="description" type="string">
+                        <Description>A description for this piece of PrivilegedData.</Description>
+                      </AttributeDefinition>
+                      <AttributeDefinition name="type" type="string">
+                        <Description>The type of PrivilegedData.  The value will be dependent on what is supported by the PAM system.  Examples include 'credential', 'ssh key', 'file', etc...</Description>
+                      </AttributeDefinition>
+                    </Schema>
+                    <Schema displayAttribute="displayName" featuresString="PROVISIONING" identityAttribute="id" nativeObjectType="Group" objectType="group">
+                      <AttributeDefinition name="id" type="string">
+                        <Description>The unique identifier of the Group</Description>
+                      </AttributeDefinition>
+                      <AttributeDefinition name="displayName" type="string">
+                        <Description>A human-readable name for the Group. REQUIRED.</Description>
+                      </AttributeDefinition>
+                      <AttributeDefinition multi="true" name="members" type="string">
+                        <Description>A list of members of the Group.</Description>
+                      </AttributeDefinition>
+                      <AttributeDefinition correlationKey="1" name="source" type="string">
+                        <Description>The name of the external application on which the object lives.  If this is a PAM local object, this is null.</Description>
+                      </AttributeDefinition>
+                      <AttributeDefinition correlationKey="2" name="nativeIdentifier" type="string">
+                        <Description>The native identifier of the object on the external application (eg - the LDAP DN).  If this is a PAM local object, this is null.</Description>
+                      </AttributeDefinition>
+                    </Schema>
+                  </Schemas>
+                  <ProvisioningForms>
+                    <Form name="Create Account Form" objectType="account" type="Create">
+                      <Attributes>
+                        <Map>
+                          <entry key="pageTitle" value="Create Account Form"/>
+                        </Map>
+                      </Attributes>
+                      <Description>Provisioning form for create account.</Description>
+                      <Section>
+                        <Field displayName="User Name" name="userName" required="true" reviewRequired="true" type="string"/>
+                        <Field displayName="Formatted Name" name="name.formatted" required="true" reviewRequired="true" type="string"/>
+                        <Field displayName="Family Name" name="name.familyName" required="true" reviewRequired="true" type="string"/>
+                        <Field displayName="Given Name" name="name.givenName" required="true" reviewRequired="true" type="string"/>
+                        <Field displayName="Display Name" name="displayName" required="true" reviewRequired="true" type="string"/>
+                        <Field displayName="Email" name="emails.work.value" required="true" reviewRequired="true" type="string"/>
+                      </Section>
+                    </Form>
+                    <Form name="Create Container Policy" objectType="Container" type="Create">
+                      <Attributes>
+                        <Map>
+                          <entry key="IIQTemplateOwnerDefinition">
+                            <value>
+                              <DynamicValue value="IIQApplicationOwner"/>
+                            </value>
+                          </entry>
+                          <entry key="pageTitle" value="Create Container Policy"/>
+                        </Map>
+                      </Attributes>
+                      <Description>Provisioning form for create container.</Description>
+                      <Section name="Section 1">
+                        <Field displayName="Container Name" name="name" type="string" required="true"/>
+                        <Field displayName="Container Display Name" name="displayName" type="string"/>
+                        <Field displayName="Container Description" name="description" type="string"/>
+                        <Field displayName="Container Type" name="type" type="string"/>
+                        <Field displayName="Container Owner" name="owner.value" type="string"/>
+                      </Section>
+                    </Form>
+                  </ProvisioningForms>
+                </Application>
+              </List>
+            </value>
+          </entry>
+        </Map>
+      </Attributes>
+    </Configuration>
+  </ImportAction>
+
+  <ImportAction name="merge">
+    <Configuration name='TargetCollectorRegistry'>
+      <Attributes>
+        <Map>
+          <entry key="Privileged Account Management Collector">
+            <value>
+              <Map>
+                <entry key="class" value="sailpoint.unstructured.PAMCollector" />
+                <entry key="page" value="PAMUnstructuredConfig.xhtml" />
+              </Map>
+            </value>
+          </entry>
+        </Map>
+      </Attributes>
+    </Configuration>
+  </ImportAction>
+
+  <ImportAction name="merge">
+    <Configuration name="ApplicationTargetCollectorRegistry">
+      <Attributes>
+        <Map>
+          <entry key='Privileged Account Management'>
+            <value>
+              <List>
+                <String>Privileged Account Management Collector</String>
+              </List>
+            </value>
+          </entry>
+        </Map>
+      </Attributes>
+    </Configuration>
+  </ImportAction>
+
+
+</sailpoint>

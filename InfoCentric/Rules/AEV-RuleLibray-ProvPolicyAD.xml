@@ -1,0 +1,126 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE Rule PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<Rule language="beanshell" name="AEV-RuleLibray-ProvPolicyAD">
+  <Source>
+    
+import java.util.*;  
+import java.lang.*;  
+import sailpoint.object.QueryOptions;
+import sailpoint.object.Filter;
+import sailpoint.object.Identity;
+import java.util.Iterator;
+import java.util.ArrayList;
+	public static String queryFilter(String checkDn){
+		
+	Filter filter = Filter.eq("dn", checkDn);
+	QueryOptions qo = new QueryOptions();
+	qo.addFilter(filter);
+	Iterator it = context.search(Identity.class, qo);
+	int counterDn = 0; 
+	String counterDnString = "";
+	
+	while ((it != null) &amp;&amp; (it.hasNext())) {
+		Identity id = it.next();
+		counterDn++;
+		context.decache(id);
+	}
+	counterDnString = counterDn.toString();
+	return counterDnString;
+	}	
+  
+  public static String queryFilterLike(String checkDn){
+		
+	Filter filter = Filter.like("dn", checkDn , Filter.MatchMode.START);
+	QueryOptions qo = new QueryOptions();
+	qo.addFilter(filter);
+	Iterator it = context.search(Identity.class, qo);
+	int counterDn = 0; 
+	String counterDnString = "";
+	
+	while ((it != null) &amp;&amp; (it.hasNext())) {
+		Identity id = it.next();
+		counterDn++;
+		context.decache(id);
+	}
+	counterDnString = counterDn.toString();
+	return counterDnString;
+	}	
+  
+  public static String ouMapping(String idCompanyName, String idCompanyCode, String idDepartmentName, String idUnit, String idLocationName, String idSource){
+	
+ String csvFile = "/home/infocentric/CSV/AEV_AD_OUMapping.csv";
+
+        BufferedReader br = null;
+        String line = "";
+        String cvsSplitBy = "||";
+		String companyName = "";
+		String companyCode = "";
+		String department = "";
+		String unit = "";
+		String location = "";
+		String ou = "";
+		String ouDn = "";
+
+        try {
+
+            br = new BufferedReader(new FileReader(csvFile));
+            while ((line = br.readLine()) != null) {
+							
+                // use comma as separator
+				
+                String[] csv = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
+				companyName = csv[0];
+				companyCode = csv[1];
+				department = csv[2];
+				unit = csv[3];
+				location = csv[4];
+				ou = csv[5].replace("\"", "");
+ 			
+           
+ 					if (idSource.equalsIgnoreCase("Ramco") || idSource.equalsIgnoreCase("Ramco CSV")) {
+            if (idLocationName.equalsIgnoreCase("")) {
+             if (idCompanyName.equalsIgnoreCase(companyName)) {
+             ouDn = "," + ou;
+             return ouDn;
+             }
+     
+           } else if (idLocationName != null){   
+             if (idCompanyName.equalsIgnoreCase(companyName) &amp;&amp; idLocationName.equalsIgnoreCase(location)) {
+             ouDn = "," + ou;
+             return ouDn;
+             }
+             }
+         }else if (idSource.equalsIgnoreCase("SAP SF CSV") || idSource.equalsIgnoreCase("SuccessFactors")) {
+					if (idLocationName.equalsIgnoreCase("")) { 
+						if (idCompanyCode.equalsIgnoreCase(companyCode) &amp;&amp; idDepartmentName.equalsIgnoreCase(department) &amp;&amp; idUnit.equalsIgnoreCase(unit) ) {
+						ouDn = "," + ou;
+						return ouDn;
+						} 
+					} else if (idLocationName != null) { 
+						if (idCompanyCode.equalsIgnoreCase(companyCode) &amp;&amp; idDepartmentName.equalsIgnoreCase(department) &amp;&amp; idUnit.equalsIgnoreCase(unit) &amp;&amp; idLocationName.equalsIgnoreCase(location)) {
+						ouDn = "," + ou;
+						return ouDn;
+						} 
+					}
+						
+				} 	
+            }
+			return ",OU=AEV,DC=aboitizgroup,DC=net";
+	
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+		}
+  
+</Source>
+</Rule>

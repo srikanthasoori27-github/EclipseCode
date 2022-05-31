@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Application PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<Application connector="sailpoint.connector.JDBCConnector" featuresString="DISCOVER_SCHEMA, PROVISIONING, SYNC_PROVISIONING, DIRECT_PERMISSIONS, SEARCH, ENABLE, UNLOCK" icon="databaseIcon" name="eInvoicing" profileClass="" type="JDBC">
+    <Attributes>
+        <Map>
+            <entry key="Role.SQL" value="SELECT  [RoleID]&#13;&#10;&#13;&#10;      ,[Name]&#13;&#10;&#13;&#10;      ,[Description]&#13;&#10;&#13;&#10;      ,[Active]&#13;&#10;&#13;&#10;  FROM [FleeteInvoicing].[Daily].[Roles];"/>
+            <entry key="Role.aggregationMode">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="Role.deltaTable"/>
+            <entry key="Role.driverClass" value="%%ELE_EINVOICING_DB_DRIVER%%"/>
+            <entry key="Role.getDeltaSQL"/>
+            <entry key="Role.getDirectPermObjectSQL"/>
+            <entry key="Role.getObjectSQL"/>
+            <entry key="Role.isPermissionEnabled">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="Role.mergeRows">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="Role.password" value="%%ELE_MS_SQL_QA_SVC_ACCOUNT_PWD%%"/>
+            <entry key="Role.url" value="%%ELE_EINVOIVING_DB_URL%%"/>
+            <entry key="Role.useExecuteQuery">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="Role.useStoredProcedureDelta">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="Role.useStoredProcedureDirectPermission">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="Role.useStoredProcedureGetObject">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="Role.useStoredProcedureSqlStmt">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="Role.user" value="%%ELE_MS_SQL_QA_SVC_ACCOUNT%%"/>
+            <entry key="SQL" value="SELECT   U.[UserID]&#13;&#10;&#13;&#10;      ,U.[Name]&#13;&#10;&#13;&#10;      ,U.[Telephone]&#13;&#10;&#13;&#10;      ,U.[Email]&#13;&#10;&#13;&#10;      ,U.[Last_Name]&#13;&#10;&#13;&#10;      ,U.[Create_Date]&#13;&#10;&#13;&#10;      ,U.[Modify_Date]&#13;&#10;&#13;&#10;      ,U.[Active]&#13;&#10;&#13;&#10;      ,R.[RoleID]&#13;&#10;&#13;&#10;  FROM [FleeteInvoicing].[Daily].[UserRoles] R inner join  [FleeteInvoicing].[Daily].[Users]  U&#13;&#10;&#13;&#10;               on R.UserID = U.UserID&#13;&#10;order by U.UserID;"/>
+            <entry key="acctAggregationEnd">
+                <value>
+                    <Date>1615695796588</Date>
+                </value>
+            </entry>
+            <entry key="acctAggregationStart">
+                <value>
+                    <Date>1615695790590</Date>
+                </value>
+            </entry>
+            <entry key="afterProvisioningRule"/>
+            <entry key="aggregationMode">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="beforeProvisioningRule"/>
+            <entry key="compositeDefinition"/>
+            <entry key="deltaTable"/>
+            <entry key="disableOrderingCheck" value="true"/>
+            <entry key="driverClass" value="%%ELE_EINVOICING_DB_DRIVER%%"/>
+            <entry key="getDeltaSQL"/>
+            <entry key="indexColumns">
+                <value>
+                    <List>
+                        <String>UserID</String>
+                    </List>
+                </value>
+            </entry>
+            <entry key="isPermissionEnabled">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="jdbcExceptionBucketing">
+                <value>
+                    <Boolean>true</Boolean>
+                </value>
+            </entry>
+            <entry key="mergeColumns">
+                <value>
+                    <List>
+                        <String>RoleID</String>
+                    </List>
+                </value>
+            </entry>
+            <entry key="mergeRows">
+                <value>
+                    <Boolean>true</Boolean>
+                </value>
+            </entry>
+            <entry key="nativeChangeDetectionAttributeScope" value="entitlements"/>
+            <entry key="nativeChangeDetectionAttributes"/>
+            <entry key="nativeChangeDetectionEnabled">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="nativeChangeDetectionOperations"/>
+            <entry key="partitionMode">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="partitionStatements"/>
+            <entry key="password" value="%%ELE_MS_SQL_QA_SVC_ACCOUNT_PWD%%"/>
+            <entry key="provisionRule" value="globalRule"/>
+            <entry key="sysDescriptions">
+                <value>
+                    <Map>
+                        <entry key="en_US"/>
+                    </Map>
+                </value>
+            </entry>
+            <entry key="templateApplication" value="JDBC Template"/>
+            <entry key="testConnSQL" value="select * from [FleeteInvoicing].[Daily].[Users]  ;"/>
+            <entry key="url" value="%%ELE_EINVOIVING_DB_URL%%"/>
+            <entry key="useExecuteQuery">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="useStoredProcedureDelta">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="useStoredProcedureDirectPermission">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="useStoredProcedureGetObject">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="useStoredProcedurePartition">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="useStoredProcedureSqlStmt">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="useStoredProcedureTestConn">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="user" value="%%ELE_MS_SQL_QA_SVC_ACCOUNT%%"/>
+        </Map>
+    </Attributes>
+    <CorrelationRule>
+        <Reference class="sailpoint.object.Rule" name="ELE_Global_Correlation_Rule"/>
+    </CorrelationRule>
+    <CreationRule>
+        <Reference class="sailpoint.object.Rule" name="ELE_Global_IdentityCreation_Rule"/>
+    </CreationRule>
+    <Owner>
+        <Reference class="sailpoint.object.Identity" name="spadmin"/>
+    </Owner>
+    <Schemas>
+        <Schema displayAttribute="Name" identityAttribute="UserID" instanceAttribute="" nativeObjectType="account" objectType="account" permissionsRemediationModificationType="None">
+            <AttributeDefinition name="UserID" type="string">
+                <Description/>
+            </AttributeDefinition>
+            <AttributeDefinition name="Name" type="string">
+                <Description/>
+            </AttributeDefinition>
+            <AttributeDefinition name="Telephone" type="string">
+                <Description/>
+            </AttributeDefinition>
+            <AttributeDefinition name="Email" type="string">
+                <Description/>
+            </AttributeDefinition>
+            <AttributeDefinition name="Last_Name" type="string">
+                <Description/>
+            </AttributeDefinition>
+            <AttributeDefinition name="Create_Date" type="string">
+                <Description/>
+            </AttributeDefinition>
+            <AttributeDefinition name="Modify_Date" type="string">
+                <Description/>
+            </AttributeDefinition>
+            <AttributeDefinition name="Active" type="string">
+                <Description/>
+            </AttributeDefinition>
+            <AttributeDefinition entitlement="true" managed="true" multi="true" name="RoleID" schemaObjectType="Role" type="string">
+                <Description/>
+            </AttributeDefinition>
+        </Schema>
+        <Schema aggregationType="group" descriptionAttribute="Description" displayAttribute="Name" identityAttribute="RoleID" instanceAttribute="" nativeObjectType="Role" objectType="Role" permissionsRemediationModificationType="None">
+            <AttributeDefinition name="RoleID" type="string">
+                <Description/>
+            </AttributeDefinition>
+            <AttributeDefinition name="Name" type="string">
+                <Description/>
+            </AttributeDefinition>
+            <AttributeDefinition name="Description" type="string">
+                <Description/>
+            </AttributeDefinition>
+            <AttributeDefinition name="Active" type="string">
+                <Description/>
+            </AttributeDefinition>
+        </Schema>
+    </Schemas>
+    <ApplicationScorecard/>
+</Application>

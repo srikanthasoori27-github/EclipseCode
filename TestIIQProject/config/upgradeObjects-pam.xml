@@ -1,0 +1,97 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE sailpoint PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+
+<!-- (c) Copyright 2019 SailPoint Technologies, Inc., All Rights Reserved. -->
+
+<!--
+  This is used by 'iiq upgrade' to drive upgrading the schema and data between revisions. There are two files that
+  define the upgrade: upgrade.xml and upgradeObjects.xml. If you have PAM enabled, there are an additional two files,
+  upgrade-pam.xml and upgradeObjects-pam.xml.
+  upgrade.xml and upgrade-pam.xml are processed in a special way before Hibernate is started so that changes can be made
+  at the JDBC level. These files should only contain <ImportAction> elements that use the "execute" command to call
+  upgrader classes.
+  *DO NOT PUT STATIC XML OBJECTS IN UPGRADE.XML OR UPGRADE-PAM.XML*
+  upgradeObjects-pam.xml is included by upgrade-pam.xml and will be imported after Hibernate is started. Any changes to
+  objects that can be represented as static XML or as ImportActions with the "merge" command must go in these files to
+  ensure that they are parsed after Hibernate has been started so that references can be resolved.
+-->
+<sailpoint>
+
+    <!--
+     This will reimport some updated objects
+     and should be safe to do for every release.
+    -->
+    <ImportAction name="include" value="WEB-INF/config/pam/pamemailtemplates.xml"/>
+    <ImportAction name="include" value="WEB-INF/config/pam/pamworkflows.xml"/>
+    <ImportAction name="include" value="WEB-INF/config/pam/pamrules.xml" />
+    <ImportAction name="include" value="WEB-INF/config/pam/pamconnectorregistry.xml" />
+    <!-- End of object updates -->
+
+    <SPRight name="ViewPAMDetail" displayName="right_view_pam">
+        <Description>right_desc_view_pam</Description>
+    </SPRight>
+
+    <Capability name="PAMViewer" displayName="capability_pam_viewer">
+        <Description>capability_desc_pam_viewer</Description>
+        <RightRefs>
+            <!-- Read Only Access to PAM -->
+            <Reference class="sailpoint.object.SPRight" name="ViewPAMDetail" />
+        </RightRefs>
+    </Capability>
+
+    <DynamicScope name="PAMAdministrator">
+        <Selector>
+            <IdentitySelector>
+                <MatchExpression>
+                    <MatchTerm name="rights" value="FullAccessPAM" />
+                    <MatchTerm name="rights" value="ViewPAMDetail"/>
+                </MatchExpression>
+            </IdentitySelector>
+        </Selector>
+    </DynamicScope>
+
+    <SPRight name="CreatePAMContainer" displayName="right_create_pam_container">
+        <Description>right_desc_create_pam_container</Description>
+    </SPRight>
+
+    <SPRight name="PAMModifyIdentities" displayName="right_modify_pam_identities">
+        <Description>right_desc_modify_pam_identities</Description>
+    </SPRight>
+
+    <SPRight name="PAMModifyPrivilegedItems" displayName="right_modify_pam_privileged_items">
+        <Description>right_desc_modify_pam_privileged_items</Description>
+    </SPRight>
+
+    <ImportAction name="merge">
+        <Configuration name="SystemConfiguration">
+            <Attributes>
+                <Map>
+                    <!-- True if container owner is allowed to edit their PAM containers -->
+                    <entry key="pamOwnerCanEditContainer" value="false" />
+                    <!-- True if privileged data is allowed to be added to or removed from PAM containers-->
+                    <entry key="pamModifyPrivilegedDataEnabled" value="false"/>
+                    <!-- True if create PAM container is allowed -->
+                    <entry key="pamCreateContainerEnabled" value="false"/>
+                </Map>
+            </Attributes>
+        </Configuration>
+    </ImportAction>
+
+    <ImportAction name="merge">
+        <UIConfig name='UIConfig'>
+            <Attributes>
+                <Map>
+                    <entry key="pamUiContainerPrivilegedItemList">
+                        <value>
+                            <List>
+                                <ColumnConfig headerKey="ui_pam_container_privileged_item_list_name" property="name" sortable="true" hideable="false"/>
+                                <ColumnConfig headerKey="ui_pam_container_privileged_item_list_type" property="type" sortable="true" hideable="false"/>
+                                <ColumnConfig headerKey="ui_pam_container_privileged_item_list_actions" dataIndex="actions" renderer="spPamPrivilegedItemActions" sortable="false" hideable="false" fixed="Right"/>
+                            </List>
+                        </value>
+                    </entry>
+                </Map>
+            </Attributes>
+        </UIConfig>
+    </ImportAction>
+</sailpoint>

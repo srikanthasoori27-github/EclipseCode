@@ -1,0 +1,11 @@
+CREATE TABLE trainingPlugin_objects (
+    name varchar(255) not null,
+    class_name varchar(255) not null
+) 
+
+INSERT INTO trainingPlugin_objects VALUES('Application', 'sailpoint.object.Application');
+INSERT INTO trainingPlugin_objects VALUES('Identity', 'sailpoint.object.Identity');
+INSERT INTO trainingPlugin_objects VALUES('Rule', 'sailpoint.object.Rule');
+INSERT INTO trainingPlugin_objects VALUES('Role', 'sailpoint.object.Bundle');
+INSERT INTO trainingPlugin_objects VALUES('Business Process', 'sailpoint.object.Workflow');
+

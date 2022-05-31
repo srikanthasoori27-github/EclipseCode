@@ -1,0 +1,15 @@
+<!-- (c) Copyright 2008 SailPoint Technologies, Inc., All Rights Reserved. -->
+
+<!-- 
+  Include file for GenericIndex subclasses
+  Attributes and ScoreItems must be selectively mapped by the subclasses.
+ -->
+
+    <property name="incomplete" type="boolean"/>
+
+    <property name="compositeScore" index="&IndexBase;_cscore"/>
+
+    <property name="attributes" type="sailpoint.persistence.XmlType" length="100000000"/>
+
+    <property name="scoreItems" column="items" type="sailpoint.persistence.ListXmlType" length="100000000"/>
+    

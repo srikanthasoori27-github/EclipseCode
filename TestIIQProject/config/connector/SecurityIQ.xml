@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+  ~ /* (c) Copyright 2008 SailPoint Technologies, Inc., All Rights Reserved. */
+  -->
+
+<!DOCTYPE ImportAction PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<ImportAction name="connectorRegistryUpdateAction">
+
+  <Application connector="sailpoint.connector.SecurityIQConnector" name="SecurityIQ template" type="File Access Manager">
+    <Attributes>
+      <Map>
+        <entry key="formPath" value="SIQAttributesForm.xhtml"/>
+      </Map>
+    </Attributes>
+    <Schemas>
+      <Schema identityAttribute="_id" nativeObjectType="event" objectType="alert">
+        <AttributeDefinition name="_index" type="string"/>
+        <AttributeDefinition name="_type" type="string"/>
+        <AttributeDefinition name="_id" type="string"/>
+        <AttributeDefinition internalName="_source.'user full name'" name="userFullName" type="string"/>
+        <AttributeDefinition internalName="_source.'alert rule names'" multi="true" name="alertRuleNames" type="string"/>
+        <AttributeDefinition internalName="_source.'action type'" name="actionType" type="string"/>
+        <AttributeDefinition internalName="_source.path" name="path" type="string"/>
+        <AttributeDefinition internalName="_source.'application type'" name="applicationType" type="string"/>
+        <AttributeDefinition internalName="_source.timestamp" name="timestamp" type="string"/>
+        <AttributeDefinition internalName="_source.'bam name'" name="bamName" type="string"/>
+        <AttributeDefinition internalName="_source.'wpc data'" name="wpc data" type="string"/>
+        <AttributeDefinition internalName="_source.creation_timestamp" name="creation_timestamp" type="string"/>
+        <AttributeDefinition internalName="_source.'object name'" name="object name" type="string"/>
+        <Attributes>
+          <Map>
+            <entry key="baseURL" value=""/>
+            <entry key="username" value=""/>
+            <entry key="password" value=""/>
+            <entry key="listEndpoint">
+              <value>
+                <Map>
+                  <entry key="baseURL" value=""/>
+                  <entry key="body">
+                    <value>
+                      <Map>
+                        <entry key="query" value="{&quot;bool&quot;: { &quot;must&quot;: [ {&quot;exists&quot;: {&quot;field&quot;: &quot;alert rule names&quot; }}],&quot;must_not&quot;: [{&quot;term&quot; : { &quot;alert rule names&quot;:&quot;&quot; }}] } }"/>
+                        <entry key="sort" value="[{&quot;creation_timestamp&quot; : {&quot;order&quot; : &quot;asc&quot;}}]"/>
+                      </Map>
+                    </value>
+                  </entry>
+                  <entry key="contextURL" value="_search"/>
+                  <entry key="header">
+                    <value>
+                      <Map>
+                      </Map>
+                    </value>
+                  </entry>
+                  <entry key="httpMethodType" value="POST"/>
+                  <entry key="scrollKeepAlive" value="5m"/>
+                  <entry key="size" value="50"/>
+                </Map>
+              </value>
+            </entry>
+            <entry key="deltaListEndpoint">
+              <value>
+                <Map>
+                  <entry key="baseURL" value=""/>
+                  <entry key="body">
+                    <value>
+                      <Map>
+                        <entry key="query" value="{&quot;bool&quot;: { &quot;must&quot;: [ {&quot;exists&quot;: {&quot;field&quot;: &quot;alert rule names&quot; }},{&quot;range&quot; : { &quot;creation_timestamp&quot; : {&quot;gt&quot; : &quot;$(deltaAggregation)&quot;}}}],&quot;must_not&quot;: [{&quot;term&quot; : { &quot;alert rule names&quot;:&quot;&quot; }}] } }"/>
+                        <entry key="sort" value="[{&quot;creation_timestamp&quot; : {&quot;order&quot; : &quot;asc&quot;}}]"/>
+                      </Map>
+                    </value>
+                  </entry>
+                  <entry key="contextURL" value="_search"/>
+                  <entry key="header">
+                    <value>
+                      <Map>
+                      </Map>
+                    </value>
+                  </entry>
+                  <entry key="httpMethodType" value="POST"/>
+                  <entry key="scrollKeepAlive" value="5m"/>
+                  <entry key="size" value="50"/>
+                </Map>
+              </value>
+            </entry>
+            <entry key="getEndpoint">
+              <value>
+                <Map>
+                  <entry key="baseURL" value=""/>
+                  <entry key="body">
+                    <value>
+                      <Map>
+                        <entry key="query" value="{&quot;ids&quot; : { &quot;type&quot; : &quot;event&quot;, &quot;values&quot; : [&quot;$(identity)&quot;] }}"/>
+                      </Map>
+                    </value>
+                  </entry>
+                  <entry key="contextURL" value="_search"/>
+                  <entry key="header">
+                    <value>
+                      <Map>
+                      </Map>
+                    </value>
+                  </entry>
+                  <entry key="httpMethodType" value="POST"/>
+                </Map>
+              </value>
+            </entry>
+          </Map>
+        </Attributes>
+      </Schema>
+      <Schema associationSchemaName="associations" displayAttribute="br_name" identityAttribute="br_id" objectType="unstructured">
+        <AttributeDefinition name="br_id" type="long"/>
+        <AttributeDefinition name="full_path" objectMapping="fullPath" type="string"/>
+        <AttributeDefinition name="br_name" objectMapping="displayName" type="string"/>
+        <AttributeDefinition name="size" objectMapping="targetSize" type="long"/>
+        <AttributeDefinition name="bam_name" objectMapping="targetHost" type="string"/>
+        <Attributes>
+          <Map>
+            <entry key="aggregateInherited">
+              <value>
+                <Boolean></Boolean>
+              </value>
+            </entry>
+            <entry key="associationAttribute" value="associations"/>
+            <entry key="driverClass" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
+            <entry key="password" value="SecurityIQ_Password"/>
+            <entry key="referencedApplications">
+              <value>
+                <List>
+                </List>
+              </value>
+            </entry>
+            <entry key="schemaName" value="whiteops"/>
+            <entry key="targetHosts">
+              <value>
+                <List>
+                </List>
+              </value>
+            </entry>
+            <entry key="url" value="jdbc:sqlserver://&lt;siqServer&gt;:&lt;port&gt;;databaseName=&lt;dbName&gt;"/>
+            <entry key="user" value="SecurityIQ_User"/>
+          </Map>
+        </Attributes>
+      </Schema>
+      <Schema aggregationType="TargetAssociation" featuresString="NO_AGGREGATION" objectType="associations">
+        <AttributeDefinition name="is_inherited" objectMapping="inherited" type="boolean"/>
+        <AttributeDefinition name="is_allow" objectMapping="allowPermission" type="boolean"/>
+        <AttributeDefinition name="is_effective" objectMapping="effective" type="int"/>
+        <AttributeDefinition name="description" type="string"/>
+        <AttributeDefinition name="permission_type_name" objectMapping="rights" type="string"/>
+        <AttributeDefinition name="row_type" type="string"/>
+        <AttributeDefinition name="user_uid" type="string"/>
+        <AttributeDefinition name="user_id" type="string"/>
+        <AttributeDefinition name="user_full_name" type="string"/>
+        <AttributeDefinition name="role_uid" type="string"/>
+        <AttributeDefinition name="role_id" type="string"/>
+        <AttributeDefinition name="role_name" type="string"/>
+        <AttributeDefinition name="role_entity_type_name" type="string"/>
+        <AttributeDefinition name="role_domain" type="string"/>
+      </Schema>
+    </Schemas>
+  </Application>
+</ImportAction>

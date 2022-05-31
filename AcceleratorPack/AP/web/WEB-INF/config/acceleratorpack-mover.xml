@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE sailpoint PUBLIC 'sailpoint.dtd' 'sailpoint.dtd'>
+<!-- Copyright © 2018 SailPoint Technologies, Inc. All Rights Reserved.
+All logos, text, content, and works of authorship, including but not limited to underlying code, programming or scripting language, designs, and/or graphics,
+that are used and/or depicted herein are protected under United States and international copyright and trademark laws and treaties,
+and may not be used or reproduced without the prior express written permission of SailPoint Technologies, Inc. -->
+<sailpoint>
+    <!-- Import First Time Start -->
+  <ImportAction name='include' value='AcceleratorPack/Mover/Configure/CertificationDefinition-Mover-Certification.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Mover/Configure/IdentityTrigger-Mover-Certification.xml'/>
+    <!-- Import First Time End -->
+    <!-- Import Second Time Start Both are dependent on each other -->
+  <ImportAction name='include' value='AcceleratorPack/Mover/Configure/CertificationDefinition-Mover-Certification.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Mover/Configure/IdentityTrigger-Mover-Certification.xml'/>
+   <!-- Import Second Time End Both are dependent on each other -->
+  <ImportAction name='include' value='AcceleratorPack/Mover/Configure/IdentityTrigger-Mover.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Mover/Configure/Custom-Mover-Settings.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Mover/Source/ObjectConfig-Application.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Mover/Source/Rule-FrameWork-Move-Account.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Mover/Source/Rule-IdentityTrigger-Mover.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Mover/Source/Rule-Mover-RuleLibrary.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Mover/Source/Workflow-Lifecycle-Mover-RequestObject-Wrapper.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Mover/Source/Workflow-Lifecycle-Mover.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Mover/Source/Rule-FrameworkCertificationExclusion.xml'/>
+</sailpoint>

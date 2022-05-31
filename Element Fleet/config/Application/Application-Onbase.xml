@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Application PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<Application connector="sailpoint.connector.JDBCConnector" featuresString="DISCOVER_SCHEMA, PROVISIONING, SYNC_PROVISIONING, DIRECT_PERMISSIONS, SEARCH, ENABLE, UNLOCK" icon="databaseIcon" name="OnBase" profileClass="" type="JDBC">
+    <Attributes>
+        <Map>
+            <entry key="SQL" value=" select distinct RTRIM(ug.usergroupname) as usergroupname,Rtrim(ua.username) as UserName,    &#13;&#10;            RTrim(SUBSTRING(realname, 1, CHARINDEX(' ', realname) - 1)) + ' ' +  &#13;&#10;            RTrim(SUBSTRING(realname, CHARINDEX(' ', realname) + 1, len(realname))) AS Name ,RTrim(ua.emailaddress) As EmailAddress,ua.lastlogon&#13;&#10;       from hsi.useritemtypegrp itg&#13;&#10;       Join hsi.doctype it on it.itemtypegroupnum = itg.itemtypegroupnum&#13;&#10;       join hsi.usergroup ug on ug.usergroupnum = itg.usergroupnum&#13;&#10;       Join hsi.userxusergroup uug on uug.usergroupnum = ug.usergroupnum&#13;&#10;       join hsi.useraccount ua on ua.usernum = uug.usernum&#13;&#10;       where itg.itemtypegroupnum = 125&#13;&#10;       and it.itemtypenum in (211,427)&#13;&#10;       and expiredate &lt; '01/01/1990' ;"/>
+            <entry key="afterProvisioningRule"/>
+            <entry key="aggregationMode">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="beforeProvisioningRule"/>
+            <entry key="compositeDefinition"/>
+            <entry key="deltaTable"/>
+            <entry key="disableOrderingCheck" value="true"/>
+            <entry key="driverClass" value="%%ELE_ONBASE_DB_DRIVER%%"/>
+            <entry key="getDeltaSQL"/>
+            <entry key="group.SQL" value="select distinct RTRIM(ug.usergroupname) as usergroupname,RTRIM(itemtypename) as itemtypename  &#13;&#10;          from hsi.useritemtypegrp itg&#13;&#10;       Join hsi.doctype it on it.itemtypegroupnum = itg.itemtypegroupnum&#13;&#10;       join hsi.usergroup ug on ug.usergroupnum = itg.usergroupnum&#13;&#10;       Join hsi.userxusergroup uug on uug.usergroupnum = ug.usergroupnum&#13;&#10;       join hsi.useraccount ua on ua.usernum = uug.usernum&#13;&#10;       where itg.itemtypegroupnum = 125&#13;&#10;       and it.itemtypenum in (211,427)&#13;&#10;       and expiredate &lt; '01/01/1990' ;"/>
+            <entry key="group.aggregationMode">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="group.deltaTable"/>
+            <entry key="group.driverClass" value="%%ELE_ONBASE_DB_DRIVER%%"/>
+            <entry key="group.getDeltaSQL"/>
+            <entry key="group.indexColumns">
+                <value>
+                    <List>
+                        <String>usergroupname</String>
+                    </List>
+                </value>
+            </entry>
+            <entry key="group.isPermissionEnabled">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="group.mergeColumns">
+                <value>
+                    <List>
+                        <String>itemtypename</String>
+                    </List>
+                </value>
+            </entry>
+            <entry key="group.mergeRows">
+                <value>
+                    <Boolean>true</Boolean>
+                </value>
+            </entry>
+            <entry key="group.password" value="%%ELE_MS_SQL_SVC_ACCOUNT_PWD%%"/>
+            <entry key="group.url" value="%%ELE_ONBASE_DB_URL%%"/>
+            <entry key="group.useExecuteQuery">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="group.useStoredProcedureDelta">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="group.useStoredProcedureDirectPermission">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="group.useStoredProcedureGetObject">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="group.useStoredProcedureSqlStmt">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="group.user" value="%%ELE_MS_SQL_SVC_ACCOUNT%%"/>
+            <entry key="indexColumns">
+                <value>
+                    <List>
+                        <String>UserName</String>
+                    </List>
+                </value>
+            </entry>
+            <entry key="isPermissionEnabled">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="jdbcExceptionBucketing">
+                <value>
+                    <Boolean>true</Boolean>
+                </value>
+            </entry>
+            <entry key="mergeColumns">
+                <value>
+                    <List>
+                        <String>usergroupname</String>
+                    </List>
+                </value>
+            </entry>
+            <entry key="mergeRows">
+                <value>
+                    <Boolean>true</Boolean>
+                </value>
+            </entry>
+            <entry key="nativeChangeDetectionAttributeScope" value="entitlements"/>
+            <entry key="nativeChangeDetectionAttributes"/>
+            <entry key="nativeChangeDetectionEnabled">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="nativeChangeDetectionOperations"/>
+            <entry key="partitionMode">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="partitionStatements"/>
+            <entry key="password" value="%%ELE_MS_SQL_SVC_ACCOUNT_PWD%%"/>
+            <entry key="provisionRule" value="globalRule"/>
+            <entry key="sysDescriptions">
+                <value>
+                    <Map>
+                        <entry key="en_US"/>
+                    </Map>
+                </value>
+            </entry>
+            <entry key="templateApplication" value="JDBC Template"/>
+            <entry key="testConnSQL" value="select * from  hsi.useraccount;"/>
+            <entry key="url" value="%%ELE_ONBASE_DB_URL%%"/>
+            <entry key="useExecuteQuery">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="useStoredProcedureDelta">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="useStoredProcedureDirectPermission">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="useStoredProcedureGetObject">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="useStoredProcedurePartition">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="useStoredProcedureSqlStmt">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="useStoredProcedureTestConn">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="user" value="%%ELE_MS_SQL_SVC_ACCOUNT%%"/>
+        </Map>
+    </Attributes>
+    <CorrelationRule>
+        <Reference class="sailpoint.object.Rule" name="ELE_Global_Correlation_Rule"/>
+    </CorrelationRule>
+    <CreationRule>
+        <Reference class="sailpoint.object.Rule" name="ELE_Global_IdentityCreation_Rule"/>
+    </CreationRule>
+    <Owner>
+        <Reference class="sailpoint.object.Identity" name="spadmin"/>
+    </Owner>
+    <Schemas>
+        <Schema displayAttribute="Name" identityAttribute="UserName" instanceAttribute="" nativeObjectType="account" objectType="account" permissionsRemediationModificationType="None">
+            <AttributeDefinition entitlement="true" managed="true" multi="true" name="usergroupname" schemaObjectType="group" type="string">
+                <Description/>
+            </AttributeDefinition>
+            <AttributeDefinition name="UserName" type="string">
+                <Description/>
+            </AttributeDefinition>
+            <AttributeDefinition name="Name" type="string">
+                <Description/>
+            </AttributeDefinition>
+            <AttributeDefinition name="EmailAddress" type="string">
+                <Description/>
+            </AttributeDefinition>
+            <AttributeDefinition name="lastlogon" type="string">
+                <Description/>
+            </AttributeDefinition>
+        </Schema>
+        <Schema descriptionAttribute="" displayAttribute="usergroupname" identityAttribute="usergroupname" instanceAttribute="" nativeObjectType="group" objectType="group" permissionsRemediationModificationType="None">
+            <AttributeDefinition name="usergroupname" type="string">
+                <Description/>
+            </AttributeDefinition>
+            <AttributeDefinition multi="true" name="itemtypename" type="string">
+                <Description/>
+            </AttributeDefinition>
+        </Schema>
+    </Schemas>
+    <ApplicationScorecard/>
+</Application>

@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE Bundle PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<Bundle created="1615454750458" displayName="Test Sn Role" id="c0a81212781a1b788178209b46fa1718" modified="1616642978312" name="Test Sn Role" type="it">
+  <Attributes>
+    <Map>
+      <entry key="accountSelectorRules"/>
+      <entry key="allowDuplicateAccounts" value="false"/>
+      <entry key="allowMultipleAssignments" value="false"/>
+      <entry key="mergeTemplates" value="false"/>
+      <entry key="sysDescriptions">
+        <value>
+          <Map>
+            <entry key="en_US" value="Test Sn Role"/>
+          </Map>
+        </value>
+      </entry>
+    </Map>
+  </Attributes>
+  <Inheritance>
+    <Reference class="sailpoint.object.Bundle" id="7f00000178631fed8178675a4011028e" name="test Business Role"/>
+  </Inheritance>
+  <Owner>
+    <Reference class="sailpoint.object.Identity" id="c0a80170778b128e81778b52cb7f00e6" name="spadmin"/>
+  </Owner>
+  <Profiles>
+    <Profile created="1616642978277" id="7f00000178631fed8178676e31e502c9">
+      <ApplicationRef>
+        <Reference class="sailpoint.object.Application" id="c0a8017077a912858177d378623b266f" name="Test Application"/>
+      </ApplicationRef>
+      <Constraints>
+        <Filter operation="CONTAINS_ALL" property="Role">
+          <Value>
+            <List>
+              <String>Admin</String>
+            </List>
+          </Value>
+        </Filter>
+      </Constraints>
+    </Profile>
+  </Profiles>
+</Bundle>
+
+

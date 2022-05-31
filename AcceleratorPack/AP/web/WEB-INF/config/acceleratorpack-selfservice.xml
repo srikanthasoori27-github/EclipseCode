@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE sailpoint PUBLIC 'sailpoint.dtd' 'sailpoint.dtd'>
+<!-- Copyright © 2018 SailPoint Technologies, Inc. All Rights Reserved.
+All logos, text, content, and works of authorship, including but not limited to underlying code, programming or scripting language, designs, and/or graphics,
+that are used and/or depicted herein are protected under United States and international copyright and trademark laws and treaties,
+and may not be used or reproduced without the prior express written permission of SailPoint Technologies, Inc. -->
+<sailpoint>
+  <ImportAction name='include' value='AcceleratorPack/SelfService/Source/Configuration-SystemConfiguration.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/SelfService/Configure/Custom-ROAD-SelfService-Form-Settings.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/SelfService/Source/Form-ROAD.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/SelfService/Configure/QuickLink-Self-Service-Application-Onboarding.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/SelfService/Source/Rule-Self-Service-Onboard-ApplicationOptions.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/SelfService/Source/Rule-Self-Service-Onboard-ApplicationValue.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/SelfService/Source/Rule-Self-Service-Onboard-RuleLibrary.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/SelfService/Source/Rule-Self-Service-ROAD-Trasnformer.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/SelfService/Source/Workflow-QuickLink-Self-Service-ROAD.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/SelfService/Source/Rule-Self-Service-RuleLibrary.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/SelfService/Source/Rule-Self-Service-Application-Schema.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/SelfService/Source/Rule-Self-Service-Application-ObjectTypes-Schema.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/SelfService/Source/Rule-Self-Service-Application-Identification-Operations.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/SelfService/Source/Rule-Self-Service-Identity-Attributes.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/SelfService/Source/Rule-Self-Service-LDAP-Operations.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/SelfService/Source/Rule-Self-Service-Onboard-ApplicationLeaverOptions.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/SelfService/Source/Rule-Self-Service-Birthright-Roles.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/SelfService/Source/DynamicScope-ROAD.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/SelfService/Configure/Workgroup-ROAD.xml'/>
+</sailpoint>

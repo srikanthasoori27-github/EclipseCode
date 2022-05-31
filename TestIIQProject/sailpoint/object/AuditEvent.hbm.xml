@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" [
+  <!ENTITY SailPointObject SYSTEM "classpath://sailpoint/object/SailPointObject.hbm.xml">
+]>
+
+<!-- (c) Copyright 2008 SailPoint Technologies, Inc., All Rights Reserved. -->
+
+<hibernate-mapping>
+  <class name="sailpoint.object.AuditEvent">
+
+    &SailPointObject;
+
+    <property name="interface" type="string" length="128" index="spt_audit_interface_ci"/>
+    <property name="source" type="string" length="128" index="spt_audit_source_ci"/>
+    <property name="action" type="string" length="128" index="spt_audit_action_ci"/>
+    <property name="target" type="string" length="255" index="spt_audit_target_ci"/>
+
+    <property name="application" type="string" length="128" index="spt_audit_application_ci"/>
+    <property name="accountName" type="string" length="256" index="spt_audit_accountname_ci"/>
+    <property name="instance" type="string" length="128" index="spt_audit_instance_ci"/>
+    <property name="attributeName" type="string" length="128" index="spt_audit_attr_ci"/>
+    <property name="attributeValue" type="string" length="450" index="spt_audit_attrVal_ci"/>
+    <property name="trackingId" type="string" length="128" index="spt_audit_trackingid_ci"/>
+
+    <property name="attributes" type="sailpoint.persistence.XmlType" length="100000000"/>
+
+    <!-- 
+      Need to allow these to be selectively indexed like we do for
+      extended Identity and Link attributes!
+    -->
+
+    <property name="string1" type="string" length="450"/>
+    <property name="string2" type="string" length="450"/>
+    <property name="string3" type="string" length="450"/>
+    <property name="string4" type="string" length="450"/>
+
+    <property name="serverHost" type="string" length="128"/>
+    <!-- this will always be an IP address so could be shorter -->
+    <property name="clientHost" type="string" length="128"/>
+
+  </class>
+</hibernate-mapping>

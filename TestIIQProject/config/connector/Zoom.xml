@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE ImportAction PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<ImportAction name="connectorRegistryUpdateAction">
+  <Application connector="sailpoint.connector.OpenConnectorAdapter" featuresString="SEARCH, PROVISIONING, ENABLE, PASSWORD" icon="internetIcon" name="Zoom" type="Zoom">
+    <Attributes>
+      <Map>
+           <entry key="connectorClass" value="openconnector.connector.zoom.ZoomConnector"/>
+           <entry key="encrypted" value="apiSecret"/>
+           <entry key="formPath" value="ZoomConfigForm.xhtml"/>
+           <entry key="url" value="https://api.zoom.us/v2/"/>
+           <entry key="aggregatePendingUsers">
+             <value>
+               <Boolean>true</Boolean>
+             </value>
+           </entry>
+      </Map>
+    </Attributes>
+    <Schemas>
+      <Schema displayAttribute="full_name" identityAttribute="id" nativeObjectType="account" objectType="account">
+        <AttributeDefinition name="id" remediationModificationType="None" required="true" type="string">
+          <Description>Unique Zoom User  ID</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="full_name" remediationModificationType="None" required="true" type="string">
+          <Description>Full name of a user. First Name + Last name</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="first_name" remediationModificationType="None" required="true" type="string">
+          <Description>User's First name</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="last_name" remediationModificationType="None" required="true" type="string">
+          <Description>User's Last name</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="email" remediationModificationType="None" required="true" type="string">
+          <Description>User's email address</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="status" remediationModificationType="None" required="true" type="string">
+          <Description>User's Status</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="dept" remediationModificationType="None" required="true" type="string">
+          <Description>Department if User has provided</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="verified" remediationModificationType="None" required="true" type="boolean">
+          <Description>Displays whether user has verified his email or not</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="last_login_time" remediationModificationType="None" required="true" type="string">
+          <Description>User's Last login time</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="type" remediationModificationType="None" required="true" type="string">
+          <Description>User's license type</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="group_ids" remediationModificationType="None" entitlement="true" multi="true" managed="true" schemaObjectType="group" required="true" type="string">
+          <Description>IDs of Web groups user belongs to</Description>
+        </AttributeDefinition>
+      </Schema>
+      <Schema displayAttribute="name" identityAttribute="id" nativeObjectType="group" objectType="group">
+        <AttributeDefinition name="id" remediationModificationType="None" required="true" type="string">
+          <Description>Web group ID</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="name" remediationModificationType="None" required="true" type="string">
+          <Description>Web group name</Description>
+        </AttributeDefinition>
+      </Schema>
+    </Schemas>
+    <Templates>
+     <Template name="account" schemaObjectType="account" usage="Create">
+         <Field displayName="con_form_zoom_first_name" helpKey="help_form_zoom_first_name" name="first_name" required="true" reviewRequired="true" type="string">
+            <Script>
+               <Source>
+                 return identity.getFirstname();
+               </Source>
+             </Script>
+         </Field>
+         <Field displayName="con_form_zoom_last_name" helpKey="help_form_zoom_last_name" name="last_name" required="true" reviewRequired="true" type="string">
+            <Script>
+               <Source>
+                 return identity.getLastname();
+               </Source>
+             </Script>
+         </Field>
+         <Field displayName="con_form_zoom_email" helpKey="help_form_zoom_email" name="email" required="true" reviewRequired="true" type="string">
+            <Script>
+               <Source>
+                 return identity.getEmail();
+               </Source>
+             </Script>
+         </Field>
+         <Field displayName="con_form_zoom_action" helpKey="help_form_zoom_action" name="action" required="false" reviewRequired="false" type="string"/>
+         <Field displayName="con_form_zoom_user_type" helpKey="help_form_zoom_user_type" name="type" required="false" reviewRequired="false" type="string"/>
+         <Field displayName="con_form_zoom_password" helpKey="help_form_zoom_password" name="password" required="false" reviewRequired="false" type="string"/>
+      </Template>
+      <Template name="account" schemaObjectType="account" usage="Delete">
+        <Field displayName="con_form_zoom_delete_transfer_data" name="transfer_data" required="false" reviewRequired="false" type="boolean"/>
+        <Field displayName="con_form_zoom_delete_transfer_email" helpKey="help_con_form_zoom_delete_transfer_email" name="transfer_email" required="false" reviewRequired="false" type="string"/>
+        <Field displayName="con_form_zoom_delete_transfer_meeting" name="transfer_meeting" required="false" reviewRequired="false" type="boolean"/>
+	      <Field displayName="con_form_zoom_delete_transfer_webinar" name="transfer_webinar" required="false" reviewRequired="false" type="boolean"/>
+	      <Field displayName="con_form_zoom_delete_transfer_recording" name="transfer_recording" required="false" reviewRequired="false" type="boolean"/>
+      </Template>
+    </Templates>
+  </Application>
+</ImportAction>

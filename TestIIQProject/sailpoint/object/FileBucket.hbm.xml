@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" [
+  <!ENTITY SailPointObject SYSTEM "classpath://sailpoint/object/SailPointObject.hbm.xml">
+]>
+
+<!-- (c) Copyright 2008 SailPoint Technologies, Inc., All Rights Reserved. -->
+
+<hibernate-mapping>
+  <class name="sailpoint.object.FileBucket">
+
+    &SailPointObject;
+
+    <property name="fileIndex" type="int" index="file_bucketNumber"/>
+    <many-to-one embed-xml="false" name="parent"
+                 class="sailpoint.object.PersistedFile"
+                 column="parent_id"/>
+    <property name="data" type="materialized_blob" length="1700000"/>
+  </class>
+</hibernate-mapping>

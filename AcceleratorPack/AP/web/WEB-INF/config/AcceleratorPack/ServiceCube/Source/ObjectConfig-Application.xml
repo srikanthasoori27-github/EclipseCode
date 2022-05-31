@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE sailpoint PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<!-- Copyright © 2018 SailPoint Technologies, Inc. All Rights Reserved.
+All logos, text, content, and works of authorship, including but not limited to underlying code, programming or scripting language, designs, and/or graphics,
+that are used and/or depicted herein are protected under United States and international copyright and trademark laws and treaties,
+and may not be used or reproduced without the prior express written permission of SailPoint Technologies, Inc. -->
+<sailpoint>
+<ImportAction name='merge'>
+<ObjectConfig name="Application">
+<!-- AGGREGATION -->
+	<ObjectAttribute defaultValue="" categoryName="Aggregate"
+		displayName="Service Account Identification" editMode="Permanent"
+		name="serviceAccountAttrExpression">
+		<Description>SUPPORTED FORMATS: [Schema Attribute Name]#IIQService#[Schema Attribute Value]#IIQService#[Operation] OR [Schema Attribute Name]#IIQService#[Java Regular Expression]</Description>
+	</ObjectAttribute>
+	<ObjectAttribute defaultValue="" categoryName="Aggregate"
+		displayName="Service Account Authoritative Source" editMode="Permanent"
+		name="authoritativeServiceAccount">
+		<Description></Description>
+	</ObjectAttribute>
+	<ObjectAttribute defaultValue="" categoryName="Aggregate"
+		displayName="Service Account Unique Name Attribute " editMode="Permanent"
+		name="apServiceAccountUniqueName">
+		<Description></Description>
+	</ObjectAttribute>
+	<ObjectAttribute categoryName="Aggregate" defaultValue="" 
+	displayName="Append Application Name To Service Account Cube Name" editMode="Permanent" name="apAppendApplicationName" type="boolean" >
+		<Description></Description>
+	</ObjectAttribute>
+	</ObjectConfig>
+	</ImportAction>
+</sailpoint>

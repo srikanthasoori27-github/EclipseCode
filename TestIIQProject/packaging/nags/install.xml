@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+
+<installation version="1.0">
+
+  <!-- Application Info -->
+  <info>
+    <appname>NetIQ Access Governance Suite</appname>
+    <appversion>7.1</appversion>
+    <url>http://www.netiq.com</url>
+    <javaversion>1.5</javaversion>
+    <uninstaller write="no"/>
+  </info>
+
+  <guiprefs resizable="no" width="640" height="480">
+    <modifier key="useHeadingPanel" value="yes" />
+    <modifier key="useHeadingForSummary" value="yes" />
+    <modifier key="headingLineCount" value="1" />
+  </guiprefs>
+
+  <!-- TODO: Localization -->
+  <locale>
+    <langpack iso3="eng" />
+  </locale>
+
+  <resources>
+    <res id="HTMLLicencePanel.licence" src="AGS 7.0 EULA 29 Jan 2016.html" />
+    <res id="Heading.image" src="netiq.png" />
+    <res id="TargetPanel.dir.windows" src="TargetDirWin.txt" />
+    <res id="TargetPanel.dir.mac" src="TargetDirUnix.txt" />
+    <res id="TargetPanel.dir.unix" src="TargetDirUnix.txt" />
+  </resources>
+
+  <panels>
+    <panel classname="HTMLLicencePanel" />
+    <panel classname="TargetPanel" />
+    <panel classname="InstallPanel" />
+    <panel classname="SimpleFinishPanel" />
+  </panels>
+
+
+  <packs>
+    <pack name="Base" required="yes">
+      <description>
+        Core Product
+      </description>
+      <fileset dir="../../../image" targetdir="$INSTALL_PATH" override="true">
+      </fileset>
+    </pack>
+  </packs>
+</installation>

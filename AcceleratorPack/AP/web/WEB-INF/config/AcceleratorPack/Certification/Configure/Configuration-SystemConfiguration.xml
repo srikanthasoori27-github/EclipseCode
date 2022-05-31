@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sailpoint PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<!-- Copyright © 2018 SailPoint Technologies, Inc. All Rights Reserved.
+All logos, text, content, and works of authorship, including but not limited to underlying code, programming or scripting language, designs, and/or graphics,
+that are used and/or depicted herein are protected under United States and international copyright and trademark laws and treaties,
+and may not be used or reproduced without the prior express written permission of SailPoint Technologies, Inc. -->
+<sailpoint>
+	<ImportAction name="merge">
+		<Configuration name="SystemConfiguration">
+			<Attributes>
+				<Map>
+					<!-- Mover and Regular Certification Email Templates -->
+      				<entry key="certificationDecisionChallengedEmailTemplate" value="EmailTemplate-Framework-CertificationDecisionChallengedNotification"/>
+      				<entry key="certificationSignOffApprovalEmailTemplate" value="EmailTemplate-Framework-CertificationSignOffApproval"/>
+      				<entry key="challengeAcceptedEmailTemplate" value="EmailTemplate-Framework-ChallengeAccepted"/>
+			      	<entry key="challengeDecisionExpirationEmailTemplate" value="EmailTemplate-Framework-ChallengeDecisionExpiration"/>
+			     	<entry key="challengeExpirationEmailTemplate" value="EmailTemplate-Framework-ChallengeExpiration"/>
+			      	<entry key="challengeGenerationEmailTemplate" value="EmailTemplate-Framework-ChallengeCreationNotification"/>
+			      	<entry key="challengePeriodEndEmailTemplate" value="EmailTemplate-Framework-ChallengePeriodEnd"/>
+     			    <entry key="challengePeriodStartEmailTemplate" value="EmailTemplate-Framework-ChallengePeriodStart"/>
+     			    <entry key="challengeRejectedEmailTemplate" value="EmailTemplate-Framework-ChallengeRejected"/>
+     			    <entry key="mitigationExpirationEmailTemplate" value="EmailTemplate-Framework-MitigationExpiration"/>
+     			    <entry key="certificationEmailTemplate" value="EmailTemplate-FrameworkAccessReviewStart"/>
+     			    <entry key="bulkReassignmentEmailTemplate" value="EmailTemplate-FrameworkAccessReviewBulkReassignment"/>
+     			    <!-- Mover and Regular Certification Rule -->
+                 	<entry key="certificationItemCustomizationRule" value="Rule-Framework-Certification-Item-Rule" />
+      				<!-- Just want to make sure we are not notifying managers for mitigations -->
+      				 <entry key="mitigationExpirationAction" value="NOTHING"/>
+					 <!-- Default Remediator -->
+                    <entry key="defaultRemediator" value="spadmin" />
+            		<!-- Certification -->
+      				<entry key="certificationDisableDelegationForwarding">
+						<value>
+							<Boolean>true</Boolean>
+						</value>
+					</entry>
+					<entry key="certificationLimitReassignments">
+						<value>
+							<Boolean>true</Boolean>
+						</value>
+					</entry>
+					<entry key="automateSignOffPopup">
+						<value>
+							<Boolean>true</Boolean>
+						</value>
+					</entry>
+					<entry key="certificationReassignmentLimit" value="4" />
+					<entry key="automateSignOffOnReassignment">
+						<value>
+							<Boolean>true</Boolean>
+						</value>
+					</entry>
+					<entry key="autoSignOffWhenNothingToCertify">
+						<value>
+							<Boolean>true</Boolean>
+						</value>
+					</entry>
+					<entry key="requireReassignmentCompletion">
+						<value>
+							<Boolean>false</Boolean>
+						</value>
+					</entry>
+					<entry key="allowCreatingRolesFromCertification">
+						<value>
+							<Boolean>false</Boolean>
+						</value>
+					</entry>
+					<entry key="automateSignOffOnReassignment">
+						<value>
+							<Boolean>true</Boolean>
+						</value>
+					</entry>
+							<entry key="requireBulkCertifyConfirmation">
+						<value>
+							<Boolean>true</Boolean>
+						</value>
+					</entry>
+					<entry key="suppressEmailWhenNothingToCertify">
+						<value>
+							<Boolean>true</Boolean>
+						</value>
+					</entry>
+					<!-- Priority Editing -->
+					<entry key="allowPriorityEditing">
+						<value>
+							<Boolean>false</Boolean>
+						</value>
+					</entry>
+					<entry key="workItemPriorityEditingEnabled">
+						<value>
+							<Boolean>false</Boolean>
+						</value>
+					</entry>
+				</Map>
+			</Attributes>
+		</Configuration>
+	</ImportAction>
+</sailpoint>

@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ImportAction PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<ImportAction name="connectorRegistryUpdateAction">
+  <Application connector="sailpoint.connector.OpenConnectorAdapter" featuresString="PROVISIONING, SYNC_PROVISIONING, ENABLE, PASSWORD" icon="internetIcon" name="Slack" type="Slack">
+    <Attributes>
+      <Map>
+        <entry key="connectorClass" value="openconnector.connector.slack.SlackConnector" />
+        <entry key="authType" value="apiToken" />
+        <entry key="enableComplexAttributeSupport" value="true" />
+        <entry key="encrypted" value="apiToken" />
+        <entry key="contentType" value="json" />
+        <entry key="formPath" value="SlackAttributesForm.xhtml" />
+        <entry key="HttpPatchSupport">
+          <value>
+            <Boolean>true</Boolean>
+          </value>
+        </entry>
+      </Map>
+    </Attributes>
+    <Schemas>
+      <Schema displayAttribute="userName" identityAttribute="id" nativeObjectType="account" objectType="account">
+        <AttributeDefinition name="id" remediationModificationType="None" required="true" type="string">
+          <Description>A unique identifier for a Slack resource</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="userName" remediationModificationType="None" required="true" type="string">
+          <Description>Name of the user</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="externalId" remediationModificationType="None" type="string">
+          <Description>A String that is an identifier for the resource</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="displayName" remediationModificationType="None" type="string">
+          <Description>The name of the user</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="nickName" remediationModificationType="None" type="string">
+          <Description>The casual way to address the user in real life</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="profileUrl" remediationModificationType="None" type="string">
+          <Description>A fully qualified URL to a page representing the user's Online profile</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="title" remediationModificationType="None" type="string">
+          <Description>The user's title</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="userType" remediationModificationType="None" type="string">
+          <Description>Used to identify the organization to user relationship</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="preferredLanguage" remediationModificationType="None" type="string">
+          <Description>Indicates the user's preferred written or spoken language</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="locale" remediationModificationType="None" type="string">
+          <Description>Used to indicate the user's default location for purposes of localizing items</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="timezone" remediationModificationType="None" type="string">
+          <Description>The user's time zone in the Olson timezone database format</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="familyName" remediationModificationType="None" type="string">
+          <Description>The family name (last name) of the user</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="givenName" remediationModificationType="None" type="string">
+          <Description>The given name (first name) of the user</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="honorificPrefix" remediationModificationType="None" type="string">
+          <Description>The honorific prefix(es) of the user</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="employeeNumber" remediationModificationType="None" type="string">
+          <Description>Numeric or alphanumeric identifier assigned to a person</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="costCenter" remediationModificationType="None" type="string">
+          <Description>Identifies the name of a cost center</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="organization" remediationModificationType="None" type="string">
+          <Description>Identifies the name of an organization</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="division" remediationModificationType="None" type="string">
+          <Description>Identifies the name of a division</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="department" remediationModificationType="None" type="string">
+          <Description>Identifies the name of a department</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="managerId" remediationModificationType="None" type="string">
+          <Description>The id of the Slack resource representing the user's manager</Description>
+        </AttributeDefinition>
+        <AttributeDefinition multi="true" name="emails" remediationModificationType="None" type="string">
+          <Description>E-mail addresses for the user</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="emails.work.primary.value" remediationModificationType="None" type="string">
+          <Description>Primary work e-mail address for the user</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="emails.work.secondary.value" remediationModificationType="None" type="string">
+          <Description>Secondary work e-mail addresses for the user</Description>
+        </AttributeDefinition>
+        <AttributeDefinition multi="true" name="phoneNumbers" remediationModificationType="None" type="string">
+          <Description>Phone numbers for the user</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="phoneNumbers.work.primary.value" remediationModificationType="None" type="string">
+          <Description>Primary work phone number for the user</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="phoneNumbers.mobile.value" remediationModificationType="None" type="string">
+          <Description>Mobile number for the user</Description>
+        </AttributeDefinition>
+        <AttributeDefinition multi="true" name="photos" remediationModificationType="None" type="string">
+          <Description>URL of a photo of the user</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="photos.photo.value" remediationModificationType="None" type="string">
+          <Description>URL of a photo of the user</Description>
+        </AttributeDefinition>
+        <AttributeDefinition multi="true" name="addresses" remediationModificationType="None" type="string">
+          <Description>A physical mailing address for this user</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="addresses.home.streetAddress" remediationModificationType="None" type="string">
+          <Description>Home Street address for this user</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="addresses.home.locality" remediationModificationType="None" type="string">
+          <Description>Home address locality for this user</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="addresses.home.region" remediationModificationType="None" type="string">
+          <Description>Home address region for this user</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="addresses.home.postalCode" remediationModificationType="None" type="string">
+          <Description>Home address postal code for this user</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="addresses.home.country" remediationModificationType="None" type="string">
+          <Description>Home address country for this user</Description>
+        </AttributeDefinition>
+        <AttributeDefinition entitlement="true" managed="true" multi="true" name="groups" remediationModificationType="None" schemaObjectType="group" type="string">
+          <Description>A list of groups that the user belongs to</Description>
+        </AttributeDefinition>
+        <AttributeDefinition entitlement="true" managed="true" multi="true" name="roles" remediationModificationType="None" type="string">
+          <Description>A list of roles for the user that collectively represent who the user is</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="created" remediationModificationType="None" type="string">
+          <Description>The date and time details of the account when it was added to the Slack</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="location" remediationModificationType="None" type="string">
+          <Description>The URL of the user being returned</Description>
+        </AttributeDefinition>
+        <AttributeDefinition entitlement="true" managed="true" multi="true" name="channels" schemaObjectType="channel" type="string">
+          <Description>Channels assigned to the user</Description>
+        </AttributeDefinition>
+      </Schema>
+      <Schema displayAttribute="displayName" featuresString="PROVISIONING" identityAttribute="id" nativeObjectType="group" objectType="group">
+        <AttributeDefinition name="id" remediationModificationType="None" type="string">
+          <Description>A unique identifier for the group</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="displayName" remediationModificationType="None" type="string">
+          <Description>The name of the group</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="created" remediationModificationType="None" type="string">
+          <Description>The date and time details of the group when it was added to the Slack</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="location" remediationModificationType="None" type="string">
+          <Description>The URL of the group being returned</Description>
+        </AttributeDefinition>
+      </Schema>
+      <Schema displayAttribute="name" featuresString="PROVISIONING" identityAttribute="id" nativeObjectType="channel" objectType="channel" aggregationType="group">
+        <AttributeDefinition name="id" remediationModificationType="None" type="string">
+          <Description>ID of the Slack channel.</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="name" remediationModificationType="None" type="string">
+          <Description>Name of the Slack channel.</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="created" remediationModificationType="None" type="string">
+          <Description>The time stamp when channel is created.</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="creator" remediationModificationType="None" type="string">
+          <Description>User ID of the member who created the channel.</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="num_members" remediationModificationType="None" type="string">
+          <Description>Number of members in the channel.</Description>
+        </AttributeDefinition>
+        <AttributeDefinition name="channel_type" remediationModificationType="None" type="string">
+          <Description>Type of the Slack channel.</Description>
+        </AttributeDefinition>
+      </Schema>
+    </Schemas>
+    <ProvisioningForms>
+      <Form name="Create Account" objectType="account" type="Create">
+        <Attributes>
+          <Map>
+            <entry key="pageTitle" value="Create Account" />
+          </Map>
+        </Attributes>
+        <Section>
+          <Field displayName="con_prov_policy_slack_username" name="userName" helpKey="help_con_prov_policy_slack_userName" required="true" type="string" reviewRequired="true">
+            <Script>
+              <Source>return identity.getName();</Source>
+            </Script>
+          </Field>
+          <Field displayName="con_prov_policy_slack_firstname" name="givenName" helpKey="help_con_prov_policy_slack_firstName" reviewRequired="true" type="string">
+            <Script>
+              <Source>return identity.getFirstname();</Source>
+            </Script>
+          </Field>
+          <Field displayName="con_prov_policy_slack_lastname" name="familyName" helpKey="help_con_prov_policy_slack_lastName" reviewRequired="true" type="string">
+            <Script>
+              <Source>return identity.getLastname();</Source>
+            </Script>
+          </Field>
+          <Field displayName="con_prov_policy_slack_displayname" name="displayName" helpKey="help_con_prov_policy_slack_displayName" reviewRequired="true" type="string">
+            <Script>
+              <Source>return identity.getDisplayName();</Source>
+            </Script>
+          </Field>
+          <Field displayName="con_prov_policy_slack_password" name="password" helpKey="help_con_prov_policy_slack_password" reviewRequired="true" type="secret" />
+          <Field displayName="con_prov_policy_slack_email" name="emails.work.primary.value" helpKey="help_con_prov_policy_slack_email" required="true" reviewRequired="true" type="string">
+            <Script>
+              <Source>return identity.getEmail();</Source>
+            </Script>
+          </Field>
+          <Field displayName="con_prov_policy_slack_usertype" name="userType" helpKey="help_con_prov_policy_slack_userType" reviewRequired="true" type="string" />
+          <Field displayName="con_prov_policy_slack_employeenumber" name="employeeNumber" helpKey="help_con_prov_policy_slack_employeeNumber" reviewRequired="true" type="string" />
+          <Field displayName="con_prov_policy_slack_department" name="department" helpKey="help_con_prov_policy_slack_department" reviewRequired="true" type="string" />
+          <Field displayName="con_prov_policy_slack_locale" name="locale" helpKey="help_con_prov_policy_slack_locale" reviewRequired="true" type="string" />
+          <Field displayName="con_prov_policy_slack_timezone" name="timezone" helpKey="help_con_prov_policy_slack_timezone" reviewRequired="true" type="string" />
+        </Section>
+      </Form>
+      <Form name="Create Group" objectType="group" type="Create">
+        <Attributes>
+          <Map>
+            <entry key="pageTitle" value="Create Group" />
+          </Map>
+        </Attributes>
+        <Section>
+          <Field displayName="con_prov_policy_slack_displayname" name="displayName" required="true" helpKey="help_con_prov_policy_slack_group_displayName" reviewRequired="true" type="string" />
+        </Section>
+      </Form>
+      <Form name="Create Channel" objectType="channel" type="Create">
+        <Attributes>
+          <Map>
+            <entry key="pageTitle" value="Create Channel" />
+          </Map>
+        </Attributes>
+        <Section>
+          <Field displayName="con_prov_policy_slack_displayname" name="name" required="true" helpKey="help_con_prov_policy_slack_channel_displayName" reviewRequired="true" type="string" />
+          <Field displayName="con_prov_policy_slack_includeCreator" name="includeCreator" helpKey="help_con_prov_policy_slack_include_creator" type="boolean" reviewRequired="true"/>
+        </Section>
+      </Form>
+    </ProvisioningForms>
+  </Application>
+</ImportAction>

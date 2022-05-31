@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE sailpoint PUBLIC 'sailpoint.dtd' 'sailpoint.dtd'>
+<!-- Copyright © 2018 SailPoint Technologies, Inc. All Rights Reserved.
+All logos, text, content, and works of authorship, including but not limited to underlying code, programming or scripting language, designs, and/or graphics,
+that are used and/or depicted herein are protected under United States and international copyright and trademark laws and treaties,
+and may not be used or reproduced without the prior express written permission of SailPoint Technologies, Inc. -->
+<sailpoint>
+  <ImportAction name='include' value='AcceleratorPack/Generic/Configure/Custom-Framework-Common-Settings.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Generic/Configure/Custom-Triggers.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Generic/Source/EmailTemplate-FrameworkWorkItemForward.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Generic/Source/Form-Framework-IdentityUpdate.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Generic/Source/Rule-Framework-AfterBeforeProvisionRuleLibrary.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Generic/Source/Rule-Framework-ManagedAttribute-GetDisplayValue.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Generic/Source/Rule-Framework-WrapperRuleLibrary.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Generic/Source/Workflow-FrameWork-Wrapper.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Generic/Configure/Workgroup-NoManagerFound.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Generic/Configure/Configuration-SystemConfiguration.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Generic/Configure/GroupDefinition-CorrelatedIdentities.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Generic/Source/Configuration-SystemConfiguration.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Generic/Source/ObjectConfig-Identity.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Generic/Configure/Workgroup-Operations.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Generic/Source/Rule-FrameWork-Group-Refresh.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Generic/Source/Rule-FrameWork-Promote-Managed-Attribute.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Generic/Source/ObjectConfig-Application.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Generic/Source/Rule-Framework-RapidAppOnBoarding-Customization-Rule.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Generic/Source/Rule-FrameWork-Correlation.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Generic/Source/ObjectConfig-Managedattribute.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Generic/Source/DynamicScope-SmartServicesBusinessAnalyst.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Generic/Configure/Workgroup-SmartServicesBusinessAnalyst.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Generic/Source/EmailTemplate-Framework-DelegationRevocation.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Generic/Source/EmailTemplate-Framework-OpenCertifications.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Generic/Source/EmailTemplate-Framework-PolicyViolation.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Generic/Source/EmailTemplate-Framework-PolicyViolationDelegation.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Generic/Source/EmailTemplate-Framework-RemediationWorkItem.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Generic/Source/EmailTemplate-Framework-TaskResultSignOff.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Generic/Source/EmailTemplate-Framework-TaskStatus.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Generic/Source/EmailTemplate-FrameworkRemediationAssignment.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Generic/Source/EmailTemplate-FrameworkRemediationAssignmentRemoval.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Generic/Source/EmailTemplate-FrameworkWorkItemAssignment.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Generic/Source/EmailTemplate-FrameworkWorkItemAssignmentRemoval.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Generic/Source/EmailTemplate-FrameworkWorkItemComment.xml'/>
+   <ImportAction name='include' value='AcceleratorPack/Generic/Source/Bundle-BirthrightRoles.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Generic/Source/Bundle-BusinessRoles.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Generic/Source/Bundle-EnterpriseRoles.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Generic/Source/Bundle-FormRoles.xml'/>
+</sailpoint>

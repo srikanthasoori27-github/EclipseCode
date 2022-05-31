@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Rule PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<Rule language="beanshell" name="TestCertificationScore">
+          
+    
+    <Source><![CDATA[
+  import sailpoint.object.*;
+  import sailpoint.score.*;
+  import sailpoint.tools.*;
+  import sailpoint.api.SailPointContext;
+  ScoreConfig config = context.getObject(ScoreConfig.class,"ScoreConfig");
+  // Give the identity username below.
+  Identity id = context.getObject(Identity.class,"WilliamTweleve.Moore");
+  public int getMaximumScore(ScoreConfig config) {
+        
+        int max = config.getMaximumScore();
+        if (max <= 0)
+            max = ScoreDefinition.DEFAULT_RANGE;
+        return max;
+    }
+
+public Date getLastCertificationDate(SailPointContext context, Identity id)
+        throws GeneralException {
+
+        Date date = null;
+
+        // Identity has this utility method but we don't use it any
+        // more so we have more control.  Delete this method if we
+        // dont't need it anywhere else!
+        //CertificationLink link = id.getLatestCertification();
+
+        List <CertificationLink> links = id.getCertifications();
+        if (links != null) {
+            for (CertificationLink link : links) {
+
+                // !!should we be ignoring app owner certs?
+                
+                Date d = link.getCompleted();
+                if (d == null) {
+                    // a continuous cert, look at mod time
+                    d = link.getModified();
+                    if (d == null) {
+                        // !! we're not currently maintining this so
+                        // have to dig it out of the Cert, 
+                        // this is EXPENSIVE
+                        Certification cert = context.getObjectById(Certification.class, link.getId());
+                        if (cert != null) {
+                            CertificationEntity ent = cert.getEntity(id);
+                            if (ent != null)
+                                d = ent.getModified();
+                            // try to keep the cache clean
+                            context.decache(cert);
+                        }
+                    }
+                }
+
+                if (d != null && (date == null || d.compareTo(date) > 0))
+                    date = d;
+            }
+        }
+
+        return date;
+    }
+  
+  public int constrainsScore(ScoreConfig config, int score) {
+
+        int max = 1000;
+
+        if (score > max)
+            score = max;
+
+        else if (score <0)
+            score = 0;
+
+        return score;
+    }
+	
+  
+  
+
+  int score = 0;
+  long days = 0;
+  
+  // offset and range mentioned in the Certification page
+  int offset=10;
+  int range =20;
+  
+  int max = getMaximumScore(config);
+  float units = (float)max / (float)range;
+   Date last = getLastCertificationDate(context, id);
+                if (last == null) {
+                    // no certification, we max
+                    score = getMaximumScore(config);
+                }
+                else {
+                    // can probably use Calendar for this, but it sure 
+                    // isn't obvious
+                    long lastMillis = last.getTime();
+                    long nowMillis = new Date().getTime();
+                    if (lastMillis > nowMillis) {
+                        // certification is after the current time, 
+                        // something is probably wrong, but assume this
+                        // means that a fresh certification is in range
+                    }
+                    else {
+                        long millisPerDay = 86400000;
+                        days = (nowMillis - lastMillis) / millisPerDay;
+                        // factor out the offset
+                        days -= offset;
+                        if (days > 0)
+                            score = (int)(units * days);
+                    }
+                }
+  
+  score = constrainsScore(config, score);
+  
+  return Util.ltoa(days);
+					]]></Source>
+        
+
+</Rule>

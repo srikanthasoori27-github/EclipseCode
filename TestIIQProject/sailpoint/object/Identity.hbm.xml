@@ -1,0 +1,160 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" [
+  <!ENTITY SailPointObject SYSTEM "classpath://sailpoint/object/SailPointObject.hbm.xml">
+  <!ENTITY IdentityExtensions SYSTEM "classpath://sailpoint/object/IdentityExtended.hbm.xml">
+]>
+
+<!-- (c) Copyright 2008 SailPoint Technologies, Inc., All Rights Reserved. -->
+
+<hibernate-mapping>
+  <class name="sailpoint.object.Identity" dynamic-update="true" dynamic-insert="true">
+
+    &SailPointObject;
+    &IdentityExtensions;
+    
+    <property name="name" type="string" length="128" unique="true" not-null="true"/>
+    <property name="description" type="string" length="1024"/>
+    <property name="protected" type="boolean"/>
+
+    <property name="needsRefresh" type="boolean" index="spt_identity_needs_refresh"/>
+
+    <!-- this was taken out of SailPointObject.hbm.xml for some reason
+         so we have to map it in each subclass as necessary
+    -->
+    <property name="lock" column="iiqlock" type="string" length="128"/>
+
+    <!--  
+      The attributes property has to go first so that hibernate will prefer
+      a column for a given property over any conflicting values in the xml 
+      attributes field.  This makes it possible for changes made via SQL to
+      take effect in the SailPointObject.
+      !! jsl - I'm not sure this is a good idea, we don't allow changes to the
+      column representations of extended attributes, do we really need
+      to allow this for standard attributes?
+    -->
+    <property name="attributes" type="sailpoint.persistence.XmlType" 
+              length="100000000"/>
+
+    <!-- jsl - this one does not need to be explicitly indexed because
+         there is a forign key index.
+    -->
+    <many-to-one embed-xml="false" name="manager" class="sailpoint.object.Identity"/>
+
+    <property name="displayName" type="string" length="128" index="spt_identity_displayName_ci"/>
+    <property name="firstname" type="string" length="128" index="spt_identity_firstname_ci"/>
+    <property name="lastname" type="string" length="128" index="spt_identity_lastname_ci"/>
+    <property name="email" type="string" length="128" index="spt_identity_email_ci"/>
+    <property name="managerStatus" type="boolean" index="spt_identity_manager_status"/>
+    <property name="inactive" type="boolean" index="spt_identity_inactive"/>
+
+    <property name="lastLogin" type="sailpoint.persistence.DateType"/>
+    <property name="lastRefresh" type="sailpoint.persistence.DateType" index="spt_identity_lastRefresh"/>
+    <property name="password" type="string" length="450" />
+    <property name="passwordExpiration" type="sailpoint.persistence.DateType"/>
+    <property name="passwordHistory" type="string" length="2000"/>
+    <property name="bundleSummary" type="string" length="2000"/>
+    <property name="assignedRoleSummary" type="string" length="2000"/>
+    <property name="correlated" type="boolean" index="spt_identity_correlated"/>
+    <property name="correlatedOverridden" type="boolean"/>
+    <property name="type" type="string" length="128" index="spt_identity_type_ci"/>
+    <property name="softwareVersion" type="string" length="128" index="spt_identity_sw_version_ci"/>
+
+    <many-to-one embed-xml="false" name="administrator" class="sailpoint.object.Identity"/>
+
+    <list name="authenticationAnswers" cascade="all">
+      <key column="identityId"/>
+      <list-index column="idx"/>
+      <one-to-many class="sailpoint.object.AuthenticationAnswer"/>
+    </list>
+    <property name="authLockStart" type="sailpoint.persistence.DateType" />
+    <property name="failedAuthQuestionAttempts" />
+    <property name="failedLoginAttempts" />
+
+    <list name="capabilities" table="IdentityCapabilities"
+          cascade="persist,merge,save-update">
+      <key column="identity_id"/>
+      <list-index column="idx"/>
+      <many-to-many column="capability_id" class="sailpoint.object.Capability"/>
+    </list>
+
+    <list name="controlledScopes" table="IdentityControlledScopes"
+          cascade="persist,merge,save-update">
+      <key column="identity_id"/>
+      <list-index column="idx"/>
+      <many-to-many column="scope_id" class="sailpoint.object.Scope"/>
+    </list>
+    <property name="controlsAssignedScope" type="boolean" />
+
+    <property name="certifications" type="sailpoint.persistence.XmlType" 
+      length="100000000"/>
+    <property name="activityConfig" type="sailpoint.persistence.XmlType" 
+      length="100000000"/>
+    <property name="preferences" type="sailpoint.persistence.XmlType" 
+      length="100000000"/>
+
+    <bag name="links" cascade="all">
+      <key column="identityId"/>
+      <one-to-many class="sailpoint.object.Link"/>
+    </bag>
+
+    <list name="assignedRoles" table="IdentityAssignedRoles"
+       cascade="persist,merge,save-update">
+      <key column="identityId"/>
+      <list-index column="idx"/>
+      <many-to-many column="bundle" class="sailpoint.object.Bundle"/>
+    </list>
+
+    <list name="bundles" table="IdentityBundles"
+       cascade="persist,merge,save-update">
+      <key column="identityId"/>
+      <list-index column="idx"/>
+      <many-to-many column="bundle" class="sailpoint.object.Bundle"/>
+    </list>
+    
+    <list name="roleMetadatas" table="IdentityRoleMetadata"
+       cascade="persist,merge,save-update">
+      <key column="identityId"/>
+      <list-index column="idx"/>
+      <many-to-many column="roleMetadataId" class="sailpoint.object.RoleMetadata"/>
+    </list>
+
+    <list name="exceptions" cascade="all">
+      <key column="identityId"/>
+      <list-index column="idx"/>
+      <one-to-many class="sailpoint.object.EntitlementGroup"/>
+    </list>
+
+    <many-to-one embed-xml="false" name="scorecard" class="sailpoint.object.Scorecard"
+      cascade="all"/>
+
+    <many-to-one embed-xml="false" name="UIPreferences" class="sailpoint.object.UIPreferences"
+      cascade="all"/>
+
+    <list name="mitigationExpirations" cascade="all">
+      <key column="identityId"/>
+      <list-index column="idx"/>
+      <one-to-many class="sailpoint.object.MitigationExpiration"/>
+    </list>
+
+    <property name="attributeMetaData" type="sailpoint.persistence.ListXmlType" 
+              length="100000000"/>
+
+    <!-- Workgroup specific properties -->
+    <property name="workgroup" type="boolean" index="spt_identity_isworkgroup"/>
+
+    <list name="workgroups" table="IdentityWorkgroups"
+          cascade="persist,merge,save-update">
+      <key column="identityId"/>
+      <list-index column="idx"/>
+      <many-to-many column="Workgroup" class="sailpoint.object.Identity"/>
+    </list>
+
+    <bag name="identityEntitlements" inverse="true" mutable="false" lazy="extra" cascade="none">
+      <key column="identityId"/>
+      <one-to-many class="sailpoint.object.IdentityEntitlement"/>
+    </bag>
+
+  </class>
+</hibernate-mapping>

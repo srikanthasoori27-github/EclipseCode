@@ -1,0 +1,21 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE sailpoint PUBLIC 'sailpoint.dtd' 'sailpoint.dtd'>
+<!-- Copyright © 2018 SailPoint Technologies, Inc. All Rights Reserved.
+All logos, text, content, and works of authorship, including but not limited to underlying code, programming or scripting language, designs, and/or graphics,
+that are used and/or depicted herein are protected under United States and international copyright and trademark laws and treaties,
+and may not be used or reproduced without the prior express written permission of SailPoint Technologies, Inc. -->
+<sailpoint>
+  <ImportAction name='include' value='AcceleratorPack/Joiner/Source/EmailTemplate-FrameworkJoinerManager.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Joiner/Source/EmailTemplate-FrameworkPasswordJoinerManager.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Joiner/Configure/IdentityTrigger-Joiner.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Joiner/Source/ObjectConfig-Application.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Joiner/Source/ObjectConfig-Identity.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Joiner/Source/ObjectConfig-Bundle.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Joiner/Source/Rule-IdentityTrigger-Joiner.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Joiner/Source/Rule-Joiner-RuleLibrary.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Joiner/Source/Workflow-Lifecycle-Joiner-RequestObject-Wrapper.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Joiner/Source/Workflow-Lifecycle-Joiner.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Joiner/Source/GroupDefinition-JoinerGroupDefinition.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Joiner/Source/Rule-FrameWork-Creation-Joiner-Authoritative-Source.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Joiner/Source/ObjectConfig-Managedattribute.xml'/>
+</sailpoint>

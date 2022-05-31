@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" [
+  <!ENTITY IndexBase "link">
+  <!ENTITY ExternalAttribute SYSTEM "classpath://sailpoint/object/ExternalAttribute.hbm.xml"> 
+]>
+
+<!-- (c) Copyright 2008 SailPoint Technologies, Inc., All Rights Reserved. -->
+
+<hibernate-mapping>
+  <class name="sailpoint.object.LinkExternalAttribute" 
+         table="LinkExternalAttr"
+         dynamic-update="true" dynamic-insert="true">  
+    &ExternalAttribute;
+  </class>
+</hibernate-mapping>

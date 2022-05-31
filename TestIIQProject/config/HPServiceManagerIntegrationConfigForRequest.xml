@@ -1,0 +1,620 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE sailpoint PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+
+<!--(c) Copyright 2016 SailPoint Technologies, Inc., All Rights Reserved. -->
+
+<!-- DOCUMENTATION
+     This document provides the required information for configuring IdentityIQ to integrate with HP Service Manager.
+     The IntegrationConfig xml file provides configuration for HP SM's Service Request operation.
+-->
+
+<sailpoint>
+  <Rule language='beanshell' name='HPSMServiceIntegration' type='Integration'>
+    <Description>
+      Use this rule to customize the data loaded into the provisioningPlan's integrationData object.
+      The provisioningPlan and its integrationData object are used by Velocity to populate values in the XML templates for the web service calls.
+      In this rule we get HPSM Account name for an Identity from specified application name and attribute name needed for web service call
+    </Description>
+    <Signature returnType='Attributes'>
+      <Inputs>
+        <Argument name='identity'>
+          <Description>
+            A sailpoint.object.Identity representing the person being remediated.
+          </Description>
+        </Argument>
+        <Argument name='plan'>
+          <Description>
+            A sailpoint.object.ProvisioningPlan representing remediation.
+          </Description>
+        </Argument>
+        <Argument name='context'>
+          <Description>
+            A sailpoint.api.SailPointContext object that can be used to 
+            query the database to find the Rule.
+          </Description>
+        </Argument>
+        <Argument name='log'>
+          <Description>
+            A Log object to help report and/or debug the Rule.
+          </Description>
+        </Argument>
+      </Inputs>
+    </Signature>
+    <Source>
+      <![CDATA[
+          import sailpoint.object.Identity;
+          import sailpoint.object.Link;
+
+          // Specify IdentityIQ application name in which HPSM users are imported
+          String applicationName = "HPSM";
+
+          // Specify Link Attribute name to populate requestedFor on request e.g Contact Name
+          String attributeName = "Contact Name";
+          String requestedFor = null;
+
+          /**
+           * Get HPSM Account name for an Identity from specified application name and attribute name
+           */
+          private getHPSMUser(Identity identity) {
+              String userName = null;
+              List links = identity.getLinks();
+              if (links != null) {
+                  for (Link link : links) {
+                      String appName = link.getApplication().getName();
+                      if (appName != null && appName.equals(applicationName)) {
+                          Object attrObj = link.getAttribute(attributeName);
+                          if(attrObj != null) {
+                              userName = attrObj.toString();
+                              if(userName != null) {
+                                  break;
+                              }
+                          }
+                      }
+                  }
+              }
+
+              return userName;
+          }
+
+          ////////////////////////////////////////////////////////////////
+          // Main
+          ////////////////////////////////////////////////////////////////
+          Map arguments = (Map)plan.getArguments();
+
+          List<Identity> requesterList = plan.getRequesters();
+          Identity requester = null;
+          if (requesterList != null) {
+              requester = requesterList.get(0);
+              requester = context.getObjectByName(Identity.class, requester.getName());
+          }
+
+          // Get HPSM requestedFor Account name
+          String requestedFor = getHPSMUser(identity);
+
+          // Get HPSM requestedBy Account name
+          String requestedBy = getHPSMUser(requester);
+
+          // Get HPSM Account name
+          String requestedFor = getHPSMUser(identity);
+
+          // If the user for which ticket is created has HPSM Account put that value
+          // else put identity name from plan as it is
+          if (requestedFor != null) {
+              arguments.put("requestedFor", requestedFor);
+          } else {
+              arguments.put("requestedFor", identity.getName());
+          }
+
+          // If Requetser has HPSM Account put that value
+          // else put requester name from plan as it is
+          if (requestedBy != null) {
+              arguments.put("requestedBy", requestedBy);
+          } else {
+              arguments.put("requestedBy", requester.getName());
+          }
+    ]]>
+    </Source>
+  </Rule>
+
+  <!-- DOCUMENTATION
+         Integration Config <entry key> documentation
+         1> key='noProvisioningRequests'
+                 when set to true disables the saving of provisioning request objects.
+         2> key='operations'
+                 Provides support operation for this integration configuration (Create,Modify,Delete,Enable,Unlock,SetPassword).
+         3> key='dateFormat'
+                 Date format for dateTime XML data type.
+                 Default is - yyyy-MM-dd'T'HH:mm:ss
+         4> key='username'
+                 Username for web service (SOAP) authentication.
+         5> key='password'
+                 The current password for the user.
+         6> key='enableChangeRequest'
+
+         7> key='multipleProvisioningSteps'
+                 This entry has two possible values "true" or "false". The "true" entry key value is used to indicate executor class that this integration
+                 requires multiple provisioning steps to create a request on HP SM. In case value of this entry is "false" the executor class would assume
+                 only a map under "provision" entry.
+                 If not defined this will default to "false".
+         8> key='lastProvisioningStep'
+                 This value provides name of last provisioning step in multiple provisioning steps e.g CreateSubmitCart is last provisioning step.
+         9> key='checkStatusProvisioningStep'
+                 The integration configuration will include this entry if there is a requirement to check the status on the HP SM service catalog request.
+                 In case not defined the request status will not be checked.
+        10> key='catalogItem'
+                 catalogItem is map of application as key and service catalog item as value
+        11> key='provision'
+                 Contains SOAP envelope template to send ticket creation request to HP SM. This uses SOAP over HTTP.
+                 The value of this key is a list of three SOAP provisioning steps. These three SOAP requests are required to create a service catalog request
+                 on HP SM and must be performed in sequence.
+                   i>   CreateCart: This SOAP operation request's response generates a "CartID"
+                   ii>  AddItemToCartViaOrder: This SOAP operation takes "CartID" as input and gernerates "CartItemId"
+                   iii> CreateSubmitCart: This SOAP operation takes "CartID" as input and gernerates "incident.id".
+
+                All three operations contains same keys as below:
+                 a> key='endpoint'
+                         HP SM endpoint to send create ticket request. 
+                         For HP SM 'Service Request' operation - http://ip_address or host_name:port_number/SM/7/ws
+                 b> key='namespace'
+                         mention it as per the WSDL file generated by the HP Service Manger
+                 c> key='prefix'
+                         The SOAP namespace prefix is 'ns'
+                         mention it as per the WSDL file generated by the HP Service Manger
+                 d> key='SOAPAction'
+                         It will tells HP Service Manager what action should perform
+                 e> key='responseElement'
+                         The SOAP response element.
+                 f> key='dependency'
+                         The value of this entry could be none or the name of the previous provisioning step or list of previous provisioning steps
+                         separated by commas.
+                 g> key='soapMessage'
+                         The SOAP envelope to send over HTTP.
+        12> key='statusMap'
+                 Mapping of HP Service Manager request status values to the possible status values in the IIQ (RequestStatus class).
+                 The following IdentityIQ 'RequestResult' status codes are available, and you can use it in IntegrationConfig to relate to most suitable
+                 state of HP SM service operation.
+                    success
+                    failure
+                    committed
+                    retry
+                    warning
+                    notStarted
+                    inProcess
+        13> key='statusMapClosureCode'
+                 mapping of HP Service Manager request closure code values to the possible status values in the IIQ (RequestStatus class)
+                    Automatically Closed
+                    Cancelled
+                    Fulfilled
+                    Not Reproducible
+                    Out of Scope
+                    Request Rejected
+                    Solved by Change/Service Request
+                    Solved by User Instruction
+                    Solved by Workaround
+                    Unable to solve
+                    Withdrawn by User
+                    Invalid
+                    1 - Successful
+                    2 - Successful (with problems)
+                    3 - Failed
+                    4 - Rejected (financial)
+                    5 - Rejected (technical)
+                    6 - Rejected (security)
+                    7 - Withdrawn
+                    8 - Withdrawal requested by customer
+                    9 - Cancelled
+                    10 - Denied request fulfillment
+        14> key='getRequestStatus'
+                 Contains SOAP envelope template to get ticket status from HP SM. This uses SOAP over HTTP.
+                 It contains below <entry key> parameters.
+                 a> key='endpoint'
+                         HP SM endpoint to get ticket status.
+                         To get 'Ticket's' status - http://ip_address or host_name:port_number/SM/7/ws
+                 b> key='prefix'
+                         The SOAP namespace prefix for 'Service Request' - default is 'ns'.
+                 c> key='SOAPAction'
+                         It will tells HP Service Manager what action should perform
+                 d> key='responseElement'
+                    The SOAP response element.
+                 e> key='soapMessage'
+                         The SOAP envelop to send over HTTP.
+                         Attribute of a soap response which has the status on the interaction/incident number
+    -->
+  <IntegrationConfig name="HPSMServiceIntegrationModuleRequest"
+                   executor="sailpoint.integration.hpservicemanager.HPServiceManagerIntegrationExecutor"
+                   roleSyncStyle="none">
+
+    <PlanInitializer>
+      <Reference class="sailpoint.object.Rule" name="HPSMServiceIntegration"/>
+    </PlanInitializer>
+
+    <Attributes>
+      <Map>
+        <entry key='noProvisioningRequests' value='false'/>
+        <entry key='operations' value='Create,Modify,Delete,Enable,Unlock,SetPassword'/>
+        <entry key="dateFormat" value="yyyy-MM-dd'T'HH:mm:ss"/>
+        <entry key="username" value=""/>
+        <entry key="password" value=""/>
+        <entry key="enableChangeRequest" value="true"/>
+        <entry key="multipleProvisioningSteps" value="true"/>
+        <entry key="lastProvisioningStep" value="CreateSubmitCartStep"/>
+        <entry key="checkStatusProvisioningStep" value="true"/>
+        <entry key="catalogItem">
+          <value>
+            <Map>
+              <entry key="Demo App1" value=""/>
+              <entry key="Demo App2" value=""/>
+            </Map>
+          </value>
+        </entry>
+        <entry key='multipleTicket' value='true'/>
+        <entry key='groupTicketBy' value='application'/>
+        <!-- #SERVICE REQUEST -->
+        <entry key="provision">
+          <value>
+            <List>
+              <Map>
+                <entry key="CreateCartStep">
+                  <value>
+                    <Map>
+                      <entry key="endpoint" value="http://localhost:13080/SM/7/ws"/>
+                      <entry key="namespace" value="http://schemas.hp.com/SM/7"/>
+                      <entry key="prefix" value="ns"/>
+                      <entry key="SOAPAction" value="Create"/>
+                      <entry key="responseElement" value="CartID"/>
+                      <entry key="dependency" value="None"/>
+                      <entry key="soapMessage">
+                      <!-- SOAP Message Template -->
+                        <value>
+                          <String><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://schemas.hp.com/SM/7" xmlns:com="http://schemas.hp.com/SM/7/Common" xmlns:xm="http://www.w3.org/2005/05/xmlmime">
+<soapenv:Header/>
+<soapenv:Body>
+<ns:CreateCartRequest attachmentInfo="" attachmentData="" ignoreEmptyElements="true" updateconstraint="">
+<ns:model query="">
+<ns:keys query="" updatecounter="">
+<ns:CartID type="Decimal" mandatory="" readonly=""></ns:CartID>
+</ns:keys>
+<ns:instance query="" uniquequery="" recordid="" updatecounter="">
+<ns:CartID type="Decimal" mandatory="" readonly=""></ns:CartID>
+<ns:Completed type="Boolean" mandatory="" readonly=""></ns:Completed>
+<ns:BriefDescription type="String" mandatory="" readonly="">
+</ns:BriefDescription>
+<ns:Owner type="String" mandatory="" readonly=""></ns:Owner>
+<ns:InteractionID type="String" mandatory="" readonly=""></ns:InteractionID>
+<ns:Submitted type="Boolean" mandatory="" readonly=""></ns:Submitted>
+<ns:Description type="Array">
+<ns:Description type="String" mandatory="" readonly="">
+#foreach ($request in $provisioningPlan.accountRequests)
+#if ($request.attributeRequests)
+#foreach ($att in $request.attributeRequests)
+ $request.application $att.operation $att.name $att.value
+#end
+#else
+ $request.operation $request.application nativeIdentity $request.nativeIdentity
+#end
+#end
+</ns:Description>
+<ns:Description type="String" mandatory="" readonly=""></ns:Description>
+</ns:Description>
+<ns:Cost type="Decimal" mandatory="" readonly=""></ns:Cost>
+<ns:Template type="Boolean" mandatory="" readonly=""></ns:Template>
+<ns:attachments>
+<com:attachment xm:contentType="application" href="" contentId="" action="" name="" type="" len="" charset="" attachmentType=""></com:attachment>
+</ns:attachments>
+</ns:instance>
+<ns:messages>
+<com:message type="String" mandatory="" readonly="" severity="" module=""></com:message>
+</ns:messages>
+</ns:model>
+</ns:CreateCartRequest>
+</soapenv:Body>
+</soapenv:Envelope>]]>
+                          </String>
+                        </value>
+                      </entry>
+                    </Map>
+                  </value>
+                </entry>
+                <entry key="AddItemToCartViaOrderStep">
+                  <value>
+                    <Map>
+                      <entry key="endpoint" value="http://localhost:13080/SM/7/ws"/>
+                      <entry key="namespace" value="http://schemas.hp.com/SM/7"/>
+                      <entry key="prefix" value="ns"/>
+                      <entry key="SOAPAction" value="AddItemToCartVia"/>
+                      <entry key="responseElement" value="CartItemId"/>
+                      <entry key="dependency" value="CreateCartStep"/>
+                      <entry key="soapMessage">
+                        <!-- SOAP Message Template -->
+                        <value>
+                          <String><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://schemas.hp.com/SM/7" xmlns:com="http://schemas.hp.com/SM/7/Common" xmlns:xm="http://www.w3.org/2005/05/xmlmime">
+<soapenv:Header/>
+<soapenv:Body>
+<ns:AddItemToCartViaOrderRequest attachmentInfo="" attachmentData="" ignoreEmptyElements="true" updateconstraint="">
+<ns:model query="">
+<ns:keys query="" updatecounter="">
+<!-- Provide Catalog Item Name exists on HP , e.g. IdentityIQ Access Request Item  -->
+<ns:ItemName type="String" mandatory="" readonly="">$catalogItem</ns:ItemName>
+</ns:keys>
+<ns:instance query="" uniquequery="" recordid="" updatecounter="">
+<ns:CartId type="Decimal" mandatory="" readonly="">$CartID</ns:CartId>
+<ns:CartItemId type="Decimal" mandatory="" readonly=""></ns:CartItemId>
+<ns:Delivery type="String" mandatory="" readonly=""></ns:Delivery>
+<ns:ItemName type="String" mandatory="" readonly="">$catalogItem</ns:ItemName>
+<ns:Quantity type="Decimal" mandatory="" readonly="">1</ns:Quantity>
+<ns:RequestedFor type="String" mandatory="" readonly="">$!provisioningPlan.integrationData.requestedFor</ns:RequestedFor>
+<ns:RequestedForDept type="String" mandatory="" readonly=""></ns:RequestedForDept>
+<ns:RequestedForType type="String" mandatory="" readonly="">individual</ns:RequestedForType>
+<ns:ServiceSLA type="Decimal" mandatory="" readonly=""></ns:ServiceSLA>
+<ns:Options type="String" mandatory="" readonly=""></ns:Options>
+<ns:option.list type="Array">
+<ns:option.list type="Structure">
+<ns:SubItemId type="Decimal" mandatory="" readonly=""></ns:SubItemId>
+<ns:SubOptions type="String" mandatory="" readonly=""></ns:SubOptions>
+<ns:SubItemName type="String" mandatory="" readonly=""></ns:SubItemName>
+</ns:option.list>
+</ns:option.list>
+<ns:attachments>
+<com:attachment xm:contentType="application" href="" contentId="" action="" name="" type="" len="" charset="" attachmentType=""></com:attachment>
+</ns:attachments>
+</ns:instance>
+<ns:messages>
+<com:message type="String" mandatory="" readonly="" severity="" module=""></com:message>
+</ns:messages>
+</ns:model>
+</ns:AddItemToCartViaOrderRequest>
+</soapenv:Body>
+</soapenv:Envelope>]]>
+                          </String>
+                        </value>
+                      </entry>
+                    </Map>
+                  </value>
+                </entry>
+                <entry key="CreateSubmitCartStep">
+                  <value>
+                    <Map>
+                      <entry key="endpoint" value="http://localhost:13080/SM/7/ws"/>
+                      <entry key="namespace" value="http://schemas.hp.com/SM/7"/>
+                      <entry key="prefix" value="ns"/>
+                      <entry key="SOAPAction" value="Create"/>
+                      <entry key="responseElement" value="incident.id"/>
+                      <entry key="dependency" value="CreateCartStep,AddItemToCartViaOrderStep"/>
+                      <entry key="soapMessage">
+                        <!-- SOAP Message Template -->
+                        <value>
+                          <String><![CDATA[<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://schemas.hp.com/SM/7" xmlns:com="http://schemas.hp.com/SM/7/Common" xmlns:xm="http://www.w3.org/2005/05/xmlmime">
+<soapenv:Header/>
+<soapenv:Body>
+<ns:CreateSubmitCartRequest attachmentInfo="" attachmentData="" ignoreEmptyElements="true" updateconstraint="-1">
+<ns:model query="">
+<ns:keys query="" updatecounter="">
+<ns:incident.id type="String" mandatory="" readonly=""></ns:incident.id>
+</ns:keys>
+<ns:instance query="" uniquequery="" recordid="" updatecounter="">
+<ns:ContactName type="String" mandatory="" readonly="">$!provisioningPlan.integrationData.requestedFor</ns:ContactName>
+<ns:Urgency type="String" mandatory="" readonly="">3</ns:Urgency>
+<ns:Purpose type="Array">
+<ns:Purpose type="String" mandatory="" readonly="">IdentityIQ Access Request for Identity $!provisioningPlan.integrationData.requestedFor</ns:Purpose>
+<ns:Purpose type="String" mandatory="" readonly="">
+#foreach ($request in $provisioningPlan.accountRequests)
+#if ($request.attributeRequests)
+#foreach ($att in $request.attributeRequests)
+ $request.application $att.operation $att.name $att.value
+#end
+#else
+ $request.operation $request.application nativeIdentity $request.nativeIdentity
+#end
+#end
+</ns:Purpose>
+</ns:Purpose>
+<ns:CallbackType type="String" mandatory="" readonly="">None</ns:CallbackType>
+<ns:Other type="String" mandatory="" readonly=""></ns:Other>
+<ns:CallbackContactName type="String" mandatory="" readonly="">$!provisioningPlan.integrationData.requestedBy</ns:CallbackContactName>
+<ns:NeededByTime type="DateTime" mandatory="" readonly=""></ns:NeededByTime>
+<ns:CartId type="String" mandatory="" readonly="">$CartID</ns:CartId>
+<ns:RequestOnBehalf type="Boolean" mandatory="" readonly=""></ns:RequestOnBehalf>
+<ns:FulfillmentGroup type="String" mandatory="" readonly=""></ns:FulfillmentGroup>
+<ns:BillingTransit type="String" mandatory="" readonly=""></ns:BillingTransit>
+<ns:ClientBase type="String" mandatory="" readonly=""></ns:ClientBase>
+<ns:ConfirmBillingTransit type="Boolean" mandatory="" readonly=""></ns:ConfirmBillingTransit>
+<ns:attachments>
+<com:attachment xm:contentType="application" href="" contentId="" action="" name="" type="" len="" charset="" attachmentType=""></com:attachment>
+</ns:attachments>
+</ns:instance>
+<ns:messages>
+<com:message type="String" mandatory="" readonly="" severity="" module=""></com:message>
+</ns:messages>
+</ns:model>
+</ns:CreateSubmitCartRequest>
+</soapenv:Body>
+</soapenv:Envelope>]]>
+                          </String>
+                        </value>
+                      </entry>
+                    </Map>
+                  </value>
+                </entry>
+              </Map>
+            </List>
+          </value>
+        </entry>
+
+        <entry key="statusMap">
+          <value>
+            <Map>
+              <entry key="Categorize" value="inProcess" />
+              <entry key="Assign" value="inProcess" />
+              <entry key="Dispatched" value="inProcess" />
+              <entry key="In Progress" value="inProcess" />
+              <entry key="Resolved" value="committed" />
+              <entry key="Suspended" value="inProcess" />
+              <entry key="Closed" value="committed" />
+              <entry key="Pending Other" value="inProcess" />
+              <entry key="Referred" value="inProcess" />
+              <entry key="Replaced Problem" value="inProcess" />
+              <entry key="Open" value="inProcess" />
+              <entry key="Open - Linked" value="inProcess" />
+              <entry key="Open - Idle" value="inProcess" />
+              <entry key="Accepted" value="inProcess" />
+              <entry key="Rejected" value="failure" />
+              <entry key="Work In Progress" value="inProcess" />
+              <entry key="Pending Customer" value="inProcess" />
+              <entry key="Pending Vendor" value="inProcess" />
+              <entry key="Pending Change" value="inProcess" />
+              <entry key="Pending Evidence" value="inProcess" />
+              <entry key="Pending Vendor/Supplier" value="inProcess" />
+              <entry key="Withdrawal Requested" value="failure" />
+              <entry key="initial" value="inProcess" />
+              <entry key="waiting" value="inProcess" />
+              <entry key="reopened" value="inProcess" />
+              <entry key="closed" value="committed" />
+            </Map>
+          </value>
+        </entry>
+        
+        <entry key="statusMapClosureCode">
+          <value>
+            <Map>
+              <entry key="Automatically Closed" value="committed" />
+              <entry key="Denied Service Catalog Request" value="failure" />
+              <entry key="Cancelled" value="failure" />
+              <entry key="Fulfilled" value="committed" />
+              <entry key="Not Reproducible" value="committed" />
+              <entry key="Out of Scope" value="committed" />
+              <entry key="Request Rejected" value="failure" />
+              <entry key="Solved by Change/Service Request" value="committed" />
+              <entry key="Solved by User Instruction" value="committed" />
+              <entry key="Solved by Workaround" value="committed" />
+              <entry key="Unable to solve" value="failure" />
+              <entry key="Unable to Solve" value="failure" />
+              <entry key="Diagnosed Successfully" value="committed" />
+              <entry key="No Fault Found" value="failure" />
+              <entry key="No User Response" value="failure" />
+              <entry key="Resolved Successfully" value="committed" />
+              <entry key="Withdrawn by User" value="failure" />
+              <entry key="Invalid" value="failure" />
+
+              <!-- Request Fulfillment closure codes -->
+              <entry key="1 - Successful" value="committed" />
+              <entry key="2 - Successful (with problems)" value="committed" />
+              <entry key="3 - Failed" value="failure" />
+              <entry key="4 - Rejected (financial)" value="failure" />
+              <entry key="5 - Rejected (technical)" value="failure" />
+              <entry key="6 - Rejected (security)" value="failure" />
+              <entry key="7 - Withdrawn" value="failure" />
+              <entry key="8 - Withdrawal requested by customer" value="failure" />
+              <entry key="9 - Cancelled" value="failure" />
+              <entry key="10 - Denied request fulfillment" value="failure" />
+              <entry key="11 - Automatically Closed" value="committed" />
+
+              <!-- Change Management closure codes -->
+              <entry key="1" value="committed" />
+              <entry key="2" value="committed" />
+              <entry key="3" value="failure" />
+              <entry key="4" value="failure" />
+              <entry key="5" value="failure" />
+              <entry key="6" value="failure" />
+              <entry key="4 - Rejected" value="failure" />
+              <entry key="5 - Withdrawn" value="failure" />
+              <entry key="6 - Cancelled" value="failure" />
+            </Map>
+          </value>
+        </entry>
+
+        <entry key="getRequestStatus">
+          <value>
+            <Map>
+              <entry key="endpoint" value="http://localhost:13080/SM/7/ws"/>
+              <entry key="namespace" value="http://schemas.hp.com/SM/7"/>
+              <entry key="prefix" value="ns"/>
+              <entry key="SOAPAction" value="Get"/>
+              <entry key="responseElement" value="Status"/>
+              <entry key="closureInfoResponseElement" value="ClosureCode"/>
+              <entry key="soapMessage">
+                <!-- XML template -->
+                <value>
+                  <String><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns="http://schemas.hp.com/SM/7" xmlns:com="http://schemas.hp.com/SM/7/Common" xmlns:xm="http://www.w3.org/2005/05/xmlmime">
+<soapenv:Header/>
+<soapenv:Body>
+<ns:GetInteractionInfoRequest attachmentInfo="" attachmentData="" ignoreEmptyElements="true" updateconstraint="-1">
+<ns:model query="">
+<ns:keys query="" updatecounter="">
+<ns:InteractionID type="String" mandatory="" readonly="">$requestID</ns:InteractionID>
+</ns:keys>
+<ns:instance query="" uniquequery="" recordid="" updatecounter="">
+<ns:InteractionID type="String" mandatory="" readonly="">$requestID</ns:InteractionID>
+<ns:ContactName type="String" mandatory="" readonly=""></ns:ContactName>
+<ns:Urgency type="String" mandatory="" readonly=""></ns:Urgency>
+<ns:OpenTime type="DateTime" mandatory="" readonly=""></ns:OpenTime>
+<ns:OpenedBy type="String" mandatory="" readonly=""></ns:OpenedBy>
+<ns:OpenedByFullName type="String" mandatory="" readonly=""></ns:OpenedByFullName>
+<ns:Service type="String" mandatory="" readonly=""></ns:Service>
+<ns:OwnerName type="String" mandatory="" readonly=""></ns:OwnerName>
+<ns:Status type="String" mandatory="" readonly=""></ns:Status>
+<ns:CallbackType type="String" mandatory="" readonly=""></ns:CallbackType>
+<ns:Category type="String" mandatory="" readonly=""></ns:Category>
+<ns:Type type="String" mandatory="" readonly=""></ns:Type>
+<ns:Priority type="String" mandatory="" readonly=""></ns:Priority>
+<ns:ServiceType type="String" mandatory="" readonly=""></ns:ServiceType>
+<ns:Area type="String" mandatory="" readonly=""></ns:Area>
+<ns:SubArea type="String" mandatory="" readonly=""></ns:SubArea>
+<ns:ClosureCode type="String" mandatory="" readonly=""></ns:ClosureCode>
+<ns:Description type="String" mandatory="" readonly=""></ns:Description>
+<ns:OwnerFullName type="String" mandatory="" readonly=""></ns:OwnerFullName>
+<ns:Currency type="String" mandatory="" readonly=""></ns:Currency>
+<ns:CallbackValue type="String" mandatory="" readonly=""></ns:CallbackValue>
+<ns:SvcSrcXML type="String" mandatory="" readonly=""></ns:SvcSrcXML>
+<ns:CallbackContact type="String" mandatory="" readonly=""></ns:CallbackContact>
+<ns:History type="Array">
+<ns:History type="String" mandatory="" readonly=""></ns:History>
+</ns:History>
+<ns:NeededByTime type="DateTime" mandatory="" readonly=""></ns:NeededByTime>
+<ns:ApprovalStatus type="String" mandatory="" readonly=""></ns:ApprovalStatus>
+<ns:Price type="Decimal" mandatory="" readonly=""></ns:Price>
+<ns:ContactFullName type="String" mandatory="" readonly=""></ns:ContactFullName>
+<ns:CallbackContactFullName type="String" mandatory="" readonly=""></ns:CallbackContactFullName>
+<ns:CartId type="String" mandatory="" readonly=""></ns:CartId>
+<ns:AffectedItem type="String" mandatory="" readonly=""></ns:AffectedItem>
+<!--Optional:-->
+<ns:Title type="String" mandatory="" readonly=""></ns:Title>
+<ns:IsRequestOnBehalf type="Boolean" mandatory="" readonly=""></ns:IsRequestOnBehalf>
+<ns:attachments>
+<com:attachment xm:contentType="application" href="" contentId="" action="" name="" type="" len="" charset="" attachmentType=""></com:attachment>
+</ns:attachments>
+</ns:instance>
+<ns:messages>
+<com:message type="String" mandatory="" readonly="" severity="" module=""></com:message>
+</ns:messages>
+</ns:model>
+</ns:GetInteractionInfoRequest>
+</soapenv:Body>
+</soapenv:Envelope>]]>
+                  </String>
+                </value>
+              </entry>
+            </Map>
+          </value>
+        </entry>
+      </Map>
+    </Attributes>
+
+    <ManagedResources>
+      <ManagedResource>
+        <ApplicationRef>
+          <Reference class="sailpoint.object.Application" name="Demo App1" />
+        </ApplicationRef>
+      </ManagedResource>
+      <ManagedResource>
+        <ApplicationRef>
+          <Reference class="sailpoint.object.Application" name="Demo App2" />
+        </ApplicationRef>
+      </ManagedResource>
+    </ManagedResources>
+
+  </IntegrationConfig>
+
+</sailpoint>

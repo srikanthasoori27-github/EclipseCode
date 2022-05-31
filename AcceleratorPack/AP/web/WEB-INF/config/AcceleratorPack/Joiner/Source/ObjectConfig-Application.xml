@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE sailpoint PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<!-- Copyright © 2018 SailPoint Technologies, Inc. All Rights Reserved.
+All logos, text, content, and works of authorship, including but not limited to underlying code, programming or scripting language, designs, and/or graphics,
+that are used and/or depicted herein are protected under United States and international copyright and trademark laws and treaties,
+and may not be used or reproduced without the prior express written permission of SailPoint Technologies, Inc. -->
+<sailpoint>
+<ImportAction name='merge'>
+<ObjectConfig name="Application">
+	<!-- JOINER -->
+	<ObjectAttribute defaultValue="" categoryName="Aggregate"
+		displayName="Birthright Entitlement Identification" editMode="Permanent"
+		name="birthrightEntAttrExpression">
+		<Description>SUPPORTED FORMATS: [Object Type(Optional).Schema Attribute Name]#IIQEntitlementBirthright#[Schema Attribute Value]#IIQEntitlementBirthright#[Operation] OR [Schema Attribute Name]#IIQEntitlementBirthright#[Java Regular Expression]</Description>
+	</ObjectAttribute>
+	<ObjectAttribute categoryName="Joiner"
+		defaultValue="" displayName="Is Eligible For Joiner" editMode="Permanent" namedColumn="true" name="joinerEnabled">
+		<Description>If Enabled, ONLY Birthright/Joiner Account will be created in case no Joiner IdentityIQ Roles are selected</Description>
+	</ObjectAttribute>
+	<ObjectAttribute categoryName="Joiner"
+		defaultValue="" displayName="Joiner Population Identification" editMode="Permanent" name="joinerPopulationRegex" >
+		<Description>SUPPORTED FORMATS: [Cube Attribute Name]#IIQJoiner#[Java Regular Expression] OR Comma Separated Group Definition Names</Description>
+	</ObjectAttribute>
+	<ObjectAttribute categoryName="Joiner"
+		defaultValue="" displayName="Joiner IdentityIQ Birthright Roles" editMode="Permanent" name="joinerRoles" >
+		<Description>Make sure these roles are of type "Birthright Roles" and value of the extended attribute "isBirthright" is set as "True"</Description>
+	</ObjectAttribute>
+	</ObjectConfig>
+	</ImportAction>
+</sailpoint>

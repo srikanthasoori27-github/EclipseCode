@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE TaskDefinition PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<TaskDefinition formPath="/analyze/analyzeTabs.jsf" name="Orphan Account - OneStream - Report" resultAction="Rename" subType="Search" template="true" type="GridReport">
+    <Attributes>
+        <Map>
+            <entry key="IdentitySearchTaskItem">
+                <value>
+                    <SearchItem operation="AND" type="Identity">
+                        <IdentityFields>
+                            <String>departmentNumber</String>
+                            <String>displayName</String>
+                            <String>email</String>
+                            <String>employeeId</String>
+                            <String>firstName</String>
+                            <String>identityType</String>
+                            <String>lastName</String>
+                            <String>manager</String>
+                            <String>networkid</String>
+                            <String>userName</String>
+                        </IdentityFields>
+                        <InputDefinitions>
+                            <SearchInputDefinition description="srch_input_def_detected_role_include_descr" headerKey="srch_input_def_detected_role_include" inputType="Equal" name="roleHierarchy" nullPropertyName="bundleSummary" nullPropertyType="String" propertyName="roleHierarchy" propertyType="None" searchType="Identity">
+                                <Value>
+                                    <Boolean/>
+                                </Value>
+                            </SearchInputDefinition>
+                            <SearchInputDefinition description="srch_input_def_assigned_role_include_descr" headerKey="srch_input_def_assigned_role_include" inputType="Equal" name="assignedRoleHierarchy" nullPropertyName="assignedRoleSummary" nullPropertyType="String" propertyName="assignedRoleHierarchy" propertyType="None" searchType="Identity">
+                                <Value>
+                                    <Boolean/>
+                                </Value>
+                            </SearchInputDefinition>
+                            <SearchInputDefinition description="Identity Type" extendedAttribute="true" headerKey="Identity Type" inputType="Like" matchMode="START" name="identityType" propertyName="identityType" propertyType="String" searchType="ExtendedIdentity">
+                                <Value>
+                                    <String>Orphan-OneStream</String>
+                                </Value>
+                            </SearchInputDefinition>
+                        </InputDefinitions>
+                        <SearchFilters>
+                            <SearchItemFilter booleanOperation="AND" property="Identity Type">
+                                <SearchFilter>
+                                    <Filter matchMode="START" operation="LIKE" property="identityType" value="Orphan-OneStream"/>
+                                </SearchFilter>
+                                <Value>
+                                    <String>Orphan-OneStream</String>
+                                </Value>
+                            </SearchItemFilter>
+                        </SearchFilters>
+                    </SearchItem>
+                </value>
+            </entry>
+            <entry key="SearchReportFilters">
+                <value>
+                    <CompositeFilter operation="AND">
+                        <Filter matchMode="START" operation="LIKE" property="identityType" value="Orphan-OneStream"/>
+                    </CompositeFilter>
+                </value>
+            </entry>
+            <entry key="SearchReportInputDefinitions">
+                <value>
+                    <List>
+                        <SearchInputDefinition description="Cost Center" extendedAttribute="true" headerKey="Cost Center" inputType="Like" matchMode="START" name="departmentNumber" propertyName="departmentNumber" propertyType="String" searchType="ExtendedIdentity"/>
+                        <SearchInputDefinition description="srch_input_def_display_name" headerKey="srch_input_def_display_name" ignoreCase="true" inputType="Like" matchMode="START" name="displayName" propertyName="displayName" propertyType="String" searchType="None"/>
+                        <SearchInputDefinition description="srch_input_def_email" headerKey="srch_input_def_email" ignoreCase="true" inputType="Like" matchMode="START" name="email" propertyName="email" propertyType="String" searchType="Identity"/>
+                        <SearchInputDefinition description="Employee ID" extendedAttribute="true" headerKey="Employee ID" inputType="Like" matchMode="START" name="employeeId" propertyName="employeeId" propertyType="String" searchType="ExtendedIdentity"/>
+                        <SearchInputDefinition description="srch_input_def_first_name" headerKey="srch_input_def_first_name" ignoreCase="true" inputType="Like" matchMode="START" name="firstName" propertyName="firstname" propertyType="String" searchType="Identity"/>
+                        <SearchInputDefinition description="Identity Type" extendedAttribute="true" headerKey="Identity Type" inputType="Like" matchMode="START" name="identityType" propertyName="identityType" propertyType="String" searchType="ExtendedIdentity">
+                            <Value>
+                                <String>Orphan-OneStream</String>
+                            </Value>
+                        </SearchInputDefinition>
+                        <SearchInputDefinition description="srch_input_def_last_name" headerKey="srch_input_def_last_name" ignoreCase="true" inputType="Like" matchMode="START" name="lastName" propertyName="lastname" propertyType="String" searchType="Identity"/>
+                        <SearchInputDefinition description="srch_input_def_manager" headerKey="srch_input_def_manager" ignoreCase="true" inputType="Like" matchMode="START" name="manager" nullPropertyName="manager" nullPropertyType="String" propertyName="manager.displayName" propertyType="Identity" searchType="Identity"/>
+                        <SearchInputDefinition description="Network Login ID" extendedAttribute="true" headerKey="Network Login ID" inputType="Like" matchMode="START" name="networkid" propertyName="networkid" propertyType="String" searchType="ExtendedIdentity"/>
+                        <SearchInputDefinition description="srch_input_def_user_name" headerKey="srch_input_def_user_name" ignoreCase="true" inputType="Like" matchMode="START" name="userName" propertyName="name" propertyType="String" searchType="None"/>
+                    </List>
+                </value>
+            </entry>
+            <entry key="SearchReportType" value="Identity"/>
+        </Map>
+    </Attributes>
+    <Parent>
+        <Reference class="sailpoint.object.TaskDefinition" name="Search Report"/>
+    </Parent>
+    <RequiredRights>
+        <Reference class="sailpoint.object.SPRight" name="FullAccessUserReport"/>
+    </RequiredRights>
+</TaskDefinition>

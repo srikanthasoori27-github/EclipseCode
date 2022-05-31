@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE sailpoint PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+
+<!-- (c) Copyright 2019 SailPoint Technologies, Inc., All Rights Reserved. -->
+
+<!--
+  File to update objects for a major version upgrade.
+-->
+<sailpoint>
+  <ImportAction name='include' value='WEB-INF/config/AcceleratorPack/Admin/Source/Configuration-SystemConfiguration.xml' />
+  <ImportAction name='include' value='WEB-INF/config/AcceleratorPack/Certification/Source/EmailTemplate-FrameworkAccessReviewReminder.xml' />
+  <ImportAction name='include' value='WEB-INF/config/AcceleratorPack/Email/Source/Rule-Framework-NotificationRuleLibrary.xml' />
+  <ImportAction name='include' value='WEB-INF/config/AcceleratorPack/Generic/Source/Rule-Framework-WrapperRuleLibrary.xml' />
+  <ImportAction name='include' value='WEB-INF/config/AcceleratorPack/Generic/Source/Workflow-FrameWork-Wrapper.xml' />
+  <ImportAction name='include' value='WEB-INF/config/AcceleratorPack/InteractiveRequest/Source/Rule-ApprovalFrameWorkLibrary.xml' />
+  <ImportAction name='include' value='WEB-INF/config/AcceleratorPack/Leaver/Source/Rule-Leaver-RuleLibrary.xml' />
+  <ImportAction name='include' value='WEB-INF/config/AcceleratorPack/Leaver/Source/Workflow-Lifecycle-Leaver.xml' />
+  <ImportAction name='include' value='WEB-INF/config/AcceleratorPack/Mover/Source/Rule-FrameWork-Move-Account.xml' />
+  <ImportAction name='include' value='WEB-INF/config/AcceleratorPack/Operations/Source/Rule-Recover-RuleLibrary.xml' />
+  <ImportAction name='include' value='WEB-INF/config/AcceleratorPack/PrivilegedAccount/Source/ObjectConfig-Link.xml' />
+  <ImportAction name='include' value='WEB-INF/config/AcceleratorPack/SelfService/Source/Rule-Self-Service-Birthright-Roles.xml' />
+  <ImportAction name='include' value='WEB-INF/config/AcceleratorPack/SelfService/Source/Rule-Self-Service-RuleLibrary.xml' />
+</sailpoint>

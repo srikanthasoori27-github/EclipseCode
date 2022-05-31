@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" [
+  <!ENTITY SailPointObjectChild SYSTEM "classpath://sailpoint/object/SailPointObjectChild.hbm.xml">
+]>
+
+<!-- (c) Copyright 2008-2009 SailPoint Technologies, Inc., All Rights Reserved. -->
+
+<hibernate-mapping>
+  <class name="sailpoint.object.LocalizedAttribute">
+
+    <!-- note that we do NOT include SailPointObject because we don't
+         assignedScope or assignedScopePath and the related indexes -->
+    &SailPointObjectChild;
+    
+    <property name="name" type="string" length="255" index="spt_localized_attr_name"/>
+              
+    <property name="locale" type="string" length="128" index="spt_localized_attr_locale" />
+
+    <property name="attribute" type="string" length="128" index="spt_localized_attr_attr" />
+    
+    <property name="value" type="string" length="1024"/>
+    <property name="targetClass"/>
+    <property name="targetName" index="spt_localized_attr_targetname"/>
+    <property name="targetId" index="spt_localized_attr_targetid"/>
+
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Application PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<Application connector="sailpoint.connector.MSSQLServerConnector" featuresString="DIRECT_PERMISSIONS, PROVISIONING, SYNC_PROVISIONING, SEARCH, UNLOCK, ENABLE, PASSWORD" icon="databaseIcon" name="OnBase MS Sql Database" profileClass="" type="Microsoft SQL Server - Direct">
+    <Attributes>
+        <Map>
+            <entry key="acctAggregationEnd">
+                <value>
+                    <Date>1616118050988</Date>
+                </value>
+            </entry>
+            <entry key="acctAggregationStart">
+                <value>
+                    <Date>1616118047974</Date>
+                </value>
+            </entry>
+            <entry key="afterProvisioningRule"/>
+            <entry key="appendHostName">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="beforeProvisioningRule"/>
+            <entry key="chunkToFetch">
+                <value>
+                    <Integer>1000</Integer>
+                </value>
+            </entry>
+            <entry key="compositeDefinition"/>
+            <entry key="driverClass" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
+            <entry key="excludeDatabases"/>
+            <entry key="includeDatabases" value="Onbase"/>
+            <entry key="nativeChangeDetectionAttributeScope" value="entitlements"/>
+            <entry key="nativeChangeDetectionAttributes"/>
+            <entry key="nativeChangeDetectionEnabled">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="nativeChangeDetectionOperations"/>
+            <entry key="password" value="%%ELE_MS_SQL_SVC_ACCOUNT_PWD%%"/>
+            <entry key="sysDescriptions">
+                <value>
+                    <Map>
+                        <entry key="en_US"/>
+                    </Map>
+                </value>
+            </entry>
+            <entry key="templateApplication" value="Microsoft SQL Server Template"/>
+            <entry key="url" value="%%ELE_ONBASE_MS_SQL_DB_URL%%"/>
+            <entry key="useEnhancedConnector">
+                <value>
+                    <Boolean>true</Boolean>
+                </value>
+            </entry>
+            <entry key="user" value="%%ELE_MS_SQL_SVC_ACCOUNT%%"/>
+        </Map>
+    </Attributes>
+    <CorrelationRule>
+        <Reference class="sailpoint.object.Rule" name="ELE_Global_Correlation_Rule"/>
+    </CorrelationRule>
+    <CreationRule>
+        <Reference class="sailpoint.object.Rule" name="ELE_Global_IdentityCreation_Rule"/>
+    </CreationRule>
+    <Owner>
+        <Reference class="sailpoint.object.Identity" name="spadmin"/>
+    </Owner>
+    <ProvisioningForms>
+        <Form name="account" objectType="account" type="Create">
+            <Attributes>
+                <Map>
+                    <entry key="pageTitle" value="account"/>
+                </Map>
+            </Attributes>
+            <Section>
+                <Field displayName="con_prov_policy_MSSQL_Login_name" helpKey="help_con_form_MSSQL_Login_name" name="native_identity" required="true" type="string"/>
+                <Field displayName="con_prov_policy_MSSQL_Password" helpKey="help_con_form_MSSQL_password" name="password" reviewRequired="true" type="secret"/>
+                <Field displayName="con_prov_policy_MSSQL_Account_Type" helpKey="help_con_form_MSSQL_Account_type" name="type_desc" required="true" type="string">
+                    <AllowedValuesDefinition>
+                        <Value>
+                            <List>
+                                <String>WINDOWS_LOGIN</String>
+                                <String>SQL_LOGIN</String>
+                            </List>
+                        </Value>
+                    </AllowedValuesDefinition>
+                </Field>
+                <Field displayName="con_prov_policy_MSSQL_User_Mapping" helpKey="help_con_form_MSSQL_User_Mapping" multi="true" name="DBUser" reviewRequired="true" type="string"/>
+            </Section>
+        </Form>
+        <Form name="create group" objectType="group" type="Create">
+            <Attributes>
+                <Map>
+                    <entry key="pageTitle" value="create group"/>
+                </Map>
+            </Attributes>
+            <Section>
+                <Field displayName="con_prov_policy_MSSQL_Native_Identity" helpKey="help_con_form_MSSQL_Native_Identity" name="native_identity" required="true" type="string"/>
+                <Field displayName="con_prov_policy_MSSQL_Group_Type" helpKey="help_con_form_MSSQL_Group_Type" name="type_desc" required="true" type="string" value="DATABASE_ROLE">
+                    <Attributes>
+                        <Map>
+                            <entry key="readOnly" value="true"/>
+                        </Map>
+                    </Attributes>
+                </Field>
+            </Section>
+        </Form>
+    </ProvisioningForms>
+    <Schemas>
+        <Schema displayAttribute="native_identity" identityAttribute="native_identity" instanceAttribute="" nativeObjectType="account" objectType="account" permissionsRemediationModificationType="None">
+            <AttributeDefinition name="native_identity" type="string">
+                <Description>Native identity represented by default as loginName</Description>
+            </AttributeDefinition>
+            <AttributeDefinition name="server_login" type="string">
+                <Description>Server login associated to account</Description>
+            </AttributeDefinition>
+            <AttributeDefinition name="name" type="string">
+                <Description>Account name</Description>
+            </AttributeDefinition>
+            <AttributeDefinition name="principal_id" type="string">
+                <Description>ID of database principal</Description>
+            </AttributeDefinition>
+            <AttributeDefinition name="type" type="string">
+                <Description>Type of the login</Description>
+            </AttributeDefinition>
+            <AttributeDefinition name="type_desc" type="string">
+                <Description>Description type of the login</Description>
+            </AttributeDefinition>
+            <AttributeDefinition name="create_date" type="string">
+                <Description>Creation date of the login</Description>
+            </AttributeDefinition>
+            <AttributeDefinition name="modify_date" type="string">
+                <Description>Last modification date of the login</Description>
+            </AttributeDefinition>
+            <AttributeDefinition name="owning_principal_id" type="string">
+                <Description>ID of the principal that owns this database principal</Description>
+            </AttributeDefinition>
+            <AttributeDefinition name="sid" type="string">
+                <Description>SID of the login</Description>
+            </AttributeDefinition>
+            <AttributeDefinition name="is_fixed_role" type="string">
+                <Description>If  the value is 1, then this row represents an entry for one of the fixed database roles</Description>
+            </AttributeDefinition>
+            <AttributeDefinition name="server_name" type="string">
+                <Description>Server name</Description>
+            </AttributeDefinition>
+            <AttributeDefinition multi="true" name="DBUser" type="string">
+                <Description>Database users which are associated to the login</Description>
+            </AttributeDefinition>
+            <AttributeDefinition entitlement="true" managed="true" multi="true" name="roles" schemaObjectType="group" type="string">
+                <Description>Server and database roles assigned to the login and its mapped database users</Description>
+            </AttributeDefinition>
+        </Schema>
+        <Schema descriptionAttribute="type_desc" displayAttribute="native_identity" featuresString="PROVISIONING" identityAttribute="native_identity" instanceAttribute="" nativeObjectType="group" objectType="group" permissionsRemediationModificationType="None">
+            <AttributeDefinition name="native_identity" type="string">
+                <Description>Native identity represented by default as groupName@serverName or groupName@databaseName</Description>
+            </AttributeDefinition>
+            <AttributeDefinition name="name" type="string">
+                <Description>Group name</Description>
+            </AttributeDefinition>
+            <AttributeDefinition name="database_name" type="string">
+                <Description>Database name in which group exists</Description>
+            </AttributeDefinition>
+            <AttributeDefinition name="database_id" type="string">
+                <Description>Database ID in which group exists</Description>
+            </AttributeDefinition>
+            <AttributeDefinition name="principal_id" type="string">
+                <Description>Id of database principal</Description>
+            </AttributeDefinition>
+            <AttributeDefinition multi="true" name="roles" type="string">
+                <Description>Roles assigned to the group</Description>
+            </AttributeDefinition>
+            <AttributeDefinition name="server_name" type="string">
+                <Description>Server name of the group</Description>
+            </AttributeDefinition>
+            <AttributeDefinition name="type_desc" type="string">
+                <Description>Description type of the group</Description>
+            </AttributeDefinition>
+        </Schema>
+    </Schemas>
+    <ApplicationScorecard/>
+</Application>

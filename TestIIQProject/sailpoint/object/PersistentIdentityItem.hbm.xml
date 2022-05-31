@@ -1,0 +1,22 @@
+<!-- (c) Copyright 2008 SailPoint Technologies, Inc., All Rights Reserved. -->
+
+<!--
+   Application is missing here because sub classes will want application
+   as a string or a full blown reference to an application.   
+
+   Don't like that we have the indexes here in this file.
+
+-->
+
+    <!--  sunrise/sunset dates -->
+    <property name="startDate" type="sailpoint.persistence.DateType"/>
+    <property name="endDate" type="sailpoint.persistence.DateType"/>
+    
+    <property name="attributes" type="sailpoint.persistence.XmlType" length="100000000"/>
+    
+    <property name="name" type="string" length="255" index="spt_&IndexBase;_name_ci"/>
+    <property name="value" type="string" length="450" index="spt_&IndexBase;_value_ci"/>
+    <property name="annotation" type="string" length="450"/>
+    <property name="displayName" type="string" length="255"/>
+    <property name="nativeIdentity" type="string" length="450" index="spt_&IndexBase;_nativeid_ci"/> 
+    <property name="instance" type="string" length="128" index="spt_&IndexBase;_instance_ci"/>

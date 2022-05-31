@@ -1,0 +1,312 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!--
+  ~ (c) Copyright 2020 SailPoint Technologies, Inc., All Rights Reserved.
+  -->
+
+<!DOCTYPE sailpoint PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+
+<!--
+  Rules used by PAM
+-->
+<sailpoint>
+
+  <Rule language="beanshell" name="PAM Access Mapping Correlation Rule" type="TargetCorrelation">
+    <Description>This rule correlates PAM access mappings to the appropriate Link or ManagedAttribute.</Description>
+    <Signature returnType="Map">
+      <Inputs>
+        <Argument name="log">
+          <Description>
+            The log object associated with the SailPointContext.
+          </Description>
+        </Argument>
+        <Argument name="context">
+          <Description>
+            A sailpoint.api.SailPointContext object that can be used to query the database if necessary.
+          </Description>
+        </Argument>
+        <Argument name="application">
+          <Description>
+            The Application which owns the Target.
+          </Description>
+        </Argument>
+        <Argument name="nativeId">
+          <Description>
+            The native id associated with an AccessMapping.
+          </Description>
+        </Argument>
+        <Argument name="target">
+          <Description>
+            The Target being correlated.
+          </Description>
+        </Argument>
+        <Argument name="targetSource">
+          <Description>
+            The source of the configuration for the collector.
+          </Description>
+        </Argument>
+        <Argument name="isGroup">
+          <Description>
+            Indicates whether or not this is a GroupMapping.
+          </Description>
+        </Argument>
+      </Inputs>
+      <Returns>
+        <Argument name="result">
+          <Description>
+            A Map containing either a ManagedAttribute object ('group') or the name ('groupAttributeName') and value ('groupAttributeValue') of a ManagedAttribute. Link may also be returned since targets may also be correlated to a link object.
+          </Description>
+        </Argument>
+      </Returns>
+    </Signature>
+    <Source><![CDATA[
+        import sailpoint.connector.Connector;
+
+        Map result = new HashMap();
+
+        // Add a list of possible applications.
+        List apps = new ArrayList();
+
+        // If the target source is on a single app, the "application" variable is available.  For multiple apps,
+        // the variable is named "applications".
+        if (void != application && null != application) {
+            apps.add(application);
+        }
+        else if (void != applications && null != applications) {
+            apps = new ArrayList(applications);
+        }
+        result.put("applications", apps);
+
+        if (isGroup) {
+            result.put("groupAttributeName", "nativeIdentity");
+            result.put("groupAttributeValue", nativeId);
+            result.put("groupType", Connector.TYPE_GROUP);
+        }
+        else {
+            result.put("linkIdentity", nativeId);
+        }
+
+        return result;
+      ]]></Source>
+  </Rule>
+
+  <Rule language="beanshell" name="PAM Group Refresh" type="GroupAggregationRefresh">
+    <Description>
+      This marks any external PAM group as non-requestable, since membership must be requested from on the external system.
+      If the Container managed attribute does not have an owner, it will try to set the Managed Attribute Owner to the
+      identity that matches the owner.value attribute if a matching identity exists.
+    </Description>
+    <Signature returnType="Object">
+      <Inputs>
+        <Argument name="log">
+          <Description>
+            The log object associated with the SailPointContext.
+          </Description>
+        </Argument>
+        <Argument name="context">
+          <Description>
+            A sailpoint.api.SailPointContext object that can be used to query the database if necessary.
+          </Description>
+        </Argument>
+        <Argument name="environment" type="Map">
+          <Description>
+            Arguments passed to the aggregation task.
+          </Description>
+        </Argument>
+        <Argument name="obj" type="ResourceObject">
+          <Description>
+            A sailpoint.object.ResourceObject generated from the application
+            and the ProvisioningPlan's ObjectRequest.
+          </Description>
+        </Argument>
+        <Argument name="accountGroup" type="ManagedAttribute">
+          <Description>
+            The account group being refreshed.
+          </Description>
+        </Argument>
+        <Argument name="groupApplication" type="Application">
+          <Description>
+            Application being aggregated.
+          </Description>
+        </Argument>
+      </Inputs>
+      <Returns>
+        <Argument name="accountGroup" type="ManagedAttribute">
+          <Description>
+            The refreshed account group object.
+          </Description>
+        </Argument>
+      </Returns>
+    </Signature>
+    <Source>
+      <![CDATA[
+            import sailpoint.workflow.PAMLibrary;
+            // On a PAM application, a group is external if it has a non-null source.  If this is
+            // the case, make it non-requestable since access to the group must be requested through
+            // the external system rather than the PAM group.
+            if ("Privileged Account Management".equals(groupApplication.getType()) &&
+                (null != accountGroup.get("source"))) {
+                accountGroup.setRequestable(false);
+            }
+
+            if (accountGroup.getOwner() == null) {
+                PAMLibrary.setManagedAttributeOwner(accountGroup, context);
+            }
+
+            return accountGroup;
+        ]]>
+    </Source>
+  </Rule>
+
+  <Rule language="beanshell" name="PAM Privileged Data Mapping" type="BeforeProvisioning">
+    <Description>
+      This rule takes the privilegedData.value, privilegedData.$ref, privilegedData.display, privilegedData.type
+      attributes and coerces them into a list of Maps to match the format SCIM expects.
+    </Description>
+    <Signature>
+      <Inputs>
+        <Argument name="log">
+          <Description>
+            The log object associated with the SailPointContext.
+          </Description>
+        </Argument>
+        <Argument name="context">
+          <Description>
+            A sailpoint.api.SailPointContext object that can be used to query the database if necessary.
+          </Description>
+        </Argument>
+        <Argument name="plan">
+          <Description>
+            The ProvisioningPlan object on its way to the Connector.
+          </Description>
+        </Argument>
+        <Argument name="application">
+          <Description>
+            The application object that references this before script.
+          </Description>
+        </Argument>
+      </Inputs>
+    </Signature>
+    <Source>
+      <![CDATA[
+    import sailpoint.object.ProvisioningPlan;
+    import sailpoint.object.ProvisioningPlan.AttributeRequest;
+    import sailpoint.object.ProvisioningPlan.ObjectRequest;
+    import sailpoint.tools.Util;
+    import java.util.ArrayList;
+    import java.util.Arrays;
+    import java.util.HashMap;
+    import java.util.List;
+    import java.util.Map;
+
+    try {
+        ObjectRequest or = null;
+        if (!Util.isEmpty(plan.getObjectRequests())) {
+          // Can only create or modify one container at a time so there should only be one object request.
+          or = plan.getObjectRequests().get(0);
+          AttributeRequest valueReq = or.getAttributeRequest("privilegedData.value");
+          if(valueReq == null) {
+            return;
+          }
+          List<String> valueList = null;
+          // Single value lists are often saved as just a string
+          if (valueReq.getValue() instanceof String) {
+            valueList = Arrays.asList((String) valueReq.getValue());
+          } else {
+            valueList = (List) valueReq.getValue();
+          }
+          if(Util.isEmpty(valueList)) {
+            return;
+          }
+          or.remove(valueReq);
+          AttributeRequest typeReq = or.getAttributeRequest("privilegedData.type");
+          List<String> typeList = new ArrayList();
+          if (typeReq != null && typeReq.getValue() instanceof String) {
+            typeList = Arrays.asList((String) typeReq.getValue());
+          } else if (typeReq != null && typeReq.getValue() instanceof List) {
+            typeList = (List) typeReq.getValue();
+          }
+          or.remove(typeReq);
+          AttributeRequest refReq = or.getAttributeRequest("privilegedData.$ref");
+          List<String> refList = new ArrayList();
+          if (refReq != null && refReq.getValue() instanceof String) {
+            refList = Arrays.asList((String) refReq.getValue());
+          } else if (refReq != null && refReq.getValue() instanceof List) {
+            refList = (List) refReq.getValue();
+          }
+          or.remove(refReq);
+          AttributeRequest displayReq = or.getAttributeRequest("privilegedData.display");
+          List<String> displayList = new ArrayList();
+          if (displayReq != null && displayReq.getValue() instanceof String) {
+            displayList = Arrays.asList((String) displayReq.getValue());
+          } else if (displayReq != null && displayReq.getValue() instanceof List) {
+            displayList = (List) displayReq.getValue();
+          }
+          or.remove(displayReq);
+          ArrayList<Map> privDataMaps = new ArrayList();
+          for (int i = 0; i < valueList.size(); i++) {
+              Map privDataMap = new HashMap();
+              privDataMap.put("value", valueList.get(i));
+              if (i < refList.size()) {
+                  privDataMap.put("$ref", refList.get(i));
+              }
+              if (i < displayList.size()) {
+                  privDataMap.put("display", displayList.get(i));
+              }
+              if (i < typeList.size()) {
+                  privDataMap.put("type", typeList.get(i));
+              }
+              privDataMaps.add(privDataMap);
+          }
+          // Prepare the right AttributeRequest
+          AttributeRequest privDataReq = new AttributeRequest("privilegedData", privDataMaps);
+          privDataReq.setOperation(valueReq.getOperation());
+          or.add(privDataReq);
+        }
+
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+]]>
+    </Source>
+  </Rule>
+
+  <ImportAction name="merge">
+    <RuleRegistry name='Rule Registry'>
+      <List>
+        <Rule language='beanshell' type='PrivilegedItemSelector' name='Privileged Item Selector Template'>
+          <Description>
+            A rule that is run to filter the privileged items that are allowed to be added to PAM Containers.
+            The response should be a filter that will be applied to the query that finds PrivilegedData Managed
+            Attributes for the given application.
+          </Description>
+          <Signature returnType='sailpoint.object.QueryInfo'>
+            <Inputs>
+              <Argument name='requester' type='sailpoint.object.Identity'>
+                <Description>
+                  Identity that is making the request.
+                </Description>
+              </Argument>
+              <Argument name='application' type='Application'>
+                <Description>
+                  The PAM application the container is associated with.
+                </Description>
+              </Argument>
+              <Argument name='container' type="ManagedAttribute">
+                <Description>
+                  The container managed attribute that the privileged items would get added to.
+                </Description>
+              </Argument>
+            </Inputs>
+            <Returns>
+              <Argument name='filter'>
+                <Description>
+                  A Filter object that will be used to search for accessible privileged items.
+                </Description>
+              </Argument>
+            </Returns>
+          </Signature>
+        </Rule>
+      </List>
+    </RuleRegistry>
+  </ImportAction>
+</sailpoint>

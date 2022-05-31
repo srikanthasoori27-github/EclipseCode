@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE Application PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<!-- (c) Copyright 2019 SailPoint Technologies, Inc., All Rights Reserved. -->
+<ImportAction name="connectorRegistryUpdateAction">
+	<Application connector="sailpoint.connector.OpenConnectorAdapter"
+		featuresString="SYNC_PROVISIONING, PROVISIONING, ENABLE" icon="internetIcon" name="SAP S/4HANA Cloud"
+		type="SAP S/4HANA Cloud">
+		<Attributes>
+			<Map>
+				<entry key="connectorClass"
+					value="openconnector.connector.saps4hanacloud.SAPS4HANACloudConnector" />
+				<entry key="formPath" value="SAPS4HANAAttributesForm.xhtml" />
+			</Map>
+		</Attributes>
+		<Schemas>
+			<Schema displayAttribute="User Name" identityAttribute="Person ID"
+				nativeObjectType="account" objectType="account">
+				<AttributeDefinition name="First Name"
+					remediationModificationType="None" type="string">
+					<Description>First Name of Business User</Description>
+				</AttributeDefinition>
+				<AttributeDefinition name="Last Name"
+					remediationModificationType="None" type="string">
+					<Description>Last Name of Business User</Description>
+				</AttributeDefinition>
+				<AttributeDefinition name="Person External ID"
+					remediationModificationType="None" type="string">
+					<Description>Person External ID of Business User</Description>
+				</AttributeDefinition>
+				<AttributeDefinition name="Business Partner Role"
+					remediationModificationType="None" type="string">
+					<Description>Business Partner Role of Business User</Description>
+				</AttributeDefinition>
+				<AttributeDefinition name="Person ID"
+					remediationModificationType="None" type="string">
+					<Description>Person ID of Business User</Description>
+				</AttributeDefinition>
+				<AttributeDefinition name="Email"
+					remediationModificationType="None" type="string">
+					<Description>Email Address of Business User</Description>
+				</AttributeDefinition>
+				<AttributeDefinition name="User Name"
+					remediationModificationType="None" type="string">
+					<Description>User Name of Business User</Description>
+				</AttributeDefinition>
+				<AttributeDefinition name="User ID"
+					remediationModificationType="None" type="string">
+					<Description>User ID of Business User</Description>
+				</AttributeDefinition>
+				<AttributeDefinition name="Employee Date Valid From"
+					remediationModificationType="None" type="string">
+					<Description>Employment start date of the Business User</Description>
+				</AttributeDefinition>
+				<AttributeDefinition name="Employee Date Valid To"
+					remediationModificationType="None" type="string">
+					<Description>Employment end date of the Business User</Description>
+				</AttributeDefinition>
+				<AttributeDefinition name="Is Locked"
+					remediationModificationType="None" type="boolean">
+					<Description>Is Business User Locked</Description>
+				</AttributeDefinition>
+				<AttributeDefinition entitlement="true" multi="true"
+					managed="true" name="Business Roles"
+					remediationModificationType="None" type="string" schemaObjectType="group">
+					<Description>Business Roles assigned to Business User</Description>
+				</AttributeDefinition>
+			</Schema>
+			<Schema displayAttribute="Business Role ID" identityAttribute="Business Role UUID"
+			        nativeObjectType="Role" objectType="group">
+			    <AttributeDefinition name="Business Role UUID"
+				    remediationModificationType="None" type="string">
+				    <Description>Business Role Universally Unique Identifier</Description>
+			    </AttributeDefinition>
+			    <AttributeDefinition name="Business Role ID"
+				    remediationModificationType="None" type="string">
+				    <Description>Business Role ID</Description>
+			    </AttributeDefinition>
+	        </Schema>
+		</Schemas>
+	</Application>
+</ImportAction>

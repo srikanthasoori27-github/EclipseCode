@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE ImportAction PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<ImportAction name="connectorRegistryUpdateAction">
+  <Application connector="sailpoint.connector.OpenConnectorAdapter" featuresString="PROVISIONING, SYNC_PROVISIONING, ENABLE, PASSWORD" icon="internetIcon" name="Oracle ERP Cloud" type="Oracle ERP Cloud">
+    <Attributes>
+      <Map>
+           <entry key="connectorClass" value="openconnector.connector.oracleerp.OracleERPCloudConnector"/>
+           <entry key="formPath" value="OracleERPCloudConfigForm.xhtml"/>
+           <entry key="accounts_filter" value="active eq true"/>
+           <entry key="roles_filter" value=""/>
+      </Map>
+    </Attributes>
+    <Schemas>
+      <Schema displayAttribute="Display Name" identityAttribute="ID" nativeObjectType="account" objectType="account">
+         <AttributeDefinition name="ID" remediationModificationType="None" type="string">
+        <Description>A unique identifier for the user resource in Oracle Applications Cloud</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="Display Name" remediationModificationType="None" type="string">
+        <Description>The display name of the user, usually the full name</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="Email" remediationModificationType="None" type="string">
+        <Description>The primary e-mail address of the user</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="User Name" remediationModificationType="None" type="string">
+        <Description>A unique identifier for the user to authenticate with the service provider directly</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="Status" remediationModificationType="None" type="boolean">
+        <Description>Indicates the administrative status of the user. </Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="First Name" remediationModificationType="None" type="string">
+        <Description>The first name of the user</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="Last Name" remediationModificationType="None" type="string">
+        <Description>The last name of the user</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="Last Modified Date" remediationModificationType="None" type="string">
+        <Description>The last modified date of the user</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="Created Date" remediationModificationType="None" type="string">
+        <Description>The created date of the user</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="User Category" remediationModificationType="None" type="string">
+        <Description>The user category of the user. By default, the value is DEFAULT</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="Account Type" remediationModificationType="None" type="string">
+        <Description>The account type of a user to indicate person or party association</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="Manager" remediationModificationType="None" type="string">
+        <Description>The manager associated to the user</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="Person Number" remediationModificationType="None" type="string">
+        <Description>The worker ID or person number associated to the user</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="Business Unit" remediationModificationType="None" type="string">
+        <Description>The business unit to which the user belongs</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="Department" remediationModificationType="None" type="string">
+        <Description>The department to which the user belongs</Description>
+      </AttributeDefinition>
+       <AttributeDefinition name="Job" remediationModificationType="None" type="string">
+        <Description>The job title of the user</Description>
+      </AttributeDefinition>
+      <AttributeDefinition entitlement="true" managed="true" multi="true" name="Roles" schemaObjectType="group" remediationModificationType="None" type="string">
+        <Description>The list of roles assigned to the user</Description>
+      </AttributeDefinition>
+       <AttributeDefinition entitlement="true" managed="true" multi="true" name="Data Access" remediationModificationType="None" type="string">
+        <Description>Combination of role, security context and its values assigned to the user</Description>
+      </AttributeDefinition>
+      </Schema>
+      <Schema displayAttribute="Display Name" identityAttribute="ID" objectType="group" aggregationType="group" nativeObjectType="role">
+	  <AttributeDefinition name="ID" remediationModificationType="None" type="string">
+        <Description>A unique identifier for the role resource in Oracle Applications Cloud</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="Description" remediationModificationType="None" type="string">
+        <Description>Description of the role</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="Category" remediationModificationType="None" type="string">
+        <Description>The category of role</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="Name" type="string">
+        <Description>A unique identifier for the role to authenticate with the service provider directly</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="Last Modified Date" type="string">
+        <Description>The last modified date of the role</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="Created Date" type="string">
+        <Description>The created date of the role</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name="Display Name" required="true" type="string">
+        <Description>The display name of the role</Description>
+      </AttributeDefinition>
+	 </Schema>
+    </Schemas>
+    
+    <ProvisioningForms>
+       <Form name="account" objectType="account" type="Create">
+         <Section label="Account" name="Account">
+           <Field displayName="con_con_prov_oracle_erp_cloud_username"
+            helpKey="help_con_prov_oracle_erp_cloud_username" name="User Name"
+            required="true" section="Account" type="string" />
+           <Field displayName="con_prov_oracle_erp_cloud_password"
+            helpKey="help_con_prov_oracle_erp_cloud_password" name="Password"
+            section="Account" required="true" type="secret" />
+           <Field displayName="con_con_prov_oracle_erp_cloud_user_category"
+            helpKey="help_con_con_prov_oracle_erp_cloud_user_category" name="User Category"
+            reviewRequired="true" section="Account" type="string" />
+            <Field displayName="con_con_prov_oracle_erp_cloud_firstname"
+            helpKey="help_con_con_prov_oracle_erp_cloud_firstname" name="First Name"
+            reviewRequired="true" section="Account" type="string" />
+            <Field displayName="con_con_prov_oracle_erp_cloud_lastname"
+            helpKey="help_con_con_prov_oracle_erp_cloud_lastname" name="Last Name"
+            reviewRequired="true" section="Account" type="string" />
+            <Field displayName="con_con_prov_oracle_erp_cloud_email"
+            helpKey="help_con_con_prov_oracle_erp_cloud_email" name="Email"
+            reviewRequired="true" section="Account" type="string" />
+         </Section>
+        </Form>
+    </ProvisioningForms>
+  </Application>
+</ImportAction>

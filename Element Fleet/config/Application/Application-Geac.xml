@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Application PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<Application connector="sailpoint.connector.DelimitedFileConnector" featuresString="DIRECT_PERMISSIONS, NO_RANDOM_ACCESS, DISCOVER_SCHEMA" icon="enterpriseIcon" name="GEAC" profileClass="" type="DelimitedFile">
+    <Attributes>
+        <Map>
+            <entry key="PassphraseForPrivateKey"/>
+            <entry key="PrivateKeyFilePath"/>
+            <entry key="afterProvisioningRule"/>
+            <entry key="beforeProvisioningRule"/>
+            <entry key="columnNames">
+                <value>
+                    <List>
+                        <String>TermGroup/PassKey</String>
+                        <String>TermGroup</String>
+                        <String>USERID</String>
+                        <String>USERNAME</String>
+                        <String>PassKey</String>
+                        <String>From Date</String>
+                        <String>To Date</String>
+                        <String>Days</String>
+                        <String>Last Change</String>
+                        <String>MINC PV</String>
+                        <String>MINC PS</String>
+                        <String>MINC PP</String>
+                        <String>MINC Max</String>
+                        <String>MCSO PV</String>
+                        <String>MCSO PS</String>
+                        <String>MCSO PP</String>
+                        <String>MCSO Max</String>
+                    </List>
+                </value>
+            </entry>
+            <entry key="compositeDefinition"/>
+            <entry key="delimiter" value="|"/>
+            <entry key="file" value="%%ELE_GEAC_FILE_PATH%%"/>
+            <entry key="filetransport" value="local"/>
+            <entry key="filterEmptyRecords">
+                <value>
+                    <Boolean>true</Boolean>
+                </value>
+            </entry>
+            <entry key="group.filetransport" value="local"/>
+            <entry key="group.filterEmptyRecords">
+                <value>
+                    <Boolean>true</Boolean>
+                </value>
+            </entry>
+            <entry key="group.partitionMode" value="auto"/>
+            <entry key="hasHeader">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="indexColumn" value="USERID"/>
+            <entry key="isCaseInsensitiveMerge">
+                <value>
+                    <Boolean>true</Boolean>
+                </value>
+            </entry>
+            <entry key="isSortedByIndexColumn">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="mergeColumns">
+                <value>
+                    <List>
+                        <String>TermGroup/PassKey</String>
+                    </List>
+                </value>
+            </entry>
+            <entry key="mergeRows">
+                <value>
+                    <Boolean>true</Boolean>
+                </value>
+            </entry>
+            <entry key="nativeChangeDetectionAttributeScope" value="entitlements"/>
+            <entry key="nativeChangeDetectionAttributes"/>
+            <entry key="nativeChangeDetectionEnabled">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="nativeChangeDetectionOperations"/>
+            <entry key="parseType" value="delimited"/>
+            <entry key="partitionMode" value="auto"/>
+            <entry key="port"/>
+            <entry key="sftpAuthMethod" value="password"/>
+            <entry key="stopIfLineHasWrongColumnLength">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="sysDescriptions">
+                <value>
+                    <Map>
+                        <entry key="en_US"/>
+                    </Map>
+                </value>
+            </entry>
+            <entry key="templateApplication" value="DelimitedFile Template"/>
+        </Map>
+    </Attributes>
+    <Owner>
+        <Reference class="sailpoint.object.Identity" name="spadmin"/>
+    </Owner>
+      <CorrelationRule>
+        <Reference class="sailpoint.object.Rule" name="ELE_Global_Correlation_Rule"/>
+    </CorrelationRule>
+    <CreationRule>
+        <Reference class="sailpoint.object.Rule" name="ELE_Global_IdentityCreation_Rule"/>
+    </CreationRule>    
+    <Schemas>
+        <Schema displayAttribute="USERNAME" identityAttribute="USERID" instanceAttribute="" nativeObjectType="account" objectType="account" permissionsRemediationModificationType="None">
+            <AttributeDefinition name="USERID" type="string">
+                <Description/>
+            </AttributeDefinition>
+            <AttributeDefinition name="USERNAME" type="string">
+                <Description/>
+            </AttributeDefinition>
+            <AttributeDefinition name="From Date" type="string">
+                <Description/>
+            </AttributeDefinition>
+            <AttributeDefinition name="To Date" type="string">
+                <Description/>
+            </AttributeDefinition>
+            <AttributeDefinition name="Days" type="string">
+                <Description/>
+            </AttributeDefinition>
+            <AttributeDefinition name="Last Change" type="string">
+                <Description/>
+            </AttributeDefinition>
+            <AttributeDefinition name="MINC PV" type="string">
+                <Description/>
+            </AttributeDefinition>
+            <AttributeDefinition name="MINC PS" type="string">
+                <Description/>
+            </AttributeDefinition>
+            <AttributeDefinition name="MINC PP" type="string">
+                <Description/>
+            </AttributeDefinition>
+            <AttributeDefinition name="MINC Max" type="string">
+                <Description/>
+            </AttributeDefinition>
+            <AttributeDefinition name="MCSO PV" type="string">
+                <Description/>
+            </AttributeDefinition>
+            <AttributeDefinition name="MCSO PS" type="string">
+                <Description/>
+            </AttributeDefinition>
+            <AttributeDefinition name="MCSO PP" type="string">
+                <Description/>
+            </AttributeDefinition>
+            <AttributeDefinition name="MCSO Max" type="string">
+                <Description/>
+            </AttributeDefinition>
+            <AttributeDefinition entitlement="true" managed="true" multi="true" name="TermGroup/PassKey" type="string">
+                <Description/>
+            </AttributeDefinition>
+        </Schema>
+    </Schemas>
+    <ApplicationScorecard/>
+</Application>

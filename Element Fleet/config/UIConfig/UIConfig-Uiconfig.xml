@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sailpoint PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<sailpoint>
+<ImportAction name="merge">
+	<UIConfig name="UIConfig">
+	  <Attributes>
+	    <Map>
+			<entry key="identitySearchAttributes" value="name,displayName,firstname,lastname,email,networkid"/>
+			<entry key="identityTableColumns">
+				<value>
+				  <List>
+					<ColumnConfig dataIndex="id" fieldOnly="true" groupProperty="id" property="id" sortProperty="id" stateId="id"/>
+					<ColumnConfig dataIndex="name" groupProperty="name" headerKey="idents_grid_hdr_name" hideable="true" property="name" sortProperty="name" sortable="true" stateId="name"/>
+					<ColumnConfig dataIndex="firstname" groupProperty="firstname" headerKey="idents_grid_hdr_first_name" hideable="true" property="firstname" sortProperty="firstname" sortable="true" stateId="firstname"/>
+					<ColumnConfig dataIndex="lastname" groupProperty="lastname" headerKey="idents_grid_hdr_last_name" hideable="true" property="lastname" sortProperty="lastname" sortable="true" stateId="lastname"/>
+					<ColumnConfig dataIndex="manager-displayName" groupProperty="manager.displayName" headerKey="idents_grid_hdr_manager" hideable="true" property="manager.displayName" sortProperty="manager.displayName" sortable="true" stateId="manager-displayName"/>
+					<ColumnConfig dataIndex="assignedRoleSummary" groupProperty="assignedRoleSummary" headerKey="idents_grid_hdr_assigned_roles" hideable="true" property="assignedRoleSummary" sortProperty="assignedRoleSummary" stateId="assignedRoleSummary"/>
+					<ColumnConfig dataIndex="bundleSummary" groupProperty="bundleSummary" headerKey="idents_grid_hdr_detected_roles" hidden="true" hideable="true" property="bundleSummary" sortProperty="bundleSummary" stateId="bundleSummary"/>
+					<ColumnConfig dataIndex="scorecard-compositeScore" groupProperty="scorecard.compositeScore" headerKey="idents_grid_hdr_composite_score" hideable="true" hidden="true" property="scorecard.compositeScore" renderer="SailPoint.Define.Grid.Identity.renderScore" sortProperty="scorecard.compositeScore" sortable="true" stateId="scorecard-compositeScore"/>
+					<ColumnConfig dataIndex="lastRefresh" dateStyle="short" groupProperty="lastRefresh" headerKey="idents_grid_hdr_last_refresh" hideable="true" property="lastRefresh" sortProperty="lastRefresh" sortable="true" stateId="lastRefresh"/>
+					<ColumnConfig dataIndex="managerStatus" fieldOnly="true" groupProperty="managerStatus" property="managerStatus" sortProperty="managerStatus" stateId="managerStatus"/>
+					<ColumnConfig dataIndex="networkid" groupProperty="networkid" headerKey="User Name" hideable="true" property="networkid" sortProperty="networkid" sortable="true" stateId="networkid"/>
+					<ColumnConfig dataIndex="employeeId" groupProperty="employeeId" headerKey="Employee Number" hideable="true" property="employeeId" sortProperty="employeeId" sortable="true" stateId="employeeId"/>
+					<ColumnConfig dataIndex="identityType" groupProperty="identityType" headerKey="User Type" hideable="true" property="identityType" sortProperty="identityType" sortable="true" stateId="identityType"/>
+					<ColumnConfig dataIndex="correlated" groupProperty="correlated" headerKey="Authoritative?" hideable="true" property="correlated" sortProperty="correlated" sortable="true" stateId="correlated"/>
+				  </List>
+				</value>
+			</entry>
+			<entry key="identityViewAttributes" value="name,firstname,lastname,email,networkid,manager,identityType,employeeId,workerid,departmentNumber,country,department,location,municipility"/>
+	    </Map>
+	  </Attributes>
+	</UIConfig>
+</ImportAction>
+</sailpoint>

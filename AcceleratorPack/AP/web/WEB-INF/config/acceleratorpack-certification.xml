@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE sailpoint PUBLIC 'sailpoint.dtd' 'sailpoint.dtd'>
+<!-- Copyright © 2018 SailPoint Technologies, Inc. All Rights Reserved.
+All logos, text, content, and works of authorship, including but not limited to underlying code, programming or scripting language, designs, and/or graphics,
+that are used and/or depicted herein are protected under United States and international copyright and trademark laws and treaties,
+and may not be used or reproduced without the prior express written permission of SailPoint Technologies, Inc. -->
+<sailpoint>
+  <ImportAction name='include' value='AcceleratorPack/Certification/Configure/Custom-Framework-Exclusion-Logical-BusinessApplications-PrivilegedAccess.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Certification/Source/UIConfig-Customizations.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Certification/Configure/Configuration-SystemConfiguration.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Certification/Source/Rule-Framework-Certification-Item-Rule.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Certification/Source/Rule-FrameWorkCertificationExclusionManager.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Certification/Source/Rule-FrameworkCertificationEntitlementOwnerExclusion.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Certification/Source/Rule-FrameworkCertificationApplicationOwnerExclusion.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Certification/Source/Rule-FrameworkCertificationAccountGroupMembershipExclusion.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Certification/Source/EmailTemplate-FrameworkAccessReviewBulkReassignment.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Certification/Source/EmailTemplate-FrameworkAccessReviewDelegation.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Certification/Source/EmailTemplate-FrameworkAccessReviewDelegationCompletion.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Certification/Source/EmailTemplate-FrameworkAccessReviewDelinquent.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Certification/Source/EmailTemplate-FrameworkAccessReviewReminder.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Certification/Source/EmailTemplate-FrameworkAccessReviewStart.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Certification/Source/Rule-FrameworkEmailRecipientCcFirstManager.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Certification/Source/EmailTemplate-Framework-MitigationExpiration.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Certification/Source/EmailTemplate-Framework-ChallengeAccepted.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Certification/Source/EmailTemplate-Framework-ChallengeCreationNotification.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Certification/Source/EmailTemplate-Framework-ChallengePeriodStart.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Certification/Source/EmailTemplate-Framework-ChallengePeriodEnd.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Certification/Source/EmailTemplate-Framework-ChallengeRejected.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Certification/Source/EmailTemplate-Framework-ChallengeExpiration.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Certification/Source/EmailTemplate-Framework-ChallengeDecisionExpiration.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Certification/Source/EmailTemplate-Framework-CertificationSignOffApproval.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/Certification/Source/EmailTemplate-Framework-CertificationDecisionChallengedNotification.xml'/>
+</sailpoint>

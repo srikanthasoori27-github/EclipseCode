@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" [
+  <!ENTITY SailPointObjectSimple SYSTEM "classpath://sailpoint/object/SailPointObjectSimple.hbm.xml">
+  <!ENTITY ServerExtentions SYSTEM "classpath://sailpoint/object/ServerExtended.hbm.xml">
+]>
+
+<!-- (c) Copyright 2008 SailPoint Technologies, Inc., All Rights Reserved. -->
+
+<hibernate-mapping>
+  <class name="sailpoint.object.Server" dynamic-update="true">
+
+    &SailPointObjectSimple;
+    &ServerExtentions;
+
+    <property name="name" type="string" length="128" unique="true" not-null="true"/>
+    <!-- don't really need to index these if we don't there there will be that many -->
+    <property name="heartbeat" type="sailpoint.persistence.DateType"/>
+    <property name="inactive" type="boolean"/>
+
+    <property name="attributes" type="sailpoint.persistence.XmlType" length="100000000"/>
+
+  </class>
+</hibernate-mapping>

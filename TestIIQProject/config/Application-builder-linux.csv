@@ -1,0 +1,105 @@
+Name, IsSudoUser, host, SshPort,SudoUser,SudoUserPassword,Schemas,ProvisioningForms
+RHEL6.7,TRUE,readhat.test.com,22,IdentityIQAdmin,IdentityIQAdmin123,"<Schemas>
+    <Schema displayAttribute=""username"" identityAttribute=""username"" instanceAttribute="""" nativeObjectType=""account"" objectType=""account"">
+      <AttributeDefinition name=""username"" remediationModificationType=""None"" required=""true"" type=""string"">
+        <Description>Name of User</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name=""uid"" remediationModificationType=""None"" type=""string"">
+        <Description>The numerical value of the user's ID</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name=""home"" remediationModificationType=""None"" type=""string"">
+        <Description>Home Directory of User</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name=""pwdlastchg"" remediationModificationType=""None"" type=""string"">
+        <Description>The number of days since January 1st, 1970 when the password was last changed</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name=""pwdmin"" remediationModificationType=""None"" type=""string"">
+        <Description>Minimum number of days between password change</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name=""pwdmax"" remediationModificationType=""None"" type=""string"">
+        <Description>The maximum number of days during which a password is valid</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name=""pwdwarn"" remediationModificationType=""None"" type=""string"">
+        <Description>Number of days of warning before password expires</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name=""primgrp"" remediationModificationType=""None"" type=""string"">
+        <Description>Primary Group of User</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name=""comment"" remediationModificationType=""None"" type=""string"">
+        <Description>User's password file comment field</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name=""expiration"" remediationModificationType=""None"" type=""string"">
+        <Description>Set the date or number of days since January 1, 1970 on which the user's account will no longer be accessible</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name=""inactive"" remediationModificationType=""None"" type=""string"">
+        <Description>Set the number of days of inactivity after a password has expired before the account is locked</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name=""lastLogin"" remediationModificationType=""None"" type=""string"">
+        <Description>Last login time of User</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name=""shell"" remediationModificationType=""None"" type=""string"">
+        <Description>The name of the user's login shell</Description>
+      </AttributeDefinition>
+      <AttributeDefinition entitlement=""true"" managed=""true"" multi=""true"" name=""groups"" schemaObjectType=""group"" type=""string"">
+        <Description>List of groups which the user is a member of</Description>
+      </AttributeDefinition>
+    </Schema>
+    <Schema displayAttribute=""name"" featuresString=""PROVISIONING"" identityAttribute=""name"" instanceAttribute="""" nativeObjectType=""group"" objectType=""group"">
+      <AttributeDefinition name=""name"" remediationModificationType=""None"" required=""true"" type=""string"">
+        <Description>Name of Group</Description>
+      </AttributeDefinition>
+      <AttributeDefinition name=""groupid"" remediationModificationType=""None"" required=""true"" type=""string"">
+        <Description>The numerical value of the group's ID</Description>
+      </AttributeDefinition>
+    </Schema>
+  </Schemas>","<ProvisioningForms>
+    <Form name=""account"" objectType=""account"" type=""Create"">
+      <Attributes>
+        <Map>
+          <entry key=""pageTitle"" value=""account""/>
+        </Map>
+      </Attributes>
+      <Section>
+        <Field displayName=""con_form_linux_direct_username"" helpKey=""help_con_linux_direct_username"" name=""username"" required=""true"" type=""string""/>
+        <Field displayName=""con_form_linux_direct_homedir"" helpKey=""help_con_linux_direct_homedir"" name=""home"" reviewRequired=""true"" type=""string""/>
+        <Field displayName=""con_form_linux_direct_shell"" helpKey=""help_con_linux_direct_shell"" name=""shell"" reviewRequired=""true"" type=""string""/>
+        <Field displayName=""con_form_linux_direct_userid"" helpKey=""help_con_linux_direct_userid"" name=""uid"" reviewRequired=""true"" type=""string""/>
+        <Field displayName=""con_form_linux_direct_password"" helpKey=""help_con_linux_direct_password"" name=""password"" reviewRequired=""true"" type=""secret""/>
+        <Field displayName=""con_form_linux_direct_mindays"" helpKey=""help_con_linux_direct_mindays"" name=""pwdmin"" reviewRequired=""true"" type=""string""/>
+        <Field displayName=""con_form_linux_direct_maxdays"" helpKey=""help_con_linux_direct_maxdays"" name=""pwdmax"" reviewRequired=""true"" type=""string""/>
+        <Field displayName=""con_form_linux_direct_warntime"" helpKey=""help_con_linux_direct_warntime"" name=""pwdwarn"" reviewRequired=""true"" type=""string""/>
+        <Field displayName=""con_form_linux_direct_grpname"" helpKey=""help_con_linux_direct_grpname"" name=""primgrp"" reviewRequired=""true"" type=""string""/>
+        <Field displayName=""con_form_linux_direct_comment"" helpKey=""help_con_linux_direct_comment"" name=""comment"" reviewRequired=""true"" type=""string""/>
+        <Field displayName=""con_form_linux_direct_accdur"" helpKey=""help_con_linux_direct_accdur"" name=""expiration"" reviewRequired=""true"" type=""string""/>
+        <Field displayName=""con_form_linux_direct_acctime"" helpKey=""help_con_linux_direct_acctime"" name=""inactive"" reviewRequired=""true"" type=""string""/>
+        <Field displayName=""con_form_linux_direct_home"" helpKey=""help_con_linux_direct_home"" name=""crthomedir"" reviewRequired=""true"" type=""boolean""/>
+        <Field displayName=""con_form_linux_direct_login"" helpKey=""help_con_linux_direct_login"" name=""lastlog"" reviewRequired=""true"" type=""boolean""/>
+        <Field displayName=""con_form_linux_direct_dupid"" helpKey=""help_con_linux_direct_dupid"" name=""dupuid"" reviewRequired=""true"" type=""boolean""/>
+        <Field displayName=""con_form_linux_direct_pswdlogin"" helpKey=""help_con_linux_direct_pswdlogin"" name=""forcepwdchg"" reviewRequired=""true"" type=""boolean"" value=""false""/>
+      </Section>
+    </Form>
+    <Form name=""create group"" objectType=""group"" type=""Create"">
+      <Attributes>
+        <Map>
+          <entry key=""pageTitle"" value=""create group""/>
+        </Map>
+      </Attributes>
+      <Section>
+        <Field displayName=""con_form_linux_direct_group"" helpKey=""help_con_linux_direct_group"" name=""name"" required=""true"" type=""string""/>
+        <Field displayName=""con_form_linux_direct_gid"" helpKey=""help_con_linux_direct_gid"" name=""groupid"" reviewRequired=""true"" type=""string""/>
+        <Field displayName=""con_form_linux_direct_dupgrp"" helpKey=""help_con_linux_direct_dupgrp"" name=""dupgid"" postBack=""true"" type=""boolean""/>
+      </Section>
+    </Form>
+    <Form name=""update group"" objectType=""group"" type=""Update"">
+      <Attributes>
+        <Map>
+          <entry key=""pageTitle"" value=""update group""/>
+        </Map>
+      </Attributes>
+      <Section>
+        <Field displayName=""con_form_linux_direct_gid"" helpKey=""help_con_linux_direct_gid"" name=""groupid"" reviewRequired=""true"" type=""string""/>
+        <Field displayName=""con_form_linux_direct_dupgrp"" helpKey=""help_con_linux_direct_dupgrp"" name=""dupgid"" reviewRequired=""true"" type=""boolean""/>
+      </Section>
+    </Form>
+  </ProvisioningForms>"
+openSuse11,TRUE,opensuse.test.com,22,IdentityIQLinuxAdmin,IdentityIQLinuxAdmin123,,

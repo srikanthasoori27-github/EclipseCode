@@ -1,0 +1,115 @@
+CompanyName,CompanyCode,Department,Unit,Location,OU
+,AFI,"Aboitiz Foundation, Inc.","Aboitiz Foundation, Inc.",Cebu,/AFI
+,AFI,"Aboitiz Foundation, Inc.","Aboitiz Foundation, Inc.",Taguig,/AFI
+,AFI,Accounting and Admin,Accounting and Admin,Cebu,/AFI
+,AFI,Accounting and Admin,Accounting and Admin,Taguig,/AFI
+,LWC,ACCOUNTING SERVICES DEPARTMENT,Accounting,,/LIMA-WATER-BATANGAS
+,AEV,AEV Gen,AEV Gen,Cebu,/AEV - Donot Add Users Here -/EXO
+,AEV,AEV Gen,AEV Gen,Taguig,/AEV - Donot Add Users Here -/EXO
+,AIC,Business Development - Infra,Business Development - Infra,Cebu,/AIC
+,AIC,Business Development - Infra,Business Development - Infra,Taguig,/AIC
+,AEV,Corporate External Affairs,Reputation Management,Cebu,/AEV - Donot Add Users Here -/RMD
+,AEV,Corporate External Affairs,Reputation Management,Taguig,/AEV - Donot Add Users Here -/RMD
+,AEV,Corporate External Affairs,Corporate External Relations,,/AEV - Donot Add Users Here -/GOVREL
+,AEV,Corporate Services Unit,Innovation Team (ALab),Cebu,/AEV - Donot Add Users Here -/ATG-Digital
+,AEV,Corporate Services Unit,Innovation Team (ALab),Taguig,/AEV - Donot Add Users Here -/ATG-Digital
+,AEV,Corporate Services Unit,Information Technology,Cebu,/AEV - Donot Add Users Here -/ATG-IT
+,AEV,Corporate Services Unit,Information Technology,Taguig,/AEV - Donot Add Users Here -/ATG-IT
+,AEV,Corporate Services Unit,Human Resource,Cebu,/AEV - Donot Add Users Here -/HR
+,AEV,Corporate Services Unit,Human Resource,Taguig,/AEV - Donot Add Users Here -/HR
+,AEV,Corporate Services Unit,Risk Management,Cebu,/AEV - Donot Add Users Here -/RMT
+,AEV,Corporate Strategy Team,Corporate Strategy Team,Cebu,/AEV - Donot Add Users Here -/SCFG
+,AEV,Corporate Strategy Team,Corporate Strategy Team,Taguig,/AEV - Donot Add Users Here -/SCFG
+,AFI,Education,Education,Cebu,/AFI
+,AFI,Education,Education,Taguig,/AFI
+,AFI,Enterprise,Enterprise,Cebu,/AFI
+,AFI,Enterprise,Enterprise,Taguig,/AFI
+,AFI,Environment,Environment,Cebu,/AFI
+,AFI,Environment,Environment,Taguig,/AFI
+,ACGI/ACI,Executive Office,Executive Office,,/ACI
+,EXPRO,Expro,Expro,Cebu,/EXPRO
+,EXPRO,Expro,Expro,Taguig,/EXPRO
+,AAII,External Relations,External Relations,,/APO Agua
+,AAII,External Relations,External Relations,,/APO Agua
+,AEVAVI,Finance,Finance,Cebu,/AEV - Donot Add Users Here -/ACCT
+,AEVAVI,Finance,Finance,Taguig,/AEV - Donot Add Users Here -/ACCT
+,AIC,Finance and Accounting,Finance and Accounting,Cebu,/AIC
+,AIC,Finance and Accounting,Finance and Accounting,Taguig,/AIC
+,AAII,Finance and Accounting,Finance and Accounting,,/APO Agua
+,AAII,Finance and Accounting,Finance and Accounting,,/APO Agua
+,AEVAVI,Flight Operations,Flight Operations,Cebu,/AVI
+,AEVAVI,Flight Operations,Flight Operations,Taguig,/AVI
+,ACGI,Flight Operations,Flight Operations,,/ACI
+,TERRA,Flight Operations,Flight Operations,,/AEV - Donot Add Users Here -/AVI
+,AEV,Group Internal Audit,Group Internal Audit,Cebu,/AEV - Donot Add Users Here -/GIA
+,AEV,Group Internal Audit,Group Internal Audit,Taguig,/AEV - Donot Add Users Here -/GIA
+,AEV,Group Internal Audit,Information Systems Audit,Cebu,/AEV - Donot Add Users Here -/GIA
+,AEV,Group Internal Audit,Information Systems Audit,Taguig,/AEV - Donot Add Users Here -/GIA
+,AEV,Group Internal Audit,Finance and Operations Audit,Cebu,/AEV - Donot Add Users Here -/GIA
+,AEV,Group Internal Audit,Finance and Operations Audit,Taguig,/AEV - Donot Add Users Here -/GIA
+,ACGI,Human Resource,Human Resource,,/ACI
+,AIC,Human Resources and Admin,Human Resources and Admin,Cebu,/AIC
+,AIC,Human Resources and Admin,Human Resources and Admin,Taguig,/AIC
+,LWC,Human Resources and Admin,Human Resources and Admin,,/LIMA-WATER-BATANGAS
+,AAII,Human Resources and Admin,Human Resources and Admin,,/APO Agua
+,AEV,Investments,Investments,Cebu,/AEV - Donot Add Users Here -/IR
+,AEV,Investments,Investments,Taguig,/AEV - Donot Add Users Here -/IR
+,AEVAVI,Maintenance,Maintenance,Cebu,/AEV - Donot Add Users Here -/AVI
+,AEVAVI,Maintenance,Maintenance,Taguig,/AEV - Donot Add Users Here -/AVI
+,LWC,Maintenance,Maintenance,,/LIMA-WATER-BATANGAS
+,TERRA,Maintenance,Maintenance,,/AEV - Donot Add Users Here -/AVI
+,WPF,Meteorology,Meteorology,,/WPF
+,AEV,Office of the Chief Finance Officer,"Finance, Accounting and Business Support",Cebu,/AEV - Donot Add Users Here -/ACCT
+,AEV,Office of the Chief Finance Officer,"Finance, Accounting and Business Support",Taguig,/AEV - Donot Add Users Here -/ACCT
+,AEV,Office of the Chief Finance Officer,Office of the Chief Finance Officer,Cebu,/AEV - Donot Add Users Here -/COO
+,AEV,Office of the Chief Finance Officer,Office of the Chief Finance Officer,Taguig,/AEV - Donot Add Users Here -/COO
+,AEV,Office of the Chief Finance Officer,Investor Relations,Cebu,/AEV - Donot Add Users Here -/IR
+,AEV,Office of the Chief Finance Officer,Investor Relations,Taguig,/AEV - Donot Add Users Here -/IR
+,AEV,Office of the Chief Finance Officer,Legal Management and Governance Compliance,Cebu,/AEV - Donot Add Users Here -/LMS
+,AEV,Office of the Chief Finance Officer,Legal Management and Governance Compliance,Taguig,/AEV - Donot Add Users Here -/LMS
+,AEV,Office of the Chief Finance Officer,Tax Advisory and Compliance Services,Cebu,/AEV - Donot Add Users Here -/TACS
+,AEV,Office of the Chief Finance Officer,Tax Advisory and Compliance Services,Taguig,/AEV - Donot Add Users Here -/TACS
+,AEV,Office of the Chief Finance Officer,Treasury Services Group,Cebu,/AEV - Donot Add Users Here -/TSG
+,AEV,Office of the Chief Finance Officer,Treasury Services Group,Taguig,/AEV - Donot Add Users Here -/TSG
+,AEV,Office of the Chief Finance Officer,Treasury Services Group,Cebu,/AEV - Donot Add Users Here -/TSG
+,AEV,Office of the Chief Finance Officer,Treasury Services Group,Taguig,/AEV - Donot Add Users Here -/TSG
+,AEV,Office of the Chief Finance Officer,"Finance, Accounting and Business Support",Cebu,/AEV - Donot Add Users Here -/ACCT
+,AEV,Office of the Chief Finance Officer,"Finance, Accounting and Business Support",Taguig,/AEV - Donot Add Users Here -/ACCT
+,AAII,Office of the General Manager,Office of the General Manager,,/APO Agua
+,AEV,Office of the Group President,Office of the Group President,Cebu,/AEV - Donot Add Users Here -/EXO
+,AEV,Office of the Group President,Office of the Group President,Taguig,/AEV - Donot Add Users Here -/EXO
+,AEV,Office of the Group President,Office of the Group President,Cebu,/AEV - Donot Add Users Here -/COO
+,AEV,Office of the Group President,Office of the Group President,Taguig,/AEV - Donot Add Users Here -/COO
+,AEV,Office of the Group President,AEV Gen / Family Council,Cebu,/FamCO
+,AEV,Office of the Group President,AEV Gen / Family Council,Taguig,/FamCO
+,AIC,Office of the President,Office of the President,Cebu,/AIC
+,AIC,Office of the President,Office of the President,Taguig,/AIC
+,AIC,Office of the President,Office of the President,,/AIC
+,LWC,Operations,Operations,,/LIMA-WATER-BATANGAS
+,WPF,Operations and Maintenance,Operations and Maintenance,,/WPF
+,AFI,Operations and Program Management Team,Operations and Program Management Team,,/AFI
+,AAII,Operations/ Technical,Operations - Project,,/APO Agua
+,AAII,Operations/ Technical,Operations/ Technical,,/APO Agua
+,AIC,Project Management Office,Project Management Office,Cebu,/AIC
+,AIC,Project Management Office,Project Management Office,Taguig,/AIC
+,LWC,Quality and Laboratory,Quality and Laboratory,,/LIMA-WATER-BATANGAS
+,AFI,Stakeholder Engagement and Communications,Stakeholder Engagement and Communications,Cebu,/AFI
+,AFI,Stakeholder Engagement and Communications,Stakeholder Engagement and Communications,Taguig,/AFI
+,AIC,Structuring and Regulatory Compliance,SRC,Cebu,/AIC
+,AIC,Structuring and Regulatory Compliance,SRC,Taguig,/AIC
+,AEV,Venture Investments,Venture Investments,,/AEV - Donot Add Users Here -/IR
+,AIC,WATER EXCELLENCE TEAM,WATER EXCELLENCE TEAM,Cebu,/AIC
+,AIC,WATER EXCELLENCE TEAM,WATER EXCELLENCE TEAM,Taguig,/AIC
+Pilmico Foods Corporation,,,,Tarlac,/Pilmico/PFC-Tarlac
+Pilmico Animal Nutrition Corporation,,,,Tarlac,/Pilmico/PANC-Tarlac
+Pilmico Foods Corporation,,,,Iligan,/Pilmico/PFC-Iligan
+Pilmico Animal Nutrition Corporation,,,,Iligan,/Pilmico/PANC-Iligan
+Pilmico Foods Corporation,,,,Taguig,/Pilmico/PFC-Taguig
+Pilmico Animal Nutrition Corporation,,,,Taguig,/Pilmico/PANC-Taguig
+Pilmico Foods Corporation,,,,Vietnam,/Pilmico/PANC-Veitnam
+Pilmico Animal Nutrition Corporation,,,,Vietnam,/Pilmico/PANC-Veitnam
+Pilmico Foods Corporation,,,,Cebu,/Pilmico/PFC-Cebu
+Pilmico Animal Nutrition Corporation,,,,Cebu,/Pilmico/PANC-Cebu
+Pilmico Foods Corporation,,,,Indonesia,/Pilmico/PFC-Indonesia
+Pilmico Foods Corporation,,,,,/Pilmico
+Pilmico Animal Nutrition Corporation,,,,,/Pilmico

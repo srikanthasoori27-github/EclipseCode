@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" [
+  <!ENTITY SailPointObject SYSTEM "classpath://sailpoint/object/SailPointObject.hbm.xml">
+  <!ENTITY ManagedAttributeExtensions SYSTEM "classpath://sailpoint/object/ManagedAttributeExtended.hbm.xml">
+  <!ENTITY Classifiable SYSTEM "classpath://sailpoint/object/Classifiable.hbm.xml">
+]>
+
+<!-- (c) Copyright 2010 SailPoint Technologies, Inc., All Rights Reserved. -->
+
+<hibernate-mapping>
+  <class name="sailpoint.object.ManagedAttribute" dynamic-update="true" dynamic-insert="true">
+
+    &SailPointObject;
+    &ManagedAttributeExtensions;
+    &Classifiable;
+    
+    <!--  purview is deprecated, new code must use application,
+          this was upgraded in 6.0, probably safe to remove -->
+    <property name="purview" type="string" length="128" unique="false"/>
+    
+    <many-to-one embed-xml="false" name="application" class="sailpoint.object.Application"/>
+
+    <property name="type" type="string" index="spt_managed_attr_type"/>
+    
+    <property name="aggregated" type="boolean" index="spt_managed_attr_aggregated" />
+
+    <property name="attribute" type="string" length="322" index="spt_managed_attr_attr_ci" />
+    
+    <property name="value" type="string" length="450" index="spt_managed_attr_value_ci" />
+
+    <!-- must be under 255, maximum unique key length is 767 bytes -->
+    <property name="hash" type="string" length="128" not-null="true" unique="true"/>
+
+    <property name="displayName" type="string" length="450" />
+
+    <property name="displayableName" type="string" length="450" index="spt_managed_attr_dispname_ci" />
+
+    <property name="uuid" type="string" length="128" index="spt_managed_attr_uuid_ci"/>
+
+    <property name="attributes" type="sailpoint.persistence.XmlType" length="100000000"/>
+    <property name="requestable" type="boolean" index="spt_managed_attr_requestable" />
+    <property name="uncorrelated" type="boolean"/>
+    <property name="lastRefresh" type="sailpoint.persistence.DateType"/>
+    <property name="lastTargetAggregation" type="sailpoint.persistence.DateType" index="spt_managed_attr_last_tgt_agg"/>
+
+    <list name="permissions" table="ManagedAttrPerms">
+      <key column="managedattribute"/>
+      <list-index column="idx"/>
+      <composite-element class="sailpoint.object.Permission">
+        <property name="target"/>
+        <property name="rights" length="4000"/>
+        <property name="annotation"/>
+        <property name="attributes" type="sailpoint.persistence.XmlType" length="100000000"/>
+      </composite-element>
+    </list>
+
+    <list name="targetPermissions" table="ManagedAttrTargetPerms">
+      <key column="managedattribute"/>
+      <list-index column="idx"/>
+      <composite-element class="sailpoint.object.Permission">
+        <property name="target"/>
+        <property name="rights" length="4000"/>
+        <property name="annotation"/>
+        <property name="attributes" type="sailpoint.persistence.XmlType" length="100000000"/>
+      </composite-element>
+    </list>
+
+    <list name="inheritance" table="ManagedAttrInheritance"
+          cascade="persist,merge,save-update">
+      <key column="managedattribute"/>
+      <list-index column="idx"/>
+      <many-to-many column="inheritsFrom" class="sailpoint.object.ManagedAttribute"/>
+    </list>
+
+    <property name="key1" type="string" length="128" index="spt_ma_key1_ci"/>
+    <property name="key2" type="string" length="128" index="spt_ma_key2_ci"/>
+    <property name="key3" type="string" length="128" index="spt_ma_key3_ci"/>
+    <property name="key4" type="string" length="128" index="spt_ma_key4_ci"/>
+
+    <bag name="associations" inverse="true">
+      <key foreign-key="none" column="objectId" />
+      <one-to-many class="sailpoint.object.TargetAssociation"/>
+    </bag>
+
+  </class>
+</hibernate-mapping>

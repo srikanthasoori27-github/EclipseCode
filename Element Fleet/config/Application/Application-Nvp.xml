@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Application PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<Application connector="sailpoint.connector.JDBCConnector" featuresString="DISCOVER_SCHEMA, PROVISIONING, SYNC_PROVISIONING, DIRECT_PERMISSIONS, SEARCH, ENABLE, UNLOCK" icon="databaseIcon" name="NVP" profileClass="" type="JDBC">
+    <Attributes>
+        <Map>
+            <entry key="Profile.SQL" value="  SELECT Perfil_id,Nombre,Descripcion&#13;&#10;&#13;&#10;  FROM EL_Security.[dbo].[Perfiles] "/>
+            <entry key="Profile.aggregationMode">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="Profile.deltaTable"/>
+            <entry key="Profile.driverClass" value="%%ELE_NVP_DB_DRIVER%%"/>
+            <entry key="Profile.getDeltaSQL"/>
+            <entry key="Profile.getDirectPermObjectSQL"/>
+            <entry key="Profile.getObjectSQL"/>
+            <entry key="Profile.isPermissionEnabled">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="Profile.mergeRows">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="Profile.password" value="%%ELE_MS_SQL_SVC_ACCOUNT_PWD%%"/>
+            <entry key="Profile.url" value="%%ELE_NVP_DB_URL%%"/>
+            <entry key="Profile.useExecuteQuery">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="Profile.useStoredProcedureDelta">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="Profile.useStoredProcedureDirectPermission">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="Profile.useStoredProcedureGetObject">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="Profile.useStoredProcedureSqlStmt">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="Profile.user" value="%%ELE_MS_SQL_SVC_ACCOUNT%%"/>
+            <entry key="Role.SQL" value="SELECT [IdRol] &#13;&#10;      ,[RoleName] &#13;&#10;  FROM [el_security].[dbo].[Roles] ;"/>
+            <entry key="Role.aggregationMode">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="Role.deltaTable"/>
+            <entry key="Role.driverClass" value="%%ELE_NVP_DB_DRIVER%%"/>
+            <entry key="Role.getDeltaSQL"/>
+            <entry key="Role.getDirectPermObjectSQL"/>
+            <entry key="Role.getObjectSQL"/>
+            <entry key="Role.isPermissionEnabled">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="Role.mergeRows">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="Role.password" value="%%ELE_MS_SQL_SVC_ACCOUNT_PWD%%"/>
+            <entry key="Role.url" value="%%ELE_NVP_DB_URL%%"/>
+            <entry key="Role.useExecuteQuery">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="Role.useStoredProcedureDelta">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="Role.useStoredProcedureDirectPermission">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="Role.useStoredProcedureGetObject">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="Role.useStoredProcedureSqlStmt">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="Role.user" value="%%ELE_MS_SQL_SVC_ACCOUNT%%"/>
+            <entry key="SQL" value="SELECT U.[Id_Usuario]&#13;&#10;      ,U.[Usuario]&#13;&#10;      ,U.[Id_Activo]&#13;&#10;      ,U.[Codigo]&#13;&#10;      ,U.[Nombre]&#13;&#10;      ,U.[email]&#13;&#10;      ,U.[Edad]&#13;&#10;      ,U.[Extension]&#13;&#10;      ,U.[Position]&#13;&#10;      ,U.[Expiracion]&#13;&#10;      ,U.[Pass_Invalid]&#13;&#10;      ,U.[Element_Id]&#13;&#10;      ,U.[AD] as adusername&#13;&#10;      ,P.[Perfil_Id] AS ProfileID&#13;&#10;      ,P.[Id_Usuario] &#13;&#10;      ,P.[IdRol]&#13;&#10;  FROM EL_Security.[dbo].[PerfilesUsuarios] P&#13;&#10;inner join  EL_Security.[dbo].[Usuarios]  U&#13;&#10;on P.Id_Usuario = U.Id_Usuario&#13;&#10;order by U.[Id_Usuario];"/>
+            <entry key="acctAggregationEnd">
+                <value>
+                    <Date>1615995835785</Date>
+                </value>
+            </entry>
+            <entry key="acctAggregationStart">
+                <value>
+                    <Date>1615995797350</Date>
+                </value>
+            </entry>
+            <entry key="afterProvisioningRule"/>
+            <entry key="aggregationMode">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="beforeProvisioningRule"/>
+            <entry key="compositeDefinition"/>
+            <entry key="deltaTable"/>
+            <entry key="disableOrderingCheck" value="true"/>
+            <entry key="driverClass" value="%%ELE_NVP_DB_DRIVER%%"/>
+            <entry key="getDeltaSQL"/>
+            <entry key="indexColumns">
+                <value>
+                    <List>
+                        <String>Id_Usuario</String>
+                    </List>
+                </value>
+            </entry>
+            <entry key="isPermissionEnabled">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="jdbcExceptionBucketing">
+                <value>
+                    <Boolean>true</Boolean>
+                </value>
+            </entry>
+            <entry key="mergeColumns">
+                <value>
+                    <List>
+                        <String>IdRol</String>
+                        <String>ProfileID</String>
+                    </List>
+                </value>
+            </entry>
+            <entry key="mergeRows">
+                <value>
+                    <Boolean>true</Boolean>
+                </value>
+            </entry>
+            <entry key="nativeChangeDetectionAttributeScope" value="entitlements"/>
+            <entry key="nativeChangeDetectionAttributes"/>
+            <entry key="nativeChangeDetectionEnabled">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="nativeChangeDetectionOperations"/>
+            <entry key="partitionMode">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="partitionStatements"/>
+            <entry key="password" value="%%ELE_MS_SQL_SVC_ACCOUNT_PWD%%"/>
+            <entry key="provisionRule" value="globalRule"/>
+            <entry key="sysDescriptions">
+                <value>
+                    <Map>
+                        <entry key="en_US"/>
+                    </Map>
+                </value>
+            </entry>
+            <entry key="templateApplication" value="JDBC Template"/>
+            <entry key="testConnSQL" value="select * FROM nvp.dbo.psn;"/>
+            <entry key="url" value="%%ELE_NVP_DB_URL%%"/>
+            <entry key="useExecuteQuery">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="useStoredProcedureDelta">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="useStoredProcedureDirectPermission">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="useStoredProcedureGetObject">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="useStoredProcedurePartition">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="useStoredProcedureSqlStmt">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="useStoredProcedureTestConn">
+                <value>
+                    <Boolean/>
+                </value>
+            </entry>
+            <entry key="user" value="%%ELE_MS_SQL_SVC_ACCOUNT%%"/>
+        </Map>
+    </Attributes>
+    <CorrelationRule>
+        <Reference class="sailpoint.object.Rule" name="ELE_Global_Correlation_Rule"/>
+    </CorrelationRule>
+    <CreationRule>
+        <Reference class="sailpoint.object.Rule" name="ELE_Global_IdentityCreation_Rule"/>
+    </CreationRule>
+    <Owner>
+        <Reference class="sailpoint.object.Identity" name="spadmin"/>
+    </Owner>
+    <Schemas>
+        <Schema displayAttribute="Usuario" identityAttribute="Id_Usuario" instanceAttribute="" nativeObjectType="account" objectType="account" permissionsRemediationModificationType="None">
+            <AttributeDefinition name="Id_Usuario" type="string">
+                <Description/>
+            </AttributeDefinition>
+            <AttributeDefinition name="Usuario" type="string">
+                <Description/>
+            </AttributeDefinition>
+            <AttributeDefinition name="Id_Activo" type="string">
+                <Description/>
+            </AttributeDefinition>
+            <AttributeDefinition name="Codigo" type="string">
+                <Description/>
+            </AttributeDefinition>
+            <AttributeDefinition name="Nombre" type="string">
+                <Description/>
+            </AttributeDefinition>
+            <AttributeDefinition name="email" type="string">
+                <Description/>
+            </AttributeDefinition>
+            <AttributeDefinition name="Edad" type="string">
+                <Description/>
+            </AttributeDefinition>
+            <AttributeDefinition name="Extension" type="string">
+                <Description/>
+            </AttributeDefinition>
+            <AttributeDefinition name="Position" type="string">
+                <Description/>
+            </AttributeDefinition>
+            <AttributeDefinition name="Expiracion" type="string">
+                <Description/>
+            </AttributeDefinition>
+            <AttributeDefinition name="Pass_Invalid" type="string">
+                <Description/>
+            </AttributeDefinition>
+            <AttributeDefinition name="Element_Id" type="string">
+                <Description/>
+            </AttributeDefinition>
+            <AttributeDefinition name="adusername" type="string">
+                <Description/>
+            </AttributeDefinition>
+            <AttributeDefinition entitlement="true" managed="true" multi="true" name="ProfileID" schemaObjectType="Profile" type="string">
+                <Description/>
+            </AttributeDefinition>
+            <AttributeDefinition entitlement="true" managed="true" multi="true" name="IdRol" schemaObjectType="Role" type="string">
+                <Description/>
+            </AttributeDefinition>
+        </Schema>
+        <Schema aggregationType="group" descriptionAttribute="" displayAttribute="RoleName" identityAttribute="IdRol" instanceAttribute="" nativeObjectType="Role" objectType="Role" permissionsRemediationModificationType="None">
+            <AttributeDefinition name="IdRol" type="string">
+                <Description/>
+            </AttributeDefinition>
+            <AttributeDefinition name="RoleName" type="string">
+                <Description/>
+            </AttributeDefinition>
+        </Schema>
+        <Schema aggregationType="group" descriptionAttribute="Descripcion" displayAttribute="Nombre" identityAttribute="Perfil_id" instanceAttribute="" nativeObjectType="Profile" objectType="Profile" permissionsRemediationModificationType="None">
+            <AttributeDefinition name="Perfil_id" type="string">
+                <Description/>
+            </AttributeDefinition>
+            <AttributeDefinition name="Nombre" type="string">
+                <Description/>
+            </AttributeDefinition>
+            <AttributeDefinition name="Descripcion" type="string">
+                <Description/>
+            </AttributeDefinition>
+        </Schema>
+    </Schemas>
+    <ApplicationScorecard/>
+</Application>

@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" [
+  <!ENTITY SailPointObject SYSTEM "classpath://sailpoint/object/SailPointObject.hbm.xml">
+]>
+
+<!-- (c) Copyright 2008 SailPoint Technologies, Inc., All Rights Reserved. -->
+
+<hibernate-mapping>
+  <class name="sailpoint.object.ArchivedCertificationItem" table="spt_archived_cert_item">
+
+    &SailPointObject;
+
+    <property name="type" index="spt_arch_cert_item_type">
+      <type name="sailpoint.persistence.EnumType">
+        <param name="enumClassName">sailpoint.object.CertificationItem$Type</param>
+      </type>
+    </property>
+
+    <property name="subType">
+      <type name="sailpoint.persistence.EnumType">
+        <param name="enumClassName">sailpoint.object.CertificationItem$SubType</param>
+      </type>
+    </property>
+
+    <property name="itemId" type="string" length="128" />  
+    <property name="exceptionApplication" type="string" length="128" index="spt_arch_item_app"/>
+    <property name="exceptionAttributeName" type="string" length="255" />
+    <property name="exceptionAttributeValue" type="string" length="2048" />
+    <property name="exceptionPermissionTarget" type="string" />
+    <property name="exceptionPermissionRight" type="string" />
+    <property name="exceptionNativeIdentity" type="string" length="322" index="spt_arch_item_native_id"/>
+    <property name="constraintName" type="string" length="2000"/>
+    <property name="policy" type="string" length="256" index="spt_arch_item_policy"/>
+    <property name="bundle" type="string" index="spt_arch_item_bundle"/>
+    <property name="violationSummary" type="string" length="256"/>
+
+    <property name="entitlements" type="sailpoint.persistence.XmlType" length="100000000"/>
+
+    <many-to-one embed-xml="false" name="parent" column="parent_id"
+                 class="sailpoint.object.ArchivedCertificationEntity"/>
+
+    <list name="applicationNames" cascade="all" table="ArchCertItemApps">
+      <key column="arch_cert_item_id"/>
+      <list-index column="idx"/>
+      <element type="string" column="application_name"/>
+    </list>
+
+    <property name="targetDisplayName" index="spt_arch_cert_item_tdisplay" />
+    <property name="targetName" index="spt_arch_cert_item_tname"/>
+    <property name="targetId"/>
+
+  </class>
+</hibernate-mapping>

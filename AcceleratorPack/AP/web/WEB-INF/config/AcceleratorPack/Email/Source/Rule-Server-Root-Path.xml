@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE Rule PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<!-- Copyright © 2018 SailPoint Technologies, Inc. All Rights Reserved.
+All logos, text, content, and works of authorship, including but not limited to underlying code, programming or scripting language, designs, and/or graphics,
+that are used and/or depicted herein are protected under United States and international copyright and trademark laws and treaties,
+and may not be used or reproduced without the prior express written permission of SailPoint Technologies, Inc. -->
+<Rule language="beanshell" name="Rule-Server-Root-Path">
+  <Source>
+  <![CDATA[
+        import sailpoint.object.Configuration;
+        import sailpoint.object.Attributes;
+        String defaultPath=Configuration.DEFAULT_SERVER_ROOT_PATH;
+        String rootPathKey=Configuration.SERVER_ROOT_PATH;
+        Configuration sysConfig = context.getConfiguration();
+        Attributes sysConfigAttributes=null;
+		if(sysConfig!=null)
+		{
+			sysConfigAttributes=sysConfig.getAttributes();
+			if(sysConfigAttributes!=null)
+			{
+				if(sysConfigAttributes.containsKey(rootPathKey))
+				{
+					String rootPath=sysConfigAttributes.get(rootPathKey);
+					if(rootPath!=null && rootPath.length()>0)
+					{
+						return rootPath;
+					}
+				}
+			}
+		}
+		return defaultPath;
+	   ]]>	
+    </Source>
+</Rule>

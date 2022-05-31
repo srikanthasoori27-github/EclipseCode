@@ -1,0 +1,114 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" [
+  <!ENTITY SailPointObject SYSTEM "classpath://sailpoint/object/SailPointObject.hbm.xml">
+  <!ENTITY ApplicationExtensions SYSTEM "classpath://sailpoint/object/ApplicationExtended.hbm.xml">
+]>
+
+<!-- (c) Copyright 2008 SailPoint Technologies, Inc., All Rights Reserved. -->
+
+<hibernate-mapping>
+  <class name="sailpoint.object.Application">
+
+    &SailPointObject;
+    &ApplicationExtensions;
+
+    <property name="name" type="string" length="128" unique="true" not-null="true" />
+    <!-- While proxiedName must be unique, they are allowed to be null.  The absence
+         of not-null="true" was causing the Hibernate DB2 schema generator to leave off the unique.  
+         Could probably fix this in the Dialect, but it's easy enough just to use an ordinary index.
+         -->
+    <property name="proxiedName" type="string" length="128" index="spt_app_proxied_name"/>
+    <property name="cluster" type="string" column="app_cluster" index="spt_application_cluster"/>
+    <property name="icon" />
+    <property name="connector"/>
+    <property name="type"/>
+    <property name="featuresString" type="string" length="512"/>
+    <property name="aggregationTypes" type="string" length="128"/>
+    <property name="profileClass"/>
+    <property name="authenticationResource" type="boolean"/>
+    <property name="caseInsensitive" type="boolean"/>
+    <property name="authoritative" type="boolean" index="spt_application_authoritative"/>
+    <property name="maintenanceExpiration"/>
+
+    <property name="logical" type="boolean" index="spt_application_logical" />
+    <property name="supportsProvisioning" type="boolean" index="spt_application_provisioning" />
+    <property name="supportsAuthenticate" type="boolean" index="spt_application_authenticate" />
+    <property name="supportsAccountOnly" type="boolean" index="spt_application_acct_only" />
+    <property name="supportsAdditionalAccounts" type="boolean" index="spt_application_addt_acct" />
+    <property name="noAggregation" type="boolean" index="spt_application_no_agg" />
+    <property name="syncProvisioning" type="boolean" index="spt_app_sync_provisioning" />
+
+    <property name="attributes" type="sailpoint.persistence.XmlType" length="100000000"/>
+
+    <property name="xmlTemplates" column="templates" type="sailpoint.persistence.XmlType" 
+      length="100000000"/>
+    <property name="hibernateProvisioningForms" column="provisioningForms" type="sailpoint.persistence.XmlType" 
+      length="100000000"/>
+
+    <property name="provisioningConfig" type="sailpoint.persistence.XmlType" length="100000000"/>
+
+    <property name="managesOtherApps" not-null="true" type="boolean" index="spt_application_mgd_apps"/>
+
+    <many-to-one embed-xml="false" name="proxy" class="sailpoint.object.Application"/>
+    <many-to-one embed-xml="false" name="correlationRule" class="sailpoint.object.Rule"/>
+    <many-to-one embed-xml="false" name="creationRule" class="sailpoint.object.Rule"/>
+    <many-to-one embed-xml="false" name="managerCorrelationRule" class="sailpoint.object.Rule"/>
+    <many-to-one embed-xml="false" name="customizationRule" class="sailpoint.object.Rule"/>
+    <many-to-one embed-xml="false" name="managedAttributeCustomizationRule" class="sailpoint.object.Rule" column="managed_attr_customize_rule"/>
+    <many-to-one embed-xml="false" name="accountCorrelationConfig" class="sailpoint.object.CorrelationConfig"/>
+
+    <many-to-one embed-xml="false" name="scorecard" class="sailpoint.object.ApplicationScorecard"
+      cascade="all"/>
+
+    <list name="schemas" cascade="all" lazy="false">
+      <key column="application"/>
+      <list-index column="idx"/>
+      <one-to-many class="sailpoint.object.Schema"/>
+    </list>
+
+    <list name="activityDataSources" cascade="all">
+      <key column="application"/>
+      <list-index column="idx"/>
+      <one-to-many class="sailpoint.object.ActivityDataSource"/>
+    </list>
+    
+    <list name="remediators" 
+       cascade="persist,merge,save-update">
+      <key column="application"/>
+      <list-index column="idx"/>
+      <many-to-many class="sailpoint.object.Identity"/>
+    </list>
+
+    <list name="secondaryOwners" table="AppSecondaryOwners"
+       cascade="persist,merge,save-update">
+      <key column="application"/>
+      <list-index column="idx"/>
+      <many-to-many class="sailpoint.object.Identity"/>
+    </list>
+
+    <list name="passwordPolicies" cascade="all">
+      <key column="application"/>
+      <list-index column="idx"/>
+      <one-to-many class="sailpoint.object.PasswordPolicyHolder"/>
+    </list>
+    
+    <list name="targetSources" table="TargetSources"
+          cascade="persist,merge,save-update">
+      <key column="application"/>
+      <list-index column="idx"/>
+      <many-to-many class="sailpoint.object.TargetSource"/>
+    </list>
+
+    <list name="dependencies" table="AppDependencies">
+      <key column="application"/>
+      <list-index column="idx"/>
+      <many-to-many class="sailpoint.object.Application" column="dependency"/>
+    </list>
+
+    <!-- deprecated in 6.0p1 in favor of a list of target sources -->
+    <many-to-one embed-xml="false" name="targetSource" class="sailpoint.object.TargetSource"/>
+
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE EmailTemplate PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<EmailTemplate name="Element-Initial-Email-AccessReviewNotification">
+          
+    
+    <Body>
+<![CDATA[
+	  
+<html> 
+<body>
+<p> All-</p>
+<p>I am asking for your support to ensure only authorized individuals have appropriate access to our key financial reporting applications. This quarterly review, performed by managers, helps safeguard Element's assets and financial reporting data and supports the CEO/CFO controls certification. 
+</p>
+<p>A key internal control practice - Review of User Access - for one of our financial reporting systems begins on $reviewBeginDate. </p>
+<p>Your timely response is critical for this process to be effective, and for Element to achieve full compliance and provide reasonable assurance. </p>
+<p>Please review your responsibilities and action items outlined below. Thank you in advance for your support. </p><br/>
+<p>Review Owner’s Responsibility 
+<br/>
+<ul>
+<li>Your responsibility is to review each user assigned to you to ensure your direct reports still need access to the necessary systems and have the appropriate privilege access. </li>
+
+<li>Leaders are accountable for the access rights of the user(s) under their supervision. As a Leader, you should know what your direct report(s) have access to, how they use that access, and if that access is still appropriate for their current job function. </li>
+</ul>
+</p>
+<p>User Access Review Process  
+<br/>
+<ul>
+ 
+
+<li>On $reviewBeginDate, you will receive a communication from IT announcing the start of the review cycle. </li>
+
+<li>Your responsibility is to review each user assigned to you within no longer than twelve (12) business days of notification. </li>
+
+<li>After 12 days, your direct leader will receive notification of your non-compliance, and user review responsibility will shift to them. </li>
+
+<li>If no response is received by day 20, access for users assigned to you will be disabled.</li>
+</p>
+ 
+<p><a href="https://urldefense.com/v3/__https:/politemail.elementcorp.com/PoliteMail/default.aspx?page=ZYFu8lxwAk-zOtk9UAo-tg&ref_id=cJMxXYO3tUafl6zWH8XcLw__;!!MsNKLpFGsw!fFxooxhrgIatWLg6O1iy57T-6M_nUPsA14_-0mNIV8T6W4ub9-V8bLjZdP4epaC5-1nt7w$">Click here to view User Access Process schedule </a> </p>
+
+ 
+
+<p>Consequences for Non-Compliance  </p>
+
+ 
+<p>
+Access for the system under review will be disabled for any user not reviewed within 20 days. Their account will remain disabled until the review is completed by the Review Owner or their direct leader. This will not be an acceptable outcome, particularly given the current business environment. For this quarter, we have requested that IT forward the list of incomplete user entitlement reviews directly to us in advance of any accounts being disabled. 
+</p>
+ 
+
+<p>Contact  </p>
+
+<p>If you have any questions about the process, please contact <a href="mailto:CSookdeo@elementcorp.com">Clifton Sookdeo</a>.</p>
+<br/><p> <b>Jim</b></p>
+</body>
+</html>
+  
+	]]>
+
+</Body>
+          
+    
+    <Description>
+      Email Template for intitial notification of Access Review.
+    </Description>
+          
+    
+    <Signature>
+                    
+        
+        <Inputs>
+                              
+            
+            <Argument name="applicationName" type="string">
+                                        
+                
+                <Description>The name of the application.</Description>
+                                      
+            
+            </Argument>
+                              
+            
+            <Argument name="workItem" type="WorkItem">
+                                        
+                
+                <Description>The WorkItem object for the certification.</Description>
+                                      
+            
+            </Argument>
+                              
+            
+            <Argument name="certification" type="Certification">
+                                        
+                
+                <Description>The Certification object.</Description>
+                                      
+            
+            </Argument>
+                              
+            
+            <Argument name="ownerName" type="string">
+                                        
+                
+                <Description>The display name of the Identity that owns the certification.</Description>
+                                      
+            
+            </Argument>
+                              
+            
+            <Argument name="reviewBeginDate" type="string">
+                                        
+                
+                <Description>The display beginning date of the review certification.</Description>
+                                      
+            
+            </Argument>
+                              
+            
+            <Argument name="reviewYear" type="string">
+                                        
+                
+                <Description>The display beginning date of the review certification.</Description>
+                                      
+            
+            </Argument>
+                              
+            
+            <Argument name="reviewQuarter" type="string">
+                                        
+                
+                <Description>The display beginning date of the review certification.</Description>
+                                      
+            
+            </Argument>
+                            
+        
+        </Inputs>
+                  
+    
+    </Signature>
+          
+    
+    <Subject>ACTION REQUIRED: $reviewQuarter $reviewYear Review of User Access permissions to $applicationName</Subject>
+        
+
+</EmailTemplate>

@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE sailpoint PUBLIC 'sailpoint.dtd' 'sailpoint.dtd'>
+<!-- Copyright © 2018 SailPoint Technologies, Inc. All Rights Reserved.
+All logos, text, content, and works of authorship, including but not limited to underlying code, programming or scripting language, designs, and/or graphics,
+that are used and/or depicted herein are protected under United States and international copyright and trademark laws and treaties,
+and may not be used or reproduced without the prior express written permission of SailPoint Technologies, Inc. -->
+<sailpoint>
+    <!-- Import First Time Start -->
+  <ImportAction name='include' value='AcceleratorPack/NativeChange/Configure/CertificationDefinition-Native-Change-Certification.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/NativeChange/Configure/IdentityTrigger-Native-Change-Certification.xml'/>
+    <!-- Import First Time End -->
+    <!-- Import Second Time Start Both are dependent on each other -->
+  <ImportAction name='include' value='AcceleratorPack/NativeChange/Configure/CertificationDefinition-Native-Change-Certification.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/NativeChange/Configure/IdentityTrigger-Native-Change-Certification.xml'/>
+   <!-- Import Second Time End Both are dependent on each other -->
+  <ImportAction name='include' value='AcceleratorPack/NativeChange/Configure/IdentityTrigger-NativeChangeDetection.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/NativeChange/Configure/Custom-Native-Change-Settings.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/NativeChange/Configure/Certification-NativeChange.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/NativeChange/Source/EmailTemplate-FrameworkAccessReviewNativeChangeBulkReassignment.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/NativeChange/Source/EmailTemplate-FrameworkAccessReviewNativeChangeDelegation.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/NativeChange/Source/EmailTemplate-FrameworkAccessReviewNativeChangeDelegationCompletion.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/NativeChange/Source/EmailTemplate-FrameworkAccessReviewNativeChangeDelinquent.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/NativeChange/Source/EmailTemplate-FrameworkAccessReviewNativeChangeReminder.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/NativeChange/Source/EmailTemplate-FrameworkAccessReviewNativeChangeStart.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/NativeChange/Source/ObjectConfig-Application.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/NativeChange/Source/Rule-FrameworkCertificationExclusionNativeChange.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/NativeChange/Source/Workflow-Lifecycle-NativeChangeDetection-RequestObject-Wrapper.xml'/>
+  <ImportAction name='include' value='AcceleratorPack/NativeChange/Source/Workflow-Lifecycle-NativeChangeDetection.xml'/>
+</sailpoint>

@@ -1,0 +1,149 @@
+<?xml version='1.0' encoding='UTF-8'?><!DOCTYPE Application PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+<ImportAction name="connectorRegistryUpdateAction">
+<Application connector="sailpoint.connector.SAPGRCConnector" featuresString="PROVISIONING, SYNC_PROVISIONING, ENABLE, MANAGER_LOOKUP" icon="internetIcon" name="SAP GRC" profileClass="" type="SAP GRC">
+  <Attributes>
+    <Map>
+      <entry key="connectorClass" value="sailpoint.connector.SAPGRCConnector"/>
+      <entry key="formPath" value="SAPGRCAttributesForm.xhtml"/>
+      <entry key="grc_mitigation_search_keyword" value="Mitigation Control"/>
+      <entry key="encrypted" value="grc_password"/>
+      <entry key="isPartialProvisioningEnabled">
+           <value>
+              <Boolean>true</Boolean>
+           </value>
+      </entry>
+    </Map>
+  </Attributes>
+  <Schemas>
+	<Schema displayAttribute="User ID" identityAttribute="User ID"
+		nativeObjectType="account" objectType="account">
+		<AttributeDefinition name="First Name"
+			remediationModificationType="None" type="string">
+			<Description>First name of the user</Description>
+		</AttributeDefinition>
+		<AttributeDefinition name="Last Name"
+			remediationModificationType="None" type="string">
+			<Description>Last name of the user</Description>
+		</AttributeDefinition>
+		<AttributeDefinition name="User ID"
+			remediationModificationType="None" type="string">
+			<Description>Id of the user</Description>
+		</AttributeDefinition>
+		<AttributeDefinition name="Email"
+			remediationModificationType="None" type="string">
+			<Description>Email of the user</Description>
+		</AttributeDefinition>
+		<AttributeDefinition name="Phone"
+			remediationModificationType="None" type="string">
+			<Description>Telephone number of the user</Description>
+		</AttributeDefinition>
+		<AttributeDefinition name="Department"
+			remediationModificationType="None" type="string">
+			<Description>Department of the user</Description>
+		</AttributeDefinition>
+		<AttributeDefinition name="Manager ID"
+			remediationModificationType="None" type="string">
+			<Description>Manager Id of the user</Description>
+		</AttributeDefinition>
+		<AttributeDefinition name="User Group" multi="true"
+			remediationModificationType="None" type="string">
+			<Description>User group assigned to a user</Description>
+		</AttributeDefinition>
+		<AttributeDefinition name="User Type"
+			remediationModificationType="None" type="string">
+			<Description>Type of the user</Description>
+		</AttributeDefinition>
+		<AttributeDefinition name="Valid From" multi="true"
+			remediationModificationType="None" type="string">
+			<Description>Valid from date of the user</Description>
+		</AttributeDefinition>
+		<AttributeDefinition name="Valid To" multi="true"
+			remediationModificationType="None" type="string">
+			<Description>Valid to date of the user</Description>
+		</AttributeDefinition>
+		<AttributeDefinition name="Status" multi="true"
+			remediationModificationType="None" type="string">
+			<Description>User Status (per connector)</Description>
+		</AttributeDefinition>
+		<AttributeDefinition name="System"
+			remediationModificationType="None" type="string">
+			<Description>System ID of the connector/source with highest sequence (priority) maintained in the data source configuration from SPRO.</Description>
+		</AttributeDefinition>
+		<AttributeDefinition entitlement="true" multi="true"
+			managed="true" name="Roles" remediationModificationType="None" type="string"
+			schemaObjectType="group">
+			<Description>Roles assigned to a user</Description>
+		</AttributeDefinition>
+	</Schema>
+	<Schema identityAttribute="Role UUID"
+		nativeObjectType="Role" objectType="group">
+		<AttributeDefinition name="Role UUID"
+			remediationModificationType="None" type="string">
+			<Description>Role universally unique identifier</Description>
+		</AttributeDefinition>
+		<AttributeDefinition name="Role Name"
+			remediationModificationType="None" type="string">
+			<Description>Name of the role</Description>
+		</AttributeDefinition>
+		<AttributeDefinition name="Role Desc"
+			remediationModificationType="None" type="string">
+			<Description>Role description</Description>
+		</AttributeDefinition>
+		<AttributeDefinition name="System"
+			remediationModificationType="None" type="string">
+			<Description>System to which role belongs</Description>
+		</AttributeDefinition>
+		<AttributeDefinition name="Role Type"
+			remediationModificationType="None" type="string">
+			<Description>Type of the role</Description>
+		</AttributeDefinition>
+		<AttributeDefinition name="Role Type Desc"
+			remediationModificationType="None" type="string">
+			<Description>Role type description</Description>
+		</AttributeDefinition>
+		<AttributeDefinition name="Landscape"
+			remediationModificationType="None" type="string">
+			<Description>Role landscape</Description>
+		</AttributeDefinition>
+		<AttributeDefinition name="Role Owner"
+			remediationModificationType="None" type="string">
+			<Description>Owner of the role</Description>
+		</AttributeDefinition>
+		<AttributeDefinition name="Business Process"
+			remediationModificationType="None" type="string">
+			<Description>Business Process to which role belongs</Description>
+		</AttributeDefinition>
+		<AttributeDefinition name="Sub Process"
+			remediationModificationType="None" type="string">
+			<Description>Sub Process to which role belongs</Description>
+		</AttributeDefinition>
+		<AttributeDefinition name="Role Status"
+			remediationModificationType="None" type="string">
+			<Description>Role Status</Description>
+		</AttributeDefinition>
+	</Schema>
+  </Schemas>
+  <Templates>
+    <Template name="Create" schemaObjectType="account" usage="Create">
+      <Field displayName="con_prov_policy_user_create_grc_userid"
+        helpKey="help_con_prov_policy_user_create_grc_userid" name="User ID"
+        required="true" type="string" />
+      <Field displayName="con_prov_policy_user_create_grc_firstname"
+        helpKey="help_con_prov_policy_user_create_grc_firstname" name="First Name"
+        required="true" type="string" />
+      <Field displayName="con_prov_policy_user_create_grc_lastname"
+        helpKey="help_con_prov_policy_user_create_grc_lastname" name="Last Name"
+        required="true" type="string" />
+      <Field displayName="con_prov_policy_user_create_grc_email"
+        helpKey="help_con_prov_policy_user_create_grc_email" name="Email"
+        required="true" type="string" />
+      <Field displayName="con_prov_policy_user_create_grc_system"
+        helpKey="help_con_prov_policy_user_create_grc_system" name="System"
+        required="true" type="string" />
+      <Field displayName="con_prov_policy_user_create_grc_managerid"
+        helpKey="help_con_prov_policy_user_create_grc_managerid" name="Manager ID"
+        reviewRequired="true" type="string" />
+    </Template>
+  </Templates>
+</Application>
+</ImportAction>

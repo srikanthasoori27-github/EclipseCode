@@ -1,0 +1,445 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE sailpoint PUBLIC "sailpoint.dtd" "sailpoint.dtd">
+
+<!-- (c) Copyright 2020 SailPoint Technologies, Inc., All Rights Reserved. -->
+
+<!--
+  This is used by 'iiq upgrade' to drive upgrading the schema and data between revisions.
+  There are two files that define the upgrade: upgrade.xml and upgradeObjects.xml.
+  upgrade.xml is processed in a special way before Hibernate is started so that changes can be made at the JDBC level.
+  These files should only contain <ImportAction> elements that use the "execute" command to call upgrader classes.
+  *DO NOT PUT STATIC XML OBJECTS IN UPGRADE.XML*
+  upgradeObjects.xml is included by upgrade.xml and will be imported after Hibernate is started. Any changes to objects
+  that can be represented as static XML or as ImportActions with the "merge" command must go in these files to ensure
+  that they are parsed after Hibernate has been started so that references can be resolved.
+-->
+<sailpoint>
+
+  <!--
+     This will reimport some updated objects
+     and should be safe to do for every release.
+   -->
+  <ImportAction name='include' value='WEB-INF/config/authorization.xml' />
+  <ImportAction name='include' value='WEB-INF/config/reportDefinitions.xml' />
+  <ImportAction name='include' value='WEB-INF/config/tasks.xml' />
+  <ImportAction name='include' value='WEB-INF/config/reportTasks.xml' />
+  <ImportAction name='include' value='WEB-INF/config/archiveReports.xml'/>
+  <ImportAction name='include' value='WEB-INF/config/rules.xml' />
+  <ImportAction name='include' value='WEB-INF/config/workflowRules.xml' />
+  <ImportAction name='include' value='WEB-INF/config/workflowSubs.xml' />
+  <ImportAction name='include' value='WEB-INF/config/workflowRegistry.xml' />
+  <ImportAction name='include' value='WEB-INF/config/workflow.xml' />
+  <ImportAction name='include' value='WEB-INF/config/form.xml' />
+  <ImportAction name='include' value='WEB-INF/config/reportForms.xml' />
+  <ImportAction name='include' value='WEB-INF/config/emailtemplates.xml' />
+  <ImportAction name='include' value='WEB-INF/config/defaultPasswordPolicies.xml' />
+  <ImportAction name='include' value='WEB-INF/config/connectorRegistry.xml' />
+  <ImportAction name='include' value='WEB-INF/config/connectorRegistryDeprecated.xml' />
+  <!-- Controlled Availability for Connectors -->
+  <ImportAction name='include' value='WEB-INF/config/connectorRegistryCAConnectors.xml' />
+  <ImportAction name='include' value='WEB-INF/config/reportRules.xml' />
+  <ImportAction name="include" value="WEB-INF/config/lcmForms.xml" />
+  <ImportAction name="include" value="WEB-INF/config/sendEmailPostActionRule.xml" />
+  <ImportAction name="include" value="WEB-INF/config/cefActivityTransformRule.xml" />
+  <ImportAction name="include" value="WEB-INF/config/cefActivityCorrelationRule.xml" />
+  <ImportAction name="include" value="WEB-INF/config/workflowConfigForms.xml" />
+  <!-- Scim configuration -->
+  <ImportAction name='include' value='WEB-INF/config/scimConfiguration.xml' />
+  <!-- Applications Builder Rule XML -->
+  <ImportAction name="include" value="WEB-INF/config/applicationBuilderRule.xml" />
+
+  <ImportAction name="merge">
+    <Configuration name="SystemConfiguration">
+      <Attributes>
+        <Map>
+          <!-- Special characters allowed in attachment filenames, as String of characters (default includes space)  -->
+          <entry key='attachmentsFilenameAllowedSpecialCharacters' value=" !#&amp;&apos;()+,-.=@[]^_`{}~" />
+          
+          <!-- Allow user to disable work item notifications in Preferences page -->
+          <entry key='allowDisableNotifications' value="true" />
+
+          <!-- New Fields for Advanced Search support in Advanced Analytics -->
+          <entry key='searchInputDefinitions'>
+            <value>
+              <List>
+                <SearchInputDefinition description="srch_input_def_certifier" headerKey="certifier" nullPropertyType="Collection"
+                                       ignoreCase="true" inputType="ContainsAll" name="advancedCertification.certifier"
+                                       propertyName="certifiers" propertyType="StringList" searchType="AdvancedCertification"/>
+                <SearchInputDefinition description="srch_input_def_member" headerKey="srch_input_def_member"
+                                       filterBuilder="sailpoint.search.CertificationEntityFilterBuilder"
+                                       ignoreCase="true" inputType="Equal" name="advancedCertification.member"
+                                       propertyName="CertificationEntity.targetName" propertyType="String"
+                                       searchType="AdvancedCertification"/>
+                <SearchInputDefinition description="srch_input_def_manager" headerKey="manager" ignoreCase="true"
+                                       inputType="Equal" name="advancedCertification.manager" propertyName="manager"
+                                       propertyType="String" searchType="AdvancedCertification"/>
+                <SearchInputDefinition description="srch_input_def_application" filterBuilder="sailpoint.search.ApplicationFilterBuilder"
+                                       headerKey="application" ignoreCase="true" inputType="Equal"
+                                       name="advancedCertification.application" propertyName="Application.name"
+                                       propertyType="String" searchType="AdvancedCertification"/>
+                <SearchInputDefinition description="srch_input_def_type" headerKey="type" ignoreCase="true" inputType="Equal"
+                                       name="advancedCertification.type" propertyName="type" propertyType="String"
+                                       searchType="AdvancedCertification"/>
+                <SearchInputDefinition description="srch_input_def_phase" headerKey="phase" ignoreCase="true" inputType="Equal"
+                                       name="advancedCertification.phase" propertyName="phase" propertyType="String"
+                                       searchType="AdvancedCertification"/>
+                <SearchInputDefinition description="srch_input_def_creator" headerKey="creator" ignoreCase="true"
+                                       inputType="Equal" name="advancedCertification.creator" propertyName="creator"
+                                       propertyType="String" searchType="AdvancedCertification"/>
+                <SearchInputDefinition description="srch_input_def_name" headerKey="name" ignoreCase="true" inputType="Like"
+                                       matchMode="START" name="advancedCertification.name" propertyName="shortName"
+                                       propertyType="String" searchType="AdvancedCertification"/>
+                <SearchInputDefinition description="srch_input_def_cert_grp_name" headerKey="srch_input_def_cert_grp_name"
+                                       ignoreCase="true" inputType="Like" matchMode="START" name="SPT_certificationGroups.name"
+                                       propertyName="SPT_certificationGroups.name" propertyType="String"
+                                       searchType="AdvancedCertification"/>
+                <SearchInputDefinition description="srch_input_def_created" headerKey="date_created" inputType="Equal"
+                                       name="advancedCertification.created" propertyName="created" propertyType="Date"
+                                       searchType="AdvancedCertification"/>
+                <SearchInputDefinition description="srch_input_def_expiration" headerKey="date_expires" inputType="Equal"
+                                       name="advancedCertification.expiration" propertyName="expiration" propertyType="Date"
+                                       searchType="AdvancedCertification"/>
+                <SearchInputDefinition description="srch_input_def_signed" headerKey="date_signed" inputType="Equal"
+                                       name="advancedCertification.signed" propertyName="signed" propertyType="Date"
+                                       searchType="AdvancedCertification"/>
+                <SearchInputDefinition description="srch_input_def_finished" headerKey="date_finished" inputType="Equal"
+                                       name="advancedCertification.finished" propertyName="finished" propertyType="Date"
+                                       searchType="AdvancedCertification"/>
+                <SearchInputDefinition description="srch_input_def_e_signed" headerKey="srch_input_def_e_signed"
+                                       inputType="Equal" name="advancedCertification.electronicallySigned"
+                                       propertyName="electronicallySigned" propertyType="Boolean"
+                                       searchType="AdvancedCertification"/>
+                <SearchInputDefinition description="srch_input_def_signed_by_name" headerKey="srch_input_def_signed_by_name"
+                                       inputType="Equal" name="advancedCertification.signOffHistory.signerName"
+                                       propertyName="signOffHistory.signerName" propertyType="String"
+                                       searchType="AdvancedCertification"/>
+                <SearchInputDefinition description="srch_input_def_total_entities" headerKey="totalEntities" inputType="Equal"
+                                       name="advancedCertification.totalEntities" propertyName="statistics.totalEntities"
+                                       propertyType="Integer" searchType="AdvancedCertification"/>
+                <SearchInputDefinition description="srch_input_def_completed_entities" headerKey="completedEntities"
+                                       inputType="Equal" name="advancedCertification.completedEntities"
+                                       propertyName="statistics.completedEntities" propertyType="Integer"
+                                       searchType="AdvancedCertification"/>
+                <SearchInputDefinition description="srch_input_def_delegated_entities" headerKey="delegatedEntities"
+                                       inputType="Equal" name="advancedCertification.delegatedEntities"
+                                       propertyName="statistics.delegatedEntities" propertyType="Integer"
+                                       searchType="AdvancedCertification"/>
+                <SearchInputDefinition description="srch_input_def_percent_complete" headerKey="percentage_complete"
+                                       inputType="Equal" name="advancedCertification.percentComplete"
+                                       propertyName="statistics.itemPercentComplete" propertyType="Integer"
+                                       searchType="AdvancedCertification"/>
+                <SearchInputDefinition description="srch_input_def_completed_items" headerKey="completed_items"
+                                       inputType="Equal" name="advancedCertification.completedItems"
+                                       propertyName="statistics.completedItems" propertyType="Integer"
+                                       searchType="AdvancedCertification"/>
+                <SearchInputDefinition description="srch_input_def_total_items" headerKey="total_items" inputType="Equal"
+                                       name="advancedCertification.totalItems" propertyName="statistics.totalItems"
+                                       propertyType="Integer" searchType="AdvancedCertification"/>
+                <SearchInputDefinition description="srch_input_def_certification_role"
+                                       filterBuilder="sailpoint.search.CertificationEntityFilterBuilder"
+                                       headerKey="srch_input_def_certification_role" ignoreCase="true" inputType="Equal"
+                                       name="advancedCertification.role" propertyName="CertificationEntity.targetName"
+                                       propertyType="String" searchType="AdvancedCertification"/>
+                <SearchInputDefinition description="srch_input_def_tags" headerKey="srch_input_def_tags" inputType="Equal"
+                                       name="SPT_tags.name" nullPropertyName="tags" nullPropertyType="Collection"
+                                       propertyName="SPT_tags.name" propertyType="Collection" searchType="AdvancedCertification"/>
+                <SearchInputDefinition description="srch_input_def_certification_account_group"
+                                       filterBuilder="sailpoint.search.CertificationEntityFilterBuilder"
+                                       headerKey="srch_input_def_certification_account_group" ignoreCase="true" inputType="Equal"
+                                       name="advancedCertification.accountGroup" propertyName="CertificationEntity.accountGroup"
+                                       propertyType="String" searchType="AdvancedCertification"/>
+
+                <SearchInputDefinition description="srch_input_def_name" headerKey="name" ignoreCase="true" inputType="Like"
+                                       matchMode="START" name="advancedRole.name" propertyName="name" propertyType="String"
+                                       searchType="AdvancedRole"/>
+                <SearchInputDefinition description="srch_input_def_display_name" headerKey="display_name" ignoreCase="true"
+                                       inputType="Like" matchMode="START" name="advancedRole.displayName" propertyName="displayName"
+                                       propertyType="String" searchType="AdvancedRole"/>
+                <SearchInputDefinition description="srch_input_def_owner" headerKey="owner" ignoreCase="true" inputType="Equal"
+                                       name="advancedRole.owner" propertyName="owner.name" propertyType="String" searchType="AdvancedRole"/>
+                <SearchInputDefinition description="disabled" headerKey="disabled" ignoreCase="true" inputType="Equal"
+                                       name="advancedRole.disabled" propertyName="disabled" propertyType="Boolean" searchType="AdvancedRole"/>
+                <SearchInputDefinition description="srch_input_def_risk_score_weight" headerKey="srch_input_def_risk_score_weight"
+                                       inputType="Equal" name="advancedRole.riskScoreWeight" propertyName="riskScoreWeight"
+                                       propertyType="Integer" searchType="AdvancedRole"/>
+                <SearchInputDefinition description="srch_input_def_type" headerKey="srch_input_def_type" ignoreCase="true"
+                                       inputType="Equal" name="advancedRole.type" propertyName="type" propertyType="String"
+                                       searchType="AdvancedRole"/>
+                <SearchInputDefinition description="ui_classification" headerKey="ui_classifications" inputType="Equal"
+                                       name="advancedRole.classification" propertyName="SPT_classifications.classification.name"
+                                       propertyType="String" searchType="AdvancedRole"/>
+                <SearchInputDefinition description="srch_input_def_assigned_count"
+                                       headerKey="srch_input_def_assigned_count" inputType="Equal" name="advancedRole.assignedCount"
+                                       propertyName="roleIndex.assignedCount" propertyType="Integer" searchType="AdvancedRole"/>
+                <SearchInputDefinition description="srch_input_def_detected_count"
+                                       headerKey="srch_input_def_detected_count" inputType="Equal" name="advancedRole.detectedCount"
+                                       propertyName="roleIndex.detectedCount" propertyType="Integer" searchType="AdvancedRole"/>
+                <SearchInputDefinition description="srch_input_def_entitlement_count"
+                                       headerKey="srch_input_def_entitlement_count" inputType="Equal" name="advancedRole.entitlementCount"
+                                       propertyName="roleIndex.entitlementCountInheritance" propertyType="Integer" searchType="AdvancedRole"/>
+                <SearchInputDefinition description="srch_input_def_associated"
+                                       headerKey="srch_input_def_associated" inputType="Equal" name="advancedRole.associatedToRole"
+                                       propertyName="roleIndex.associatedToRole" propertyType="Boolean" searchType="AdvancedRole"/>
+                <SearchInputDefinition description="srch_input_def_last_certified_membership"
+                                       headerKey="srch_input_def_last_certified_membership" inputType="Equal"
+                                       name="advancedRole.lastCertifiedMembership" propertyName="roleIndex.lastCertifiedMembership"
+                                       propertyType="Date" searchType="AdvancedRole"/>
+                <SearchInputDefinition description="srch_input_def_last_certified_composition"
+                                       headerKey="srch_input_def_last_certified_composition" inputType="Equal"
+                                       name="advancedRole.lastCertifiedComposition" propertyName="roleIndex.lastCertifiedComposition"
+                                       propertyType="Date" searchType="AdvancedRole"/>
+                <SearchInputDefinition description="srch_input_def_last_assignment"
+                                       headerKey="srch_input_def_last_assignment" inputType="Equal" name="advancedRole.lastAssigned"
+                                       propertyName="roleIndex.lastAssigned" propertyType="Date" searchType="AdvancedRole"/>
+                <SearchInputDefinition description="srch_input_def_effective_access" headerKey="srch_input_def_effective_access"
+                                       ignoreCase="true" inputType="Equal" name="advancedRole.associations"
+                                       propertyName="associations.targetName" propertyType="String" searchType="AdvancedRole"/>
+
+                <SearchInputDefinition description="application" headerKey="application" ignoreCase="true" inputType="Equal"
+                                       name="advancedAccountGroup.application" propertyName="application.name"
+                                       propertyType="String" searchType="AdvancedAccountGroup"/>
+                <SearchInputDefinition description="srch_input_def_attribute" headerKey="attribute" ignoreCase="true"
+                                       inputType="Like" matchMode="START" name="advancedAccountGroup.name"
+                                       propertyName="attribute" propertyType="String" searchType="AdvancedAccountGroup"/>
+                <SearchInputDefinition description="srch_input_def_name" headerKey="display_name" ignoreCase="true"
+                                       inputType="Like" matchMode="START" name="advancedAccountGroup.displayableName"
+                                       propertyName="displayableName" propertyType="String" searchType="AdvancedAccountGroup"/>
+                <SearchInputDefinition description="srch_input_def_value" headerKey="value" ignoreCase="true" inputType="Like"
+                                       matchMode="START" name="advancedAccountGroup.nativeIdentity" propertyName="value"
+                                       propertyType="String" searchType="AdvancedAccountGroup"/>
+                <SearchInputDefinition description="srch_input_def_target" headerKey="target" ignoreCase="true" inputType="Like"
+                                       matchMode="START" name="advancedAccountGroup.target" propertyName="permissions.target"
+                                       propertyType="String" searchType="AdvancedAccountGroup"/>
+                <SearchInputDefinition description="rights" filterBuilder="sailpoint.search.AccountGroupFilterBuilder"
+                                       headerKey="rights" ignoreCase="true" inputType="Like" matchMode="START"
+                                       name="advancedAccountGroup.rights" propertyName="permissions.rights"
+                                       propertyType="String" searchType="AdvancedAccountGroup"/>
+                <SearchInputDefinition description="label_annotation" headerKey="label_annotation" ignoreCase="true"
+                                       inputType="Like" matchMode="START" name="advancedAccountGroup.annotation"
+                                       propertyName="permissions.annotation" propertyType="String"
+                                       searchType="AdvancedAccountGroup"/>
+                <SearchInputDefinition description="srch_input_def_owner" headerKey="owner" ignoreCase="true" inputType="Equal"
+                                       name="advancedAccountGroup.owner" propertyName="owner.name" propertyType="String"
+                                       searchType="AdvancedAccountGroup"/>
+                <SearchInputDefinition description="srch_input_def_type" headerKey="type" ignoreCase="true" inputType="Equal"
+                                       name="advancedAccountGroup.typeFilter" propertyName="type" propertyType="String"
+                                       searchType="AdvancedAccountGroup"/>
+                <SearchInputDefinition description="srch_input_def_effective_access" excludeDisplayFields="true"
+                                       headerKey="srch_input_def_effective_access" ignoreCase="true" inputType="Equal"
+                                       name="advancedAccountGroup.associations" propertyName="associations.targetName"
+                                       propertyType="String" searchType="AdvancedAccountGroup"/>
+                <SearchInputDefinition description="ui_classification" headerKey="ui_classifications" inputType="Equal"
+                                       name="advancedAccountGroup.classification" propertyName="SPT_classifications.classification.name"
+                                       propertyType="String" searchType="AdvancedAccountGroup"/>
+
+                <SearchInputDefinition description="srch_input_def_audit_date" headerKey="srch_input_def_audit_date" inputType="None"
+                                       name="advancedAudit.created" propertyName="created" propertyType="Date" searchType="AdvancedAudit" sortIndex="0"/>
+                <SearchInputDefinition description="srch_input_def_audit_action" headerKey="srch_input_def_audit_action" ignoreCase="true"
+                                       inputType="Equal" name="advancedAudit.action" propertyName="action" propertyType="String" searchType="AdvancedAudit" sortIndex="1"/>
+                <SearchInputDefinition description="srch_input_def_audit_source" headerKey="srch_input_def_audit_source" ignoreCase="true"
+                                       inputType="Like" matchMode="START" name="advancedAudit.source" propertyName="source" propertyType="String" searchType="AdvancedAudit" sortIndex="2"/>
+                <SearchInputDefinition description="srch_input_def_audit_target" headerKey="srch_input_def_audit_target" ignoreCase="true"
+                                       inputType="Like" matchMode="START" name="advancedAudit.target" propertyName="target" propertyType="String" searchType="AdvancedAudit" sortIndex="3"/>
+                <SearchInputDefinition description="srch_input_def_audit_interface" headerKey="srch_input_def_audit_interface" ignoreCase="true"
+                                       inputType="Equal" name="advancedAudit.interface" propertyName="interface" propertyType="String" searchType="AdvancedAudit" sortIndex="4"/>
+                <SearchInputDefinition description="srch_input_def_audit_application" headerKey="srch_input_def_audit_application" ignoreCase="true"
+                                       inputType="Equal" name="advancedAudit.application" propertyName="application" propertyType="String" searchType="AdvancedAudit" sortIndex="5"/>
+                <SearchInputDefinition description="srch_input_def_audit_instance" headerKey="srch_input_def_audit_instance" ignoreCase="true"
+                                       inputType="Equal" name="advancedAudit.instance" propertyName="instance" propertyType="String" searchType="AdvancedAudit" sortIndex="6"/>
+                <SearchInputDefinition description="srch_input_def_audit_account_name" headerKey="srch_input_def_audit_account_name" ignoreCase="true"
+                                       inputType="Equal" name="advancedAudit.accountName" propertyName="accountName" propertyType="String" searchType="AdvancedAudit" sortIndex="7"/>
+                <SearchInputDefinition description="srch_input_def_audit_attribute_name" headerKey="srch_input_def_audit_attribute_name"
+                                       ignoreCase="true" inputType="Equal" name="advancedAudit.attributeName" propertyName="attributeName" propertyType="String" searchType="AdvancedAudit" sortIndex="8"/>
+                <SearchInputDefinition description="srch_input_def_audit_attribute_value" headerKey="srch_input_def_audit_attribute_value"
+                                       ignoreCase="true" inputType="Equal" name="advancedAudit.attributeValue" propertyName="attributeValue" propertyType="String" searchType="AdvancedAudit" sortIndex="9"/>
+                <SearchInputDefinition description="srch_input_def_audit_string1" headerKey="srch_input_def_audit_string1" ignoreCase="true"
+                                       inputType="Equal" name="advancedAudit.string1" propertyName="string1" propertyType="String" searchType="AdvancedAudit" sortIndex="10"/>
+                <SearchInputDefinition description="srch_input_def_audit_string2" headerKey="srch_input_def_audit_string2" ignoreCase="true"
+                                       inputType="Equal" name="advancedAudit.string2" propertyName="string2" propertyType="String" searchType="AdvancedAudit" sortIndex="11"/>
+                <SearchInputDefinition description="srch_input_def_audit_string3" headerKey="srch_input_def_audit_string3" ignoreCase="true"
+                                       inputType="Equal" name="advancedAudit.string3" propertyName="string3" propertyType="String" searchType="AdvancedAudit" sortIndex="12"/>
+                <SearchInputDefinition description="srch_input_def_audit_string4" headerKey="srch_input_def_audit_string4" ignoreCase="true"
+                                       inputType="Equal" name="advancedAudit.string4" propertyName="string4" propertyType="String" searchType="AdvancedAudit" sortIndex="13"/>
+                <SearchInputDefinition description="srch_input_def_audit_client_host" headerKey="srch_input_def_audit_client_host" ignoreCase="true"
+                                       inputType="Equal" name="advancedAudit.clientHost" propertyName="clientHost" propertyType="String" searchType="AdvancedAudit" sortIndex="14"/>
+                <SearchInputDefinition description="srch_input_def_audit_server_host" headerKey="srch_input_def_audit_server_host" ignoreCase="true"
+                                       inputType="Equal" name="advancedAudit.serverHost" propertyName="serverHost" propertyType="String" searchType="AdvancedAudit" sortIndex="15"/>
+
+                <SearchInputDefinition description="srch_input_def_link_identity" headerKey="srch_input_def_link_identity" ignoreCase="true"
+                                       matchMode="START" inputType="Like" name="link.identity" nullPropertyName="identity" nullPropertyType="String"
+                                       propertyName="identity.displayName" propertyType="Identity" searchType="Link"/>
+                <SearchInputDefinition description="srch_input_def_link_iiqdisabled" headerKey="disabled" ignoreCase="true"
+                                       inputType="Equal" name="link.iiqDisabled" propertyName="iiqDisabled" propertyType="Boolean" searchType="Link"/>
+                <SearchInputDefinition description="srch_input_def_link_iiqlocked" headerKey="locked" ignoreCase="true"
+                                       inputType="Equal" name="link.iiqLocked" propertyName="iiqLocked" propertyType="Boolean" searchType="Link"/>
+                <SearchInputDefinition description="srch_input_def_link_application" headerKey="srch_input_def_link_application" ignoreCase="true"
+                                       inputType="Equal" name="advancedLink.application" propertyName="application.name" propertyType="String" searchType="AdvancedLink"/>
+                <SearchInputDefinition description="srch_input_def_link_display_name" headerKey="srch_input_def_link_display_name" ignoreCase="true"
+                                       matchMode="START" inputType="Like" name="advancedLink.displayname" propertyName="displayName" propertyType="String" searchType="AdvancedLink"/>
+                <SearchInputDefinition description="srch_input_def_link_created" headerKey="srch_input_def_link_created" ignoreCase="true"
+                                       inputType="Equal" name="advancedLink.created" propertyName="created" propertyType="Date" searchType="AdvancedLink"/>
+                <SearchInputDefinition description="srch_input_def_link_entitlements" headerKey="srch_input_def_link_entitlements" ignoreCase="true"
+                                       inputType="Equal" name="advancedLink.entitlements" propertyName="entitlements" propertyType="String" searchType="AdvancedLink"/>
+                <SearchInputDefinition description="srch_input_def_link_native_identity" headerKey="srch_input_def_link_native_identity" ignoreCase="true"
+                                       matchMode="START" inputType="Like" name="advancedLink.nativeIdentity" propertyName="nativeIdentity" propertyType="String" searchType="AdvancedLink"/>
+                <SearchInputDefinition description="srch_input_def_link_instance" headerKey="srch_input_def_link_instance" ignoreCase="true"
+                                       matchMode="START" inputType="Like" name="advancedLink.instance" propertyName="instance" propertyType="String" searchType="AdvancedLink"/>
+                <SearchInputDefinition description="srch_input_def_link_uuid" headerKey="srch_input_def_link_uuid" ignoreCase="true"
+                                       matchMode="START" inputType="Like" name="advancedLink.uuid" propertyName="uuid" propertyType="String" searchType="AdvancedLink"/>
+                <SearchInputDefinition description="srch_input_def_link_identity" headerKey="srch_input_def_link_identity" ignoreCase="true"
+                                       matchMode="START" inputType="Like" name="advancedLink.identity" nullPropertyName="identity" nullPropertyType="String"
+                                       propertyName="identity.displayName" propertyType="Identity" searchType="AdvancedLink"/>
+                <SearchInputDefinition description="srch_input_def_link_iiqdisabled" headerKey="disabled" ignoreCase="true"
+                                       inputType="Equal" name="advancedLink.iiqDisabled" propertyName="iiqDisabled" propertyType="Boolean" searchType="AdvancedLink"/>
+                <SearchInputDefinition description="srch_input_def_link_iiqlocked" headerKey="locked" ignoreCase="true"
+                                       inputType="Equal" name="advancedLink.iiqLocked" propertyName="iiqLocked" propertyType="Boolean" searchType="AdvancedLink"/>
+
+                <SearchInputDefinition description="srch_input_def_request_id" filterBuilder="sailpoint.search.IdentityRequestFilterBuilder" ignoreCase="true"
+                                       headerKey="srch_input_def_request_id" inputType="Like" matchMode="START" name="advancedIdentityRequest.requestId" propertyName="name" propertyType="String" searchType="AdvancedIdentityRequest"/>
+                <SearchInputDefinition description="srch_input_def_request_date" headerKey="srch_input_def_request_date" inputType="Equal"
+                                       name="advancedIdentityRequest.created" propertyName="created" propertyType="Date" searchType="AdvancedIdentityRequest"/>
+                <SearchInputDefinition description="srch_input_def_request_completion_date" headerKey="srch_input_def_request_completion_date" inputType="Equal"
+                                       name="advancedIdentityRequest.completionDate" propertyName="endDate" propertyType="Date" searchType="AdvancedIdentityRequest"/>
+                <SearchInputDefinition description="srch_input_def_request_state" headerKey="srch_input_def_request_state" ignoreCase="true" inputType="Like"
+                                       matchMode="START" name="advancedIdentityRequest.state" propertyName="state" propertyType="String" searchType="AdvancedIdentityRequest"/>
+                <SearchInputDefinition description="srch_input_def_request_requester" headerKey="srch_input_def_request_requester" ignoreCase="true" inputType="Equal"
+                                       name="advancedIdentityRequest.requestor" propertyName="requesterDisplayName" propertyType="String" searchType="AdvancedIdentityRequest"/>
+                <SearchInputDefinition description="srch_input_def_request_requestee" headerKey="srch_input_def_request_requestee" ignoreCase="true" inputType="Equal"
+                                       name="advancedIdentityRequest.requestee" propertyName="targetDisplayName" propertyType="String" searchType="AdvancedIdentityRequest"/>
+                <SearchInputDefinition description="srch_input_def_request_priority" headerKey="srch_input_def_request_priority" inputType="Equal"
+                                       name="advancedIdentityRequest.priority" propertyName="priority" propertyType="String" searchType="AdvancedIdentityRequest"/>
+                <SearchInputDefinition description="srch_input_def_request_completion_status" headerKey="srch_input_def_request_completion_status" ignoreCase="true"
+                                       inputType="Equal" name="advancedIdentityRequest.completionStatus" propertyName="completionStatus" propertyType="String" searchType="AdvancedIdentityRequest"/>
+                <SearchInputDefinition description="dash_access_req_search_type" headerKey="dash_access_req_search_type" ignoreCase="true" inputType="Equal"
+                                       name="advancedIdentityRequest.type" propertyName="type" propertyType="String" searchType="AdvancedIdentityRequest"/>
+                <SearchInputDefinition description="srch_input_def_request_verified" headerKey="srch_input_def_request_verified" inputType="Equal"
+                                       name="advancedIdentityRequest.verified" propertyName="verified" propertyType="Date" searchType="AdvancedIdentityRequest"/>
+                <SearchInputDefinition description="srch_input_def_request_external_ticket_id" headerKey="srch_input_def_request_external_ticket_id" ignoreCase="true"
+                                       inputType="Equal" name="advancedIdentityRequest.externalTicketId" propertyName="externalTicketId" propertyType="String" searchType="AdvancedIdentityRequest"/>
+
+                <SearchInputDefinition description="srch_input_def_syslog_date" headerKey="srch_input_def_syslog_date" ignoreCase="true"
+                                       inputType="Equal" name="advancedSyslog.created" propertyName="created" propertyType="Date" reportColumnWidth="75"
+                                       searchType="AdvancedSyslog"/>
+                <SearchInputDefinition description="srch_input_def_syslog_quick_key" headerKey="srch_input_def_syslog_quick_key" ignoreCase="true"
+                                       inputType="Equal" name="advancedSyslog.quickKey" propertyName="quickKey" propertyType="String" reportColumnWidth="75"
+                                       searchType="AdvancedSyslog"/>
+                <SearchInputDefinition description="srch_input_def_syslog_event_level" headerKey="srch_input_def_syslog_event_level" ignoreCase="true"
+                                       inputType="Equal" name="advancedSyslog.eventLevel" propertyName="eventLevel" propertyType="String" reportColumnWidth="40"
+                                       searchType="AdvancedSyslog"/>
+                <SearchInputDefinition description="srch_input_def_syslog_classname" headerKey="srch_input_def_syslog_classname" ignoreCase="true"
+                                       inputType="Equal" name="advancedSyslog.classname" propertyName="classname" propertyType="String" searchType="AdvancedSyslog"/>
+                <SearchInputDefinition description="srch_input_def_syslog_message" headerKey="srch_input_def_syslog_message" ignoreCase="true"
+                                       inputType="Like" matchMode="ANYWHERE" name="advancedSyslog.message" propertyName="message" propertyType="String" reportColumnWidth="200"
+                                       searchType="AdvancedSyslog"/>
+                <SearchInputDefinition description="srch_input_def_syslog_server" headerKey="srch_input_def_syslog_server" ignoreCase="true"
+                                       inputType="Equal" name="advancedSyslog.server" propertyName="server" propertyType="String" searchType="AdvancedSyslog"/>
+                <SearchInputDefinition description="srch_input_def_syslog_username" headerKey="srch_input_def_syslog_username" ignoreCase="true"
+                                       inputType="Equal" name="advancedSyslog.username" propertyName="username" propertyType="String" searchType="AdvancedSyslog"/>
+                <SearchInputDefinition description="ui_classification" headerKey="ui_classifications"
+                                       inputType="Equal" name="role.classification" propertyName="SPT_classifications.classification.id" propertyType="String" searchType="Role"/>
+                <SearchInputDefinition description="ui_classification" headerKey="ui_classifications"
+                                       inputType="Equal" name="accountGroup.classification" propertyName="SPT_classifications.classification.id" propertyType="String" searchType="AccountGroup"/>
+              </List>
+            </value>
+          </entry>
+        </Map>
+      </Attributes>
+    </Configuration>
+  </ImportAction>
+
+  <ImportAction name="merge">
+    <Configuration name="WebResource">
+      <Attributes>
+        <Map>
+          <!-- webResources : Urls and the rights required to view them. Urls that are not included in this list will be globally
+              accessible -->
+          <entry key="webResources">
+            <value>
+              <List>
+                <!-- PAM -->
+                <WebResource rights="FullAccessPAM,ViewPAMDetail" url="pam/pam.*" />
+                <WebResource rights="FullAccessPAM,CreatePAMContainer" url="pam/createContainer.*" />
+
+                <!-- Analyze -->
+                <WebResource rights="ViewIdentity, SetIdentityPassword, SetIdentityCapability, DeleteIdentityLink, MoveIdentityLink, DeleteIdentitySnapshot, MonitorIdentityActivity, ViewPolicy, ManagePolicy, ViewRole, ManageRole, ViewCertifications, ViewAccountGroups, ViewAuditLog, ViewLink, ViewIdentityRequest, ViewSyslog"
+                             url="analyze/advanced/*" />
+                <WebResource rights="ViewCertifications" url="analyze/certification/advancedCertificationDataSource.*" />
+                <WebResource rights="ViewAccountGroups" url="analyze/accountGroup/advancedAccountGroupDataSource.*" />
+                <WebResource rights="ViewAuditLog" url="analyze/audit/advancedAuditDataSource.*" />
+                <WebResource rights="ViewLink" url="analyze/link/advancedLinkDataSource.*" />
+                <WebResource rights="ViewIdentityRequest" url="analyze/identityRequest/advancedIdentityRequestDataSource.*" />
+                <WebResource rights="ViewSyslog" url="analyze/syslog/advancedSyslogDataSource.*" />
+              </List>
+            </value>
+          </entry>
+        </Map>
+      </Attributes>
+    </Configuration>
+  </ImportAction>
+
+  <ImportAction name="merge">
+    <TaskDefinition name="Identity Refresh">
+      <Signature>
+        <Inputs>
+          <Argument name="disableIdentityProcessingThreshold" type="boolean" helpKey="help_task_disable_identity_processing_threshold">
+            <Prompt>task_in_identity_refresh_disable_identity_processing_threshold</Prompt>
+          </Argument>
+        </Inputs>
+      </Signature>
+    </TaskDefinition>
+  </ImportAction>
+
+  <ImportAction name="merge">
+    <UIConfig name="UIConfig">
+      <Attributes>
+        <Map>
+          <entry key="environmentMonitoringHostsColumns">
+            <value>
+              <List>
+                <ColumnConfig dataIndex="openFileCount" headerKey="monitor_stat_label_open_file_count" hidden="true" hideable="true" sortable="true" stateId="openFileCount"/>
+              </List>
+            </value>
+          </entry>
+        </Map>
+      </Attributes>
+    </UIConfig>
+  </ImportAction>
+
+  <ImportAction name="merge">
+    <ServiceDefinition name="Monitoring">
+      <Attributes>
+        <Map>
+          <entry key="monitoringConfig">
+            <value>
+              <Map>
+                <entry key="monitoringStatistics">
+                  <value>
+                    <List>
+                      <String>openFileCount</String>
+                    </List>
+                  </value>
+                </entry>
+              </Map>
+            </value>
+          </entry>
+        </Map>
+      </Attributes>
+    </ServiceDefinition>
+  </ImportAction>
+
+  <MonitoringStatistic displayName="monitor_stat_label_open_file_count"
+                       name="openFileCount"
+                       type="Server"
+                       value="call:getOpenFileCount"
+                       valueType="long"/>
+
+  <RequestDefinition name="Identity Request Prune Scan Request"
+                     executor="sailpoint.request.IdentityRequestPruneScanRequestExecutor">
+    <Attributes>
+      <Map>
+        <entry key='maxThreads' value='1'/>
+      </Map>
+    </Attributes>
+  </RequestDefinition>
+
+</sailpoint>

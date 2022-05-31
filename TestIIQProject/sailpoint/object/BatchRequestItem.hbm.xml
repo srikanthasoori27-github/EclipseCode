@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd" [
+  <!ENTITY SailPointObject SYSTEM "classpath://sailpoint/object/SailPointObject.hbm.xml">
+]>
+
+<!-- (c) Copyright 2008 SailPoint Technologies, Inc., All Rights Reserved. -->
+
+<hibernate-mapping>
+  <class name="sailpoint.object.BatchRequestItem">
+
+    &SailPointObject;
+
+    <!--
+      The csv line to be processed
+      -->
+    <property name="requestData" type="string" length="4000" />
+
+    <!--
+      Status: Running, Finished, Terminated, Invalid
+     -->
+    <property name="status">
+      <type name="sailpoint.persistence.EnumType">
+        <param name="enumClassName">sailpoint.object.BatchRequestItem$Status</param>
+      </type>
+    </property>
+
+    <property name="message" type="string" length="4000" />
+
+    <property name="errorMessage" type="sailpoint.persistence.XmlType" length="100000000" />
+
+    <!--
+      Result: Success, Failed, Manual Input, Skipped 
+     -->
+    <property name="result">
+      <type name="sailpoint.persistence.EnumType">
+        <param name="enumClassName">sailpoint.object.BatchRequestItem$Result</param>
+      </type>
+    </property>
+
+    <property name="identityRequestId" type="string" length="255" />
+
+    <property name="targetIdentityId" type="string" length="255" />
+
+    <many-to-one embed-xml="false" name="batchRequest" column="batchRequestId" class="sailpoint.object.BatchRequest"/>
+  </class>
+</hibernate-mapping>
