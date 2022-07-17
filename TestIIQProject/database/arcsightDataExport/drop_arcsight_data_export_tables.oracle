@@ -1,3 +1,0 @@
-drop table identityiq.sptr_arcsight_export cascade constraints;
-drop table identityiq.sptr_arcsight_identity cascade constraints;
-drop table identityiq.sptr_arcsight_audit_event cascade constraints;

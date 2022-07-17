@@ -1,7 +1,0 @@
-
-use master
-GO
-
-drop database identityiqPlugin
-GO
-sp_droplogin identityiqPlugin

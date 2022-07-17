@@ -1,6 +1,0 @@
-
-DROP USER 'identityiq'@'%'; 
-DROP USER 'identityiq'@'localhost';
-
-FLUSH PRIVILEGES;
-DROP DATABASE IF EXISTS identityiq;
